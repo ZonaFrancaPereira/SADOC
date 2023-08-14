@@ -1,0 +1,28 @@
+body{
+	background-image: url(../img/fondo_login.jpg);
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-size: 100% 100%;
+}
+.caja_login{
+	margin-top: 6%;
+	background: rgba(0, 0, 0, 0.35);
+	color: white;
+	border-radius: 10px;
+}
+.btn-link{
+	color: white;
+}
+.centrame{
+	text-align: center;
+}
+#login_zf{
+	float: left;
+}
+#mostrar_registro:hover{
+	text-decoration: none;
+	color: skyblue;
+}
+#btn_login:hover{
+	background-color: #0099bc;
+}
