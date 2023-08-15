@@ -67,7 +67,6 @@ if ($_SESSION['ingreso'] == true) {
           <i class="nav-icon fas fa-th"></i>
           <p>
             Proveedores
-            <span class="right badge badge-success">Nueva</span>
           </p>
         </a>
       </li>
@@ -102,7 +101,7 @@ if ($_SESSION['ingreso'] == true) {
             Pendientes por aprobar / en procesoa
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
-          <div class="tab-pane " id="acpm">
+          <div class="tab-pane " id="orden">
             <form id="form_acpm" method="POST">
               <div class="card card-navy">
                 <div class="card-header">
@@ -148,107 +147,126 @@ if ($_SESSION['ingreso'] == true) {
                           } else {
                             echo '<option value="0">No existen proveedores</option>';
                           }
-                        } catch (PDOExeption $e) {
+                        } catch (PDOException $e) {
                           echo "Error en el servidor";
                         }
                         ?>
                       </datalist>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Origen ACPM</label>
-                      <textarea class="form-control" id="origen_acpm" name="origen_acpm" rows="3" required></textarea>
-                    </div>
+                      <table class="table pt-2" id="tabla">
+                        <thead>
+                          <tr>
+                            <th>Articulo</th>
+                            <th>Cantidad</th>
+                            <th>Valor Unitario</th>
+                            <th>Valor Iva</th>
+                            <th>Total</th>
+                            <th>Observaciones</th>
+                            <th>X</th>
+                          </tr>
+                        </thead>
+                        <tr class="fila-fija ">
+                          <td class="col-md-2">
+                            <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
+                          </td>
+                          <td class=" col-md-2">
+                            <input type="number" name="cantidad_orden[]" class="recibido form-control" placeholder="Unidades" required step="any">
+                          </td>
+                          <td class=" col-md-2">
+                            <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" required id="valor_neto">
+                          </td>
+                          <td class=" col-md-2">
+                            <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]" required id="valor_neto" readonly>
+                          </td>
+                          <td class=" col-md-2">
+                            <input type="number" class="valor_neto form-control" placeholder="Toltal" value="" name="valor_total[]" step="any" required id="valor_total" readonly>
+                          </td>
+                          <td class="col-md-2">
+                            <textarea name="articulo_compra[]" id="observaciones_articulo" class="form-control" cols="10" rows="5"></textarea>
+                          </td>
+                          <td class="eliminar col-md-1">
+                            <input type="button" class="btn btn-danger" value="X" />
+                          </td>
+                        </tr>
 
-                    <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
-                      <label>Descripcion Fuente</label>
-                      <textarea class="form-control" id="descripcion_fuente" name="descripcion_fuente" rows="3"></textarea>
-                    </div>
-                    <div class="col-2 col-xs-12 col-sm-12">
-                      <label>Tipo de Reporte</label>
-                      <select class="form-control" id="tipo_acpm" name="tipo_acpm" required>
-                        <option value="AC">Accion Correctiva</option>
-                        <option value="AP">Accion Preventiva</option>
-                        <option value="AM">Accion de Mejora</option>
-                      </select>
-                    </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Descripción ACPM</label>
-                      <textarea class="form-control" id="descripcion_acpm" name="descripcion_acpm" rows="3" required></textarea>
+                      </table>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for=""><B>TOTAL ORDEN</B></label>
+                          <input type="number" class="form-control input-lg" id="totalOrden" name="totalOrden" total="0" value="0" placeholder="0" readonly>
+                        </div>
+                        <div class="col-md-6">
+                          <label for=""><B>Añade más articulos a la Orden de Compra</B></label>
+                          <button id="adicional" name="adicional" type="button" class="adicional btn btn-info btn-block"> <i class="fas fa-plus"></i> Agregar</button>
+                        </div>
+                      </div>
                     </div>
                     <div class="col-12 bg-navy pt-2 mt-3 col-xs-12 col-sm-12">
                       <center>
-                        <h5>Analisis del Hallazgo</h5>
-                      </center>
-
-                    </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Analisis de Causa (Técnicas de los por ques, espina de pescado, lluvia de ideas, etc)</label>
-                      <textarea class="form-control" id="causa_acpm" name="causa_acpm" rows="3"></textarea>
-                    </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>¿Se identifican No Conformidades similares o que potencialmente puedan ocurrir en otro proceso?</label>
-                      <select class="form-control" id="nc_similar" name="nc_similar" required>
-                        <option>Selecciona una Opcion</option>
-                        <option value="Si">Si</option>
-                        <option value="No">No</option>
-                      </select>
-                    </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12" id="similares">
-                      <label>Describe cuales y en que proceso</label>
-                      <textarea class="form-control" id="descripcion_nsc" name="descripcion_nsc" rows="3"></textarea>
-                    </div>
-                    <div class="col-12 bg-navy pt-2 mt-3 col-xs-12 col-sm-12">
-                      <center>
-                        <h5>Plan de Mejora</h5>
+                        <h5>Forma de Pago</h5>
                       </center>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Corrección ACPM</label>
-                      <textarea class="form-control" id="correccion_acpm" name="correccion_acpm" rows="3" required></textarea>
-                    </div>
-
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Se identificó peligros de SST nuevos o que han cambiado, o la necesidad de generar controles nuevos o modificar los existentes</label>
-                      <select class="form-control" id="riesgo_acpm" name="riesgo_acpm" required>
+                      <label>Selecciona una Forma de Pago, dependiendo la seleccion deberas llenar lo restante</label>
+                      <select class="form-control" id="tipo_pago" name="tipo_pago" required>
                         <option>Selecciona una Opcion</option>
-                        <option value="Si">Si</option>
-                        <option value="No">No</option>
+                        <option value="Contado">Contado</option>
+                        <option value="Credito">Credito</option>
+                        <option value="Anticipo">Anticipo</option>
+                        <option value="Otros">Otros</option>
                       </select>
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12" id="riesgos">
-                      <label>Describa cuales son los riegos</label>
-                      <textarea class="form-control" id="justificacion_riesgo" name="justificacion_riesgo" rows="3"></textarea>
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="tiempo">
+                      <label>Tiempo de pago en dias</label>
+                      <input type="number" class="form-control input-lg" id="tiempo_pago" name="tiempo_pago">
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="porcentaje">
+                      <label>Porcentaje del Anticipo</label>
+                      <input type="number" class="form-control input-lg" id="tiempo_pago" name="tiempo_pago">
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="otros">
+                      <label>Otras condiciones de la negociación</label>
+                      <textarea class="form-control" id="condiciones_negociacion" name="condiciones_negociacion" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                      <label>Comentarios</label>
+                      <textarea class="form-control" id="comentario_orden" name="comentario_orden" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="tiempo">
+                      <label>Tiempo de entrega en dias</label>
+                      <input type="number" class="form-control input-lg" id="tiempo_entrega" name="tiempo_entrega">
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                  <button type="button" class="btn btn-success btn-block " id="enviar_acpm" name="enviar_acpm">Radicar ACPM</button>
+                  <button type="button" class="btn btn-success btn-block " id="enviar_orden" name="enviar_orden">Enviar Orden</button>
                 </div>
               </div>
 
             </form>
             <!-- /.card -->
           </div>
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRAN LAS ORDENES PENDIENTES DE CADA USUARIO-->
           <div id="pendientes" class="tab-pane ">
-            aBIERTAS
+            PENDIENTES
           </div>
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRAN LAS ORDENES APROBADAS DE CADA USUARIO-->
           <div id="aprobadas" class="tab-pane ">
-            CERRADAS
+            APROBADAS
           </div>
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRAN LAS ORDENES EN EJECUCCION DE CADA USUARIO-->
           <div id="ejecuccion" class="tab-pane ">
-            CERRADAS
+            EJECUCCION
           </div>
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRAN LAS ORDENES EJECUTADS DE CADA USUARIO-->
           <div id="ejecutadas" class="tab-pane ">
-            CERRADAS
+            ORDENES EJECUTADAS
           </div>
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
           <div id="proveedores" class="tab-pane ">
-            CERRADAS
+            PROVEEDORES
           </div>
           <!-- CIERRE DEL TAB -->
         </div>
@@ -273,38 +291,36 @@ if ($_SESSION['ingreso'] == true) {
 </script>
 <script>
   $(document).ready(function() {
-    $("#similares").hide();
-    $("#fuente").hide();
-    $("#riesgos").hide();
+    $("#tiempo").hide();
+    $("#porcentaje").hide();
+    $("#otros").hide();
 
-    $("#nc_similar").change(function() {
+    $("#tipo_pago").change(function() {
       var seleccion = $(this).val();
-
-      if (seleccion === "Si") {
-        $("#similares").show();
-      } else {
-        $("#similares").hide();
+      switch (seleccion) {
+        case "Credito":
+          $("#tiempo").show();
+          $("#porcentaje").hide();
+          $("#otros").hide();
+          break;
+        case "Anticipo":
+          $("#porcentaje").show();
+          $("#tiempo").hide();
+          $("#otros").hide();
+          break;
+        case "Otros":
+          $("#otros").show();
+          $("#tiempo").hide();
+          $("#porcentaje").hide();
+          break;
+        default:
+          $("#tiempo").hide();
+          $("#porcentaje").hide();
+          $("#otros").hide();
       }
-    });
-    $("#fuente_acpm").change(function() {
-      var seleccion = $(this).val();
 
-      if (seleccion === "Otros") {
-        $("#fuente").show();
-      } else {
-        $("#fuente").hide();
-      }
     });
-    $("#riesgo_acpm").change(function() {
-      var seleccion = $(this).val();
-
-      if (seleccion === "Si") {
-        $("#riesgos").show();
-      } else {
-        $("#riesgos").hide();
-      }
-    });
-  });
+  })
 </script>
 
 </body>
