@@ -86,22 +86,60 @@
   });
 </script>
 <script>
-  $(function() {
-        /*=============================================
-         Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
-         =============================================*/
-        $("#adicional").on('click', function() {
-          $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
-        
-        });
-        /*=============================================
-        Evento que selecciona la fila y la elimina 
-        =============================================*/
-        $(document).on("click", ".eliminar", function() {
-          var parent = $(this).parents().get(0);
-          $(parent).remove();
-         
+  /*=============================================
+     Suma todos los valores de la tabla
+     =============================================*/
+  function sumarTotalPrecios() {
 
-        });
-      });
+    var precioItem = $(".valor_total");
+
+    var arraySumaPrecio = [];
+
+    for (var i = 0; i < precioItem.length; i++) {
+
+      arraySumaPrecio.push(Number($(precioItem[i]).val()));
+
+
+    }
+
+    function sumaArrayPrecios(total, numero) {
+
+      return total + numero;
+
+    }
+
+    var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+
+    $("#totalOrden").val(sumaTotalPrecio);
+    $("#totalOrden").attr("total", sumaTotalPrecio);
+
+  }
+
+    /*=============================================
+     MODIFICAR EL TOTAL PAGADO
+     =============================================*/
+     $(".formularioCompra").on("change", "input.valor_total", function () {
+      sumarTotalPrecios()
+      
+    })
+  $(function() {
+    /*=============================================
+     Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+     =============================================*/
+    $("#adicional").on('click', function() {
+      $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
+      sumarTotalPrecios()
+
+    });
+    /*=============================================
+    Evento que selecciona la fila y la elimina 
+    =============================================*/
+    $(document).on("click", ".eliminar", function() {
+      var parent = $(this).parents().get(0);
+      $(parent).remove();
+      sumarTotalPrecios()
+
+
+    });
+  });
 </script>

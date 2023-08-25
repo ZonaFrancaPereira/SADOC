@@ -102,7 +102,7 @@ if ($_SESSION['ingreso'] == true) {
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="orden">
-            <form id="form_acpm" method="POST">
+            <form action="php/insertarOrden.php" class="formularioCompra" method="POST">
               <div class="card card-navy">
                 <div class="card-header">
                   <center>
@@ -171,16 +171,16 @@ if ($_SESSION['ingreso'] == true) {
                             <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
                           </td>
                           <td class=" col-md-2">
-                            <input type="number" name="cantidad_orden[]" class="recibido form-control" placeholder="Unidades" required step="any">
+                            <input type="number" name="cantidad_orden[]" class="cantidad_orden form-control" placeholder="Unidades" required step="any">
                           </td>
                           <td class=" col-md-2">
-                            <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" required id="valor_neto">
+                            <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]"  onkeyup="myFunction()" >
                           </td>
                           <td class=" col-md-2">
-                            <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]" required id="valor_neto" readonly>
+                            <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]" required >
                           </td>
                           <td class=" col-md-2">
-                            <input type="number" class="valor_neto form-control" placeholder="Toltal" value="" name="valor_total[]" step="any" required id="valor_total" readonly>
+                            <input type="number" class="valor_total form-control" placeholder="Toltal" value="" name="valor_total[]" step="any" required  >
                           </td>
                           <td class="col-md-2">
                             <textarea name="articulo_compra[]" id="observaciones_articulo" class="form-control" cols="10" rows="5"></textarea>
@@ -241,7 +241,7 @@ if ($_SESSION['ingreso'] == true) {
                 </div>
                 <!-- /.card-body -->
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                  <button type="button" class="btn btn-success btn-block " id="enviar_orden" name="enviar_orden">Enviar Orden</button>
+                  <button type="submit" class="btn btn-success btn-block " id="enviar_orden" name="enviar_orden">Enviar Orden</button>
                 </div>
               </div>
 
