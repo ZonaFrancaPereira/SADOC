@@ -1,10 +1,18 @@
-<footer class="main-footer">
-  <strong>Copyright &copy;  <?php echo date(Y)?> <a href="https://zonafrancadepreira.com">Zona Franca Internacional de Pereira</a>.</strong>
-  Todos los derechoss reservados.
-  <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 3.2.0
+ 
   </div>
-</footer>
+ <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.content-wrapper -->
+  <?php $year = date("Y"); ?>
+  <footer class="main-footer">
+    <strong>Copyright &copy; <?php echo $year; ?> <a href="https://zonafrancadepreira.com">Zona Franca Internacional de Pereira</a>.</strong>
+  Todos los derechoss reservados.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -33,6 +41,12 @@
 <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
 <script src="plugins/summernote/summernote-bs4.min.js"></script>
+
+<!-- CodeMirror -->
+<script src="plugins/codemirror/codemirror.js"></script>
+<script src="plugins/codemirror/mode/css/css.js"></script>
+<script src="plugins/codemirror/mode/xml/xml.js"></script>
+<script src="plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <!-- overlayScrollbars -->
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
@@ -142,4 +156,16 @@
 
     });
   });
+</script>
+<script>
+  $(function () {
+    // Summernote
+    $('.textarea').summernote()
+
+    // CodeMirror
+    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+      mode: "htmlmixed",
+      theme: "monokai"
+    });
+  })
 </script>

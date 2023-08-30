@@ -102,7 +102,7 @@ if ($_SESSION['ingreso'] == true) {
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="orden">
-            <form action="php/insertarOrden.php" class="formularioCompra" method="POST">
+            <form action="ordenes/insertarOrden.php" class="formularioCompra" method="POST">
               <div class="card card-navy">
                 <div class="card-header">
                   <center>
@@ -129,7 +129,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-6 col-xs-6 col-sm-6">
                       <label for="exampleDataList" class="form-label">Proveedor</label>
-                      <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Identificacion de Proveedor">
+                      <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Identificacion de Proveedor" name="">
                       <datalist id="datalistOptions">
 
                         <?php
@@ -183,7 +183,7 @@ if ($_SESSION['ingreso'] == true) {
                             <input type="number" class="valor_total form-control" placeholder="Toltal" value="" name="valor_total[]" step="any" required  >
                           </td>
                           <td class="col-md-2">
-                            <textarea name="articulo_compra[]" id="observaciones_articulo" class="form-control" cols="10" rows="5"></textarea>
+                            <textarea name="observaciones_articulo[]" id="observaciones_articulo" class=" form-control" cols="10" rows="5"></textarea>
                           </td>
                           <td class="eliminar col-md-1">
                             <input type="button" class="btn btn-danger" value="X" />
@@ -194,7 +194,7 @@ if ($_SESSION['ingreso'] == true) {
                       <div class="row">
                         <div class="col-md-6">
                           <label for=""><B>TOTAL ORDEN</B></label>
-                          <input type="number" class="form-control input-lg" id="totalOrden" name="totalOrden" total="0" value="0" placeholder="0" readonly>
+                          <input type="number" class="form-control input-lg" id="totalOrden" name="total_orden" total="0" value="0" placeholder="0" readonly>
                         </div>
                         <div class="col-md-6">
                           <label for=""><B>Añade más articulos a la Orden de Compra</B></label>
@@ -209,7 +209,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
                       <label>Selecciona una Forma de Pago, dependiendo la seleccion deberas llenar lo restante</label>
-                      <select class="form-control" id="tipo_pago" name="tipo_pago" required>
+                      <select class="form-control" id="forma_pago" name="forma_pago" required>
                         <option>Selecciona una Opcion</option>
                         <option value="Contado">Contado</option>
                         <option value="Credito">Credito</option>
@@ -223,7 +223,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="porcentaje">
                       <label>Porcentaje del Anticipo</label>
-                      <input type="number" class="form-control input-lg" id="tiempo_pago" name="tiempo_pago">
+                      <input type="number" class="form-control input-lg" id="porcentaje_anticipo" name="porcentaje_anticipo">
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="otros">
                       <label>Otras condiciones de la negociación</label>
@@ -231,7 +231,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
                       <label>Comentarios</label>
-                      <textarea class="form-control" id="comentario_orden" name="comentario_orden" rows="3" required></textarea>
+                      <textarea class="form-control textarea" id="comentario_orden" name="comentario_orden" rows="3" required></textarea>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="tiempo">
                       <label>Tiempo de entrega en dias</label>
@@ -293,7 +293,7 @@ if ($_SESSION['ingreso'] == true) {
     $("#porcentaje").hide();
     $("#otros").hide();
 
-    $("#tipo_pago").change(function() {
+    $("#forma_pago").change(function() {
       var seleccion = $(this).val();
       switch (seleccion) {
         case "Credito":
