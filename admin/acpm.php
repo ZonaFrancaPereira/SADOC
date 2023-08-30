@@ -41,7 +41,7 @@ if ($_SESSION['ingreso']==true) {
           <p>Acciones Abiertas</p>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" name="cerradas">
         <a data-toggle="tab" href="#cerradas" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Acciones Cerradas</p>
@@ -201,47 +201,82 @@ if ($_SESSION['ingreso']==true) {
         </div>
         <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO--> 
         <div id="abiertas" class="tab-pane ">
-          <div class="" id="fuente">
-             <table class="table">
+        <div class="table-responsive">
+             <table class="table table-hover">
                 <thead>
                   <tr style=text-align:center>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre del responsable</th>
-                    <th scope="col">Cargo</th>
-                    <th scope="col">Origen Acpm</th>
-                    <th scope="col">Fuente</th>
-                    <th scope="col">Tipo de Reporte</th>
-                    <th scope="col">Descripcion Acpm</th>
-                    <th scope="col">Fecha Correcion</th>
-                    <th scope="col">Fecha Finalizacion</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th class="col-md-1" scope="col">#</th>
+                    <th class="col-md-1" scope="col">Nombre del responsable</th>
+                    <th class="col-md-1" scope="col">Cargo</th>
+                    <th class="col-md-1" scope="col">Origen Acpm</th>
+                    <th class="col-md-1" scope="col">Fuente</th>
+                    <th class="col-md-1" scope="col">Tipo de Reporte</th>
+                    <th class="col-md-1" scope="col">Descripcion Acpm</th>
+                    <th class="col-md-1" scope="col">Fecha Correcion</th>
+                    <th class="col-md-1" scope="col">Fecha Finalizacion</th>
+                    <th class="col-md-1" scope="col">Estado</th>
+                    <th class="col-md-1" scope="col">Asignar</th>
+                    <th class="col-md-1" scope="col">Ver</th>
                   </tr>
                 </thead>
                       <?php
-                  foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario") as $row) {?>
+                      foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'abierta'") as $row) {{?>
                       <tr style=text-align:center >
-                        <td><?php echo $row["id_consecutivo"] ?></td>
-                        <td><p class="text-break" style="width: 12rem"><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
-                        <td><?php echo $row["id_cargo_fk"] ?></td>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["origen_acpm"] ?></td>
-                        <td><?php echo $row["fuente_acpm"] ?></td>
-                        <td><p style="width: 7rem"><?php echo $row["tipo_acpm"] ?></td></p>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["descripcion_acpm"] ?></td>
-                        <td><p style="width: 8rem"><?php echo $row["fecha_correccion"] ?></td></p>
-                        <td><p style="width: 10rem"><?php echo $row["fecha_finalizacion"] ?></td></p>
-                        <td><?php echo $row["estado_acpm"] ?></td>
-                        <td><button type="button" class="btn btn-success" id="id_actividad" name="" style="border-radius: 1rem;width: 10rem">Asignar Actividades</button></td>
-                        <td><button type="button" class="btn btn-success" id="" name="" style="border-radius: 1rem;width: 10rem">Ver Actividades</button></td>
+                        <td class="col-md-1"><?php echo $row["id_consecutivo"] ?></td>
+                        <td class="col-md-1"><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
+                        <td class="col-md-1"><?php echo $row["id_cargo_fk"] ?></td>
+                        <td><p class="text-break" style="width: 20rem"><?php echo $row["origen_acpm"] ?></p></td>
+                        <td class="col-md-1"><?php echo $row["fuente_acpm"] ?></td>
+                        <td class="col-md-1"><?php echo $row["tipo_acpm"] ?></td>
+                        <td><p class="text-break" style="width: 20rem"><?php echo $row["descripcion_acpm"] ?></p></td>
+                        <td class="col-md-1"><?php echo $row["fecha_correccion"] ?></td>
+                        <td class="col-md-1"><?php echo $row["fecha_finalizacion"] ?></td>
+                        <td class="col-md-1"><?php echo $row["estado_acpm"] ?></td>
+                        <td class="col-md-1"><button type="button" class="btn btn-success" id="id_actividad" name="" style="border-radius: 1rem;width: 5rem" onclick="location.href='actividades.php'">Asignar</button></td>
+                        <td class="col-md-1"><button type="button" class="btn btn-success" id="" name="" style="border-radius: 1rem;width: 5rem">Ver</button></td>
                       </tr>
-                    <?php } ?>
+                    <?php }} ?>
               </table>
-          </div>
+              </div>
         </div>
         <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO--> 
         <div id="cerradas" class="tab-pane ">
-          CERRADAS
+        <div class="table-responsive">
+             <table class="table table-hover">
+                <thead>
+                  <tr style=text-align:center>
+                    <th class="col-md-1" scope="col">#</th>
+                    <th class="col-md-1" scope="col">Nombre del responsable</th>
+                    <th class="col-md-1" scope="col">Cargo</th>
+                    <th class="col-md-1" scope="col">Origen Acpm</th>
+                    <th class="col-md-1" scope="col">Fuente</th>
+                    <th class="col-md-1" scope="col">Tipo de Reporte</th>
+                    <th class="col-md-1" scope="col">Descripcion Acpm</th>
+                    <th class="col-md-1" scope="col">Fecha Correcion</th>
+                    <th class="col-md-1" scope="col">Fecha Finalizacion</th>
+                    <th class="col-md-1" scope="col">Estado</th>
+                  </tr>
+                </thead>
+                      <?php
+                      foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'cerrada'") as $row) {{?>
+                      <tr style=text-align:center >
+                        <td class="col-md-1"><?php echo $row["id_consecutivo"] ?></td>
+                        <td class="col-md-1"><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
+                        <td class="col-md-1"><?php echo $row["id_cargo_fk"] ?></td>
+                        <td><p class="text-break" style="width: 20rem"><?php echo $row["origen_acpm"] ?></p></td>
+                        <td class="col-md-1"><?php echo $row["fuente_acpm"] ?></td>
+                        <td class="col-md-1"><?php echo $row["tipo_acpm"] ?></td>
+                        <td><p class="text-break" style="width: 20rem"><?php echo $row["descripcion_acpm"] ?></p></td>
+                        <td class="col-md-1"><?php echo $row["fecha_correccion"] ?></td>
+                        <td class="col-md-1"><?php echo $row["fecha_finalizacion"] ?></td>
+                        <td class="col-md-1"><?php echo $row["estado_acpm"] ?></td>
+                      </tr>
+                    <?php }} ?>
+                    
+              </table>
+              </div>
+        </div>
+
         </div>
         <!-- CIERRE DEL TAB --> 
       </div>
