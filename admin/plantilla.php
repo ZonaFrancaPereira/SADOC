@@ -25,6 +25,10 @@
    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
    <!-- summernote -->
    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="plugins/codemirror/codemirror.css">
+  <link rel="stylesheet" href="plugins/codemirror/theme/monokai.css">
    <!-- DataTables -->
    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -90,7 +94,7 @@
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
       <img src="img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">SADOC ZFIP</span>
+      <span class="brand-text font-weight-light">PLATAFORMA ZFIP</span>
     </a>
 
     <!-- Sidebar -->
@@ -100,7 +104,8 @@
 
         <div class="info text-center">
           <B>
-            <a href="#" class="d-block "><?php echo $_SESSION['nombre_usuario']; ?></a>
+          <a href="./profile.php?section=<?php echo $_SESSION['Id']; ?>" class="d-block text-uppercase"><?php echo $_SESSION['nombre_usuario']; ?></a>
+          
           </B>
         </div>
       </div>

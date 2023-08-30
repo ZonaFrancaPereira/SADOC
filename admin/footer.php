@@ -1,10 +1,18 @@
-<footer class="main-footer">
-  <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-  All rights reserved.
-  <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 3.2.0
+ 
   </div>
-</footer>
+ <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.content-wrapper -->
+  <?php $year = date("Y"); ?>
+  <footer class="main-footer">
+    <strong>Copyright &copy; <?php echo $year; ?> <a href="https://zonafrancadepreira.com">Zona Franca Internacional de Pereira</a>.</strong>
+  Todos los derechoss reservados.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -33,6 +41,12 @@
 <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
 <script src="plugins/summernote/summernote-bs4.min.js"></script>
+
+<!-- CodeMirror -->
+<script src="plugins/codemirror/codemirror.js"></script>
+<script src="plugins/codemirror/mode/css/css.js"></script>
+<script src="plugins/codemirror/mode/xml/xml.js"></script>
+<script src="plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <!-- overlayScrollbars -->
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
@@ -86,22 +100,72 @@
   });
 </script>
 <script>
-  $(function() {
-        /*=============================================
-         Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
-         =============================================*/
-        $("#adicional").on('click', function() {
-          $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
-        
-        });
-        /*=============================================
-        Evento que selecciona la fila y la elimina 
-        =============================================*/
-        $(document).on("click", ".eliminar", function() {
-          var parent = $(this).parents().get(0);
-          $(parent).remove();
-         
+  /*=============================================
+     Suma todos los valores de la tabla
+     =============================================*/
+  function sumarTotalPrecios() {
 
-        });
-      });
+    var precioItem = $(".valor_total");
+
+    var arraySumaPrecio = [];
+
+    for (var i = 0; i < precioItem.length; i++) {
+
+      arraySumaPrecio.push(Number($(precioItem[i]).val()));
+
+
+    }
+
+    function sumaArrayPrecios(total, numero) {
+
+      return total + numero;
+
+    }
+
+    var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+
+    $("#totalOrden").val(sumaTotalPrecio);
+    $("#totalOrden").attr("total", sumaTotalPrecio);
+
+  }
+
+    /*=============================================
+     MODIFICAR EL TOTAL PAGADO
+     =============================================*/
+     $(".formularioCompra").on("change", "input.valor_total", function () {
+      sumarTotalPrecios()
+      
+    })
+  $(function() {
+    /*=============================================
+     Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+     =============================================*/
+    $("#adicional").on('click', function() {
+      $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
+      sumarTotalPrecios()
+
+    });
+    /*=============================================
+    Evento que selecciona la fila y la elimina 
+    =============================================*/
+    $(document).on("click", ".eliminar", function() {
+      var parent = $(this).parents().get(0);
+      $(parent).remove();
+      sumarTotalPrecios()
+
+
+    });
+  });
+</script>
+<script>
+  $(function () {
+    // Summernote
+    $('.textarea').summernote()
+
+    // CodeMirror
+    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+      mode: "htmlmixed",
+      theme: "monokai"
+    });
+  })
 </script>
