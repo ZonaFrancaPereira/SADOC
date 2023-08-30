@@ -153,7 +153,7 @@ if ($_SESSION['ingreso'] == true) {
                         ?>
                       </datalist>
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
+                    <div class="col-md-12 col-xs-12 col-sm-12 pt-2">
                       <table class="table pt-2" id="tabla">
                         <thead>
                           <tr>
@@ -266,9 +266,7 @@ if ($_SESSION['ingreso'] == true) {
           </div>
           <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
           <div id="proveedores" class="tab-pane ">
-            PROVEEDORES
-          </div>
-          <!-- CIERRE DEL TAB -->
+                    <!-- CIERRE DEL TAB -->
         </div>
       </div>
     </div>
