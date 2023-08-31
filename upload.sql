@@ -1,20 +1,21 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-08-2023 a las 10:30:02
--- Versión del servidor: 10.1.10-MariaDB
--- Versión de PHP: 5.5.15
+-- Tiempo de generación: 31-08-2023 a las 02:22:41
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `upload`
@@ -26,30 +27,37 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `acpm`
 --
 
-CREATE TABLE IF NOT EXISTS `acpm` (
-`id_consecutivo` int(11) NOT NULL,
-  `origen_acpm` text,
+CREATE TABLE `acpm` (
+  `id_consecutivo` int(11) NOT NULL,
+  `origen_acpm` text DEFAULT NULL,
   `fuente_acpm` enum('AI','AE','Otros') DEFAULT NULL,
-  `descripcion_fuente` text,
+  `descripcion_fuente` text DEFAULT NULL,
   `tipo_acpm` enum('AC','AP','AM') DEFAULT NULL,
-  `fecha_acpm` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `descripcion_acpm` text,
-  `causa_acpm` text,
+  `fecha_acpm` timestamp NULL DEFAULT current_timestamp(),
+  `descripcion_acpm` text DEFAULT NULL,
+  `causa_acpm` text DEFAULT NULL,
   `nc_similar` enum('Si','No') DEFAULT NULL,
-  `descripcion_nsc` text,
-  `correccion_acpm` text,
+  `descripcion_nsc` text DEFAULT NULL,
+  `correccion_acpm` text DEFAULT NULL,
   `fecha_correccion` date DEFAULT NULL,
   `estado_acpm` enum('Abierta','Proceso','Cerrada','Rechazada') DEFAULT NULL,
   `riesgo_acpm` enum('Si','No') DEFAULT NULL,
-  `justificacion_riesgo` text,
+  `justificacion_riesgo` text DEFAULT NULL,
   `cambios_sig` enum('Si','No') DEFAULT NULL,
-  `justificacion_sig` text,
+  `justificacion_sig` text DEFAULT NULL,
   `conforme_sig` enum('Si','No') DEFAULT NULL,
-  `justificacion_conforme_sig` text,
+  `justificacion_conforme_sig` text DEFAULT NULL,
   `fecha_estado` date DEFAULT NULL,
   `fecha_finalizacion` date DEFAULT NULL,
   `id_usuario_fk` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `acpm`
+--
+
+INSERT INTO `acpm` (`id_consecutivo`, `origen_acpm`, `fuente_acpm`, `descripcion_fuente`, `tipo_acpm`, `fecha_acpm`, `descripcion_acpm`, `causa_acpm`, `nc_similar`, `descripcion_nsc`, `correccion_acpm`, `fecha_correccion`, `estado_acpm`, `riesgo_acpm`, `justificacion_riesgo`, `cambios_sig`, `justificacion_sig`, `conforme_sig`, `justificacion_conforme_sig`, `fecha_estado`, `fecha_finalizacion`, `id_usuario_fk`) VALUES
+(11, '1', 'AI', '', 'AC', '2023-08-30 21:30:35', '1', '1', 'Si', '11', '22', '2023-12-31', 'Abierta', 'No', '', NULL, NULL, NULL, NULL, '2023-08-30', '0000-00-00', 3);
 
 -- --------------------------------------------------------
 
@@ -57,14 +65,14 @@ CREATE TABLE IF NOT EXISTS `acpm` (
 -- Estructura de tabla para la tabla `actividades_acpm`
 --
 
-CREATE TABLE IF NOT EXISTS `actividades_acpm` (
-`id_actividad` int(11) NOT NULL,
-  `fecha_actividad` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `actividades_acpm` (
+  `id_actividad` int(11) NOT NULL,
+  `fecha_actividad` timestamp NOT NULL DEFAULT current_timestamp(),
   `descripcion_actividad` text NOT NULL,
   `estado_actividad` enum('Completa','Incompleta') NOT NULL,
   `id_usuario_fk` int(11) NOT NULL,
   `id_acpm_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -72,10 +80,10 @@ CREATE TABLE IF NOT EXISTS `actividades_acpm` (
 -- Estructura de tabla para la tabla `cargos`
 --
 
-CREATE TABLE IF NOT EXISTS `cargos` (
-`id_cargo` int(11) NOT NULL,
+CREATE TABLE `cargos` (
+  `id_cargo` int(11) NOT NULL,
   `nombre_cargo` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `cargos`
@@ -91,14 +99,14 @@ INSERT INTO `cargos` (`id_cargo`, `nombre_cargo`) VALUES
 -- Estructura de tabla para la tabla `detalle_actividad`
 --
 
-CREATE TABLE IF NOT EXISTS `detalle_actividad` (
-`id_detalle_acpm` int(11) NOT NULL,
-  `fecha_evidencia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `detalle_actividad` (
+  `id_detalle_acpm` int(11) NOT NULL,
+  `fecha_evidencia` timestamp NOT NULL DEFAULT current_timestamp(),
   `evidencia` text NOT NULL,
   `recursos` text NOT NULL,
   `id_actividad_fk` int(11) NOT NULL,
   `id_usuario_e_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -106,16 +114,32 @@ CREATE TABLE IF NOT EXISTS `detalle_actividad` (
 -- Estructura de tabla para la tabla `detalle_orden`
 --
 
-CREATE TABLE IF NOT EXISTS `detalle_orden` (
-`id_orden_detalle` int(11) NOT NULL,
-  `articulo_orden` text NOT NULL,
+CREATE TABLE `detalle_orden` (
+  `id_orden_detalle` int(11) NOT NULL,
+  `articulo_compra` text NOT NULL,
   `cantidad_orden` float NOT NULL,
   `valor_neto` float NOT NULL,
   `valor_iva` float NOT NULL,
   `valor_total` float NOT NULL,
   `observaciones_articulo` text NOT NULL,
   `id_orden_compra` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_orden`
+--
+
+INSERT INTO `detalle_orden` (`id_orden_detalle`, `articulo_compra`, `cantidad_orden`, `valor_neto`, `valor_iva`, `valor_total`, `observaciones_articulo`, `id_orden_compra`) VALUES
+(4, 'licencia', 1, 1, 1, 1, '', 12),
+(5, 'SSD', 1, 1, 1, 1, '', 12),
+(6, '12', 1, 1, 1, 1, '1', 13),
+(7, '12666', 1, 1, 1, 1, '1', 13),
+(8, 'LUPA', 1, 2000000, 10000, 200000, '', 14),
+(9, 'LUPA', 1, 2000000, 10000, 200000, '', 14),
+(10, 'LOI|', 0, 2000000, 0, 2000000, '', 15),
+(11, 'LOI|', 0, 2000000, 0, 2000000, '', 15),
+(12, '1s', 2, 2000000, 0, 2000000, '', 16),
+(13, 's1', 2, 2000000, 0, 2000000, '', 16);
 
 -- --------------------------------------------------------
 
@@ -123,20 +147,35 @@ CREATE TABLE IF NOT EXISTS `detalle_orden` (
 -- Estructura de tabla para la tabla `orden_compra`
 --
 
-CREATE TABLE IF NOT EXISTS `orden_compra` (
-`id_orden` int(11) NOT NULL,
-  `fecha_orden` date NOT NULL,
-  `forma_pago` enum('Contado','Credito','Otros') NOT NULL,
-  `tiempo_pago` varchar(50) NOT NULL,
-  `condiciones_negociacion` text NOT NULL,
-  `comentario_orden` text NOT NULL,
-  `tiempo_entrega` varchar(300) NOT NULL,
-  `id_cotizante` int(11) NOT NULL,
-  `id_gerente` int(11) NOT NULL,
-  `fecha_aprovacion` datetime NOT NULL,
-  `estado_orden` enum('Proceso','Aprobada','Denegada','') NOT NULL,
-  `descripcion_declinado` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE `orden_compra` (
+  `id_orden` int(11) NOT NULL,
+  `fecha_orden` date DEFAULT NULL,
+  `forma_pago` enum('Contado','Credito','Anticipo','Otros') DEFAULT NULL,
+  `tiempo_pago` varchar(50) DEFAULT NULL,
+  `porcentaje_anticipo` float DEFAULT NULL,
+  `condiciones_negociacion` text DEFAULT NULL,
+  `comentario_orden` text DEFAULT NULL,
+  `tiempo_entrega` varchar(300) DEFAULT NULL,
+  `total_orden` float DEFAULT NULL,
+  `analisis_cotizacion` enum('Si','No') DEFAULT NULL,
+  `estado_orden` enum('Proceso','Aprobada','Denegada','Analisis de Cotizacion') DEFAULT NULL,
+  `descripcion_declinado` text DEFAULT NULL,
+  `fecha_aprobacion` datetime DEFAULT NULL,
+  `id_cotizante` int(11) DEFAULT NULL,
+  `id_proveedor_fk` int(11) DEFAULT NULL,
+  `id_gerente` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `orden_compra`
+--
+
+INSERT INTO `orden_compra` (`id_orden`, `fecha_orden`, `forma_pago`, `tiempo_pago`, `porcentaje_anticipo`, `condiciones_negociacion`, `comentario_orden`, `tiempo_entrega`, `total_orden`, `analisis_cotizacion`, `estado_orden`, `descripcion_declinado`, `fecha_aprobacion`, `id_cotizante`, `id_proveedor_fk`, `id_gerente`) VALUES
+(12, '2023-08-30', 'Contado', '', 0, '', '<p>S</p>', '1', 2, 'No', 'Proceso', NULL, NULL, 3, 900311215, NULL),
+(13, '2023-08-30', 'Contado', '', 0, '', '<p>2</p>', '2', 2, 'No', 'Proceso', NULL, NULL, 3, 900311215, NULL),
+(14, '2023-08-30', '', '', 0, '', '<p>2</p>', '2', 400000, 'No', 'Proceso', NULL, NULL, 3, 900311215, NULL),
+(15, '2023-08-30', 'Contado', '', 0, '', '<p>1</p>', '1', 4000000, 'Si', 'Analisis de Cotizacion', NULL, NULL, 3, 900311215, NULL),
+(16, '2023-08-30', 'Contado', '', 0, '', '<p>s</p>', '3', 4000000, 'Si', 'Analisis de Cotizacion', NULL, NULL, 3, 900311215, NULL);
 
 -- --------------------------------------------------------
 
@@ -144,12 +183,12 @@ CREATE TABLE IF NOT EXISTS `orden_compra` (
 -- Estructura de tabla para la tabla `proceso`
 --
 
-CREATE TABLE IF NOT EXISTS `proceso` (
-`id_proceso` int(11) NOT NULL,
-  `siglas_proceso` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `nombre_proceso` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
-  `estado_proceso` enum('Activo','Inactivo') COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=13 ;
+CREATE TABLE `proceso` (
+  `id_proceso` int(11) NOT NULL,
+  `siglas_proceso` varchar(20) NOT NULL,
+  `nombre_proceso` varchar(30) NOT NULL,
+  `estado_proceso` enum('Activo','Inactivo') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `proceso`
@@ -175,12 +214,20 @@ INSERT INTO `proceso` (`id_proceso`, `siglas_proceso`, `nombre_proceso`, `estado
 -- Estructura de tabla para la tabla `proveedor_compras`
 --
 
-CREATE TABLE IF NOT EXISTS `proveedor_compras` (
-`id_proveedor` int(11) NOT NULL,
+CREATE TABLE `proveedor_compras` (
+  `id_proveedor` int(11) NOT NULL,
   `nombre_proveedor` varchar(200) NOT NULL,
   `contacto_proveedor` varchar(100) NOT NULL,
-  `telefono_proveedor` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `telefono_proveedor` varchar(15) NOT NULL,
+  `id_usuario_fk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `proveedor_compras`
+--
+
+INSERT INTO `proveedor_compras` (`id_proveedor`, `nombre_proveedor`, `contacto_proveedor`, `telefono_proveedor`, `id_usuario_fk`) VALUES
+(900311215, 'Zona Franca Internacional e Pereira', 'contacto@zonafrancapereira.com', '3343000', 3);
 
 -- --------------------------------------------------------
 
@@ -188,15 +235,15 @@ CREATE TABLE IF NOT EXISTS `proveedor_compras` (
 -- Estructura de tabla para la tabla `sadoc`
 --
 
-CREATE TABLE IF NOT EXISTS `sadoc` (
-`id` int(11) NOT NULL,
+CREATE TABLE `sadoc` (
+  `id` int(11) NOT NULL,
   `ruta` varchar(500) NOT NULL,
   `ruta_principal` varchar(500) NOT NULL,
-  `Fecha_Subida` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Fecha_Subida` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('activo','inactivo') NOT NULL,
   `sub_Carpeta` enum('Si','No') NOT NULL,
   `id_proceso_fk` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `sadoc`
@@ -230,19 +277,30 @@ INSERT INTO `sadoc` (`id`, `ruta`, `ruta_principal`, `Fecha_Subida`, `estado`, `
 -- Estructura de tabla para la tabla `tipo_usuario`
 --
 
-CREATE TABLE IF NOT EXISTS `tipo_usuario` (
-`id_tipo_usuario` int(11) NOT NULL,
-  `rol_usuario` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+CREATE TABLE `tipo_usuario` (
+  `id_tipo_usuario` int(11) NOT NULL,
+  `rol_usuario` varchar(100) NOT NULL,
+  `admin_acpm` enum('Si','No') NOT NULL,
+  `radicar_acpm` enum('Si','No') NOT NULL,
+  `admin_sadoc` enum('Si','No') NOT NULL,
+  `consultar_sadoc` enum('Si','No') NOT NULL,
+  `admin_compras` enum('Si','No') NOT NULL,
+  `pagar_ordenes` enum('Si','No') NOT NULL,
+  `analisis_cotizacion` enum('Si','No') NOT NULL,
+  `radicar_orden` enum('Si','No') NOT NULL,
+  `firmar_orden` enum('Si','No') NOT NULL,
+  `evaluar_proveedor` enum('Si','No') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `tipo_usuario`
 --
 
-INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`) VALUES
-(1, 'superadmin'),
-(2, 'admin'),
-(3, 'usuario');
+INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`, `admin_acpm`, `radicar_acpm`, `admin_sadoc`, `consultar_sadoc`, `admin_compras`, `pagar_ordenes`, `analisis_cotizacion`, `radicar_orden`, `firmar_orden`, `evaluar_proveedor`) VALUES
+(1, 'superadmin', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(2, 'admin_sig', 'Si', 'Si', 'Si', 'Si', 'No', 'No', 'No', 'Si', 'No', 'Si'),
+(3, 'usuario_aux', 'No', 'No', 'No', 'Si', 'No', 'No', 'No', 'No', 'No', 'No'),
+(4, 'gerencia', 'No', 'Si', 'No', 'Si', 'No', 'No', 'No', 'Si', 'Si', 'Si');
 
 -- --------------------------------------------------------
 
@@ -250,7 +308,7 @@ INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE `usuarios` (
   `Id_usuario` int(11) NOT NULL,
   `correo_usuario` varchar(100) DEFAULT NULL,
   `contrasena_usuario` varchar(10) DEFAULT NULL,
@@ -262,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `proceso_usuario_fk` int(11) NOT NULL,
   `id_cargo_fk` int(11) NOT NULL,
   `tipo_usuario_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -270,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `nombre_usuario`, `apellidos_usuario`, `salario_usuario`, `estado_usuario`, `firma_usuario`, `proceso_usuario_fk`, `id_cargo_fk`, `tipo_usuario_fk`) VALUES
 (2, 'ptecnico@zonafrancadepereira.com', '7896', 'Fabio', 'Oliveros', '', 'activo', '', 2, 1, 2),
-(3, 'ymontoya@zonafrancadepereira.com', '5689', 'Melissa', 'Montoya', '', 'activo', '', 1, 1, 1),
+(3, 'ymontoya@zonafrancadepereira.com', '5689', 'Melissa', 'Montoya', '', 'activo', '64efa30b7d965_firma.png', 2, 1, 1),
 (4, 'jcardona@zonafrancadepereira.com', '1059', 'Jorge Eliecer', 'Garcia Cardona', '', 'activo', '', 2, 1, 3),
 (5, 'pjuridico@zonafrancadepereira.com', '9876', 'Edwin David', 'Vallejo Rodriguez', '', 'activo', '', 2, 1, 3),
 (6, 'mensajeria@zonafrancadepereira.com', '1234', 'Juan Carlos', 'Arcila', '', 'activo', '', 2, 1, 3),
@@ -312,67 +370,83 @@ INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `n
 -- Indices de la tabla `acpm`
 --
 ALTER TABLE `acpm`
- ADD PRIMARY KEY (`id_consecutivo`), ADD KEY `id_usuario_fk` (`id_usuario_fk`);
+  ADD PRIMARY KEY (`id_consecutivo`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`);
 
 --
 -- Indices de la tabla `actividades_acpm`
 --
 ALTER TABLE `actividades_acpm`
- ADD PRIMARY KEY (`id_actividad`), ADD KEY `id_usuario_fk` (`id_usuario_fk`), ADD KEY `id_acpm_fk` (`id_acpm_fk`);
+  ADD PRIMARY KEY (`id_actividad`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`),
+  ADD KEY `id_acpm_fk` (`id_acpm_fk`);
 
 --
 -- Indices de la tabla `cargos`
 --
 ALTER TABLE `cargos`
- ADD PRIMARY KEY (`id_cargo`);
+  ADD PRIMARY KEY (`id_cargo`);
 
 --
 -- Indices de la tabla `detalle_actividad`
 --
 ALTER TABLE `detalle_actividad`
- ADD PRIMARY KEY (`id_detalle_acpm`), ADD KEY `id_actividad_fk` (`id_actividad_fk`), ADD KEY `id_usuario_e_fk` (`id_usuario_e_fk`);
+  ADD PRIMARY KEY (`id_detalle_acpm`),
+  ADD KEY `id_actividad_fk` (`id_actividad_fk`),
+  ADD KEY `id_usuario_e_fk` (`id_usuario_e_fk`);
 
 --
 -- Indices de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
- ADD PRIMARY KEY (`id_orden_detalle`), ADD KEY `id_orden_compra` (`id_orden_compra`);
+  ADD PRIMARY KEY (`id_orden_detalle`),
+  ADD KEY `id_orden_compra` (`id_orden_compra`);
 
 --
 -- Indices de la tabla `orden_compra`
 --
 ALTER TABLE `orden_compra`
- ADD PRIMARY KEY (`id_orden`), ADD KEY `id_cotizante` (`id_cotizante`), ADD KEY `id_gerente` (`id_gerente`);
+  ADD PRIMARY KEY (`id_orden`),
+  ADD KEY `id_cotizante` (`id_cotizante`),
+  ADD KEY `id_gerente` (`id_gerente`),
+  ADD KEY `id_proveedor_fk` (`id_proveedor_fk`);
 
 --
 -- Indices de la tabla `proceso`
 --
 ALTER TABLE `proceso`
- ADD PRIMARY KEY (`id_proceso`);
+  ADD PRIMARY KEY (`id_proceso`);
 
 --
 -- Indices de la tabla `proveedor_compras`
 --
 ALTER TABLE `proveedor_compras`
- ADD PRIMARY KEY (`id_proveedor`);
+  ADD PRIMARY KEY (`id_proveedor`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`);
 
 --
 -- Indices de la tabla `sadoc`
 --
 ALTER TABLE `sadoc`
- ADD PRIMARY KEY (`id`), ADD KEY `id_cargo_fk` (`id_proceso_fk`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_cargo_fk` (`id_proceso_fk`);
 
 --
 -- Indices de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
- ADD PRIMARY KEY (`id_tipo_usuario`);
+  ADD PRIMARY KEY (`id_tipo_usuario`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
- ADD PRIMARY KEY (`Id_usuario`), ADD KEY `cargo_fk` (`proceso_usuario_fk`), ADD KEY `cargo_fk_2` (`proceso_usuario_fk`), ADD KEY `tipo_usuario_fk` (`tipo_usuario_fk`), ADD KEY `tipo_usuario_fk_2` (`tipo_usuario_fk`), ADD KEY `id_cargo_fk` (`id_cargo_fk`);
+  ADD PRIMARY KEY (`Id_usuario`),
+  ADD KEY `cargo_fk` (`proceso_usuario_fk`),
+  ADD KEY `cargo_fk_2` (`proceso_usuario_fk`),
+  ADD KEY `tipo_usuario_fk` (`tipo_usuario_fk`),
+  ADD KEY `tipo_usuario_fk_2` (`tipo_usuario_fk`),
+  ADD KEY `id_cargo_fk` (`id_cargo_fk`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -382,52 +456,62 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `acpm`
 --
 ALTER TABLE `acpm`
-MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT de la tabla `actividades_acpm`
 --
 ALTER TABLE `actividades_acpm`
-MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
-MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `detalle_actividad`
 --
 ALTER TABLE `detalle_actividad`
-MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
-MODIFY `id_orden_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_orden_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT de la tabla `orden_compra`
 --
 ALTER TABLE `orden_compra`
-MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
 -- AUTO_INCREMENT de la tabla `proceso`
 --
 ALTER TABLE `proceso`
-MODIFY `id_proceso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id_proceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT de la tabla `proveedor_compras`
 --
 ALTER TABLE `proveedor_compras`
-MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=900311216;
+
 --
 -- AUTO_INCREMENT de la tabla `sadoc`
 --
 ALTER TABLE `sadoc`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -436,35 +520,42 @@ MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- Filtros para la tabla `acpm`
 --
 ALTER TABLE `acpm`
-ADD CONSTRAINT `acpm_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`);
+  ADD CONSTRAINT `acpm_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`);
 
 --
 -- Filtros para la tabla `actividades_acpm`
 --
 ALTER TABLE `actividades_acpm`
-ADD CONSTRAINT `actividades_acpm_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`),
-ADD CONSTRAINT `actividades_acpm_ibfk_2` FOREIGN KEY (`id_acpm_fk`) REFERENCES `acpm` (`id_consecutivo`);
+  ADD CONSTRAINT `actividades_acpm_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`),
+  ADD CONSTRAINT `actividades_acpm_ibfk_2` FOREIGN KEY (`id_acpm_fk`) REFERENCES `acpm` (`id_consecutivo`);
 
 --
 -- Filtros para la tabla `detalle_actividad`
 --
 ALTER TABLE `detalle_actividad`
-ADD CONSTRAINT `detalle_actividad_ibfk_1` FOREIGN KEY (`id_actividad_fk`) REFERENCES `actividades_acpm` (`id_actividad`),
-ADD CONSTRAINT `detalle_actividad_ibfk_2` FOREIGN KEY (`id_usuario_e_fk`) REFERENCES `usuarios` (`Id_usuario`);
+  ADD CONSTRAINT `detalle_actividad_ibfk_1` FOREIGN KEY (`id_actividad_fk`) REFERENCES `actividades_acpm` (`id_actividad`),
+  ADD CONSTRAINT `detalle_actividad_ibfk_2` FOREIGN KEY (`id_usuario_e_fk`) REFERENCES `usuarios` (`Id_usuario`);
+
+--
+-- Filtros para la tabla `proveedor_compras`
+--
+ALTER TABLE `proveedor_compras`
+  ADD CONSTRAINT `proveedor_compras_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`);
 
 --
 -- Filtros para la tabla `sadoc`
 --
 ALTER TABLE `sadoc`
-ADD CONSTRAINT `sadoc_ibfk_1` FOREIGN KEY (`id_proceso_fk`) REFERENCES `proceso` (`id_proceso`);
+  ADD CONSTRAINT `sadoc_ibfk_1` FOREIGN KEY (`id_proceso_fk`) REFERENCES `proceso` (`id_proceso`);
 
 --
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`tipo_usuario_fk`) REFERENCES `tipo_usuario` (`id_tipo_usuario`),
-ADD CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`proceso_usuario_fk`) REFERENCES `proceso` (`id_proceso`),
-ADD CONSTRAINT `usuarios_ibfk_4` FOREIGN KEY (`id_cargo_fk`) REFERENCES `cargos` (`id_cargo`);
+  ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`tipo_usuario_fk`) REFERENCES `tipo_usuario` (`id_tipo_usuario`),
+  ADD CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`proceso_usuario_fk`) REFERENCES `proceso` (`id_proceso`),
+  ADD CONSTRAINT `usuarios_ibfk_4` FOREIGN KEY (`id_cargo_fk`) REFERENCES `cargos` (`id_cargo`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
