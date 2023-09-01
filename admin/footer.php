@@ -71,6 +71,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="dist/js/document.js"></script>
 <script src="dist/js/acpm.js"></script>
+<script src="dist/js/ordenes.js"></script>
 
 <script>
   $(document).ready(function() {
@@ -87,18 +88,7 @@
   });
 </script>
 
-<script>
-  $(document).ready(function() {
-    $('#table_id').DataTable({
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-      },
-      "order": [
-        [1, "asc"]
-      ]
-    });
-  });
-</script>
+
 <script>
   /*=============================================
      Suma todos los valores de la tabla
