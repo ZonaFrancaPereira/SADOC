@@ -233,6 +233,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a data-toggle="tab" href="#proveedores" class="nav-link ">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Proveedores
+                </p>
+              </a>
+            </li>
           </ul>
         </nav>
         <footer>
@@ -654,7 +662,7 @@
                   <!-- DIV DONDE SE MUESTRAN LAS ORDENES PENDIENTES DE CADA USUARIO-->
                   <div id="pendientes" class="tab-pane ">
                     <div class="row">
-                      <div class="col-lg-12">
+                      <div class="col-lg-12 ">
                         <div class="card">
                           <div class="card-header border-0 bg-navy">
                             <h3 class="card-title">Consulta Tus Ordenes de Compra</h3>
@@ -662,7 +670,7 @@
                             </div>
                           </div>
                           <div class="card-body table-responsive p-0">
-                            <table class="display table table-striped table-valign-middle">
+                            <table class="display table table-striped table-valign-middle " width="100%">
                               <thead>
                                 <tr>
                                   <th># Orden</th>
@@ -673,9 +681,7 @@
                                   <th>Forma de Pago</th>
                                   <th>Valor</th>
                                   <th>Estado</th>
-                                  <th>Comentario</th>
                                   <th>Ver</th>
-
                                 </tr>
                               </thead>
                               <tbody>
@@ -695,9 +701,7 @@
                                   $stmt->execute();
                                   $registros = 1;
                                   if ($stmt->rowCount() > 0) {
-
                                     while ($row = $stmt->fetch()) {
-
                                       $id_orden = $row["id_orden"];
                                       $nombre_usuario = $row["nombre_usuario"];
                                       $apellidos_usuario = $row["apellidos_usuario"];
@@ -730,10 +734,7 @@
                                           echo "<td><center><span class='badge-success'>" . $estado_orden . "</span></center></td>";
                                           break;
                                       }
-                                      echo "<td>" . $row["comentario_orden"] . "</td>";
                                       echo "<td>  <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></td>";
-
-
                                       echo "</tr>";
                                       $registros++;
                                     }
@@ -748,18 +749,136 @@
                       </div>
                     </div>
                   </div>
+                  <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
+                  <div id="proveedores" class="tab-pane">
+                    <div class="row">
+                      <div class="col-lg-12 ">
+                        <div class="card">
+                          <div class="card-header border-0 bg-navy">
+                            <h3 class="card-title">Administra tus Proveedores</h3>
+                          </div>
+                          <br><br>
+                          <!-- Button trigger modal -->
 
+                          <button type="button" class="btn btn-primary col-md-6 col-lg-6" data-toggle="modal" data-target="#exampleModal">
+                            Agregar Proveedor
+                          </button><br><br>
+
+                          </section>
+                          <div class="card">
+                            <div class="card-header bg-warning">
+                              <h3 class="card-title">Consulatar Proveedor</h3>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                              <table class="display table table-striped table-valign-middle " width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Telefono</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  try {
+                                    $stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
+                                  FROM proveedor_compras p
+                                  INNER JOIN usuarios u
+                                  ON u.Id_usuario= p.id_usuario_fk');
+                                    $stmt->execute();
+                                    $registros = 1;
+                                    if ($stmt->rowCount() > 0) {
+
+                                      while ($row = $stmt->fetch()) {
+
+                                        $id_proveedor = $row["id_proveedor"];
+                                        $nombre_proveedor = $row["nombre_proveedor"];
+                                        $correo_proveedor = $row["correo_proveedor"];
+                                        $telefono_proveedor = $row["telefono_proveedor"];
+                                        echo "<tr>";
+                                        echo "<td >" . $id_proveedor . "</td>";
+                                        echo "<td >" . $nombre_proveedor . "</td>";
+                                        echo "<td>" . $correo_proveedor . "</td>";
+                                        echo "<td>" . $telefono_proveedor . "</td>";
+                                        echo "<td>  <button class='btn btn-warning'><i class='fas fa-edit'></i> </button></td>";
+                                        echo "<td>  <button class='btn btn-danger'><i class='fas fa-trash'></i> </button></td>";
+
+                                        echo "</tr>";
+                                        $registros++;
+                                      }
+                                    }
+                                  } catch (PDOException $e) {
+                                    echo "Error en el servidor";
+                                  } ?>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- /.content-wrapper -->
-          <?php require('footer.php'); ?>
-          <!-- Control Sidebar -->
-          <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-          </aside>
-          <!-- /.control-sidebar -->
+        </div>
+        <!-- /.content-wrapper -->
+        <?php require('footer.php'); ?>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+          <!-- Control sidebar content goes here -->
+        </aside>
+
+        <!-- Modal PARA AGREGAR UN NUEVO PROVEEDOR-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-navy">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="" class="formularioProveedor" method="POST">
+                  <div class="card ">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>NIT/CC </label>
+                          <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor">
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Razón Social</label>
+                          <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor">
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Correo</label>
+                          <input type="text" class="form-control input-lg" id="correo_proveedor" name="correo_proveedor" placeholder="Correo Proveedor">
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Correo</label>
+                          <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="guardarProveedor">Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- ./wrapper -->
         <script>
