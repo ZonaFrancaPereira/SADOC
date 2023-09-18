@@ -577,6 +577,7 @@
                                     <th>X</th>
                                   </tr>
                                 </thead>
+                                <tbody>
                                 <tr class="fila-fija ">
                                   <td class="col-md-2">
                                     <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
@@ -600,7 +601,7 @@
                                     <input type="button" class="btn btn-danger" value="X" />
                                   </td>
                                 </tr>
-
+                                </tbody>
                               </table>
                               <div class="row">
                                 <div class="col-md-6">

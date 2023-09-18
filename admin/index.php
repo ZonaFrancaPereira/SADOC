@@ -27,6 +27,7 @@
 </div>
 <!-- /.sidebar -->
 </aside>
+</div>
 <?php  
     //require('include/footer.php');
 
