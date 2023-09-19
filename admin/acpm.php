@@ -225,7 +225,10 @@ if ($_SESSION['ingreso']==true) {
                   </thead>
                   <tbody>
                   <?php
-                      foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'abierta'") as $row) {{?>
+                      foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'abierta'") as $row) {
+                        {
+                          $id_acpm=$row["id_consecutivo"];
+                          ?>
                       <tr style=text-align:center>
                         <td><?php echo $row["id_consecutivo"] ?></td>
                         <td><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
@@ -236,10 +239,11 @@ if ($_SESSION['ingreso']==true) {
                         <td><?php echo $row["fecha_correccion"] ?></td>
                         <td><?php echo $row["fecha_finalizacion"] ?></td>
                         <td><?php echo $row["estado_acpm"] ?></td>
-                        <td><button type="button" class="btn btn-success" id="id_actividad" name="" onclick="location.href='actividades.php'">Asignar</button></td>
-                        <td><button type="button" class="btn btn-success" id="" name="">Ver</button></td>
+                        <td><a href="actividades.php?id_acpm=<?php echo $id_acpm ; ?> "><button type="button" class="btn btn-success" id="id_actividad" name="">Asignar</button></a></td>
+                        <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo"  onclick="location.href='enviar_actividades.php'">Ver</button></td>
                       </tr>
                     <?php }} ?>
+                    
                   </tbody>
                   <tfoot>
                   <tr>
@@ -282,8 +286,6 @@ if ($_SESSION['ingreso']==true) {
                     <th>Fecha Correcion</th>
                     <th>Fecha Finalizacion</th>
                     <th>Estado</th>
-                    <th>Asignar</th>
-                    <th>Ver</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -313,8 +315,6 @@ if ($_SESSION['ingreso']==true) {
                     <th>Fecha Correcion</th>
                     <th>Fecha Finalizacion</th>
                     <th>Estado</th>
-                    <th>Asignar</th>
-                    <th>Ver</th>
                   </tr>
                   </tfoot>
                 </table>
