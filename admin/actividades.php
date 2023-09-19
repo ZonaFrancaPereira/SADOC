@@ -3,8 +3,55 @@ session_start();
 if ($_SESSION['ingreso']==true) {
  require('php/conexion.php');
  require('plantilla.php');
+ require('acpm.php');
  ?>
  
+
+ <!-- Sidebar Menu -->
+ <nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+   <li class="nav-item">
+    <a data-toggle="tab" href="#panelc" class="nav-link active">
+      <i class="nav-icon fas fa-th"></i>
+      <p>
+        Panel de Control
+      </p>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a data-toggle="tab" href="#acpm" class="nav-link ">
+      <i class="nav-icon fas fa-th"></i>
+      <p>
+        Nueva ACPM
+        <span class="right badge badge-success">Nueva</span>
+      </p>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="#" class="nav-link">
+      <i class="nav-icon fas fa-edit"></i>
+      <p>
+        Consultas
+        <i class="fas fa-angle-left right"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview">
+      <li class="nav-item">
+        <a data-toggle="tab" href="#abiertas" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Acciones Abiertas</p>
+        </a>
+      </li>
+      <li class="nav-item" name="cerradas">
+        <a data-toggle="tab" href="#cerradas" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Acciones Cerradas</p>
+        </a>
+      </li>
+
+    </ul>
+  </li>
+</ul>
 
 </nav>
 <footer >
@@ -23,120 +70,68 @@ if ($_SESSION['ingreso']==true) {
   header('location: index.php');
 }
 ?>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div id="wrapper" class="toggled">
+    <div id="page-content-wrapper">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Text Editors</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Text Editors</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <div class="tab-content card">
+          <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->   
+          <div  class="tab-pane  show active" id="panelc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Summernote
-              </h3>
+            <div class="tab-pane " id="acpm" >
+            <form  id="form_actividades" method="POST">
+              <div class="card card-navy">
+                <div class="card-header">
+                  <center>  
+                    <h4>ASIGNAR ACTIVIDADES</h4>
+                  </center>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                <label for="fecha_actividad">Fecha Actividad</label>
+                    <input type="date" name="fecha_actividad" class="form-control" id="fecha_actividad" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
+                    <label for="descripcion_actividad">Descripcion de la Actividad</label>
+                    <textarea class="form-control" id="descripcion_actividad" name="descripcion_actividad" rows="1" ></textarea>
+                  </div>
+                  <div class="col-2 col-xs-12 col-sm-12">
+                    <label for="estado_actividad">Estado de la Actividad</label>
+                    <select class="form-control" id="estado_actividad" name="estado_actividad" required>
+                      <option value="completa">Completa</option>
+                      <option value="incompleta">Incompleta</option>
+                    </select>
+                  </div>
+                  <div class="col-2 col-xs-12 col-sm-12">
+                    <label for="responsable_actividad">Responsable de la Actividad</label>
+                    <select class="form-control" id="estado_actividad" name="estado_actividad" required>
+                    <option value="completa">Completa</option>
+                      <option value="incompleta">Incompleta</option>
+                    </select>
+                  </div>
+                  </div>
+              <!-- /.card-body -->
+              <br>
+              <div class="col-md-12 col-xs-12 col-sm-12" >
+                <button type="button" class="btn btn-success btn-block " id="enviar_actividad" name="enviar_actividad">Asignar Actividad</button>
+              </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <textarea id="summernote">
-                Place <em>some</em> <u>text</u> <strong>here</strong>
-              </textarea>
-            </div>
-            <div class="card-footer">
-              Visit <a href="https://github.com/summernote/summernote/">Summernote</a> documentation for more examples and information about the plugin.
-            </div>
+          </form>
+          <!-- /.card -->
+        </div>
           </div>
         </div>
-        <!-- /.col-->
-      </div>
-      <!-- ./row -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                CodeMirror
-              </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <textarea id="codeMirrorDemo" class="p-3">
-<div class="info-box bg-gradient-info">
-  <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Bookmarks</span>
-    <span class="info-box-number">41,410</span>
-    <div class="progress">
-      <div class="progress-bar" style="width: 70%"></div>
-    </div>
-    <span class="progress-description">
-      70% Increase in 30 Days
-    </span>
-  </div>
-</div>
-              </textarea>
-            </div>
-            <div class="card-footer">
-              Visit <a href="https://codemirror.net/">CodeMirror</a> documentation for more examples and information about the plugin.
-            </div>
-          </div>
         </div>
-        <!-- /.col-->
       </div>
-      <!-- ./row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
-  <script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- Summernote -->
-<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
-<!-- CodeMirror -->
-<script src="../../plugins/codemirror/codemirror.js"></script>
-<script src="../../plugins/codemirror/mode/css/css.js"></script>
-<script src="../../plugins/codemirror/mode/xml/xml.js"></script>
-<script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Page specific script -->
-<script>
-  $(function () {
-    // Summernote
-    $('#summernote').summernote()
-
-    // CodeMirror
-    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-      mode: "htmlmixed",
-      theme: "monokai"
-    });
-  })
-</script>
+  </div>
 </body>
 </html>

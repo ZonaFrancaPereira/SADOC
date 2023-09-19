@@ -200,89 +200,135 @@ if ($_SESSION['ingreso']==true) {
           <!-- /.card -->
         </div>
         <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO--> 
-        <div id="abiertas" class="tab-pane ">
-        <div class="table-responsive">
-             <table class="table table-hover">
-                <thead>
-                  <tr style=text-align:center>
-                    <th class="col-md-1" scope="col">#</th>
-                    <th class="col-md-1" scope="col">Nombre del responsable</th>
-                    <th class="col-md-1" scope="col">Cargo</th>
-                    <th class="col-md-1" scope="col">Origen Acpm</th>
-                    <th class="col-md-1" scope="col">Fuente</th>
-                    <th class="col-md-1" scope="col">Tipo de Reporte</th>
-                    <th class="col-md-1" scope="col">Descripcion Acpm</th>
-                    <th class="col-md-1" scope="col">Fecha Correcion</th>
-                    <th class="col-md-1" scope="col">Fecha Finalizacion</th>
-                    <th class="col-md-1" scope="col">Estado</th>
-                    <th class="col-md-1" scope="col">Asignar</th>
-                    <th class="col-md-1" scope="col">Ver</th>
+        <div id="abiertas" class="tab-pane">
+        <div class="card" class="">
+              <div class="card-header">
+                <h3 class="card-title">ACPM ABIERTAS</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <th>#</th>
+                    <th>Nombre del responsable</th>
+                    <th>Origen Acpm</th>
+                    <th>Fuente</th>
+                    <th>Tipo de Reporte</th>
+                    <th>Descripcion Acpm</th>
+                    <th>Fecha Correcion</th>
+                    <th>Fecha Finalizacion</th>
+                    <th>Estado</th>
+                    <th>Asignar</th>
+                    <th>Ver</th>
                   </tr>
-                </thead>
-                      <?php
+                  </thead>
+                  <tbody>
+                  <?php
                       foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'abierta'") as $row) {{?>
-                      <tr style=text-align:center >
-                        <td class="col-md-1"><?php echo $row["id_consecutivo"] ?></td>
-                        <td class="col-md-1"><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
-                        <td class="col-md-1"><?php echo $row["id_cargo_fk"] ?></td>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["origen_acpm"] ?></p></td>
-                        <td class="col-md-1"><?php echo $row["fuente_acpm"] ?></td>
-                        <td class="col-md-1"><?php echo $row["tipo_acpm"] ?></td>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["descripcion_acpm"] ?></p></td>
-                        <td class="col-md-1"><?php echo $row["fecha_correccion"] ?></td>
-                        <td class="col-md-1"><?php echo $row["fecha_finalizacion"] ?></td>
-                        <td class="col-md-1"><?php echo $row["estado_acpm"] ?></td>
-                        <td class="col-md-1"><button type="button" class="btn btn-success" id="id_actividad" name="" style="border-radius: 1rem;width: 5rem" onclick="location.href='actividades.php'">Asignar</button></td>
-                        <td class="col-md-1"><button type="button" class="btn btn-success" id="" name="" style="border-radius: 1rem;width: 5rem">Ver</button></td>
+                      <tr style=text-align:center>
+                        <td><?php echo $row["id_consecutivo"] ?></td>
+                        <td><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
+                        <td><p class="text-break" style="width: 10rem"><?php echo $row["origen_acpm"] ?></p></td>
+                        <td><?php echo $row["fuente_acpm"] ?></td>
+                        <td><?php echo $row["tipo_acpm"] ?></td>
+                        <td><p class="text-break" style="width: 10rem"><?php echo $row["descripcion_acpm"] ?></p></td>
+                        <td><?php echo $row["fecha_correccion"] ?></td>
+                        <td><?php echo $row["fecha_finalizacion"] ?></td>
+                        <td><?php echo $row["estado_acpm"] ?></td>
+                        <td><button type="button" class="btn btn-success" id="id_actividad" name="" onclick="location.href='actividades.php'">Asignar</button></td>
+                        <td><button type="button" class="btn btn-success" id="" name="">Ver</button></td>
                       </tr>
                     <?php }} ?>
-              </table>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre del responsable</th>
+                    <th>Origen Acpm</th>
+                    <th>Fuente</th>
+                    <th>Tipo de Reporte</th>
+                    <th>Descripcion Acpm</th>
+                    <th>Fecha Correcion</th>
+                    <th>Fecha Finalizacion</th>
+                    <th>Estado</th>
+                    <th>Asignar</th>
+                    <th>Ver</th>
+                  </tr>
+                  </tfoot>
+                </table>
               </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
         </div>
         <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO--> 
         <div id="cerradas" class="tab-pane ">
-        <div class="table-responsive">
-             <table class="table table-hover">
-                <thead>
-                  <tr style=text-align:center>
-                    <th class="col-md-1" scope="col">#</th>
-                    <th class="col-md-1" scope="col">Nombre del responsable</th>
-                    <th class="col-md-1" scope="col">Cargo</th>
-                    <th class="col-md-1" scope="col">Origen Acpm</th>
-                    <th class="col-md-1" scope="col">Fuente</th>
-                    <th class="col-md-1" scope="col">Tipo de Reporte</th>
-                    <th class="col-md-1" scope="col">Descripcion Acpm</th>
-                    <th class="col-md-1" scope="col">Fecha Correcion</th>
-                    <th class="col-md-1" scope="col">Fecha Finalizacion</th>
-                    <th class="col-md-1" scope="col">Estado</th>
+        <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">DataTable with default features</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <th>#</th>
+                    <th>Nombre del responsable</th>
+                    <th>Origen Acpm</th>
+                    <th>Fuente</th>
+                    <th>Tipo de Reporte</th>
+                    <th>Descripcion Acpm</th>
+                    <th>Fecha Correcion</th>
+                    <th>Fecha Finalizacion</th>
+                    <th>Estado</th>
+                    <th>Asignar</th>
+                    <th>Ver</th>
                   </tr>
-                </thead>
-                      <?php
+                  </thead>
+                  <tbody>
+                  <?php
                       foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'cerrada'") as $row) {{?>
-                      <tr style=text-align:center >
-                        <td class="col-md-1"><?php echo $row["id_consecutivo"] ?></td>
-                        <td class="col-md-1"><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
-                        <td class="col-md-1"><?php echo $row["id_cargo_fk"] ?></td>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["origen_acpm"] ?></p></td>
-                        <td class="col-md-1"><?php echo $row["fuente_acpm"] ?></td>
-                        <td class="col-md-1"><?php echo $row["tipo_acpm"] ?></td>
-                        <td><p class="text-break" style="width: 20rem"><?php echo $row["descripcion_acpm"] ?></p></td>
-                        <td class="col-md-1"><?php echo $row["fecha_correccion"] ?></td>
-                        <td class="col-md-1"><?php echo $row["fecha_finalizacion"] ?></td>
-                        <td class="col-md-1"><?php echo $row["estado_acpm"] ?></td>
+                      <tr style=text-align:center>
+                        <td><?php echo $row["id_consecutivo"] ?></td>
+                        <td><?php echo $row["nombre_usuario"]." ".$row["apellidos_usuario"] ?></td>
+                        <td><p class="text-break" style="width: 10rem"><?php echo $row["origen_acpm"] ?></p></td>
+                        <td><?php echo $row["fuente_acpm"] ?></td>
+                        <td><?php echo $row["tipo_acpm"] ?></td>
+                        <td><p class="text-break" style="width: 10rem"><?php echo $row["descripcion_acpm"] ?></p></td>
+                        <td><?php echo $row["fecha_correccion"] ?></td>
+                        <td><?php echo $row["fecha_finalizacion"] ?></td>
+                        <td><?php echo $row["estado_acpm"] ?></td>
                       </tr>
                     <?php }} ?>
-                    
-              </table>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre del responsable</th>
+                    <th>Origen Acpm</th>
+                    <th>Fuente</th>
+                    <th>Tipo de Reporte</th>
+                    <th>Descripcion Acpm</th>
+                    <th>Fecha Correcion</th>
+                    <th>Fecha Finalizacion</th>
+                    <th>Estado</th>
+                    <th>Asignar</th>
+                    <th>Ver</th>
+                  </tr>
+                  </tfoot>
+                </table>
               </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
         </div>
-
+          </div>`
         </div>
         <!-- CIERRE DEL TAB --> 
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <!-- /.content-wrapper -->
@@ -291,10 +337,32 @@ if ($_SESSION['ingreso']==true) {
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
-  <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 </div>
+<!-- ./wrapper -->
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
 <!-- ./wrapper -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -332,6 +400,19 @@ if ($_SESSION['ingreso']==true) {
       $("#riesgos").hide();
     }
   });
+  $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
  });
 </script>
 
