@@ -3,7 +3,6 @@ $(document).ready(iniciar_acpm);
 function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$('input').on('input', function(){
-
 		$('input').each(function() {
 
 			var boton      = $( '#enviar_acpm' );
@@ -12,13 +11,11 @@ function iniciar_acpm() {
 			boton.prop('disabled', esta_vacio);        
 		});
 	});
-
 	$('button').on('click', function(){  
 		console.log('Enviado!!');
 	});
 }	
 function insertar_acpm(){
-
 	var origen_acpm = $("#origen_acpm").val();
 	var fuente_acpm = $("#fuente_acpm").val();
 	var descripcion_fuente = $("#descripcion_fuente").val();
