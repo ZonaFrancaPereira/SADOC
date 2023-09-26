@@ -1,10 +1,8 @@
         <?php
         session_start();
-
         use PHPMailer\PHPMailer\PHPMailer;
         use PHPMailer\PHPMailer\SMTP;
         use PHPMailer\PHPMailer\Exception;
-
         if ($_SESSION['ingreso'] == true) {
           require('php/conexion.php');
           require('plantilla.php');
@@ -203,8 +201,54 @@
                   window.location.href='./index.php'; </script>";
             }
           }
+          if (isset($_POST['guardarProveedor'])) {
+            $id_proveedor = $_POST['id_proveedor'];
+            $nombre_proveedor = $_POST['nombre_proveedor'];
+            $contacto_proveedor = $_POST['contacto_proveedor'];
+            $telefono_proveedor = $_POST['telefono_proveedor'];
+            $id_usuario_fk = $_SESSION['Id'];
+            try {
+              $stmt = $conn->prepare('INSERT INTO proveedor_compras(id_proveedor,nombre_proveedor,contacto_proveedor,telefono_proveedor,id_usuario_fk) VALUES(?,?,?,?,?)');
+              $stmt->bindParam(1, $id_proveedor);
+              $stmt->bindParam(2, $nombre_proveedor);
+              $stmt->bindParam(3, $contacto_proveedor);
+              $stmt->bindParam(4, $telefono_proveedor);
+              $stmt->bindParam(5, $id_usuario_fk);
+
+
+              if ($stmt->execute()) {
+                echo "1";
+              } else {
+                echo "ERROR";
+              }
+            } catch (PDOException $e) {
+              echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
+            }
+          }
+        }
+        try {
+          $stmt = $conn->prepare("SELECT 
+          SUM(CASE WHEN estado_orden = 'Proceso' THEN 1 ELSE 0 END) AS Proceso,
+          SUM(CASE WHEN estado_orden = 'Aprobada' THEN 1 ELSE 0 END) AS Aprobada,
+          SUM(CASE WHEN estado_orden = 'Denegada' THEN 1 ELSE 0 END) AS Denegada,
+          SUM(CASE WHEN estado_orden = 'Analisis de Cotizacion' THEN 1 ELSE 0 END) AS Cotizacion,
+          SUM(CASE WHEN estado_orden = 'Pendiente de Pago' THEN 1 ELSE 0 END) AS Pago,
+          SUM(CASE WHEN estado_orden = 'Ejecutada' THEN 1 ELSE 0 END) AS Ejecutada
+          FROM orden_compra WHERE id_cotizante='" . $_SESSION['Id'] . "'");
+          $stmt->execute();
+          $registros = 1;
+          if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch()) {
+              $proceso = $row['Proceso'];
+              $cotizacion = $row['Cotizacion'];
+              $pago = $row['Pago'];
+            }
+          }
+        } catch (PDOException $e) {
+          echo "Error en el servidor";
         }
         ?>
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -216,31 +260,33 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a data-toggle="tab" href="#orden" class="nav-link ">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                  Nueva Orden
-                  <span class="right badge badge-success">Nueva</span>
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a data-toggle="tab" href="#pendientes" class="nav-link ">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                  Consultar Ordenes
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a data-toggle="tab" href="#proveedores" class="nav-link ">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                  Proveedores
-                </p>
-              </a>
-            </li>
+            <?php if ($_SESSION['radicar_orden'] == "Si") { ?>
+              <li class="nav-item">
+                <a data-toggle="tab" href="#orden" class="nav-link ">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Nueva Orden
+                    <span class="right badge badge-success">Nueva</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-toggle="tab" href="#pendientes" class="nav-link ">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Consultar Ordenes
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-toggle="tab" href="#proveedores" class="nav-link ">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Proveedores
+                  </p>
+                </a>
+              </li>
+            <?php  } ?>
           </ul>
         </nav>
         <footer>
@@ -255,82 +301,85 @@
           <div id="wrapper" class="toggled">
             <div id="page-content-wrapper">
               <div class="container-fluid">
-                <div class="tab-content card">
+                <div class="tab-content ">
                   <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
                   <div class="tab-pane  show active" id="panelc">
                     <div class="row">
-                      <div class="col-lg-12">
-                        <!-- /.card -->
-                        <div class="card">
-                          <div class="card-header border-0">
-                            <h3 class="card-title">Tus Ordenes</h3>
-                          </div>
-                          <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                              <p class="text-info text-xl">
-                                <i class="fas fa-file-signature"></i>
-                              </p>
-                              <p class="d-flex flex-column text-right">
-                                <span class="text-muted"> <B>8</B></span>
-                                <span class="text-muted">Esperando Aprobación</span>
-                              </p>
+                      <?php if ($_SESSION['radicar_orden'] == "Si") { ?>
+                        <div class="col-lg-12">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header border-0">
+                              <h3 class="card-title">Tus Ordenes</h3>
                             </div>
-                            <!-- /.d-flex -->
-                            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                              <p class="text-danger text-xl">
-                                <i class="fas fa-file-pdf"></i>
-                              </p>
-                              <p class="d-flex flex-column text-right">
-                                <span class="text-muted"> <B>8</B></span>
-                                <span class="text-muted">Pendiente Analisis de Cotización</span>
-                              </p>
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                <p class="text-info text-xl">
+                                  <i class="fas fa-file-signature"></i>
+                                </p>
+                                <p class="d-flex flex-column text-right">
+                                  <span class="text-muted"> <B><?php echo $proceso; ?></B></span>
+                                  <span class="text-muted">Esperando Aprobación</span>
+                                </p>
+                              </div>
+                              <!-- /.d-flex -->
+                              <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                <p class="text-danger text-xl">
+                                  <i class="fas fa-file-pdf"></i>
+                                </p>
+                                <p class="d-flex flex-column text-right">
+                                  <span class="text-muted"> <B> <?php echo $cotizacion; ?></B></span>
+                                  <span class="text-muted">Pendiente Analisis de Cotización</span>
+                                </p>
+                              </div>
+                              <!-- /.d-flex -->
+                              <div class="d-flex justify-content-between align-items-center mb-0">
+                                <p class="text-success text-xl">
+                                  <i class="fas fa-money-check-alt"></i>
+                                </p>
+                                <p class="d-flex flex-column text-right">
+                                  <span class="text-muted"> <B><?php echo $pago; ?></B></span>
+                                  <span class="text-muted">Pendientes de pago</span>
+                                </p>
+                              </div>
+                              <!-- /.d-flex -->
                             </div>
-                            <!-- /.d-flex -->
-                            <div class="d-flex justify-content-between align-items-center mb-0">
-                              <p class="text-success text-xl">
-                                <i class="fas fa-money-check-alt"></i>
-                              </p>
-                              <p class="d-flex flex-column text-right">
-                                <span class="text-muted"> <B>8</B></span>
-                                <span class="text-muted">Pendientes de pago</span>
-                              </p>
-                            </div>
-                            <!-- /.d-flex -->
                           </div>
                         </div>
-                      </div>
+                      <?php } ?>
                       <!-- /.col-md-6 -->
-                      <div class="col-lg-12">
-                        <!-- /.card -->
-                        <div class="card">
-                          <div class="card-header border-0">
-                            <h3 class="card-title">Ordenes por Aprobar</h3>
-                            <div class="card-tools">
-                              <a href="#" class="btn btn-tool btn-sm">
-                                <i class="fas fa-download"></i>
-                              </a>
-                              <a href="#" class="btn btn-tool btn-sm">
-                                <i class="fas fa-bars"></i>
-                              </a>
+                      <?php if ($_SESSION['firmar_orden'] == "Si") { ?>
+                        <div class="col-lg-12">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header border-0">
+                              <h3 class="card-title">Ordenes por Aprobar</h3>
+                              <div class="card-tools">
+                                <a href="#" class="btn btn-tool btn-sm">
+                                  <i class="fas fa-download"></i>
+                                </a>
+                                <a href="#" class="btn btn-tool btn-sm">
+                                  <i class="fas fa-bars"></i>
+                                </a>
+                              </div>
                             </div>
-                          </div>
-                          <div class="card-body table-responsive p-0">
-                            <table class="display table table-striped table-valign-middle">
-                              <thead>
-                                <tr>
-                                  <th># Orden</th>
-                                  <th>Cotizante</th>
-                                  <th>Fecha</th>
-                                  <th>Valor</th>
-                                  <th>Ver</th>
-                                  <th>Aprobar</th>
-                                  <th>Declinar</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php
-                                try {
-                                  $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
+                            <div class="card-body table-responsive p-0">
+                              <table class="display table table-striped table-valign-middle">
+                                <thead>
+                                  <tr>
+                                    <th># Orden</th>
+                                    <th>Cotizante</th>
+                                    <th>Fecha</th>
+                                    <th>Valor</th>
+                                    <th>Ver</th>
+                                    <th>Aprobar</th>
+                                    <th>Declinar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  try {
+                                    $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                    c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                    c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
                                    u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
@@ -341,62 +390,64 @@
                                     INNER JOIN proveedor_compras p
                                     ON c.id_proveedor_fk= p.id_proveedor
                                      WHERE  c.estado_orden = "Proceso" ');
-                                  $stmt->execute();
-                                  $registros = 1;
-                                  if ($stmt->rowCount() > 0) {
+                                    $stmt->execute();
+                                    $registros = 1;
+                                    if ($stmt->rowCount() > 0) {
 
-                                    while ($row = $stmt->fetch()) {
+                                      while ($row = $stmt->fetch()) {
 
-                                      $id_orden = $row["id_orden"];
-                                      $nombre_usuario = $row["nombre_usuario"];
-                                      $apellidos_usuario = $row["apellidos_usuario"];
-                                      echo "<tr>";
-                                      echo "<td >" . $id_orden . "</td>";
-                                      echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
-                                      echo "<td>" . $row["fecha_orden"] . "</td>";
-                                      echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
-                                      echo "<td>  <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></td>";
-                                      echo "<td>  <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></td>";
-                                      echo "<td>  <button class='btn btn-danger'><i class='fas fa-thumbs-down'></i> </button></td>";
-                                      echo "</tr>";
-                                      $registros++;
+                                        $id_orden = $row["id_orden"];
+                                        $nombre_usuario = $row["nombre_usuario"];
+                                        $apellidos_usuario = $row["apellidos_usuario"];
+                                        echo "<tr>";
+                                        echo "<td >" . $id_orden . "</td>";
+                                        echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
+                                        echo "<td>" . $row["fecha_orden"] . "</td>";
+                                        echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
+                                        echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
+                                        echo "<td> <a href='ordenes/editar_estado.php?id_orden=$id_orden?estado_orden=Aprobada' > <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></a></td>";
+                                        echo "<td>  <button class='btn btn-danger'><i class='fas fa-thumbs-down'></i> </button></td>";
+                                        echo "</tr>";
+                                        $registros++;
+                                      }
                                     }
-                                  }
-                                } catch (PDOException $e) {
-                                  echo "Error en el servidor";
-                                } ?>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                        <!-- /.card -->
-                      </div>
-                      <!-- /.col-md-6 -->
-                      <div class="col-lg-12">
-                        <!-- /.card -->
-                        <div class="card">
-                          <div class="card-header border-0">
-                            <h3 class="card-title">Pendiente Analisis de Cotización</h3>
-                            <div class="card-tools">
-
+                                  } catch (PDOException $e) {
+                                    echo "Error en el servidor";
+                                  } ?>
+                                </tbody>
+                              </table>
                             </div>
                           </div>
-                          <div class="card-body table-responsive p-0">
-                            <table class="display table table-striped table-valign-middle">
-                              <thead>
-                                <tr>
-                                  <th># Orden</th>
-                                  <th>Cotizante</th>
-                                  <th>Fecha</th>
-                                  <th>Valor</th>
-                                  <th>Ver</th>
-                                  <th>Recibido</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php
-                                try {
-                                  $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
+                          <!-- /.card -->
+                        </div>
+                      <?php } ?>
+                      <!-- /.col-md-6 -->
+                      <?php if ($_SESSION['analisis_cotizacion'] == "Si") { ?>
+                        <div class="col-lg-12">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header border-0">
+                              <h3 class="card-title">Pendiente Analisis de Cotización</h3>
+                              <div class="card-tools">
+
+                              </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                              <table class="display table table-striped table-valign-middle">
+                                <thead>
+                                  <tr>
+                                    <th># Orden</th>
+                                    <th>Cotizante</th>
+                                    <th>Fecha</th>
+                                    <th>Valor</th>
+                                    <th>Ver</th>
+                                    <th>Recibido</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  try {
+                                    $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
@@ -407,61 +458,60 @@
                                   INNER JOIN proveedor_compras p
                                   ON c.id_proveedor_fk= p.id_proveedor
                                   WHERE  c.estado_orden = "Analisis de Cotizacion" ');
-                                  $stmt->execute();
-                                  $registros = 1;
-                                  if ($stmt->rowCount() > 0) {
-
-                                    while ($row = $stmt->fetch()) {
-
-                                      $id_orden = $row["id_orden"];
-                                      $nombre_usuario = $row["nombre_usuario"];
-                                      $apellidos_usuario = $row["apellidos_usuario"];
-                                      echo "<tr>";
-                                      echo "<td >" . $id_orden . "</td>";
-                                      echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
-                                      echo "<td>" . $row["fecha_orden"] . "</td>";
-                                      echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
-                                      echo "<td>  <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></td>";
-                                      echo "<td>  <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></td>";
-
-                                      echo "</tr>";
-                                      $registros++;
+                                    $stmt->execute();
+                                    $registros = 1;
+                                    if ($stmt->rowCount() > 0) {
+                                      while ($row = $stmt->fetch()) {
+                                        $id_orden = $row["id_orden"];
+                                        $nombre_usuario = $row["nombre_usuario"];
+                                        $apellidos_usuario = $row["apellidos_usuario"];
+                                        echo "<tr>";
+                                        echo "<td >" . $id_orden . "</td>";
+                                        echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
+                                        echo "<td>" . $row["fecha_orden"] . "</td>";
+                                        echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
+                                        echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></a></td>";
+                                        echo "<td>  <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></td>";
+                                        echo "</tr>";
+                                        $registros++;
+                                      }
                                     }
-                                  }
-                                } catch (PDOException $e) {
-                                  echo "Error en el servidor";
-                                } ?>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                        <!-- /.card -->
-                      </div>
-                      <div class="col-lg-12">
-                        <!-- /.card -->
-                        <div class="card">
-                          <div class="card-header border-0">
-                            <h3 class="card-title">Pendiente Analisis de Cotización</h3>
-                            <div class="card-tools">
-
+                                  } catch (PDOException $e) {
+                                    echo "Error en el servidor";
+                                  } ?>
+                                </tbody>
+                              </table>
                             </div>
                           </div>
-                          <div class="card-body table-responsive p-0">
-                            <table class="display table table-striped table-valign-middle">
-                              <thead>
-                                <tr>
-                                  <th># Orden</th>
-                                  <th>Cotizante</th>
-                                  <th>Fecha</th>
-                                  <th>Valor</th>
-                                  <th>Ver</th>
-                                  <th>Recibido</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php
-                                try {
-                                  $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
+                          <!-- /.card -->
+                        </div>
+                      <?php } ?>
+                      <?php if ($_SESSION['pagar_ordenes'] == "Si") { ?>
+                        <div class="col-lg-12">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header border-0">
+                              <h3 class="card-title">Por Pagar</h3>
+                              <div class="card-tools">
+
+                              </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                              <table class="display table table-striped table-valign-middle">
+                                <thead>
+                                  <tr>
+                                    <th># Orden</th>
+                                    <th>Cotizante</th>
+                                    <th>Fecha</th>
+                                    <th>Valor</th>
+                                    <th>Ver</th>
+                                    <th>Recibido</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  try {
+                                    $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
@@ -471,37 +521,38 @@
                                   ON c.id_cotizante=u.Id_usuario
                                   INNER JOIN proveedor_compras p
                                   ON c.id_proveedor_fk= p.id_proveedor
-                                  WHERE  c.estado_orden = "Proceso" ');
-                                  $stmt->execute();
-                                  $registros = 1;
-                                  if ($stmt->rowCount() > 0) {
+                                  WHERE  c.estado_orden = "Aprobada" ');
+                                    $stmt->execute();
+                                    $registros = 1;
+                                    if ($stmt->rowCount() > 0) {
 
-                                    while ($row = $stmt->fetch()) {
+                                      while ($row = $stmt->fetch()) {
 
-                                      $id_orden = $row["id_orden"];
-                                      $nombre_usuario = $row["nombre_usuario"];
-                                      $apellidos_usuario = $row["apellidos_usuario"];
-                                      echo "<tr>";
-                                      echo "<td >" . $id_orden . "</td>";
-                                      echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
-                                      echo "<td>" . $row["fecha_orden"] . "</td>";
-                                      echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
-                                      echo "<td>  <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></td>";
-                                      echo "<td>  <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></td>";
+                                        $id_orden = $row["id_orden"];
+                                        $nombre_usuario = $row["nombre_usuario"];
+                                        $apellidos_usuario = $row["apellidos_usuario"];
+                                        echo "<tr>";
+                                        echo "<td >" . $id_orden . "</td>";
+                                        echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
+                                        echo "<td>" . $row["fecha_orden"] . "</td>";
+                                        echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
+                                        echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
+                                        echo "<td> <a href='ordenes/editar_estado.php?id_orden=$id_orden?estado_orden=Ejecutada' > <button class='btn btn-success'><i class='fas fa-thumbs-up'></i> </button></a></td>";
 
-                                      echo "</tr>";
-                                      $registros++;
+                                        echo "</tr>";
+                                        $registros++;
+                                      }
                                     }
-                                  }
-                                } catch (PDOException $e) {
-                                  echo "Error en el servidor";
-                                } ?>
-                              </tbody>
-                            </table>
+                                  } catch (PDOException $e) {
+                                    echo "Error en el servidor";
+                                  } ?>
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
+                          <!-- /.card -->
                         </div>
-                        <!-- /.card -->
-                      </div>
+                      <?php } ?>
                     </div>
                   </div>
                   <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ORDEN DE COMPRA-->
@@ -578,29 +629,29 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="fila-fija ">
-                                  <td class="col-md-2">
-                                    <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
-                                  </td>
-                                  <td class=" col-md-2">
-                                    <input type="number" name="cantidad_orden[]" class="cantidad_orden form-control" placeholder="Unidades" step="any">
-                                  </td>
-                                  <td class=" col-md-2">
-                                    <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" onkeyup="myFunction()">
-                                  </td>
-                                  <td class=" col-md-2">
-                                    <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]">
-                                  </td>
-                                  <td class=" col-md-2">
-                                    <input type="number" class="valor_total form-control" placeholder="Toltal" value="" name="valor_total[]" step="any">
-                                  </td>
-                                  <td class="col-md-2">
-                                    <textarea name="observaciones_articulo[]" id="observaciones_articulo" class=" form-control" cols="10" rows="5"></textarea>
-                                  </td>
-                                  <td class="eliminar col-md-1">
-                                    <input type="button" class="btn btn-danger" value="X" />
-                                  </td>
-                                </tr>
+                                  <tr class="fila-fija ">
+                                    <td class="col-md-2">
+                                      <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
+                                    </td>
+                                    <td class=" col-md-2">
+                                      <input type="number" name="cantidad_orden[]" class="cantidad_orden form-control" placeholder="Unidades" step="any">
+                                    </td>
+                                    <td class=" col-md-2">
+                                      <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" onkeyup="myFunction()">
+                                    </td>
+                                    <td class=" col-md-2">
+                                      <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]">
+                                    </td>
+                                    <td class=" col-md-2">
+                                      <input type="number" class="valor_total form-control" placeholder="Toltal" value="" name="valor_total[]" step="any">
+                                    </td>
+                                    <td class="col-md-2">
+                                      <textarea name="observaciones_articulo[]" id="observaciones_articulo" class=" form-control" cols="10" rows="5"></textarea>
+                                    </td>
+                                    <td class="eliminar col-md-1">
+                                      <input type="button" class="btn btn-danger" value="X" />
+                                    </td>
+                                  </tr>
                                 </tbody>
                               </table>
                               <div class="row">
@@ -735,7 +786,7 @@
                                           echo "<td><center><span class='badge-success'>" . $estado_orden . "</span></center></td>";
                                           break;
                                       }
-                                      echo "<td>  <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></td>";
+                                      echo "<td><a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></a></td>";
                                       echo "</tr>";
                                       $registros++;
                                     }
@@ -758,19 +809,23 @@
                           <div class="card-header border-0 bg-navy">
                             <h3 class="card-title">Administra tus Proveedores</h3>
                           </div>
-                          <br><br>
                           <!-- Button trigger modal -->
-
-                          <button type="button" class="btn btn-primary col-md-6 col-lg-6" data-toggle="modal" data-target="#exampleModal">
-                            Agregar Proveedor
-                          </button><br><br>
-
-                          </section>
                           <div class="card">
-                            <div class="card-header bg-warning">
-                              <h3 class="card-title">Consulatar Proveedor</h3>
+                            <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                <button type="button" class="btn btn-primary col-md-12 btn-block" data-toggle="modal" data-target="#exampleModal">
+                                  Agregar Proveedor
+                                </button>
+                              </h5>
                             </div>
-                            <div class="card-body table-responsive p-0">
+                          </div>
+                          <div class="card">
+                            <div class="card-header bg-teal">
+                              <i class="fas fa-list-alt"></i>
+                              Lista Actual de Proveedores
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
                               <table class="display table table-striped table-valign-middle " width="100%">
                                 <thead>
                                   <tr>
@@ -794,19 +849,17 @@
                                     $stmt->execute();
                                     $registros = 1;
                                     if ($stmt->rowCount() > 0) {
-
                                       while ($row = $stmt->fetch()) {
-
                                         $id_proveedor = $row["id_proveedor"];
                                         $nombre_proveedor = $row["nombre_proveedor"];
-                                        $correo_proveedor = $row["correo_proveedor"];
+                                        $correo_proveedor = $row["contacto_proveedor"];
                                         $telefono_proveedor = $row["telefono_proveedor"];
                                         echo "<tr>";
                                         echo "<td >" . $id_proveedor . "</td>";
                                         echo "<td >" . $nombre_proveedor . "</td>";
                                         echo "<td>" . $correo_proveedor . "</td>";
                                         echo "<td>" . $telefono_proveedor . "</td>";
-                                        echo "<td>  <button class='btn btn-warning'><i class='fas fa-edit'></i> </button></td>";
+                                        echo '<td> 	<a class="btn btn-warning" href="#editProveedorModal" data-toggle="modal"  data-id_proveedor="' . $id_proveedor . '"  data-nombre_proveedor="' . $nombre_proveedor . '"  data-correo_proveedor="' . $correo_proveedor . '"  data-telefono_proveedor="' . $telefono_proveedor . '"><i class="fas fa-edit"></i> </a></td>';
                                         echo "<td>  <button class='btn btn-danger'><i class='fas fa-trash'></i> </button></td>";
 
                                         echo "</tr>";
@@ -819,6 +872,7 @@
                                 </tbody>
                               </table>
                             </div>
+                            <!-- /.card-body -->
                           </div>
                         </div>
                       </div>
@@ -835,6 +889,51 @@
         <aside class="control-sidebar control-sidebar-dark">
           <!-- Control sidebar content goes here -->
         </aside>
+        <!-- EDITAR PROVEEDOR -->
+        <div class="modal fade" id="editProveedorModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Editar Datos Proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="" class="formularioProveedor" method="POST">
+                  <div class="card ">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>NIT/CC </label>
+                          <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required readonly>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Razón Social</label>
+                          <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Correo</label>
+                          <input type="text" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                          <label>Correo</label>
+                          <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="edititemform" class="btn btn-success" name="btnedit">Editar</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Modal PARA AGREGAR UN NUEVO PROVEEDOR-->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -853,30 +952,29 @@
                       <div class="row">
                         <div class="col-md-12 col-xs-12 col-sm-12">
                           <label>NIT/CC </label>
-                          <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor">
+                          <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12">
                           <label>Razón Social</label>
-                          <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor">
+                          <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12">
                           <label>Correo</label>
-                          <input type="text" class="form-control input-lg" id="correo_proveedor" name="correo_proveedor" placeholder="Correo Proveedor">
+                          <input type="email" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12">
                           <label>Correo</label>
-                          <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor">
+                          <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
                         </div>
                       </div>
                     </div>
 
                   </div>
-
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarProveedor" name="guardarProveedor">Guardar Cambios</button>
+                  </div>
                 </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" id="guardarProveedor">Guardar Cambios</button>
               </div>
             </div>
           </div>
@@ -916,8 +1014,22 @@
 
             });
           })
+          $('#editProveedorModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id_proveedor = button.data('id_proveedor'); // Extract info from data-* attributes
+            var nombre_proveedor = button.data('nombre_proveedor');
+            var correo_proveedor = button.data('correo_proveedor');
+            var telefono_proveedor = button.data('telefono_proveedor');
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            modal.find('.modal-body #id_proveedor').val(id_proveedor);
+            modal.find('.modal-body #nombre_proveedor').val(nombre_proveedor);
+            modal.find('.modal-body #correo_proveedor').val(correo_proveedor);
+            modal.find('.modal-body #telefono_proveedor').val(telefono_proveedor);
+
+          });
         </script>
 
         </body>
 
-        </html> 
+        </html>

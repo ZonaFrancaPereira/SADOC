@@ -4,9 +4,8 @@
  <head>
    <meta charset="UTF-8">
    <title>SADOC Gestor</title>
-   <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
-   <meta name="viewport" content="width=device-width" />
-   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0," name="viewport" >
+ 
    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon" />
    <!-- Google Font: Source Sans Pro -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -58,13 +57,16 @@
          <li class="nav-item d-none d-sm-inline-block">
            <a href="sadoc.php" class="nav-link" target="_blank">SADOC</a>
          </li>
+         <?php if($_SESSION['radicar_acpm']=="Si"){ ?>
          <li class="nav-item d-none d-sm-inline-block">
            <a href="acpm.php" class="nav-link">ACPM</a>
          </li>
+         <?php } ?>
+         <?php if($_SESSION['ordenes']=="Si"){ ?>
          <li class="nav-item d-none d-sm-inline-block">
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
-
+         <?php } ?>
        </ul>
 
        <!-- Right navbar links -->
@@ -82,11 +84,13 @@
           <i class="fas fa-folder-open"></i> SADOC
             <span class="float-right text-muted text-sm">Ir</span>
           </a>
+          <?php if($_SESSION['ordenes']=="Si"){ ?>
           <div class="dropdown-divider"></div>
           <a href="ordenes.php" class="dropdown-item">
           <i class="fas fa-money-check-alt"></i> Ordenes de Compra
             <span class="float-right text-muted text-sm">Ir</span>
           </a>
+          <?php } ?>
           <div class="dropdown-divider"></div>
           <a href="acpm.php" class="dropdown-item">
           <i class="fas fa-tasks"></i> ACPM
