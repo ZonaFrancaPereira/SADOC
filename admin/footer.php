@@ -70,6 +70,8 @@
 <script src="dist/js/document.js"></script>
 <script src="dist/js/acpm.js"></script>
 <script src="dist/js/ordenes.js"></script>
+<script src="dist/js/actividades.js"></script>
+<script src="dist/js/evidencia_actividades.js"></script>
 
 <script>
   $(document).ready(function() {

@@ -3,6 +3,7 @@ $(document).ready(iniciar_acpm);
 function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$('input').on('input', function(){
+		
 		$('input').each(function() {
 
 			var boton      = $( '#enviar_acpm' );
@@ -106,7 +107,7 @@ function insertar_acpm(){
 		})
 
 	}
-	
-	
+
+
 
 }

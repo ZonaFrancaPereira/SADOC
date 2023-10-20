@@ -239,8 +239,8 @@ if ($_SESSION['ingreso']==true) {
                         <td><?php echo $row["fecha_correccion"] ?></td>
                         <td><?php echo $row["fecha_finalizacion"] ?></td>
                         <td><?php echo $row["estado_acpm"] ?></td>
-                        <td><a href="actividades.php?id_acpm=<?php echo $id_acpm ; ?> "><button type="button" class="btn btn-success" id="id_actividad" name="">Asignar</button></a></td>
-                        <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo"  onclick="location.href='enviar_actividades.php'">Ver</button></td>
+                        <td><a href="actividades.php?id_acpm=<?php echo $id_acpm ; ?>"><button type="button" class="btn btn-success" id="id_actividad" name="">Asignar</button></a></td>
+                        <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo"  onclick="location.href='enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>'">Ver</button></td>
                       </tr>
                     <?php }} ?>
                     

@@ -1,12 +1,12 @@
-$(document).ready(iniciar_actividad);
+$(document).ready(enviar_evidencia);
 
-function iniciar_actividad() {
-	$("#enviar_actividad").on("click", insertar_actividad);
+function enviar_evidencia() {
+	$("#subir_evidencia").on("click", insertar_evidencia_actividad);
 	$('input').on('input', function () {
 
 		$('input').each(function () {
 
-			var boton = $('#enviar_actividad');
+			var boton = $('#subir_evidencia');
 			var esta_vacio = $(this).prop('value') === '';
 
 			boton.prop('disabled', esta_vacio);
@@ -18,14 +18,15 @@ function iniciar_actividad() {
 		console.log('Enviado!!');
 	});
 }
-function insertar_actividad() {
-	var fecha_actividad = $("#fecha_actividad").val();
-	var descripcion_actividad = $("#descripcion_actividad").val();
-	var estado_actividad = $("#estado_actividad").val();
-	var id_usuario = $("#id_usuario_fk").val();
-	var id_acpm = $("#id_acpm_fk").val();
-	//alert(fecha_actividad+descripcion_actividad+estado_actividad+id_usuario_fk+id_acpm_fk);
-	if (descripcion_actividad == "" || id_usuario == "") {
+function insertar_evidencia_actividad() {
+	var fecha_evidencia = $("#fecha_evidencia").val();
+	var evidencia = $("#evidencia").val();
+	var recursos = $("#recursos").val();
+	var id_actividad_fk = $("#id_actividad").val();
+	var id_usuario_e_fk= $("#id_usuario_e_fk").val();
+        
+	//alert(fecha_evidencia+evidencia+recursos+id_actividad_fk+id_usuario_e_fk);
+	if (fecha_evidencia == "" || recursos == "") {
 		Swal.fire(
 			'Atención',
 			'Debes diligenciar todos los campos para poder continuar',
@@ -41,7 +42,7 @@ function insertar_actividad() {
 		})
 
 		swalWithBootstrapButtons.fire({
-			title: '¿Estas segur@ que quieres Asignar esta ACTIVIDAD?',
+			title: '¿Estas segur@ que quieres Subir esta Evidencia?',
 			text: "Recuerda que una vez enviada quedara a disposicion de SIG para desmontarla",
 			icon: 'warning',
 			showCancelButton: true,
@@ -51,28 +52,28 @@ function insertar_actividad() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				var json = {
-					'fecha_actividad': fecha_actividad,
-					'descripcion_actividad': descripcion_actividad,
-					'estado_actividad': estado_actividad,
-					'id_usuario_fk': id_usuario,
-					'id_acpm_fk': id_acpm
+					'fecha_evidencia': fecha_evidencia,
+					'evidencia': evidencia,
+					'recursos': recursos,
+					'id_actividad_fk': id_actividad_fk,
+					'id_usuario_e_fk': id_usuario_e_fk
 				}
 				$.ajax({
 					type: "POST",
 					data: json,
-					url: 'php/insertar_actividad.php',
-					success: function (resultacpm) {
-						if (resultacpm == "1") {
+					url: 'php/insertar_evidencia_actividad.php',
+					success: function (resultaactividad) {
+						if (resultaactividad == "1") {
 							Swal.fire(
 								'Buen Trabajo',
-								'Se registro la ACPM con exito',
+								'Se Subio la Evidencia con exito',
 								'success'
 							)
-							$("#actividades").load(location.href + " #actividades");
+							$("#evidencia_actividad").load(location.href + " #evidencia_actividad");
 						} else {
 							Swal.fire(
 								'Ups',
-								'No se registro la ACTIVIDAD',
+								'No se Subio la evidencia Correctamente',
 								'error'
 							)
 						}

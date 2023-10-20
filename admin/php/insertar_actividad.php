@@ -4,8 +4,8 @@ include_once("conexion.php");
 $fecha_actividad=$_POST["fecha_actividad"];
 $descripcion_actividad=$_POST["descripcion_actividad"];
 $estado_actividad=$_POST["estado_actividad"];
-$id_usuario=$_POST["id_usuario"];
-$id_acpm=$_POST["id_acpm"];
+$id_usuario=$_POST["id_usuario_fk"];
+$id_acpm=$_POST["id_acpm_fk"];
 
 try {
 	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad, descripcion_actividad, estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?)');
