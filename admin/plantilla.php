@@ -57,16 +57,15 @@
          <li class="nav-item d-none d-sm-inline-block">
            <a href="sadoc.php" class="nav-link" target="_blank">SADOC</a>
          </li>
-         <?php if($_SESSION['radicar_acpm']=="Si"){ ?>
+         
          <li class="nav-item d-none d-sm-inline-block">
            <a href="acpm.php" class="nav-link">ACPM</a>
          </li>
-         <?php } ?>
-         <?php if($_SESSION['ordenes']=="Si"){ ?>
+        
          <li class="nav-item d-none d-sm-inline-block">
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
-         <?php } ?>
+         
        </ul>
 
        <!-- Right navbar links -->
