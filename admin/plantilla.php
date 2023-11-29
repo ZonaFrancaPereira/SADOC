@@ -67,6 +67,9 @@
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
          <?php } ?>
+         <li class="nav-item d-none d-sm-inline-block">
+           <a href="activos.php" class="nav-link">Activos Fijos</a>
+         </li>
        </ul>
 
        <!-- Right navbar links -->

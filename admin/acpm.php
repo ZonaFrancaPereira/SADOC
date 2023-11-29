@@ -78,12 +78,7 @@ if ($_SESSION['ingreso']==true) {
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->   
           <div  class="tab-pane  show active" id="panelc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            AQUI VAMOS A PONER CONSULTAS DE ALERTAS, ACPM Y ACTIVIDADES PROXIMAS A VENCER.
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM --> 
           <div class="tab-pane " id="acpm" >
