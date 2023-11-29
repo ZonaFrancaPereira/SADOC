@@ -76,6 +76,11 @@ if ($_SESSION['ingreso'] == true) {
     <div id="page-content-wrapper">
       <div class="container-fluid">
         <div class="tab-content card">
+<<<<<<< HEAD
+          <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->   
+          <div  class="tab-pane  show active" id="panelc">
+            AQUI VAMOS A PONER CONSULTAS DE ALERTAS, ACPM Y ACTIVIDADES PROXIMAS A VENCER.
+=======
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -84,6 +89,7 @@ if ($_SESSION['ingreso'] == true) {
             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+>>>>>>> ac309e13226183c471eb3e0cfafccedc01376900
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">

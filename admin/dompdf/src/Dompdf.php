@@ -464,7 +464,7 @@ class Dompdf
         // http://hsivonen.iki.fi/doctype/
         // https://developer.mozilla.org/en/mozilla's_quirks_mode
         $quirksmode = false;
-
+        
         if ($this->options->isHtml5ParserEnabled() && class_exists("HTML5_Tokenizer")) {
             $tokenizer = new HTML5_Tokenizer($str);
             $tokenizer->parse();
@@ -607,7 +607,7 @@ class Dompdf
                             if (!$accept) {
                                 //found at least one mediatype, but none of the accepted ones
                                 //Skip this css file.
-                                continue;
+                                continue 2;
                             }
                         }
 
@@ -628,7 +628,7 @@ class Dompdf
                         ($media = $tag->getAttribute("media")) &&
                         !in_array($media, $acceptedmedia)
                     ) {
-                        continue;
+                        continue 2;
                     }
 
                     $css = "";

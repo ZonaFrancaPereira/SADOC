@@ -6,7 +6,7 @@ $contrasena= $_POST['pass'];
 
 try {
 
-   $sql =$conn->prepare('SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario, u.proceso_usuario_fk, u.tipo_usuario_fk,p.id_proceso, p.siglas_proceso, p.nombre_proceso, p.estado_proceso, t.id_tipo_usuario, t.rol_usuario,t.admin_acpm, t.radicar_acpm, t.admin_sadoc, t.consultar_sadoc,t.ordenes, t.admin_compras, t.pagar_ordenes, t.analisis_cotizacion, t.radicar_orden, t.firmar_orden, t.evaluar_proveedor, c.id_cargo,c.nombre_cargo FROM usuarios u
+   $sql =$conn->prepare('SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario, u.proceso_usuario_fk, u.tipo_usuario_fk,p.id_proceso, p.siglas_proceso, p.nombre_proceso, p.estado_proceso, t.id_tipo_usuario, t.rol_usuario,t.admin_acpm, t.radicar_acpm, t.admin_sadoc, t.consultar_sadoc,t.ordenes, t.admin_compras, t.pagar_ordenes, t.analisis_cotizacion, t.radicar_orden, t.firmar_orden, t.evaluar_proveedor,t.admin_activos,t.consultar_activos, t.ingresar_activos, t.editar_activos, c.id_cargo,c.nombre_cargo FROM usuarios u
     INNER JOIN proceso p
     ON u.proceso_usuario_fk = p.id_proceso
     INNER JOIN tipo_usuario t 
@@ -29,6 +29,7 @@ try {
       $_SESSION['nombre_usuario']= $fila['nombre_usuario'];
       $_SESSION['apellidos_usuario']= $fila['apellidos_usuario'];
       $_SESSION['proceso_fk']= $fila['siglas_proceso'];
+      $_SESSION['siglas_usuario']= $fila['siglas_usuario'];
       $_SESSION['nombre_cargo']= $fila['nombre_cargo'];
       $_SESSION['rol_usuario']= $fila['rol_usuario'];
       $_SESSION['admin_acpm']= $fila['admin_acpm'];
@@ -42,7 +43,10 @@ try {
       $_SESSION['radicar_orden']= $fila['radicar_orden'];
       $_SESSION['firmar_orden']= $fila['firmar_orden'];
       $_SESSION['evaluar_proveedor']= $fila['evaluar_proveedor'];
-     
+      $_SESSION['admin_activos']= $fila['admin_activos'];
+      $_SESSION['consultar_activos']= $fila['consultar_activos'];
+      $_SESSION['ingresar_activos']= $fila['ingresar_activos'];
+      $_SESSION['editar_activos']= $fila['editar_activos'];
       $cargo = $fila['siglas_proceso'];
   }
 
