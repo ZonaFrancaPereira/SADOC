@@ -4,6 +4,7 @@ if ($_SESSION['ingreso'] == true) {
   require('php/conexion.php');
   require('plantilla.php');
   $id_acpm = $_GET['id_acpm'];
+  $descripcion = $_GET['descripcion'];
 ?>
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
@@ -31,31 +32,41 @@ if ($_SESSION['ingreso'] == true) {
           <div class="tab-pane  show active" id="panelc">
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
+                <div class="btn btn-secondary">
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label for="">ID ACPM: <?php echo $id_acpm ?> </label>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label for="">DESCRIPCION ACPM: <?php echo $descripcion ?> </label>
+                  </div>
+                </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Id actividad</th>
-                        <th>Id acpm</th>
                         <th>descripcion de la actividad</th>
                         <th>nombre del responsable</th>
                         <th>fecha de la actividad</th>
                         <th>estado actividad</th>
                         <th>Subir evidencia</th>
+                        <th>Visualizar Evidencias</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { { ?>
+                      foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
+                      ?>
                           <tr style=text-align:center>
                             <td><?php echo $row["id_actividad"] ?></td>
-                            <td><?php echo $row["id_acpm_fk"] ?></td>
                             <td><?php echo $row["descripcion_actividad"] ?></td>
                             <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                             <td><?php echo $row["fecha_actividad"] ?></td>
                             <td><?php echo $row["estado_actividad"] ?></td>
                             <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>">Subir Evidencia</button></td>
+                            <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>">Visualizar Evidencias</button></td>
                           </tr>
                       <?php }
                       } ?>
@@ -63,12 +74,12 @@ if ($_SESSION['ingreso'] == true) {
                     <tfoot>
                       <tr>
                         <th>Id actividad</th>
-                        <th>Id acpm</th>
                         <th>descripcion de la actividad</th>
                         <th>nombre del responsable</th>
                         <th>fecha de la activida</th>
                         <th>estado actividad</th>
                         <th>subir evidencia</th>
+                        <th>Visualizar Evidencias</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -78,7 +89,7 @@ if ($_SESSION['ingreso'] == true) {
               <!-- /.card -->
             </div>
           </div>
-          <!-- Main content -->
+          <!-- MODAL PARA SUBIR EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-success">
               <div class="modal-dialog">
@@ -125,7 +136,7 @@ if ($_SESSION['ingreso'] == true) {
                               <input type="text" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">Asignar Actividad</button>
+                              <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
                             </div>
                           </div>
                           <!-- /.modal-content -->
@@ -139,6 +150,24 @@ if ($_SESSION['ingreso'] == true) {
               </div>
               <!-- /.modal -->
           </section>
+          <!-- /.CIERRE DE MODAL -->
+          <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
+          <section class="content">
+            <div class="modal fade" id="modal-evidencia">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="btn btn-success btn-block">
+                  <h4 class="modal-title">VISUALIZAR EVIDENCIA</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div id="div_detalle">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- /.CIERRE DE MODAL -->
         </div>
       </div>
     </div>
@@ -199,6 +228,24 @@ if ($_SESSION['ingreso'] == true) {
     modal.find('.modal-body #id_actividad').val(id_actividad);
 
 
+  });
+
+  $('#modal-evidencia').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id_actividad = button.data('id_actividad'); // Extract info from data-* attributes
+    var modal = $(this);
+    var json = {
+      'id_actividad': id_actividad
+
+    }
+    $.ajax({
+      type: "POST",
+      data: json,
+      url: 'php/consultar_detallea.php',
+      success: function(data) {
+        modal.find('.modal-body #div_detalle').html(data);
+      }
+    });
   });
 </script>
 

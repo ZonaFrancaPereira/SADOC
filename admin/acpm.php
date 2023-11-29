@@ -205,6 +205,7 @@ if ($_SESSION['ingreso'] == true) {
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
+
                   <thead>
                     <tr>
                       <th>#</th>
@@ -224,6 +225,7 @@ if ($_SESSION['ingreso'] == true) {
                     <?php
                     foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'abierta'") as $row) { {
                         $id_acpm = $row["id_consecutivo"];
+                        $descripcion = $row["descripcion_acpm"];
                     ?>
                         <tr style=text-align:center>
                           <td><?php echo $row["id_consecutivo"] ?></td>
@@ -240,7 +242,7 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["fecha_finalizacion"] ?></td>
                           <td><?php echo $row["estado_acpm"] ?></td>
                           <td><button type="button" class="btn btn-success" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>">Asignar</button></a></td>
-                          <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo" data-toggle="tab"onclick="location.href='enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>'" class="nav-link active">Ver</button></td></a>
+                          <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo" data-toggle="tab"onclick="location.href='enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>'" class="nav-link active">Ver</button></td></a>
                         </tr>
                     <?php }
                     } ?>
@@ -275,9 +277,6 @@ if ($_SESSION['ingreso'] == true) {
                     <h4 class="modal-title ">ASIGNAR ACTIVIDAD</h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST">
-                      <div class="card card-navy">
-                        <div class="card-body">
                           <div class="row">
                             <form id="form_actividades" method="POST">
                               <div class="card">
@@ -319,7 +318,7 @@ if ($_SESSION['ingreso'] == true) {
                                         ?>
                                       </datalist>
                                     </div>
-                                    <div class="col-2 col-xs-12 col-sm-12">
+                                    <div class="col-2 col-xs-12 col-sm-12" hidden>
                                       <label for="id_acpm">ID acpm</label>
                                       <input type="number" class="form-control" value="<?php echo $id_acpm; ?>" name="id_acpm" id="id_acpm_fk" >
                                     </div>
@@ -334,11 +333,9 @@ if ($_SESSION['ingreso'] == true) {
                             <!-- /.modal-content -->
                             <!-- /.card-body -->
                           </div>
-                        </div>
-                    </form>
                   </div>
-                </div>
                 <!-- /.modal-dialog -->
+              </div>
               </div>
               <!-- /.modal -->
           </section>
