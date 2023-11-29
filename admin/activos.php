@@ -113,9 +113,6 @@ if ($_SESSION['ingreso'] == true) {
                                 </div>
                               
                               </li>
-                              
-                    
-                  
                         <?php
                         try {
                           $stmt = $conn->prepare('SELECT * FROM activos WHERE id_usuario_fk="'.$_SESSION['Id'].'"');
