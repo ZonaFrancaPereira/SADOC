@@ -1,4 +1,7 @@
- <!DOCTYPE html>
+<?php 
+include "sumatorias.php";
+?>
+<!DOCTYPE html>
  <html lang="en">
 
  <head>
@@ -41,11 +44,12 @@
 
  </head>
 
- <body class="hold-transition sidebar-mini layout-fixed">
+ <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
 
    <div class="wrapper">
      <!-- Navbar PARA CERRAR SESION Y AÑADIR OPCIONES DENTRO DEL SISTEMA -->
-     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+     <nav class="main-header navbar navbar-expand navbar-dark">
        <!-- Left navbar links -->
        <ul class="navbar-nav">
          <li class="nav-item">

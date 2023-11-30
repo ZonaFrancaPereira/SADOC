@@ -111,10 +111,10 @@ if ($_SESSION['ingreso']==true) {
   
   
 </head>
-<body>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 
  <!-- Navbar PARA CERRAR SESION Y AÑADIR OPCIONES DENTRO DEL SISTEMA -->
- <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+ <nav class="main-header navbar navbar-expand navbar-dark">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
     <li class="nav-item">
@@ -364,7 +364,7 @@ if ($_SESSION['ingreso']==true) {
                                           echo "</tr>";
                                           $registros++;
                                         } }
-                                      } catch (PDOExeption $e) {
+                                      } catch (PDOException $e) {
                                         echo "Error en el servidor";
                                       }?>
 
@@ -408,7 +408,7 @@ if ($_SESSION['ingreso']==true) {
                                             echo "</tr>";
                                             $registros++;
                                           } }
-                                        } catch (PDOExeption $e) {
+                                        } catch (PDOException $e) {
                                           echo "Error en el servidor";
                                         }?>
 
@@ -451,7 +451,7 @@ if ($_SESSION['ingreso']==true) {
                                               echo "</tr>";
                                               $registros++;
                                             } }
-                                          } catch (PDOExeption $e) {
+                                          } catch (PDOException $e) {
                                             echo "Error en el servidor";
                                           }?>
 
@@ -494,7 +494,7 @@ if ($_SESSION['ingreso']==true) {
                                                 echo "</tr>";
                                                 $registros++;
                                               } }
-                                            } catch (PDOExeption $e) {
+                                            } catch (PDOException $e) {
                                               echo "Error en el servidor";
                                             }?>
 
@@ -537,7 +537,7 @@ if ($_SESSION['ingreso']==true) {
                                                  echo "</tr>";
                                                  $registros++;
                                                } }
-                                             } catch (PDOExeption $e) {
+                                             } catch (PDOException $e) {
                                               echo "Error en el servidor";
                                             }?>
 
@@ -580,7 +580,7 @@ if ($_SESSION['ingreso']==true) {
                                                   echo "</tr>";
                                                   $registros++;
                                                 } }
-                                              } catch (PDOExeption $e) {
+                                              } catch (PDOException $e) {
                                                 echo "Error en el servidor";
                                               }
                                               ?>
@@ -624,7 +624,7 @@ if ($_SESSION['ingreso']==true) {
                                                     echo "</tr>";
                                                     $registros++;
                                                   } }
-                                                } catch (PDOExeption $e) {
+                                                } catch (PDOException $e) {
                                                   echo "Error en el servidor";
                                                 }?>
 
@@ -667,7 +667,7 @@ if ($_SESSION['ingreso']==true) {
                                                       echo "</tr>";
                                                       $registros++;
                                                     } }
-                                                  } catch (PDOExeption $e) {
+                                                  } catch (PDOException $e) {
                                                     echo "Error en el servidor";
                                                   }?>
 
@@ -710,7 +710,7 @@ if ($_SESSION['ingreso']==true) {
                                                         echo "</tr>";
                                                         $registros++;
                                                       } }
-                                                    } catch (PDOExeption $e) {
+                                                    } catch (PDOException $e) {
                                                       echo "Error en el servidor";
                                                     }?>
 
@@ -753,7 +753,7 @@ if ($_SESSION['ingreso']==true) {
                                                           echo "</tr>";
                                                           $registros++;
                                                         } }
-                                                      } catch (PDOExeption $e) {
+                                                      } catch (PDOException $e) {
                                                         echo "Error en el servidor";
                                                       }?>
 
@@ -796,7 +796,7 @@ if ($_SESSION['ingreso']==true) {
                                                             echo "</tr>";
                                                             $registros++;
                                                           } }
-                                                        } catch (PDOExeption $e) {
+                                                        } catch (PDOException $e) {
                                                           echo "Error en el servidor";
                                                         }?>
 
@@ -863,7 +863,7 @@ if ($_SESSION['ingreso']==true) {
 
                               <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
                                 <div class="col-lg-1"></div>
-                                <div class="card-header text-center bg-teal">
+                                <div class="card-header text-center bg-success">
                                   <h3 ><B>SIG - Descarga de Archivos :</B></h3>
                                 </div>
                                 <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -876,12 +876,12 @@ if ($_SESSION['ingreso']==true) {
 
                                 <div class="row">
                                  <div class="col-md-6">
-                                  <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+                                  <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                                     <thead class="thead-light ">
                                       <tr>
-                                        <th class="text-center">#</th>
-                                        <th><h3><B>Carpetas</B></h3></th>
-                                        <th class="text-center">
+                                        <th class="bg-info text-center">#</th>
+                                        <th class="bg-info"><h3><B>Carpetas</B></h3></th>
+                                        <th class="bg-info text-center">
                                           <div id="panel">
                                             <center>
                                               <a id='volver_SIG'>
@@ -907,14 +907,14 @@ if ($_SESSION['ingreso']==true) {
                                   </table>
                                 </div>
                                 <div class="col-md-6">
-                                  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+                                  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                                     <thead class="thead-light ">
                                       <tr>
-                                        <th>#</th>
-                                        <th>Nombre del Archivo</th>
-                                        <th>Fecha de Actualización</th>
-                                        <th class="text-center">Vista Previa</th>
-                                        <th class="text-center">X</th>
+                                        <th class="bg-info">#</th>
+                                        <th class="bg-info">Nombre del Archivo</th>
+                                        <th class="bg-info">Fecha de Actualización</th>
+                                        <th class="bg-info text-center">Vista Previa</th>
+                                        <th class="bg-info text-center">X</th>
                                       </tr>
                                     </thead>
                                     <tbody id="descargas_SIG">
@@ -966,7 +966,7 @@ if ($_SESSION['ingreso']==true) {
 
                           <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
                             <div class="col-lg-1"></div>
-                            <div class="card-header text-center bg-teal">
+                            <div class="card-header text-center bg-success">
                               <h3 ><B>TI - Descarga de Archivos :</B></h3>
                             </div>
                             <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -979,12 +979,12 @@ if ($_SESSION['ingreso']==true) {
 
                             <div class="row">
                              <div class="col-md-6">
-                              <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+                              <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                                 <thead class="thead-light ">
                                   <tr>
-                                    <th class="text-center">#</th>
-                                    <th><h3><B>Carpetas</B></h3></th>
-                                    <th class="text-center">
+                                    <th class="bg-info text-center">#</th>
+                                    <th class="bg-info"><B>Carpetas</B></th>
+                                    <th class="bg-info text-center">
                                       <div id="panel_TI">
                                         <center>
                                           <a id='volver_TI'>
@@ -1010,14 +1010,14 @@ if ($_SESSION['ingreso']==true) {
                               </table>
                             </div>
                             <div class="col-md-6">
-                              <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+                              <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                                 <thead class="thead-light ">
                                   <tr>
-                                    <th>#</th>
-                                    <th>Nombre del Archivo</th>
-                                    <th>Fecha de Actualización</th>
-                                    <th class="text-center">Vista Previa</th>
-                                    <th class="text-center">X</th>
+                                    <th class="bg-info">#</th>
+                                    <th class="bg-info">Nombre del Archivo</th>
+                                    <th class="bg-info">Fecha de Actualización</th>
+                                    <th class="bg-info text-center">Vista Previa</th>
+                                    <th class="bg-info text-center">X</th>
                                   </tr>
                                 </thead>
                                 <tbody id="descargas_TI">
@@ -1066,7 +1066,7 @@ if ($_SESSION['ingreso']==true) {
 
                       <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
 
-                        <div class="card-header text-center bg-teal">
+                        <div class="card-header text-center bg-success">
                           <h3 ><B>Contabilidad - Descarga de Archivos : </B></h3>
                         </div>
                         <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1079,12 +1079,12 @@ if ($_SESSION['ingreso']==true) {
 
                         <div class="row">
                          <div class="col-md-6">
-                          <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+                          <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                             <thead class="thead-light ">
                               <tr>
-                                <th class="text-center">#</th>
-                                <th><h3><B>Carpetas</B></h3></th>
-                                <th class="text-center">
+                                <th class="bg-info text-center">#</th>
+                                <th class="bg-info"><B>Carpetas</B></th>
+                                <th class="bg-info text-center">
                                   <div id="panel_CT">
                                     <center>
                                       <a id='volver_CT'>
@@ -1110,14 +1110,14 @@ if ($_SESSION['ingreso']==true) {
                           </table>
                         </div>
                         <div class="col-md-6">
-                          <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+                          <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                             <thead class="thead-light ">
                               <tr>
-                                <th>#</th>
-                                <th>Nombre del Archivo</th>
-                                <th>Fecha de Actualización</th>
-                                <th class="text-center">Vista Previa</th>
-                                <th class="text-center">X</th>
+                                <th class="bg-info">#</th>
+                                <th class="bg-info">Nombre del Archivo</th>
+                                <th class="bg-info">Fecha de Actualización</th>
+                                <th class="bg-info text-center">Vista Previa</th>
+                                <th class="bg-info text-center">X</th>
                               </tr>
                             </thead>
                             <tbody id="descargas_CT">
@@ -1166,7 +1166,7 @@ if ($_SESSION['ingreso']==true) {
 
                   <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
                     <div class="col-lg-1"></div>
-                    <div class="card-header text-center bg-teal">
+                    <div class="card-header text-center bg-success">
                       <h3 ><B>Técnico - Descarga de Archivos : </B></h3>
                     </div>
                     <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1179,12 +1179,12 @@ if ($_SESSION['ingreso']==true) {
 
                     <div class="row">
                      <div class="col-md-6">
-                      <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+                      <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                         <thead class="thead-light ">
                           <tr>
-                            <th class="text-center">#</th>
-                            <th><h3><B>Carpetas</B></h3></th>
-                            <th class="text-center">
+                            <th class="bg-info text-center">#</th>
+                            <th class="bg-info"><B>Carpetas</B></th>
+                            <th class="bg-info text-center">
                               <div id="panel_TEC">
                                 <center>
                                   <a id='volver_TEC'>
@@ -1210,14 +1210,14 @@ if ($_SESSION['ingreso']==true) {
                       </table>
                     </div>
                     <div class="col-md-6">
-                      <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+                      <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                         <thead class="thead-light ">
                           <tr>
-                            <th>#</th>
-                            <th>Nombre del Archivo</th>
-                            <th>Fecha de Actualización</th>
-                            <th class="text-center">Vista Previa</th>
-                            <th class="text-center">X</th>
+                            <th class="bg-info">#</th>
+                            <th class="bg-info">Nombre del Archivo</th>
+                            <th class="bg-info">Fecha de Actualización</th>
+                            <th class="bg-info text-center">Vista Previa</th>
+                            <th class="bg-info text-center">X</th>
                           </tr>
                         </thead>
                         <tbody id="descargas_TEC">
@@ -1269,7 +1269,7 @@ if ($_SESSION['ingreso']==true) {
 
               <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
                 <div class="col-lg-1"></div>
-                <div class="card-header text-center bg-teal">
+                <div class="card-header text-center bg-success">
                   <h3 ><B>Gestión Humana - Descarga de Archivos : </B></h3>
                 </div>
                 <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1282,12 +1282,12 @@ if ($_SESSION['ingreso']==true) {
 
                 <div class="row">
                  <div class="col-md-6">
-                  <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+                  <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                     <thead class="thead-light ">
                       <tr>
-                        <th class="text-center">#</th>
-                        <th><h3><B>Carpetas</B></h3></th>
-                        <th class="text-center">
+                        <th class="bg-info text-center">#</th>
+                        <th class="bg-info"><B>Carpetas</B></th>
+                        <th class="bg-info text-center">
                           <div id="panel_GH">
                             <center>
                               <a id='volver_GH'>
@@ -1313,14 +1313,14 @@ if ($_SESSION['ingreso']==true) {
                   </table>
                 </div>
                 <div class="col-md-6">
-                  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+                  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                     <thead class="thead-light ">
                       <tr>
-                        <th>#</th>
-                        <th>Nombre del Archivo</th>
-                        <th>Fecha de Actualización</th>
-                        <th class="text-center">Vista Previa</th>
-                        <th class="text-center">X</th>
+                        <th class="bg-info">#</th>
+                        <th class="bg-info">Nombre del Archivo</th>
+                        <th class="bg-info">Fecha de Actualización</th>
+                        <th class="bg-info text-center">Vista Previa</th>
+                        <th class="bg-info text-center">X</th>
                       </tr>
                     </thead>
                     <tbody id="descargas_GH">
@@ -1369,7 +1369,7 @@ if ($_SESSION['ingreso']==true) {
 
           <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
             <div class="col-lg-1"></div>
-            <div class="card-header text-center bg-teal">
+            <div class="card-header text-center bg-success">
               <h3 ><B>Gestión Documental - Descarga de Archivos : </B></h3>
             </div>
             <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1382,12 +1382,12 @@ if ($_SESSION['ingreso']==true) {
 
             <div class="row">
              <div class="col-md-6">
-              <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+              <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
                 <thead class="thead-light ">
                   <tr>
-                    <th class="text-center">#</th>
-                    <th><h3><B>Carpetas</B></h3></th>
-                    <th class="text-center">
+                    <th class="text-center bg-info">#</th>
+                    <th class="bg-info"><B>Carpetas</B></th>
+                    <th class="bg-info text-center">
                       <div id="panel_GD">
                         <center>
                           <a id='volver_GD'>
@@ -1413,14 +1413,14 @@ if ($_SESSION['ingreso']==true) {
               </table>
             </div>
             <div class="col-md-6">
-              <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+              <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
                 <thead class="thead-light ">
                   <tr>
-                    <th>#</th>
-                    <th>Nombre del Archivo</th>
-                    <th>Fecha de Actualización</th>
-                    <th class="text-center">Vista Previa</th>
-                    <th class="text-center">X</th>
+                    <th class="bg-info">#</th>
+                    <th class="bg-info">Nombre del Archivo</th>
+                    <th class="bg-info">Fecha de Actualización</th>
+                    <th class="text-center bg-info">Vista Previa</th>
+                    <th class="text-center bg-info">X</th>
                   </tr>
                 </thead>
                 <tbody id="descargas_GD">
@@ -1472,7 +1472,7 @@ if ($_SESSION['ingreso']==true) {
 
       <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
         <div class="col-lg-1"></div>
-        <div class="card-header text-center bg-teal">
+        <div class="card-header text-center bg-success">
           <h3 ><B>Operaciones - Descarga de Archivos : </B></h3>
         </div>
         <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1485,12 +1485,12 @@ if ($_SESSION['ingreso']==true) {
 
         <div class="row">
          <div class="col-md-6">
-          <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+          <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
             <thead class="thead-light ">
               <tr>
-                <th class="text-center">#</th>
-                <th><h3><B>Carpetas</B></h3></th>
-                <th class="text-center">
+                <th class="bg-info text-center">#</th>
+                <th class="bg-info"><B>Carpetas</B></th>
+                <th class=" bg-info text-center">
                   <div id="panel_OP">
                     <center>
                       <a id='volver_OP'>
@@ -1516,14 +1516,14 @@ if ($_SESSION['ingreso']==true) {
           </table>
         </div>
         <div class="col-md-6">
-          <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+          <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
             <thead class="thead-light ">
               <tr>
-                <th>#</th>
-                <th>Nombre del Archivo</th>
-                <th>Fecha de Actualización</th>
-                <th class="text-center">Vista Previa</th>
-                <th class="text-center">X</th>
+                <th class="bg-info">#</th>
+                <th class="bg-info">Nombre del Archivo</th>
+                <th class="bg-info">Fecha de Actualización</th>
+                <th class="bg-info text-center">Vista Previa</th>
+                <th class="bg-info text-center">X</th>
               </tr>
             </thead>
             <tbody id="descargas_OP">
@@ -1575,7 +1575,7 @@ if ($_SESSION['ingreso']==true) {
 
   <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
     <div class="col-lg-1"></div>
-    <div class="card-header text-center bg-teal">
+    <div class="card-header text-center bg-success">
       <h3 ><B>Gestión Juridica - Descarga de Archivos : </B></h3>
     </div>
     <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1588,12 +1588,12 @@ if ($_SESSION['ingreso']==true) {
 
     <div class="row">
      <div class="col-md-6">
-      <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+      <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
         <thead class="thead-light ">
           <tr>
-            <th class="text-center">#</th>
-            <th><h3><B>Carpetas</B></h3></th>
-            <th class="text-center">
+            <th class="bg-info text-center">#</th>
+            <th class="bg-info"><B>Carpetas</B></th>
+            <th class="bg-info text-center">
               <div id="panel_JR">
                 <center>
                   <a id='volver_JR'>
@@ -1619,14 +1619,14 @@ if ($_SESSION['ingreso']==true) {
       </table>
     </div>
     <div class="col-md-6">
-      <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+      <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
         <thead class="thead-light ">
           <tr>
-            <th>#</th>
-            <th>Nombre del Archivo</th>
-            <th>Fecha de Actualización</th>
-            <th class="text-center">Vista Previa</th>
-            <th class="text-center">X</th>
+            <th class="bg-info">#</th>
+            <th class="bg-info">Nombre del Archivo</th>
+            <th class="bg-info">Fecha de Actualización</th>
+            <th class="bg-info text-center">Vista Previa</th>
+            <th class="bg-info text-center">X</th>
           </tr>
         </thead>
         <tbody id="descargas_JR">
@@ -1676,7 +1676,7 @@ if ($_SESSION['ingreso']==true) {
 
 <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
   <div class="col-lg-1"></div>
-  <div class="card-header text-center bg-teal">
+  <div class="card-header text-center bg-success">
     <h3 ><B>Seguridad - Descarga de Archivos : </B></h3>
   </div>
   <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1689,12 +1689,12 @@ if ($_SESSION['ingreso']==true) {
 
   <div class="row">
    <div class="col-md-6">
-    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead class="thead-light ">
         <tr>
-          <th class="text-center">#</th>
-          <th><h3><B>Carpetas</B></h3></th>
-          <th class="text-center">
+          <th class="bg-info text-center">#</th>
+          <th class="bg-info"><B>Carpetas</B></th>
+          <th class="bg-info text-center">
             <div id="panel_PH">
               <center>
                 <a id='volver_PH'>
@@ -1720,14 +1720,14 @@ if ($_SESSION['ingreso']==true) {
     </table>
   </div>
   <div class="col-md-6">
-    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
       <thead class="thead-light ">
         <tr>
-          <th>#</th>
-          <th>Nombre del Archivo</th>
-          <th>Fecha de Actualización</th>
-          <th class="text-center">Vista Previa</th>
-          <th class="text-center">X</th>
+          <th class="bg-info">#</th>
+          <th class="bg-info">Nombre del Archivo</th>
+          <th class="bg-info">Fecha de Actualización</th>
+          <th class="bg-info text-center">Vista Previa</th>
+          <th class="bg-info text-center">X</th>
         </tr>
       </thead>
       <tbody id="descargas_PH">
@@ -1776,7 +1776,7 @@ if ($_SESSION['ingreso']==true) {
 
 <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
   <div class="col-lg-1"></div>
-  <div class="card-header text-center bg-teal">
+  <div class="card-header text-center bg-success">
     <h3 ><B>SST - Descarga de Archivos : </B></h3>
   </div>
   <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1789,12 +1789,12 @@ if ($_SESSION['ingreso']==true) {
 
   <div class="row">
    <div class="col-md-6">
-    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead class="thead-light ">
         <tr>
-          <th class="text-center">#</th>
-          <th><h3><B>Carpetas</B></h3></th>
-          <th class="text-center">
+          <th class="bg-info text-center">#</th>
+          <th class="bg-info"><B>Carpetas</B></th>
+          <th class="bg-info text-center">
             <div id="panel_SST">
               <center>
                 <a id='volver_SST'>
@@ -1820,14 +1820,14 @@ if ($_SESSION['ingreso']==true) {
     </table>
   </div>
   <div class="col-md-6">
-    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
       <thead class="thead-light ">
         <tr>
-          <th>#</th>
-          <th>Nombre del Archivo</th>
-          <th>Fecha de Actualización</th>
-          <th class="text-center">Vista Previa</th>
-          <th class="text-center">X</th>
+          <th class="bg-info">#</th>
+          <th class="bg-info">Nombre del Archivo</th>
+          <th class="bg-info">Fecha de Actualización</th>
+          <th class="bg-info text-center">Vista Previa</th>
+          <th class="bg-info text-center">X</th>
         </tr>
       </thead>
       <tbody id="descargas_SST">
@@ -1879,7 +1879,7 @@ if ($_SESSION['ingreso']==true) {
 
 <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
   <div class="col-lg-1"></div>
-  <div class="card-header text-center bg-teal">
+  <div class="card-header text-center bg-success">
     <h3 ><B>Gerencia - Descarga de Archivos :</B></h3>
   </div>
   <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -1892,12 +1892,12 @@ if ($_SESSION['ingreso']==true) {
 
   <div class="row">
    <div class="col-md-6">
-    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead class="thead-light ">
         <tr>
-          <th class="text-center">#</th>
-          <th><h3><B>Carpetas</B></h3></th>
-          <th class="text-center">
+          <th class="bg-info text-center">#</th>
+          <th class="bg-info"><B>Carpetas</B></th>
+          <th class="bg-info text-center">
             <div id="panel_GR">
               <center>
                 <a id='volver_GR'>
@@ -1925,14 +1925,14 @@ if ($_SESSION['ingreso']==true) {
     </table>
   </div>
   <div class="col-md-6">
-    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
       <thead class="thead-light ">
         <tr>
-          <th>#</th>
-          <th>Nombre del Archivo</th>
-          <th>Fecha de Actualización</th>
-          <th class="text-center">Vista Previa</th>
-          <th class="text-center">X</th>
+          <th class="bg-info">#</th>
+          <th class="bg-info">Nombre del Archivo</th>
+          <th class="bg-info">Fecha de Actualización</th>
+          <th class="bg-info text-center">Vista Previa</th>
+          <th class="bg-info text-center">X</th>
         </tr>
       </thead>
       <tbody id="descargas_GR">
@@ -2012,7 +2012,7 @@ if ($_SESSION['ingreso']==true) {
 
 <div class="borde col-xs-12 col-sm-12 col-md-12 col-lg-12 panel panel-default">
   <div class="col-lg-1"></div>
-  <div class="card-header text-center bg-teal">
+  <div class="card-header text-center bg-success">
     <h3 ><B>Gerencia - Descarga de Archivos :</B></h3>
   </div>
   <div style="margin-top: 10px;" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -2025,12 +2025,12 @@ if ($_SESSION['ingreso']==true) {
 
   <div class="row">
    <div class="col-md-6">
-    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead class="thead-light ">
         <tr>
-          <th class="text-center">#</th>
-          <th><h3><B>Carpetas</B></h3></th>
-          <th class="text-center">
+          <th class="bg-info text-center">#</th>
+          <th class="bg-info"><B>Carpetas</B></th>
+          <th class="bg-info text-center">
             <div id="panel_PLE">
               <center>
                 <a id='volver_PLE'>
@@ -2058,14 +2058,14 @@ if ($_SESSION['ingreso']==true) {
     </table>
   </div>
   <div class="col-md-6">
-    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
       <thead class="thead-light ">
         <tr>
-          <th>#</th>
-          <th>Nombre del Archivo</th>
-          <th>Fecha de Actualización</th>
-          <th class="text-center">Vista Previa</th>
-          <th class="text-center">X</th>
+          <th class="bg-info">#</th>
+          <th class="bg-info">Nombre del Archivo</th>
+          <th class="bg-info">Fecha de Actualización</th>
+          <th class="bg-info text-center">Vista Previa</th>
+          <th class="bg-info text-center">X</th>
         </tr>
       </thead>
       <tbody id="descargas_PLE">
@@ -2122,7 +2122,7 @@ if ($_SESSION['ingreso']==true) {
     <h3 ><B>Listado de Matrices Gestión Juridica</B></h3>
   </div>
   <div class="col-lg-1"></div>
-  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
     <thead class="thead-light ">
       <tr>
         <th>#</th>
@@ -2184,7 +2184,7 @@ if ($_SESSION['ingreso']==true) {
     <h3 ><B>Listado de Matrices Gestión Administrativa</B></h3>
   </div>
   <div class="col-lg-1"></div>
-  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
     <thead class="thead-light ">
       <tr>
         <th>#</th>
@@ -2246,7 +2246,7 @@ if ($_SESSION['ingreso']==true) {
     <h3 ><B>Listado de Matrices Seguridad :</B></h3>
   </div>
   <div class="col-lg-1"></div>
-  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+  <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
     <thead class="thead-light ">
       <tr>
         <th>#</th>
@@ -2318,7 +2318,7 @@ if ($_SESSION['ingreso']==true) {
       </i>
     </div>
     <div class="col-lg-1"></div>
-    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead>
         <tr>
           <th scope="col" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">#</th>
@@ -2381,7 +2381,7 @@ if ($_SESSION['ingreso']==true) {
       </i>
     </div>
     <div class="col-lg-1"></div>
-    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead>
         <tr>
           <th scope="col" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">#</th>
@@ -2444,7 +2444,7 @@ if ($_SESSION['ingreso']==true) {
       </i>
     </div>
     <div class="col-lg-1"></div>
-    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead>
         <tr>
           <th scope="col" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">#</th>
@@ -2507,7 +2507,7 @@ if ($_SESSION['ingreso']==true) {
       </i>
     </div>
     <div class="col-lg-1"></div>
-    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+    <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
       <thead>
         <tr>
           <th>#</th>
@@ -2565,7 +2565,7 @@ if ($_SESSION['ingreso']==true) {
     <h3 ><B>Listado de Matrices Gestión Juridica</B></h3>
   </div>
   <div class="col-lg-1"></div>
-  <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered">
+  <table class="informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover">
     <thead>
       <tr class="text-center">
        <th>#</th>
@@ -2629,7 +2629,7 @@ if ($_SESSION['ingreso']==true) {
       </i>
     </div>
     <div class="col-lg-1"></div>
-    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-bordered ">
+    <table class=" informacion margen col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-hover ">
       <thead class="thead-light ">
         <tr>
           <th>#</th>
