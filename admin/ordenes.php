@@ -382,7 +382,7 @@
                                     $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                    c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                    c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
-                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                     u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                     FROM  orden_compra c
                                     INNER JOIN usuarios u
@@ -450,7 +450,7 @@
                                     $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                   FROM  orden_compra c
                                   INNER JOIN usuarios u
@@ -514,7 +514,7 @@
                                     $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                   FROM  orden_compra c
                                   INNER JOIN usuarios u
@@ -742,7 +742,7 @@
                                   $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                   FROM  orden_compra c
                                   INNER JOIN usuarios u
@@ -841,7 +841,7 @@
                                   <?php
                                   try {
                                     $stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                   FROM proveedor_compras p
                                   INNER JOIN usuarios u

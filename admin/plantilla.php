@@ -1,4 +1,7 @@
- <!DOCTYPE html>
+<?php 
+include "sumatorias.php";
+?>
+<!DOCTYPE html>
  <html lang="en">
 
  <head>
@@ -41,11 +44,12 @@
 
  </head>
 
- <body class="hold-transition sidebar-mini layout-fixed">
+ <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
 
    <div class="wrapper">
      <!-- Navbar PARA CERRAR SESION Y AÑADIR OPCIONES DENTRO DEL SISTEMA -->
-     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+     <nav class="main-header navbar navbar-expand navbar-dark">
        <!-- Left navbar links -->
        <ul class="navbar-nav">
          <li class="nav-item">
@@ -65,9 +69,11 @@
          <li class="nav-item d-none d-sm-inline-block">
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
+      
          <li class="nav-item d-none d-sm-inline-block">
            <a href="activos.php" class="nav-link">Activos Fijos</a>
          </li>
+         
        </ul>
 
        <!-- Right navbar links -->

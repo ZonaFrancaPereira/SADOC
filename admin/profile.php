@@ -30,7 +30,7 @@ if ($_SESSION['ingreso'] == true) {
 		$pass1 = $_POST['pass1'];
 		$pass2 = $_POST['pass2'];
 		$nombre_archivo2 = uniqid() . "_" . $_FILES["firma_usuario"]["name"]; // Generar un nombre único para la imagen
-		
+
 		$guardar_img2 = $_FILES['firma_usuario']['tmp_name'];
 		if ($pass1 == "" && $pass2 == "") {
 			if (move_uploaded_file($guardar_img2, 'firmas/' . $nombre_archivo2)) {
@@ -59,7 +59,7 @@ if ($_SESSION['ingreso'] == true) {
 	<nav class="mt-2">
 		<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 			<li class="nav-item" hidden>
-				<a data-toggle="tab" href="#panelc" class="nav-link active" >
+				<a data-toggle="tab" href="#panelc" class="nav-link active">
 					<i class="nav-icon fas fa-th"></i>
 					<p>
 						Panel de Control
@@ -173,7 +173,32 @@ if ($_SESSION['ingreso'] == true) {
 							<h3 class="profile-username text-center text-uppercase"><?php echo $_SESSION['nombre_usuario'] . " " . $_SESSION['apellidos_usuario']; ?></h3>
 							<h3 class="profile-username text-center "><?php echo $_SESSION['nombre_cargo'] . " " . $_SESSION['proceso_fk']; ?></h5>
 								<span class=" btn btn-primary btn-block fa fa-fw fa-eye password-icon show-password "> Mostrar Contraseña</span>
+
 						</div>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn bg-teal" data-toggle="modal" data-target="#exampleModal">
+							Aviso de Datos Personales
+						</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Aviso Proteccion de Datos Personales </h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+									<p>AVISO DE REGISTRO ELECTRÓNICO DE DATOS: Al registrar y entregar sus datos personales mediante este mecanismo electrónico de página web y/o similares, usted declara que conoce nuestra política de tratamiento de datos personales disponible en: www.politicadeprivacidad.co/politica/zfipusuariooperador, también declara que conoce sus derechos como titular de la información y que autoriza de manera libre, voluntaria, previa, explícita, informada e inequívoca a ZONA FRANCA INTERNACIONAL DE PEREIRA SAS USUARIO OPERADOR DE ZONAS FRANCAS con NIT 900.311.215-6 para gestionar sus datos personales bajo los parámetros indicados en dicha política de tratamiento.</p>
+
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
 						<!-- /.card-body -->
 					</div>
 					<!-- /.card -->

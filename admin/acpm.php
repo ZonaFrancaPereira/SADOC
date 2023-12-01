@@ -242,7 +242,7 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["fecha_finalizacion"] ?></td>
                           <td><?php echo $row["estado_acpm"] ?></td>
                           <td><button type="button" class="btn btn-success" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>">Asignar</button></a></td>
-                          <td><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo" data-toggle="tab"onclick="location.href='enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>'" class="nav-link active">Ver</button></td></a>
+                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>"><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo" >Ver</button></a></td>
                         </tr>
                     <?php }
                     } ?>
