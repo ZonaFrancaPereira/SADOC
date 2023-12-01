@@ -92,10 +92,10 @@ if ($_SESSION['ingreso'] == true) {
           <!-- MODAL PARA SUBIR EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-success">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header btn btn-success btn-block">
-                    <h4 class="modal-title ">SUBIR EVIDENCIA</h4>
+                    <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
                   </div>
                   <div class="modal-body">
                     <form id="" method="POST">
@@ -106,15 +106,15 @@ if ($_SESSION['ingreso'] == true) {
                               <label for="fecha_evidencia">Fecha Actividad</label>
                               <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label></label>
-                              <textarea id="evidencia" name="evidencia" class="textarea" required>
-                              </textarea>
+                            <div class="col-md-12 col-xs-12 col-sm-12" >
+                              <br>
+                              <div class="editor" id="evidencia" name="evidencia"></div>
+                              <!-- Create the editor container -->
                             </div>
                             <!-- /.SUBIR EVIDENCIAS -->
                             <!-- /.card-header -->
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label>Recursos</label>
+                              <br><br><br><label>Recursos</label>
                               <select class="form-control" id="recursos" name="recursos" required>
                                 <option>Selecciona una Opcion</option>
                                 <option value="Humanos">Humanos</option>
@@ -122,6 +122,7 @@ if ($_SESSION['ingreso'] == true) {
                               </select>
                             </div>
                             <!-- /.content -->
+                            
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
@@ -133,7 +134,7 @@ if ($_SESSION['ingreso'] == true) {
                             <!-- /.SUBIR EVIDENCIAS -->
                             <div class="col-md-6 col-xs-6 col-sm-6" hidden>
                               <label>Id Usuario</label>
-                              <input type="text" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
+                              <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
@@ -154,7 +155,7 @@ if ($_SESSION['ingreso'] == true) {
           <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-evidencia">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="btn btn-success btn-block">
                   <h4 class="modal-title">VISUALIZAR EVIDENCIA</h4>
@@ -174,7 +175,8 @@ if ($_SESSION['ingreso'] == true) {
   </div>
 </div>
 <?php require('footer.php'); ?>
-
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
   <!-- Control sidebar content goes here -->
@@ -186,6 +188,11 @@ if ($_SESSION['ingreso'] == true) {
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 
+<script>
+  var quill = new Quill('.editor', {
+    theme: 'snow'
+  });
+</script>
 <!-- Page specific script -->
 <script>
   $(function() {
@@ -195,25 +202,7 @@ if ($_SESSION['ingreso'] == true) {
       "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-
-    // Summernote
-    $('#summernote').summernote()
-
-    // CodeMirror
-    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-      mode: "htmlmixed",
-      theme: "monokai"
-    });
-
+ 
     $('.select2').select2()
 
   });
@@ -221,13 +210,11 @@ if ($_SESSION['ingreso'] == true) {
   $('#modal-success').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var id_actividad = button.data('id_actividad'); // Extract info from data-* attributes
-
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     var modal = $(this);
 
     modal.find('.modal-body #id_actividad').val(id_actividad);
-
-
+    
   });
 
   $('#modal-evidencia').on('show.bs.modal', function(event) {
@@ -247,6 +234,7 @@ if ($_SESSION['ingreso'] == true) {
       }
     });
   });
+  
 </script>
 
 </body>

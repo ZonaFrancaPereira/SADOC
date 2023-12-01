@@ -9,29 +9,21 @@ if ($result->rowCount() > 0) {
     foreach ($result as $row) {
 ?>
         <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example1" class="table table-bordered table-striped" >
+                  <thead class="text-center">
                     <tr>
-                        <th>Fecha de Evidencia</th>
+                        <th>Fecha Evidencia</th>
                         <th>Evidencia</th>
                         <th>Recursos</th>
                         <th>Id de la Actividad</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     <td><?php echo $row["fecha_evidencia"] ?></td>
-                    <td><p class="text-break" style="width: 6rem"><?php echo $row["evidencia"] ?></td></p>
+                    <td><p class="text-break" style="max-width;"><?php echo $row["evidencia"] ?></td></p>
                     <td><?php echo $row["recursos"] ?></td>
                     <td><?php echo $row["id_actividad"] ?></td>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Fecha de Evidencia</th>
-                        <th>Evidencia</th>
-                        <th>Recursos</th>
-                        <th>Id de la Actividad</th>
-                    </tr>
-                </tfoot>
             </table>
         </div>
 <?php

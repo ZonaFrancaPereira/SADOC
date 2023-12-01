@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 01-11-2023 a las 19:30:38
--- Versión del servidor: 10.5.19-MariaDB-cll-lve
--- Versión de PHP: 7.2.34
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 29-11-2023 a las 20:21:27
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `u446101023_app`
+-- Base de datos: `upload`
 --
 
 -- --------------------------------------------------------
@@ -66,6 +66,46 @@ CREATE TABLE `actividades_acpm` (
   `id_usuario_fk` int(11) NOT NULL,
   `id_acpm_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `activos`
+--
+
+CREATE TABLE `activos` (
+  `id_activo` int(11) NOT NULL,
+  `fecha_asignacion` datetime NOT NULL,
+  `nombre_articulo` varchar(300) NOT NULL,
+  `descripcion_articulo` text NOT NULL,
+  `modelo_articulo` varchar(200) DEFAULT NULL,
+  `referencia_articulo` varchar(200) DEFAULT NULL,
+  `marca_articulo` varchar(300) DEFAULT NULL,
+  `tipo_articulo` enum('PC','Licencia','Otro') DEFAULT NULL,
+  `ip` varchar(30) NOT NULL,
+  `windows` text NOT NULL,
+  `office` varchar(300) NOT NULL,
+  `factura_office` text NOT NULL,
+  `departamento_articulo` enum('Piso 1 /  U.O','Piso 2 / U.O','Operaciones','Monitoreo') DEFAULT NULL,
+  `lugar_articulo` text DEFAULT NULL,
+  `observaciones_articulo` text DEFAULT NULL,
+  `numero_factura` float DEFAULT NULL,
+  `fecha_garantia` date DEFAULT NULL,
+  `valor_articulo` float DEFAULT NULL,
+  `condicion_articulo` text DEFAULT NULL,
+  `id_proveedor_fk` int(11) DEFAULT NULL,
+  `descripcion_proveedor` text DEFAULT NULL,
+  `id_usuario_fk` int(11) DEFAULT NULL,
+  `estado_activo` enum('Activo','Inactivo','Rentado','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `activos`
+--
+
+INSERT INTO `activos` (`id_activo`, `fecha_asignacion`, `nombre_articulo`, `descripcion_articulo`, `modelo_articulo`, `referencia_articulo`, `marca_articulo`, `tipo_articulo`, `ip`, `windows`, `office`, `factura_office`, `departamento_articulo`, `lugar_articulo`, `observaciones_articulo`, `numero_factura`, `fecha_garantia`, `valor_articulo`, `condicion_articulo`, `id_proveedor_fk`, `descripcion_proveedor`, `id_usuario_fk`, `estado_activo`) VALUES
+(2, '2023-11-28 18:27:18', 'ComputadorHP', 'DELL', '3070', 'LENOVO', 'LENOVO', '', '', '', '', '', 'Piso 1 /  U.O', 'Sala de juntas', 'ninguna', 540, '2023-11-30', 1000000, 'buena', 0, 'no registraba', 2, 'Activo'),
+(1548, '2023-11-28 18:27:18', 'Computador Optiplex 3070', 'DELL', '3070', 'LENOVO', 'LENOVO', '', '', '', '', '', 'Piso 1 /  U.O', 'Sala de juntas', 'ninguna', 540, '2023-11-30', 1000000, 'buena', 0, 'no registraba', 2, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -136,6 +176,16 @@ CREATE TABLE `detalle_orden` (
   `id_orden_compra` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `detalle_orden`
+--
+
+INSERT INTO `detalle_orden` (`id_orden_detalle`, `articulo_compra`, `cantidad_orden`, `valor_neto`, `valor_iva`, `valor_total`, `observaciones_articulo`, `id_orden_compra`) VALUES
+(15, 'Pc', 124854, 151, 1, 1, '', 2),
+(16, 'Telefono', 124854, 151, 1, 1, '', 2),
+(17, 'Pc', 124854, 151, 1, 1, '', 3),
+(18, 'Telefono', 124854, 151, 1, 1, '', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -161,6 +211,14 @@ CREATE TABLE `orden_compra` (
   `id_proveedor_fk` int(11) DEFAULT NULL,
   `id_gerente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `orden_compra`
+--
+
+INSERT INTO `orden_compra` (`id_orden`, `fecha_orden`, `proveedor_recurrente`, `forma_pago`, `tiempo_pago`, `porcentaje_anticipo`, `condiciones_negociacion`, `comentario_orden`, `tiempo_entrega`, `total_orden`, `analisis_cotizacion`, `estado_orden`, `descripcion_declinado`, `fecha_aprobacion`, `id_cotizante`, `id_proveedor_fk`, `id_gerente`) VALUES
+(2, '2023-11-28', 'No', 'Contado', '', 0, '', '<p>aaaa</p>', '1', 2, 'No', 'Proceso', NULL, NULL, 2, 42024431, NULL),
+(3, '2023-11-28', 'No', 'Contado', '', 0, '', '<p>aaaa</p>', '1', 2, 'No', 'Proceso', NULL, NULL, 2, 42024431, NULL);
 
 -- --------------------------------------------------------
 
@@ -212,6 +270,8 @@ CREATE TABLE `proveedor_compras` (
 --
 
 INSERT INTO `proveedor_compras` (`id_proveedor`, `nombre_proveedor`, `contacto_proveedor`, `telefono_proveedor`, `id_usuario_fk`) VALUES
+(0, 'NO APLICA', 'NO APLICA', '3218124847', 1),
+(42024431, 'Lucenia', 'ymontoya@zonafrancadepereira.com', '321548151', 2),
 (1087561072, 'Melissa Montoya', 'melissa@gmail.com', '3218124874', 3);
 
 -- --------------------------------------------------------
@@ -249,21 +309,26 @@ CREATE TABLE `tipo_usuario` (
   `analisis_cotizacion` enum('Si','No') NOT NULL,
   `radicar_orden` enum('Si','No') NOT NULL,
   `firmar_orden` enum('Si','No') NOT NULL,
-  `evaluar_proveedor` enum('Si','No') NOT NULL
+  `evaluar_proveedor` enum('Si','No') NOT NULL,
+  `admin_activos` enum('Si','No','','') NOT NULL,
+  `consultar_activos` enum('Si','No','','') NOT NULL,
+  `ingresar_activos` enum('Si','No') NOT NULL,
+  `editar_activos` enum('Si','No') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `tipo_usuario`
 --
 
-INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`, `admin_acpm`, `radicar_acpm`, `admin_sadoc`, `consultar_sadoc`, `ordenes`, `admin_compras`, `pagar_ordenes`, `analisis_cotizacion`, `radicar_orden`, `firmar_orden`, `evaluar_proveedor`) VALUES
-(1, 'superadmin', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si'),
-(2, 'admin_sig', 'Si', 'Si', 'Si', 'Si', 'Si', 'No', 'No', 'No', 'Si', 'No', 'Si'),
-(3, 'usuario_aux', 'No', 'No', 'No', 'Si', 'Si', 'No', 'No', 'No', 'No', 'No', 'No'),
-(4, 'gerencia', 'No', 'Si', 'No', 'Si', 'Si', 'No', 'No', 'No', 'No', 'Si', 'Si'),
-(5, 'directivo', 'No', 'Si', 'No', 'Si', 'Si', 'No', 'No', 'No', 'Si', 'No', 'Si'),
-(6, 'aux_cotizacion', 'No', 'No', 'No', 'Si', 'Si', 'No', 'No', 'Si', 'No', 'No', 'Si'),
-(7, 'aux_contable', 'No', 'No', 'No', 'Si', 'Si', 'No', 'Si', 'No', 'No', 'No', 'No');
+INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`, `admin_acpm`, `radicar_acpm`, `admin_sadoc`, `consultar_sadoc`, `ordenes`, `admin_compras`, `pagar_ordenes`, `analisis_cotizacion`, `radicar_orden`, `firmar_orden`, `evaluar_proveedor`, `admin_activos`, `consultar_activos`, `ingresar_activos`, `editar_activos`) VALUES
+(1, 'superadmin', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(2, 'admin_sig', 'Si', 'Si', 'Si', 'Si', 'Si', 'No', 'No', 'No', 'Si', 'No', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(3, 'usuario_aux', 'No', 'No', 'No', 'Si', 'Si', 'No', 'No', 'No', 'No', 'No', 'No', 'Si', 'Si', 'Si', 'Si'),
+(4, 'gerencia', 'No', 'Si', 'No', 'Si', 'Si', 'No', 'No', 'No', 'No', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(5, 'directivo', 'No', 'Si', 'No', 'Si', 'Si', 'No', 'No', 'No', 'Si', 'No', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(6, 'aux_cotizacion', 'No', 'No', 'No', 'Si', 'Si', 'No', 'No', 'Si', 'No', 'No', 'Si', 'Si', 'Si', 'Si', 'Si'),
+(7, 'aux_contable', 'No', 'No', 'No', 'Si', 'Si', 'No', 'Si', 'No', 'No', 'No', 'No', 'Si', 'Si', 'Si', 'Si'),
+(8, 'admin_contable', 'No', 'Si', 'No', 'Si', 'Si', 'No', 'Si', 'No', 'Si', 'No', 'Si', 'Si', 'Si', 'Si', 'Si');
 
 -- --------------------------------------------------------
 
@@ -277,9 +342,10 @@ CREATE TABLE `usuarios` (
   `contrasena_usuario` varchar(10) DEFAULT NULL,
   `nombre_usuario` varchar(20) DEFAULT NULL,
   `apellidos_usuario` varchar(20) DEFAULT NULL,
-  `salario_usuario` varchar(10) NOT NULL,
+  `siglas_usuario` varchar(50) NOT NULL,
   `estado_usuario` enum('activo','inactivo') DEFAULT NULL,
   `firma_usuario` text NOT NULL,
+  `dia_backup` enum('lunes','martes','miercoles','jueves','viernes') NOT NULL,
   `proceso_usuario_fk` int(11) NOT NULL,
   `id_cargo_fk` int(11) NOT NULL,
   `tipo_usuario_fk` int(11) NOT NULL
@@ -289,36 +355,36 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `nombre_usuario`, `apellidos_usuario`, `salario_usuario`, `estado_usuario`, `firma_usuario`, `proceso_usuario_fk`, `id_cargo_fk`, `tipo_usuario_fk`) VALUES
-(1, 'ssierra@zonafrancadepereira.com', '8521', 'Stefania', 'Sierra Loaiza', '', 'activo', '', 7, 9, 2),
-(2, 'ymontoyag@zonafrancadepereira.com', '2012', 'Yuliana Melissa', 'Montoya', '', 'activo', '652423e3eda0b_firmameli.png', 2, 1, 4),
-(3, 'jcardona@zonafrancadepereira.com', '6325', 'Jorge Eliecer', 'Garcia Cardona', '', 'activo', '', 2, 1, 3),
-(4, 'sbermudez@zonafrancadepereira.com', '5212', 'Santiago', 'Bermudez Marin', '', 'activo', '', 2, 1, 3),
-(5, 'mensajeria@zonafrancadepereira.com', '9632', 'Santiago', 'Rendon', '', 'activo', '', 2, 1, 3),
-(6, 'ssalazar@zonafrancadepereira.com', '4789', 'Sonia Janeth', 'Salazar Oviedo ', '', 'activo', '', 2, 1, 3),
-(7, 'aledesma@zonafrancadepereira.com', '3215', 'Aura Mar¡a', 'Ledesma', '', 'activo', '', 2, 1, 3),
-(8, 'auxiliarsst@zonafrancadepereira.com', '9845', 'Oscar Julian', 'Millan Rodas', '', 'activo', '', 2, 1, 3),
-(9, 'monitoreo@zonafrancadepereira.com', '2105', 'Monitoreo', 'ZFIP', '', 'activo', '', 2, 1, 3),
-(10, 'ygarciaz@zonafrancadepereira.com', '9874', 'Yaqueline', 'Garcia Zapata', '', 'activo', '', 2, 1, 3),
-(11, 'agalan@zonafrancadepereira.com', '8745', 'Andrea ', 'Galan Moreno', '', 'activo', '', 2, 1, 3),
-(12, 'cbustamante@zonafrancadepereira.com', '6302', 'Isabel Cristina', 'Bustamante', '', 'activo', '', 2, 1, 3),
-(13, 'evelasquez@zonafrancadepereira.com', '7913', 'Estefania', 'Velasquez', '', 'activo', '', 2, 1, 3),
-(14, 'bparra@zonafrancadepereira.com', '5241', 'Bayron Julian', 'Gomez Parra', '', 'activo', '', 2, 1, 3),
-(15, 'fgomez@zonafrancadepereira.com', '5213', 'Faisury', 'Gomez Serna', '', 'activo', '', 2, 1, 3),
-(16, 'jperez@zonafrancadepereira.com', '3054', 'Juan Carlos', 'P‚rez Rodas', '', 'activo', '', 2, 1, 3),
-(17, 'yrios@zonafrancadepereira.com', '7852', 'Yuly Viviana', 'Rios Casta¤o', '', 'activo', '', 2, 1, 3),
-(18, 'Serazo@zonafrancadepereira.com', '8415', 'Sebastian', 'Erazo Aguirre', '', 'activo', '', 2, 1, 3),
-(19, 'practicantesig@zonafrancadepereira.com', '6825', 'Jennifer Alexandra', 'Villada Gonzales', '', 'activo', '', 2, 1, 3),
-(20, 'rsoto@zonafrancadepereira.com', '9730', 'Robert Arturo', 'Soto V‚lez', '', 'activo', '', 2, 1, 3),
-(21, 'jraigosa@zonafrancadepereira.com', '6548', 'Julio', 'Raigosa', '', 'activo', '', 2, 1, 3),
-(22, 'ylopez@zonafrancadepereira.com', '1548', 'Yuliana Andrea', 'Lopez Taborda', '', 'activo', '', 2, 1, 3),
-(23, 'jgutierrez@zonafrancadepereira.com', '2315', 'Julian Bernardo', 'Gutierrez Naranjo', '', 'activo', '', 2, 1, 3),
-(24, 'malvarez@zonafrancadepereira.com', '6582', 'Maria Valentina', 'Alvarez Gallego', '', 'activo', '', 2, 1, 3),
-(25, 'gerencia@creserconsultores.com.co', '3201', 'Mateo', 'Rios', '', 'activo', '', 2, 1, 3),
-(26, 'alagos@zonafrancadepereira.com', '7895', 'Ana Luisa', ' Lagos Pati¤o', '', 'activo', '', 2, 1, 3),
-(27, 'diradministrativo@zonafrancadepereira.com', '9654', 'Cristian', 'Benavides', '', 'activo', '', 2, 1, 3),
-(28, 'kechavarria@zonafrancadepereira.com', '9632', 'Kevin David', 'Echavarria Gonzalez', '', 'activo', '', 2, 1, 3),
-(55, 'correo_usuario', 'contrasena', 'nombre_usuario', 'apellidos_usuario', 'salario_us', '', 'firma_usuario', 0, 0, 0);
+INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `nombre_usuario`, `apellidos_usuario`, `siglas_usuario`, `estado_usuario`, `firma_usuario`, `dia_backup`, `proceso_usuario_fk`, `id_cargo_fk`, `tipo_usuario_fk`) VALUES
+(1, 'ssierra@zonafrancadepereira.com', '8521', 'Stefania', 'Sierra Loaiza', '', 'activo', '', 'lunes', 7, 9, 2),
+(2, 'ymontoyag@zonafrancadepereira.com', '2012', 'Yuliana Melissa', 'Montoya', 'ZFIP-TI01', 'activo', '65660ce9edcc9_650b541b0e691_firma meli.png', 'lunes', 2, 1, 8),
+(3, 'jcardona@zonafrancadepereira.com', '6325', 'Jorge Eliecer', 'Garcia Cardona', '', 'activo', '', 'lunes', 2, 1, 3),
+(4, 'sbermudez@zonafrancadepereira.com', '5212', 'Santiago', 'Bermudez Marin', '', 'activo', '', 'lunes', 2, 1, 3),
+(5, 'mensajeria@zonafrancadepereira.com', '9632', 'Santiago', 'Rendon', '', 'activo', '', 'lunes', 2, 1, 3),
+(6, 'ssalazar@zonafrancadepereira.com', '4789', 'Sonia Janeth', 'Salazar Oviedo ', '', 'activo', '', 'lunes', 2, 1, 3),
+(7, 'aledesma@zonafrancadepereira.com', '3215', 'Aura Mar¡a', 'Ledesma', '', 'activo', '', 'lunes', 2, 1, 3),
+(8, 'auxiliarsst@zonafrancadepereira.com', '9845', 'Oscar Julian', 'Millan Rodas', '', 'activo', '', 'lunes', 2, 1, 3),
+(9, 'monitoreo@zonafrancadepereira.com', '2105', 'Monitoreo', 'ZFIP', '', 'activo', '', 'lunes', 2, 1, 3),
+(10, 'ygarciaz@zonafrancadepereira.com', '9874', 'Yaqueline', 'Garcia Zapata', '', 'activo', '', 'lunes', 2, 1, 3),
+(11, 'agalan@zonafrancadepereira.com', '8745', 'Andrea ', 'Galan Moreno', '', 'activo', '', 'lunes', 2, 1, 3),
+(12, 'cbustamante@zonafrancadepereira.com', '6302', 'Isabel Cristina', 'Bustamante', '', 'activo', '', 'lunes', 2, 1, 3),
+(13, 'evelasquez@zonafrancadepereira.com', '7913', 'Estefania', 'Velasquez', '', 'activo', '', 'lunes', 2, 1, 3),
+(14, 'bparra@zonafrancadepereira.com', '5241', 'Bayron Julian', 'Gomez Parra', '', 'activo', '', 'lunes', 2, 1, 3),
+(15, 'fgomez@zonafrancadepereira.com', '5213', 'Faisury', 'Gomez Serna', '', 'activo', '', 'lunes', 2, 1, 3),
+(16, 'jperez@zonafrancadepereira.com', '3054', 'Juan Carlos', 'P‚rez Rodas', '', 'activo', '', 'lunes', 2, 1, 3),
+(17, 'yrios@zonafrancadepereira.com', '7852', 'Yuly Viviana', 'Rios Casta¤o', '', 'activo', '', 'lunes', 2, 1, 3),
+(18, 'Serazo@zonafrancadepereira.com', '8415', 'Sebastian', 'Erazo Aguirre', '', 'activo', '', 'lunes', 2, 1, 3),
+(19, 'practicantesig@zonafrancadepereira.com', '6825', 'Jennifer Alexandra', 'Villada Gonzales', '', 'activo', '', 'lunes', 2, 1, 3),
+(20, 'rsoto@zonafrancadepereira.com', '9730', 'Robert Arturo', 'Soto V‚lez', '', 'activo', '', 'lunes', 2, 1, 3),
+(21, 'jraigosa@zonafrancadepereira.com', '6548', 'Julio', 'Raigosa', '', 'activo', '', 'lunes', 2, 1, 3),
+(22, 'ylopez@zonafrancadepereira.com', '1548', 'Yuliana Andrea', 'Lopez Taborda', '', 'activo', '', 'lunes', 2, 1, 3),
+(23, 'jgutierrez@zonafrancadepereira.com', '2315', 'Julian Bernardo', 'Gutierrez Naranjo', '', 'activo', '', 'lunes', 2, 1, 3),
+(24, 'malvarez@zonafrancadepereira.com', '6582', 'Maria Valentina', 'Alvarez Gallego', '', 'activo', '', 'lunes', 2, 1, 3),
+(25, 'gerencia@creserconsultores.com.co', '3201', 'Mateo', 'Rios', '', 'activo', '', 'lunes', 2, 1, 3),
+(26, 'alagos@zonafrancadepereira.com', '7895', 'Ana Luisa', ' Lagos Pati¤o', '', 'activo', '', 'lunes', 2, 1, 3),
+(27, 'diradministrativo@zonafrancadepereira.com', '9654', 'Cristian', 'Benavides', '', 'activo', '', 'lunes', 2, 1, 3),
+(28, 'kechavarria@zonafrancadepereira.com', '9632', 'Kevin David', 'Echavarria Gonzalez', '', 'activo', '', 'lunes', 2, 1, 3),
+(55, 'correo_usuario', 'contrasena', 'nombre_usuario', 'apellidos_usuario', 'salario_us', '', 'firma_usuario', 'lunes', 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -338,6 +404,14 @@ ALTER TABLE `actividades_acpm`
   ADD PRIMARY KEY (`id_actividad`),
   ADD KEY `id_usuario_fk` (`id_usuario_fk`),
   ADD KEY `id_acpm_fk` (`id_acpm_fk`);
+
+--
+-- Indices de la tabla `activos`
+--
+ALTER TABLE `activos`
+  ADD PRIMARY KEY (`id_activo`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`),
+  ADD KEY `id_proveedor` (`id_proveedor_fk`);
 
 --
 -- Indices de la tabla `cargos`
@@ -421,6 +495,12 @@ ALTER TABLE `actividades_acpm`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `activos`
+--
+ALTER TABLE `activos`
+  MODIFY `id_activo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1550;
+
+--
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
@@ -436,13 +516,13 @@ ALTER TABLE `detalle_actividad`
 -- AUTO_INCREMENT de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
-  MODIFY `id_orden_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_orden_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_compra`
 --
 ALTER TABLE `orden_compra`
-  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `proceso`
@@ -460,7 +540,7 @@ ALTER TABLE `sadoc`
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -471,6 +551,13 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `activos`
+--
+ALTER TABLE `activos`
+  ADD CONSTRAINT `activos_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`),
+  ADD CONSTRAINT `activos_ibfk_2` FOREIGN KEY (`id_proveedor_fk`) REFERENCES `proveedor_compras` (`id_proveedor`);
 
 --
 -- Filtros para la tabla `usuarios`
