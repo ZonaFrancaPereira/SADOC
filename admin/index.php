@@ -27,7 +27,6 @@
     </div>
     <!-- /.sidebar -->
     </aside>
-    </div>
   <?php
     //require('include/footer.php');
 
@@ -69,10 +68,10 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Activos Fijos</span>
-                <h3><?= $cantidad_activos ?></h3>
+                <h3><?= $cantidad_activos; ?></h3>
 
                 <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
+                  <div class="progress-bar" style="width: <?= $cantidad_activos; ?>%"></div>
                 </div>
                 <span class="progress-description">
                   Cantidad de Activos Asignados
@@ -89,9 +88,9 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Ordenes de Compra</span>
-                <h3>150</h3>
+                <h3><?= $cantidad_orden ?></h3>
                 <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
+                  <div class="progress-bar" style="width: <?= $cantidad_orden ?>%"></div>
                 </div>
                 <span class="progress-description">
                   Esperando aprobación
@@ -108,10 +107,11 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Actividades </span>
-                <h3>150</h3>
+
+                <h3><?= $proxima_vencer; ?></h3>
 
                 <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
+                  <div class="progress-bar" style="width: <?= $proxima_vencer; ?>%"></div>
                 </div>
                 <span class="progress-description">
                   Proximas a Vencer
@@ -128,10 +128,10 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Urgente</span>
-                <h3><?= $total_actividades_vencidas ?></h3>
+                <h3><?= $total_actividades_vencidas; ?></h3>
 
                 <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
+                  <div class="progress-bar" style="width: <?= $total_actividades_vencidas; ?>%"></div>
                 </div>
                 <span class="progress-description">
                   Actividades Vencidas
@@ -141,8 +141,82 @@
             </div>
             <!-- /.info-box -->
           </div>
+          
+           <!-- /ESTA TARJETA ES PARA LA GERENTE -->
+          <?php if ($_SESSION['firmar_orden'] == "Si") { ?>
+            <div class="col-md-8 col-sm-12 col-12">
+              <!-- /.card -->
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title">Ordenes por Aprobar</h3>
+                  <div class="card-tools">
+                    <a href="#" class="btn btn-tool btn-sm">
+                      <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="btn btn-tool btn-sm">
+                      <i class="fas fa-bars"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                  <table class="display table table-striped table-valign-middle">
+                    <thead>
+                      <tr>
+                        <th># Orden</th>
+                        <th>Cotizante</th>
+                        <th>Fecha</th>
+                        <th>Valor</th>
+                        <th>Ver</th>
+                        <th>Aprobar</th>
+                        <th>Ni Chimba</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      try {
+                        $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
+                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
+                                   c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
+                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
+                                    u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
+                                    FROM  orden_compra c
+                                    INNER JOIN usuarios u
+                                    ON c.id_cotizante=u.Id_usuario
+                                    INNER JOIN proveedor_compras p
+                                    ON c.id_proveedor_fk= p.id_proveedor
+                                     WHERE  c.estado_orden = "Proceso" ');
+                        $stmt->execute();
+                        $registros = 1;
+                        if ($stmt->rowCount() > 0) {
 
+                          while ($row = $stmt->fetch()) {
 
+                            $id_orden = $row["id_orden"];
+                            $nombre_usuario = $row["nombre_usuario"];
+                            $apellidos_usuario = $row["apellidos_usuario"];
+                            echo "<tr>";
+                            echo "<td >" . $id_orden . "</td>";
+                            echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
+                            echo "<td>" . $row["fecha_orden"] . "</td>";
+                            echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
+                            echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
+                            echo "<td> <a href='ordenes/editar_estado.php?id_orden=$id_orden?estado_orden=Aprobada' > <button class='btn bg-success'><i class='fas fa-check-circle'></i> </button></a></td>";
+                            echo "<td>  <button class='btn bg-danger'><i class='fas fa-times-circle'></i> </button></td>";
+                            echo "</tr>";
+                            $registros++;
+                          }
+                        }
+                      } catch (PDOException $e) {
+                        echo "Error en el servidor";
+                      } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          <?php } ?>
+           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC                                                                                                                                                      -->
           <div class="card col-md-4 col-sm-6 col-12">
             <div class="card-header">
               <h3 class="card-title">Ultimos Documentos SADOC</h3>
@@ -165,7 +239,7 @@
                       $fecha_subida = $row["Fecha_Subida"];
                       $nombre_archivo = $row["nombre_archivo"];
                       $ruta_principal = $row["ruta_principal"];
-                      
+
                 ?>
 
                       <li class="item">
@@ -199,14 +273,20 @@
             </div>
             <!-- /.card-footer -->
           </div>
+
           <!-- /.col -->
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 
   </div>
+
+
   <?php require('footer.php'); ?>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
   <!-- ./wrapper -->
 
 

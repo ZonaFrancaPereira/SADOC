@@ -347,7 +347,7 @@
                           </div>
                         </div>
                       <?php } ?>
-                      <!-- /.col-md-6 -->
+                      <!-- /.col-md-6  -->
                       <?php if ($_SESSION['firmar_orden'] == "Si") { ?>
                         <div class="col-lg-12">
                           <!-- /.card -->

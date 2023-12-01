@@ -112,7 +112,6 @@ if ($_SESSION['ingreso']==true) {
   
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-
  <!-- Navbar PARA CERRAR SESION Y AÑADIR OPCIONES DENTRO DEL SISTEMA -->
  <nav class="main-header navbar navbar-expand navbar-dark">
   <!-- Left navbar links -->
@@ -2654,6 +2653,9 @@ if ($_SESSION['ingreso']==true) {
 <footer>
 
 </footer>
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
 <?php
 
 if ($_SESSION['proceso_fk'] == "JR") {
