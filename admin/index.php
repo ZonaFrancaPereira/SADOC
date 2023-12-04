@@ -216,7 +216,7 @@
               <!-- /.card -->
             </div>
           <?php } ?>
-           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC                                                                                                                                                      -->
+           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC -->
           <div class="card col-md-4 col-sm-6 col-12">
             <div class="card-header">
               <h3 class="card-title">Ultimos Documentos SADOC</h3>
@@ -268,7 +268,7 @@
               </ul>
             </div>
             <!-- /.card-body -->
-            <div class="card-footer text-center">
+            <div class="card card-footer text-center bg-primary">
               <a href="sadoc.php" class="uppercase" target="_blank">Ir a SADOC</a>
             </div>
             <!-- /.card-footer -->

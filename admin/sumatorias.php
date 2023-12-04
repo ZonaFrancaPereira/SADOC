@@ -23,7 +23,7 @@ WHERE estado_actividad = 'Incompleta'
   try {
     $stmt = $conn->prepare("SELECT COUNT(id_activo) AS cantidad_activos
     FROM activos
-     WHERE estado_activo = 'Activo' OR estado_activo = 'Rentado' AND id_usuario_fk='".$id_usuario_fk."' ");
+    WHERE (estado_activo = 'Activo' OR estado_activo = 'Rentado') AND id_usuario_fk = '".$id_usuario_fk."' ");
     $stmt->execute();
     $registros = 1;
     if ($stmt->rowCount() > 0) {
@@ -38,7 +38,7 @@ WHERE estado_actividad = 'Incompleta'
   try {
     $stmt = $conn->prepare("SELECT COUNT(id_orden) AS cantidad_orden
     FROM orden_compra
-     WHERE estado_orden = 'Proceso' OR estado_orden = 'Analisis de Cotizacion' AND id_cotizante='".$id_usuario_fk."' ");
+     WHERE (estado_orden = 'Proceso' OR estado_orden = 'Analisis de Cotizacion') AND id_cotizante='".$id_usuario_fk."' ");
     $stmt->execute();
     $registros = 1;
     if ($stmt->rowCount() > 0) {
@@ -54,8 +54,8 @@ WHERE estado_actividad = 'Incompleta'
 try {
   $stmt = $conn->prepare("SELECT COUNT(*) AS cantidad_actividades_a_vencer
   FROM actividades_acpm
-  WHERE fecha_actividad <= DATE_ADD(CURDATE(), INTERVAL 10 DAY)
-  AND fecha_actividad >= CURDATE() AND id_usuario_fk='".$id_usuario_fk."' ");
+  WHERE (fecha_actividad <= DATE_ADD(CURDATE(), INTERVAL 10 DAY)
+  AND fecha_actividad >= CURDATE() ) AND id_usuario_fk='".$id_usuario_fk."' ");
   $stmt->execute();
   $registros = 1;
   if ($stmt->rowCount() > 0) {

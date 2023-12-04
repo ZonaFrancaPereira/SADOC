@@ -49,7 +49,7 @@ if ($_SESSION['ingreso'] == true) {
         </a>
       </li>
     <?php  } ?>
-    <?php if ($_SESSION['consultar_activos'] == "Si") { ?>
+   
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#consultar" class="nav-link ">
           <i class="nav-icon fas fa-th"></i>
@@ -58,7 +58,7 @@ if ($_SESSION['ingreso'] == true) {
           </p>
         </a>
       </li>
-    <?php  } ?>
+
 
 
   </ul>
@@ -101,7 +101,7 @@ if ($_SESSION['ingreso'] == true) {
                       $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?id_activo='" .$_SESSION['Id']. "'", "");
                       $qr = $svg;
                       ?>
-                      <li class="col-md-4" style=" border: 1px solid black; background:white;">
+                      <li class="col-md-6" style=" border: 1px solid black; background:white;">
                                 <div class="product-img">
                                   <a href="javascript:void(0)" class="product-title"><?php echo $_SESSION['siglas_usuario']; ?></a>
                                   <?= $qr ?>
@@ -127,7 +127,7 @@ if ($_SESSION['ingreso'] == true) {
                               $qr = $svg;
                         ?>
 
-                              <li class="col-md-4" style=" border: 1px solid black; background:white;">
+                              <li class="col-md-6" style=" border: 1px solid black; background:white;">
                                 <div class="product-img">
                                   <a href="javascript:void(0)" class="product-title"><?php echo $_SESSION['siglas_usuario']; ?></a>
                                   <?= $qr ?>
