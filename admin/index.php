@@ -194,14 +194,17 @@
                             $id_orden = $row["id_orden"];
                             $nombre_usuario = $row["nombre_usuario"];
                             $apellidos_usuario = $row["apellidos_usuario"];
+                            $fecha_orden=$row["fecha_orden"];
+                            $total_orden=$row["total_orden"];
+                            $correo_usuario=$row["correo_usuario"];
                             echo "<tr>";
                             echo "<td >" . $id_orden . "</td>";
                             echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
                             echo "<td>" . $row["fecha_orden"] . "</td>";
                             echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
                             echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
-                            echo "<td> <a href='ordenes/editar_estado.php?id_orden=$id_orden?estado_orden=Aprobada' > <button class='btn bg-success'><i class='fas fa-check-circle'></i> </button></a></td>";
-                            echo "<td>  <button class='btn bg-danger'><i class='fas fa-times-circle'></i> </button></td>";
+                            echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Aprobada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden'><button class='btn btn-success'><i class='fas fa-thumbs-up'></i></button></a></td>";
+                            echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Denegada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-danger'><i class='fas fa-times-circle'></i> </button></a></td>";
                             echo "</tr>";
                             $registros++;
                           }
@@ -216,7 +219,7 @@
               <!-- /.card -->
             </div>
           <?php } ?>
-           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC                                                                                                                                                      -->
+           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC -->
           <div class="card col-md-4 col-sm-6 col-12">
             <div class="card-header">
               <h3 class="card-title">Ultimos Documentos SADOC</h3>
@@ -268,7 +271,7 @@
               </ul>
             </div>
             <!-- /.card-body -->
-            <div class="card-footer text-center">
+            <div class="card card-footer text-center bg-primary">
               <a href="sadoc.php" class="uppercase" target="_blank">Ir a SADOC</a>
             </div>
             <!-- /.card-footer -->
