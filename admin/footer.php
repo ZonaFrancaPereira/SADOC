@@ -189,3 +189,16 @@ dom:"Bfrtilp",
     });
   })
 </script>
+<script>
+  $(document).ready(function() {
+    // Inicializa Quill en el contenedor
+    var quill = new Quill('.quill-content', {
+      theme: 'snow'
+    });
+
+    // Actualiza el contenido del textarea cuando cambia Quill
+    quill.on('text-change', function() {
+      $('.editor').val(quill.root.innerHTML);
+    });
+  });
+</script>
