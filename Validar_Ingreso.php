@@ -47,6 +47,7 @@ try {
       $_SESSION['consultar_activos']= $fila['consultar_activos'];
       $_SESSION['ingresar_activos']= $fila['ingresar_activos'];
       $_SESSION['editar_activos']= $fila['editar_activos'];
+      $_SESSION['nombre_proceso']= $fila['nombre_proceso'];
       $cargo = $fila['siglas_proceso'];
   }
 
