@@ -33,26 +33,26 @@ if ($_SESSION['ingreso'] == true) {
           <div class="tab-pane  show active" id="panelc">
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
-              <div class="col-md-12">
-            <div class="card card-primary collapsed-card">
-              <div class="card-header">
-                <h3 class="card-title">ID ACPM: <?php echo $id_acpm ?> </h3>
-                <button type="button" class="btn btn-primary btn-block"><i class="fa fa-bell"></i> .btn-block</button>
+                <div class="col-md-12">
+                  <div class="card card-primary collapsed-card">
+                    <div class="card-header">
+                      <h3 class="card-title col-md-10">ID ACPM: <?php echo $id_acpm ?> </h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                  </button>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      DESCRIPCION ACPM: <?php echo $descripcion ?>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
                 </div>
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-              DESCRIPCION ACPM: <?php echo $descripcion ?>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
@@ -71,6 +71,7 @@ if ($_SESSION['ingreso'] == true) {
                       <?php
                       foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
                           $id_actividad = $row['id_actividad'];
+                          $estado_actividad = $row["estado_actividad"];
                       ?>
                           <tr style=text-align:center>
                             <td><?php echo $row["id_actividad"] ?></td>
@@ -96,6 +97,9 @@ if ($_SESSION['ingreso'] == true) {
                       </tr>
                     </tfoot>
                   </table>
+                  <div class="col-md-2" style="float: left;">
+                    <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -199,6 +203,35 @@ if ($_SESSION['ingreso'] == true) {
 </aside>
 <!-- /.control-sidebar -->
 </div>
+<script>
+  // Obtener el elemento enviar_sig por su ID
+  var enviar_sig = document.getElementById("enviar_sig");
+
+  // Obtener el estado de la actividad desde el atributo de datos
+  var estado_actividad = enviar_sig.dataset.estado;
+
+  // Verificar el estado y deshabilitar el botón si es "Incompleta"
+  if (estado_actividad === 'Incompleta') {
+    enviar_sig.disabled = true;
+  }
+
+  // Agregar un event listener para ejecutar la función cuando el botón se hace clic
+  enviar_sig.addEventListener("click", function() {
+    // Verificar si la actividad está completa
+    if (estado_actividad === 'Completa') {
+      // Si está completa, realizar la acción deseada (enviar a SIG, en este caso)
+      enviarASIG();
+    } else {
+      // Si no está completa, mostrar un mensaje o realizar otra acción
+      alert("La actividad está incompleta. No se puede enviar a SIG.");
+    }
+  });
+
+  // Función para simular el envío a SIG
+  function enviarASIG() {
+    alert("Enviando a SIG...");
+  }
+</script>
 <!-- /.style quill -->
 <style>
   .ql-toolbar {
@@ -208,6 +241,7 @@ if ($_SESSION['ingreso'] == true) {
     /* Cambiar el color del texto en la barra de herramientas */
   }
 </style>
+
 
 <script>
   $.widget.bridge('uibutton', $.ui.button)
