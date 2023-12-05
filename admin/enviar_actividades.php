@@ -22,6 +22,7 @@ if ($_SESSION['ingreso'] == true) {
   header('location: index.php');
 }
 ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">
@@ -32,15 +33,26 @@ if ($_SESSION['ingreso'] == true) {
           <div class="tab-pane  show active" id="panelc">
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
-                <div class="btn btn-secondary">
-                  <div class="col-md-12 col-xs-12 col-sm-12">
-                    <label for="">ID ACPM: <?php echo $id_acpm ?> </label>
-                  </div>
-                  <div class="col-md-12 col-xs-12 col-sm-12">
-                    <label for="">DESCRIPCION ACPM: <?php echo $descripcion ?> </label>
-                  </div>
-                </div>
+              <div class="col-md-12">
+            <div class="card card-primary collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">ID ACPM: <?php echo $id_acpm ?> </h3>
+                <button type="button" class="btn btn-primary btn-block"><i class="fa fa-bell"></i> .btn-block</button>
 
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              DESCRIPCION ACPM: <?php echo $descripcion ?>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
@@ -58,6 +70,7 @@ if ($_SESSION['ingreso'] == true) {
                     <tbody>
                       <?php
                       foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
+                          $id_actividad = $row['id_actividad'];
                       ?>
                           <tr style=text-align:center>
                             <td><?php echo $row["id_actividad"] ?></td>
@@ -65,8 +78,8 @@ if ($_SESSION['ingreso'] == true) {
                             <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                             <td><?php echo $row["fecha_actividad"] ?></td>
                             <td><?php echo $row["estado_actividad"] ?></td>
-                            <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>">Subir Evidencia</button></td>
-                            <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>">Visualizar Evidencias</button></td>
+                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>">Subir Evidencia</button></td>
+                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>">Visualizar Evidencias</button></td>
                           </tr>
                       <?php }
                       } ?>
@@ -89,6 +102,19 @@ if ($_SESSION['ingreso'] == true) {
               <!-- /.card -->
             </div>
           </div>
+          <?php
+          // Consulta para verificar si hay evidencia asociada a la actividad
+          $consultaEvidencia = $conn->query("SELECT COUNT(*) as cantidad_evidencia FROM detalle_actividad WHERE id_actividad_fk = '$id_actividad'");
+
+          // Obtiene el resultado de la consulta
+          $resultadoEvidencia = $consultaEvidencia->fetch(PDO::FETCH_ASSOC);
+
+          // Verifica si hay evidencia asociada
+          if ($resultadoEvidencia['cantidad_evidencia'] > 0) {
+            // Hay evidencia asociada, entonces actualiza el estado a "completa" en la tabla actividades_acpm
+            $conn->query("UPDATE actividades_acpm SET estado_actividad = 'Completa' WHERE actividades_acpm.id_actividad = '$id_actividad'");
+          }
+          ?>
           <!-- MODAL PARA SUBIR EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-success">
@@ -98,7 +124,7 @@ if ($_SESSION['ingreso'] == true) {
                     <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST">
+                    <form id="" method="POST" action="">
                       <div class="card card-navy">
                         <div class="card-body">
                           <div class="row">
@@ -106,13 +132,12 @@ if ($_SESSION['ingreso'] == true) {
                               <label for="fecha_evidencia">Fecha Actividad</label>
                               <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12" >
+                            <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
-                              <div class="editor" id="evidencia" name="evidencia"></div>
-                              <!-- Create the editor container -->
+                              <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
+                              <!-- Contenedor para el contenido de Quill -->
+                              <div class="quill-content"></div>
                             </div>
-                            <!-- /.SUBIR EVIDENCIAS -->
-                            <!-- /.card-header -->
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br><br><br><label>Recursos</label>
                               <select class="form-control" id="recursos" name="recursos" required>
@@ -121,17 +146,13 @@ if ($_SESSION['ingreso'] == true) {
                                 <option value="Tecnologicos">Tecnologicos</option>
                               </select>
                             </div>
-                            <!-- /.content -->
-                            
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
                                 <label>Numero de la Actividad</label>
                                 <input type="number" id="id_actividad" class="form-control" readonly>
                               </div>
-                              <!-- /.form-group -->
                             </div>
-                            <!-- /.SUBIR EVIDENCIAS -->
                             <div class="col-md-6 col-xs-6 col-sm-6" hidden>
                               <label>Id Usuario</label>
                               <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
@@ -140,26 +161,21 @@ if ($_SESSION['ingreso'] == true) {
                               <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
                             </div>
                           </div>
-                          <!-- /.modal-content -->
-                          <!-- /.card-body -->
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
-                <!-- /.modal-dialog -->
               </div>
-              <!-- /.modal -->
           </section>
           <!-- /.CIERRE DE MODAL -->
+
           <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-evidencia">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                  <div class="btn btn-success btn-block">
-                  <h4 class="modal-title">VISUALIZAR EVIDENCIA</h4>
-                  </div>
+
                   <div class="modal-body">
                     <div id="div_detalle">
                     </div>
@@ -183,17 +199,21 @@ if ($_SESSION['ingreso'] == true) {
 </aside>
 <!-- /.control-sidebar -->
 </div>
+<!-- /.style quill -->
+<style>
+  .ql-toolbar {
+    background-color: white;
+    /* Cambiar el color de fondo de la barra de herramientas */
+    color: white;
+    /* Cambiar el color del texto en la barra de herramientas */
+  }
+</style>
 
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-
-<script>
-  var quill = new Quill('.editor', {
-    theme: 'snow'
-  });
-</script>
 <!-- Page specific script -->
+
 <script>
   $(function() {
     $("#example1").DataTable({
@@ -202,7 +222,7 @@ if ($_SESSION['ingreso'] == true) {
       "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
- 
+
     $('.select2').select2()
 
   });
@@ -214,7 +234,7 @@ if ($_SESSION['ingreso'] == true) {
     var modal = $(this);
 
     modal.find('.modal-body #id_actividad').val(id_actividad);
-    
+
   });
 
   $('#modal-evidencia').on('show.bs.modal', function(event) {
@@ -234,7 +254,6 @@ if ($_SESSION['ingreso'] == true) {
       }
     });
   });
-  
 </script>
 
 </body>

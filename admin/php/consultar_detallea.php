@@ -8,23 +8,45 @@ $result = $conn->query($query);
 if ($result->rowCount() > 0) {
     foreach ($result as $row) {
 ?>
+        <div class="btn bg-info btn-block">
+            <h4 class="modal-title">NUMERO DE ACTIVIDAD: <?php echo $row["id_actividad"] ?></h4>
+        </div>
         <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped" >
-                  <thead class="text-center">
-                    <tr>
-                        <th>Fecha Evidencia</th>
-                        <th>Evidencia</th>
-                        <th>Recursos</th>
-                        <th>Id de la Actividad</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <td><?php echo $row["fecha_evidencia"] ?></td>
-                    <td><p class="text-break" style="max-width;"><?php echo $row["evidencia"] ?></td></p>
-                    <td><?php echo $row["recursos"] ?></td>
-                    <td><?php echo $row["id_actividad"] ?></td>
-                </tbody>
-            </table>
+            <div class="col-md-12 bg-info">
+                <!-- Widget: user widget style 1 -->
+                <div class="card card-widget widget-user" style="background-color: white; color: black;">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header text-black" style="background: url('../dist/img/photo1.png') center center;">
+                        <h3 class="widget-user-username text-center" style="background-color: white; color: black;">EVIDENCIA</h3>
+                        <h5 class="widget-user-desc text-center">
+                            <p class="text-break" style="max-width,background-color: white; color: black;"><?php echo $row["evidencia"] ?></p>
+                        </h5>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-6 border-right">
+                                
+                                <div class="description-block">
+                                    <h5 class="description-header">FECHA EVIDENCIA</h5>
+                                    <span class="description-text"><?php echo $row["fecha_evidencia"] ?></span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-6 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">RECURSOS</h5>
+                                    <span class="description-text"><?php echo $row["recursos"] ?></span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+            </div>
         </div>
 <?php
     }
@@ -35,4 +57,5 @@ if ($result->rowCount() > 0) {
 ?>
 
 </body>
+
 </html>

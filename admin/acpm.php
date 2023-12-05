@@ -241,8 +241,8 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["fecha_correccion"] ?></td>
                           <td><?php echo $row["fecha_finalizacion"] ?></td>
                           <td><?php echo $row["estado_acpm"] ?></td>
-                          <td><button type="button" class="btn btn-success" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>">Asignar</button></a></td>
-                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>"><button type="button" class="btn btn-success" id="idConsecutivo" name="idConsecutivo" >Ver</button></a></td>
+                          <td><button type="button" class="btn bg-info" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>">Asignar</button></a></td>
+                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo" >Ver</button></a></td>
                         </tr>
                     <?php }
                     } ?>
@@ -273,8 +273,8 @@ if ($_SESSION['ingreso'] == true) {
             <div class="modal fade" id="modal-success">
               <div class="modal-dialog">
                 <div class="modal-content">
-                  <div class="modal-header btn btn-success btn-block">
-                    <h4 class="modal-title ">ASIGNAR ACTIVIDAD</h4>
+                  <div class="modal-header btn bg-info btn-block">
+                    <h4 class="modal-title">ASIGNAR ACTIVIDAD</h4>
                   </div>
                   <div class="modal-body">
                           <div class="row">
@@ -286,7 +286,7 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="card-body">
                                   <div class="row">
                                     <div class="col-md-12 col-xs-12 col-sm-12">
-                                      <label for="fecha_actividad">Fecha Actividad</label>
+                                      <label for="fecha_actividad">Fecha vencimiento de la Actividad</label>
                                       <input type="date" name="fecha_actividad" class="form-control" id="fecha_actividad" required>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
@@ -294,7 +294,7 @@ if ($_SESSION['ingreso'] == true) {
                                       <textarea class="form-control" id="descripcion_actividad" name="descripcion_actividad"></textarea>
                                     </div>
                                     <div class="col-2 col-xs-12 col-sm-12">
-                                      <label for="estado_actividad">Estado de la Actividad</label><input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
+                                    <label for="estado_actividad">Estado de la Actividad</label><input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
                                     </div>
                                     <div class="col-2 col-xs-10 col-sm-10">
                                       <label for="id_usuario">Nombre del Responsable:</label>
@@ -326,7 +326,7 @@ if ($_SESSION['ingreso'] == true) {
                                   <!-- /.card-body -->
                                   <br>
                                   <div class="col-md-12 col-xs-12 col-sm-12">
-                                    <button type="button" class="btn btn-success btn-block " id="enviar_actividad" name="enviar_actividad">Asignar Actividad</button>
+                                    <button type="button" class="btn bg-info btn-block " id="enviar_actividad" name="enviar_actividad">Asignar Actividad</button>
                                   </div>
                                 </div>
                             </form>
