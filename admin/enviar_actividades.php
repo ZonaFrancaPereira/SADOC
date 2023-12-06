@@ -22,7 +22,6 @@ if ($_SESSION['ingreso'] == true) {
   header('location: index.php');
 }
 ?>
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">
@@ -53,6 +52,7 @@ if ($_SESSION['ingreso'] == true) {
                   </div>
                   <!-- /.card -->
                 </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
@@ -128,7 +128,7 @@ if ($_SESSION['ingreso'] == true) {
                     <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST" action="">
+                    <form id="" method="POST">
                       <div class="card card-navy">
                         <div class="card-body">
                           <div class="row">
@@ -141,7 +141,10 @@ if ($_SESSION['ingreso'] == true) {
                               <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
                               <!-- Contenedor para el contenido de Quill -->
                               <div class="quill-content"></div>
+                              <!-- Create the editor container -->
                             </div>
+                            <!-- /.SUBIR EVIDENCIAS -->
+                            <!-- /.card-header -->
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br><br><br><label>Recursos</label>
                               <select class="form-control" id="recursos" name="recursos" required>
@@ -150,13 +153,17 @@ if ($_SESSION['ingreso'] == true) {
                                 <option value="Tecnologicos">Tecnologicos</option>
                               </select>
                             </div>
+                            <!-- /.content -->
+
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
                                 <label>Numero de la Actividad</label>
                                 <input type="number" id="id_actividad" class="form-control" readonly>
                               </div>
+                              <!-- /.form-group -->
                             </div>
+                            <!-- /.SUBIR EVIDENCIAS -->
                             <div class="col-md-6 col-xs-6 col-sm-6" hidden>
                               <label>Id Usuario</label>
                               <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
@@ -165,15 +172,18 @@ if ($_SESSION['ingreso'] == true) {
                               <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
                             </div>
                           </div>
+                          <!-- /.modal-content -->
+                          <!-- /.card-body -->
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
+                <!-- /.modal-dialog -->
               </div>
+              <!-- /.modal -->
           </section>
           <!-- /.CIERRE DE MODAL -->
-
           <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
           <section class="content">
             <div class="modal fade" id="modal-evidencia">
@@ -203,36 +213,6 @@ if ($_SESSION['ingreso'] == true) {
 </aside>
 <!-- /.control-sidebar -->
 </div>
-<script>
-  // Obtener el elemento enviar_sig por su ID
-  var enviar_sig = document.getElementById("enviar_sig");
-
-  // Obtener el estado de la actividad desde el atributo de datos
-  var estado_actividad = enviar_sig.dataset.estado;
-
-  // Verificar el estado y deshabilitar el botón si es "Incompleta"
-  if (estado_actividad === 'Incompleta') {
-    enviar_sig.disabled = true;
-  }
-
-  // Agregar un event listener para ejecutar la función cuando el botón se hace clic
-  enviar_sig.addEventListener("click", function() {
-    // Verificar si la actividad está completa
-    if (estado_actividad === 'Completa') {
-      // Si está completa, realizar la acción deseada (enviar a SIG, en este caso)
-      enviarASIG();
-    } else {
-      // Si no está completa, mostrar un mensaje o realizar otra acción
-      alert("La actividad está incompleta. No se puede enviar a SIG.");
-    }
-  });
-
-  // Función para simular el envío a SIG
-  function enviarASIG() {
-    alert("Enviando a SIG...");
-  }
-</script>
-<!-- /.style quill -->
 <style>
   .ql-toolbar {
     background-color: white;
@@ -241,8 +221,6 @@ if ($_SESSION['ingreso'] == true) {
     /* Cambiar el color del texto en la barra de herramientas */
   }
 </style>
-
-
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -288,6 +266,34 @@ if ($_SESSION['ingreso'] == true) {
       }
     });
   });
+  
+  // Obtener el elemento enviar_sig por su ID
+  var enviar_sig = document.getElementById("enviar_sig");
+
+  // Obtener el estado de la actividad desde el atributo de datos
+  var estado_actividad = enviar_sig.dataset.estado;
+
+  // Verificar el estado y deshabilitar el botón si es "Incompleta"
+  if (estado_actividad === 'Incompleta') {
+    enviar_sig.disabled = true;
+  }
+
+  // Agregar un event listener para ejecutar la función cuando el botón se hace clic
+  enviar_sig.addEventListener("click", function() {
+    // Verificar si la actividad está completa
+    if (estado_actividad === 'Completa') {
+      // Si está completa, realizar la acción deseada (enviar a SIG, en este caso)
+      enviarASIG();
+    } else {
+      // Si no está completa, mostrar un mensaje o realizar otra acción
+      alert("La actividad está incompleta. No se puede enviar a SIG.");
+    }
+  });
+
+  // Función para simular el envío a SIG
+  function enviarASIG() {
+    alert("Enviando a SIG...");
+  }
 </script>
 
 </body>
