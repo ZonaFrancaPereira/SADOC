@@ -168,7 +168,7 @@
                         <th>Valor</th>
                         <th>Ver</th>
                         <th>Aprobar</th>
-                        <th>Ni Chimba</th>
+                        <th>Rechazar</th>
                       </tr>
                     </thead>
                     <tbody>

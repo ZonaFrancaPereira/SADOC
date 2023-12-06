@@ -78,20 +78,16 @@ function insertar_acpm(){
 					data:json,
 					url:'php/insertar_acpm.php',    
 					success: function (resultacpm) {
-						if(resultacpm=="1"){
-							Swal.fire(
-								'Buen Trabajo',
-								'Se registro la ACPM con exito',
-								'success'
-								)
-						$("#acpm").load(location.href + " #acpm");
-						}else{
-								Swal.fire(
-								'Ups',
-								'No se registro la ACPM',
-								'error'
-								)
-						}
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se registró la ACPM con éxito',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = 'acpm.php';
+							}
+						});
 					}
 				});
 			} else if (

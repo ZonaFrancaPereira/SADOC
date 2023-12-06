@@ -22,7 +22,7 @@ function insertar_actividad() {
 	var fecha_actividad = $("#fecha_actividad").val();
 	var descripcion_actividad = $("#descripcion_actividad").val();
 	var estado_actividad = $("#estado_actividad").val();
-	var id_usuario = $("#id_usuario_fk").val();
+	var id_usuario = $("#id_responsable").val();
 	var id_acpm = $("#id_acpm_fk").val();
 	//alert(fecha_actividad+descripcion_actividad+estado_actividad+id_usuario_fk+id_acpm_fk);
 	if (descripcion_actividad == "" || id_usuario == "") {
@@ -61,21 +61,17 @@ function insertar_actividad() {
 					type: "POST",
 					data: json,
 					url: 'php/insertar_actividad.php',
-					success: function (resultacpm) {
-						if (resultacpm == "1") {
-							Swal.fire(
-								'Buen Trabajo',
-								'Se registro la ACPM con exito',
-								'success'
-							)
-							$("#actividades").load(location.href + " #actividades");
-						} else {
-							Swal.fire(
-								'Ups',
-								'No se registro la ACTIVIDAD',
-								'error'
-							)
-						}
+					success: function (resultactividad){
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se registró la actividad con éxito',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = 'acpm.php';
+							}
+						});
 					}
 				});
 			} else if (
