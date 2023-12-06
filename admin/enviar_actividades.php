@@ -110,17 +110,22 @@ if ($_SESSION['ingreso'] == true) {
           </div>
         </div>
         <?php
-        // Consulta para verificar si hay evidencia asociada a la actividad
-        $consultaEvidencia = $conn->query("SELECT COUNT(*) as cantidad_evidencia FROM detalle_actividad WHERE id_actividad_fk = '$id_actividad'");
+        // Utiliza sentencias preparadas para evitar inyección de SQL
+        $stmt = $conn->prepare("
+                UPDATE actividades_acpm
+                SET estado_actividad = 'Completa'
+                WHERE id_actividad = :id_actividad
+                AND EXISTS (
+                    SELECT 1
+                    FROM detalle_actividad
+                    WHERE id_actividad_fk = :id_actividad
+                )
+            ");
+        // Asigna valores a los parámetros
+        $stmt->bindParam(':id_actividad', $id_actividad, PDO::PARAM_INT);
 
-        // Obtiene el resultado de la consulta
-        $resultadoEvidencia = $consultaEvidencia->fetch(PDO::FETCH_ASSOC);
-
-        // Verifica si hay evidencia asociada
-        if ($resultadoEvidencia['cantidad_evidencia'] > 0) {
-          // Hay evidencia asociada, entonces actualiza el estado a "completa" en la tabla actividades_acpm
-          $conn->query("UPDATE actividades_acpm SET estado_actividad = 'Completa' WHERE actividades_acpm.id_actividad = '$id_actividad'");
-        }
+        // Ejecuta la consulta preparada
+        $stmt->execute();
         ?>
 
         <!-- MODAL PARA SUBIR EVIDENCIA -->
