@@ -76,8 +76,8 @@ if ($_SESSION['ingreso'] == true) {
     <div id="page-content-wrapper">
       <div class="container-fluid">
         <div class="tab-content card">
-          <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->   
-          <div  class="tab-pane  show active" id="panelc">
+          <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
+          <div class="tab-pane  show active" id="panelc">
             AQUI VAMOS A PONER CONSULTAS DE ALERTAS, ACPM Y ACTIVIDADES PROXIMAS A VENCER.
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
@@ -133,12 +133,12 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-12 bg-navy pt-2 mt-3 col-xs-12 col-sm-12">
                       <center>
-                        <h5>Analisis del Hallazgo</h5>
+                        <h5>Análisis del Hallazgo</h5>
                       </center>
 
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Analisis de Causa (Técnicas de los por ques, espina de pescado, lluvia de ideas, etc)</label>
+                      <label>Análisis de Causa (Técnicas de los por ques, espina de pescado, lluvia de ideas, etc)</label>
                       <textarea class="form-control" id="causa_acpm" name="causa_acpm" rows="3"></textarea>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
@@ -180,7 +180,7 @@ if ($_SESSION['ingreso'] == true) {
                       <textarea class="form-control" id="justificacion_riesgo" name="justificacion_riesgo" rows="3"></textarea>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Fecha Finalizacion (Fecha en la cual la accion debe estar cerrada)</label>
+                      <label>Fecha Finalización (Fecha en la cual la acción debe estar cerrada)</label>
                       <input type="date" name="fecha_finalizacion" class="form-control" id="fecha_finalizacion" required>
                     </div>
                   </div>
@@ -199,8 +199,10 @@ if ($_SESSION['ingreso'] == true) {
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO-->
           <div id="abiertas" class="tab-pane">
             <div class="card" class="">
-              <div class="card-header">
-                <h3 class="card-title">ACPM ABIERTAS</h3>
+              <div class="card-header  bg-primary">
+                <center>
+                  <h3 class="card-title">ACPM Abiertas por <?= $_SESSION["nombre_usuario"]; ?> <?= $_SESSION["apellidos_usuario"]; ?></h3>
+                </center>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -209,14 +211,15 @@ if ($_SESSION['ingreso'] == true) {
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Nombre del responsable</th>
-                      <th>Origen Acpm</th>
+                      
+                      <th>Origen</th>
                       <th>Fuente</th>
                       <th>Tipo de Reporte</th>
-                      <th>Descripcion Acpm</th>
-                      <th>Fecha Correcion</th>
-                      <th>Fecha Finalizacion</th>
+                      <th>Descripción </th>
+                      <th>Fecha Corrección</th>
+                      <th>Fecha Finalización</th>
                       <th>Estado</th>
+                      <th>Informe</th>
                       <th>Asignar</th>
                       <th>Ver</th>
                     </tr>
@@ -229,7 +232,6 @@ if ($_SESSION['ingreso'] == true) {
                     ?>
                         <tr style=text-align:center>
                           <td><?php echo $row["id_consecutivo"] ?></td>
-                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                           <td>
                             <p class="text-break" style="width: 10rem"><?php echo $row["origen_acpm"] ?></p>
                           </td>
@@ -241,27 +243,15 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["fecha_correccion"] ?></td>
                           <td><?php echo $row["fecha_finalizacion"] ?></td>
                           <td><?php echo $row["estado_acpm"] ?></td>
-                          <td><button type="button" class="btn bg-info" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>">Asignar</button></a></td>
-                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm ; ?>&descripcion=<?php echo $descripcion ; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo" >Ver</button></a></td>
+                          <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+
+                          <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
+                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                         </tr>
                     <?php }
                     } ?>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre del responsable</th>
-                      <th>Origen Acpm</th>
-                      <th>Fuente</th>
-                      <th>Tipo de Reporte</th>
-                      <th>Descripcion Acpm</th>
-                      <th>Fecha Correcion</th>
-                      <th>Fecha Finalizacion</th>
-                      <th>Estado</th>
-                      <th>Asignar</th>
-                      <th>Ver</th>
-                    </tr>
-                  </tfoot>
+
                 </table>
               </div>
               <!-- /.card-body -->
@@ -277,69 +267,69 @@ if ($_SESSION['ingreso'] == true) {
                     <h4 class="modal-title">ASIGNAR ACTIVIDAD</h4>
                   </div>
                   <div class="modal-body">
-                          <div class="row">
-                            <form id="form_actividades" method="POST">
-                              <div class="card">
-                                <div class="card-header">
-                                  <label>Desea Asignar actividades a la siguiente ACPM:</label><input type="text" class="form-control" value="" name="id_acpm_fk" id="id_acpm_fk" readonly>
-                                </div>
-                                <div class="card-body">
-                                  <div class="row">
-                                    <div class="col-md-12 col-xs-12 col-sm-12">
-                                      <label for="fecha_actividad">Fecha vencimiento de la Actividad</label>
-                                      <input type="date" name="fecha_actividad" class="form-control" id="fecha_actividad" required>
-                                    </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
-                                      <label for="descripcion_actividad">Descripcion de la Actividad</label>
-                                      <textarea class="form-control" id="descripcion_actividad" name="descripcion_actividad"></textarea>
-                                    </div>
-                                    <div class="col-2 col-xs-12 col-sm-12">
-                                    <label for="estado_actividad">Estado de la Actividad</label><input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
-                                    </div>
-                                    <div class="col-2 col-xs-10 col-sm-10">
-                                      <label for="id_usuario">Nombre del Responsable:</label>
-                                      <input list="browsers" id="id_responsable" name="id_responsable" class="form-control" placeholder="Nombre del responsable" required>
-                                      <datalist id="browsers">
-                                        <?php
-                                        try {
-                                          $stmt = $conn->prepare('SELECT * FROM  usuarios ');
-                                          $stmt->execute();
-                                          if ($stmt->rowCount() > 0) {
-                                            while ($row = $stmt->fetch()) {
-                                              $id_usuario = $row["Id_usuario"];
-                                              $nombre_usuario = $row["nombre_usuario"];
-                                              $apellidos_usuario = $row["apellidos_usuario"];
-                                              echo '<option value=' . $id_usuario . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
-                                            }
-                                          }
-                                        } catch (PDOException $e) {
-                                          echo "Error en el servidor";
-                                        }
-                                        ?>
-                                      </datalist>
-                                    </div>
-                                    <div class="col-2 col-xs-12 col-sm-12" hidden>
-                                      <label for="id_acpm">ID acpm</label>
-                                      <input type="number" class="form-control" value="<?php echo $id_acpm; ?>" name="id_acpm" id="id_acpm_fk" >
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                  <br>
-                                  <div class="col-md-12 col-xs-12 col-sm-12">
-                                    <button type="button" class="btn bg-info btn-block " id="enviar_actividad" name="enviar_actividad">Asignar Actividad</button>
-                                  </div>
-                                </div>
-                            </form>
-                            <!-- /.modal-content -->
-                            <!-- /.card-body -->
+                    <div class="row">
+                      <form id="form_actividades" method="POST">
+                        <div class="card">
+                          <div class="card-header">
+                            <label>Desea Asignar actividades a la siguiente ACPM:</label><input type="text" class="form-control" value="" name="id_acpm_fk" id="id_acpm_fk" readonly>
                           </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-md-12 col-xs-12 col-sm-12">
+                                <label for="fecha_actividad">Fecha vencimiento de la Actividad</label>
+                                <input type="date" name="fecha_actividad" class="form-control" id="fecha_actividad" required>
+                              </div>
+                              <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
+                                <label for="descripcion_actividad">Descripción de la Actividad</label>
+                                <textarea class="form-control" id="descripcion_actividad" name="descripcion_actividad"></textarea>
+                              </div>
+                              <div class="col-2 col-xs-12 col-sm-12">
+                                <label for="estado_actividad">Estado de la Actividad</label><input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
+                              </div>
+                              <div class="col-2 col-xs-12 col-sm-12">
+                                <label for="id_usuario">Nombre del Responsable:</label>
+                                <input list="browsers" id="id_responsable" name="id_responsable" class="form-control" placeholder="Nombre del responsable" required>
+                                <datalist id="browsers">
+                                  <?php
+                                  try {
+                                    $stmt = $conn->prepare('SELECT * FROM  usuarios ');
+                                    $stmt->execute();
+                                    if ($stmt->rowCount() > 0) {
+                                      while ($row = $stmt->fetch()) {
+                                        $id_usuario = $row["Id_usuario"];
+                                        $nombre_usuario = $row["nombre_usuario"];
+                                        $apellidos_usuario = $row["apellidos_usuario"];
+                                        echo '<option value=' . $id_usuario . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
+                                      }
+                                    }
+                                  } catch (PDOException $e) {
+                                    echo "Error en el servidor";
+                                  }
+                                  ?>
+                                </datalist>
+                              </div>
+                              <div class="col-2 col-xs-12 col-sm-12" hidden>
+                                <label for="id_acpm">ID acpm</label>
+                                <input type="number" class="form-control" value="<?php echo $id_acpm; ?>" name="id_acpm" id="id_acpm_fk">
+                              </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <br>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <button type="button" class="btn bg-info btn-block " id="enviar_actividad" name="enviar_actividad">Asignar Actividad</button>
+                            </div>
+                          </div>
+                      </form>
+                      <!-- /.modal-content -->
+                      <!-- /.card-body -->
+                    </div>
                   </div>
-                <!-- /.modal-dialog -->
-              </div>
+                  <!-- /.modal-dialog -->
+                </div>
               </div>
               <!-- /.modal -->
           </section>
-           <!-- TERMINA LAS ACPM ABIERTAS-->   
+          <!-- TERMINA LAS ACPM ABIERTAS-->
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
           <div id="cerradas" class="tab-pane ">
@@ -517,7 +507,6 @@ if ($_SESSION['ingreso'] == true) {
 
     modal.find('.modal-body #id_acpm_fk').val(id_acpm_fk);
   });
-  
 </script>
 
 </body>

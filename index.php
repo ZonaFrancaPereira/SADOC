@@ -38,7 +38,7 @@ if (isset($_SESSION['ingreso'])) {
 		<link rel="stylesheet" href="./admin/plugins/summernote/summernote-bs4.min.css">
 	</head>
 
-	<body class="hold-transition login-page" style="background-image: url(img/fondo_login.png); background-attachment: fixed;
+	<body class="hold-transition login-page" style="background-color: #fff; background-attachment: fixed;
 	background-repeat: repeat-x;
 	background-size: 100% 100%; ">
 	<div class="login-box">
@@ -48,10 +48,10 @@ if (isset($_SESSION['ingreso'])) {
 			<div class="card-header text-center">
 			   
 			     
-				<a href="index.php" class="h1"><b>SADOC </b>ZFIP</a>
+				<a href="index.php" class="h1"><b>PLATAFORMA </b>ZFIP</a>
 			</div>
 			<div class="card-body">
-				<p class="login-box-msg">Inicia sesión para iniciar tu sesión</p>
+				<p class="login-box-msg"></p>
 
 				<form action="Validar_Ingreso.php" method="post">
 					<label for="">Email *</label>
@@ -94,10 +94,10 @@ if (isset($_SESSION['ingreso'])) {
 	<br>
 	
 	<center>
-		<img src="img/333.png" alt="" class="img-responsive" style="width:60%">
+		<img src="admin/img/logo_zf.png" alt="" class="img-responsive" width="10%">
 
 	</center>
-	<footer><B>SADOC 3.0 © Copyright <?php echo date("Y");?>, ZFIP SAS</B></footer>
+	<footer><B>PLATAFORMA V1.1 © Copyright <?php echo date("Y");?>, ZFIP SAS</B></footer>
 	<!-- jQuery -->
 	<script src="./admin/plugins/jquery/jquery.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->

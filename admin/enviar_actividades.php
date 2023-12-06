@@ -35,7 +35,7 @@ if ($_SESSION['ingreso'] == true) {
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
                 <div class="col-md-12">
-                  <div class="card card-primary collapsed-card">
+                  <div class="card bg-primary collapsed-card">
                     <div class="card-header">
                       <h3 class="card-title col-md-10">ID ACPM: <?php echo $id_acpm ?> </h3>
 
@@ -57,13 +57,13 @@ if ($_SESSION['ingreso'] == true) {
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="bg-info">
                       <tr>
-                        <th>Id actividad</th>
-                        <th>descripcion de la actividad</th>
-                        <th>nombre del responsable</th>
-                        <th>fecha de la actividad</th>
-                        <th>estado actividad</th>
+                        <th>#</th>
+                        <th>Descripción de la actividad</th>
+                        <th>Responsable</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado</th>
                         <th>Subir evidencia</th>
                         <th>Visualizar Evidencias</th>
                       </tr>
