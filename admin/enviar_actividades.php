@@ -5,7 +5,7 @@ if ($_SESSION['ingreso'] == true) {
   require('plantilla.php');
   $id_acpm = $_GET['id_acpm'];
   $descripcion = $_GET['descripcion'];
-  $id_actividad=0;
+  $id_actividad = 0;
 ?>
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
@@ -89,122 +89,127 @@ if ($_SESSION['ingreso'] == true) {
                     <tfoot>
                       <tr>
                         <th>Id actividad</th>
-                        <th>descripcion de la actividad</th>
-                        <th>nombre del responsable</th>
-                        <th>fecha de la activida</th>
-                        <th>estado actividad</th>
-                        <th>subir evidencia</th>
+                        <th>Descripción de la actividad</th>
+                        <th>Nombre del responsable</th>
+                        <th>Fecha de la actividad</th>
+                        <th>Estado actividad</th>
+                        <th>Subir evidencia</th>
                         <th>Visualizar Evidencias</th>
                       </tr>
                     </tfoot>
                   </table>
-                  <div class="col-md-2" style="float: left;">
-                    <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
-                  </div>
+
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
             </div>
           </div>
-          <?php
-          // Consulta para verificar si hay evidencia asociada a la actividad
-          $consultaEvidencia = $conn->query("SELECT COUNT(*) as cantidad_evidencia FROM detalle_actividad WHERE id_actividad_fk = '$id_actividad'");
+          <div class="col-md-2" style="position: fixed; right: 100px;top: 60px;">
+            <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
+          </div>
+        </div>
+        <?php
+        // Consulta para verificar si hay evidencia asociada a la actividad
+        $consultaEvidencia = $conn->query("SELECT COUNT(*) as cantidad_evidencia FROM detalle_actividad WHERE id_actividad_fk = '$id_actividad'");
 
-          // Obtiene el resultado de la consulta
-          $resultadoEvidencia = $consultaEvidencia->fetch(PDO::FETCH_ASSOC);
+        // Obtiene el resultado de la consulta
+        $resultadoEvidencia = $consultaEvidencia->fetch(PDO::FETCH_ASSOC);
 
-          // Verifica si hay evidencia asociada
-          if ($resultadoEvidencia['cantidad_evidencia'] > 0) {
-            // Hay evidencia asociada, entonces actualiza el estado a "completa" en la tabla actividades_acpm
-            $conn->query("UPDATE actividades_acpm SET estado_actividad = 'Completa' WHERE actividades_acpm.id_actividad = '$id_actividad'");
-          }
-          ?>
-          <!-- MODAL PARA SUBIR EVIDENCIA -->
-          <section class="content">
-            <div class="modal fade" id="modal-success">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header btn btn-success btn-block">
-                    <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
-                  </div>
-                  <div class="modal-body">
-                    <form id="" method="POST">
-                      <div class="card card-navy">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label for="fecha_evidencia">Fecha Actividad</label>
-                              <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
-                            </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <br>
-                              <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
-                              <!-- Contenedor para el contenido de Quill -->
-                              <div class="quill-content"></div>
-                              <!-- Create the editor container -->
-                            </div>
-                            <!-- /.SUBIR EVIDENCIAS -->
-                            <!-- /.card-header -->
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <br><br><br><label>Recursos</label>
-                              <select class="form-control" id="recursos" name="recursos" required>
-                                <option>Selecciona una Opcion</option>
-                                <option value="Humanos">Humanos</option>
-                                <option value="Tecnologicos">Tecnologicos</option>
-                              </select>
-                            </div>
-                            <!-- /.content -->
+        // Verifica si hay evidencia asociada
+        if ($resultadoEvidencia['cantidad_evidencia'] > 0) {
+          // Hay evidencia asociada, entonces actualiza el estado a "completa" en la tabla actividades_acpm
+          $conn->query("UPDATE actividades_acpm SET estado_actividad = 'Completa' WHERE actividades_acpm.id_actividad = '$id_actividad'");
+        }
+        ?>
 
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <br>
-                              <div class="form-group">
-                                <label>Numero de la Actividad</label>
-                                <input type="number" id="id_actividad" class="form-control" readonly>
-                              </div>
-                              <!-- /.form-group -->
-                            </div>
-                            <!-- /.SUBIR EVIDENCIAS -->
-                            <div class="col-md-6 col-xs-6 col-sm-6" hidden>
-                              <label>Id Usuario</label>
-                              <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
-                            </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12">
-                              <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
-                            </div>
-                          </div>
-                          <!-- /.modal-content -->
-                          <!-- /.card-body -->
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+        <!-- MODAL PARA SUBIR EVIDENCIA -->
+        <section class="content">
+          <div class="modal fade" id="modal-success">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header btn btn-success btn-block">
+                  <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
                 </div>
-                <!-- /.modal-dialog -->
-              </div>
-              <!-- /.modal -->
-          </section>
-          <!-- /.CIERRE DE MODAL -->
-          <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
-          <section class="content">
-            <div class="modal fade" id="modal-evidencia">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+                <div class="modal-body">
+                  <form id="" method="POST">
+                    <div class="card card-navy">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                            <label for="fecha_evidencia">Fecha Actividad</label>
+                            <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
+                          </div>
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                            <br>
+                            <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
+                            <!-- Contenedor para el contenido de Quill -->
+                            <div class="quill-content"></div>
+                            <!-- Create the editor container -->
+                          </div>
+                          <!-- /.SUBIR EVIDENCIAS -->
+                          <!-- /.card-header -->
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                            <br><br><br><label>Recursos</label>
+                            <select class="form-control" id="recursos" name="recursos" required>
+                              <option>Selecciona una Opcion</option>
+                              <option value="Humanos">Humanos</option>
+                              <option value="Tecnologicos">Tecnologicos</option>
+                            </select>
+                          </div>
+                          <!-- /.content -->
 
-                  <div class="modal-body">
-                    <div id="div_detalle">
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                            <br>
+                            <div class="form-group">
+                              <label>Numero de la Actividad</label>
+                              <input type="number" id="id_actividad" class="form-control" readonly>
+                            </div>
+                            <!-- /.form-group -->
+                          </div>
+                          <!-- /.SUBIR EVIDENCIAS -->
+                          <div class="col-md-6 col-xs-6 col-sm-6" hidden>
+                            <label>Id Usuario</label>
+                            <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
+                          </div>
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                            <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                        <!-- /.card-body -->
+                      </div>
                     </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </section>
+        <!-- /.CIERRE DE MODAL -->
+        <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
+        <section class="content">
+          <div class="modal fade" id="modal-evidencia">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <div class="modal-body">
+                  <div id="div_detalle">
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <!-- /.CIERRE DE MODAL -->
-        </div>
+          </div>
+        </section>
+        <!-- /.CIERRE DE MODAL -->
       </div>
     </div>
+
   </div>
+
 </div>
+
 <?php require('footer.php'); ?>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -213,7 +218,9 @@ if ($_SESSION['ingreso'] == true) {
   <!-- Control sidebar content goes here -->
 </aside>
 <!-- /.control-sidebar -->
+
 </div>
+
 <style>
   .ql-toolbar {
     background-color: white;
@@ -267,7 +274,7 @@ if ($_SESSION['ingreso'] == true) {
       }
     });
   });
-  
+
   // Obtener el elemento enviar_sig por su ID
   var enviar_sig = document.getElementById("enviar_sig");
 

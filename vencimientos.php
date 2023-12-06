@@ -109,10 +109,9 @@ try {
             }
         }
     } else {
-        echo "Revisar";
+       // echo "Revisar";
     }
-    echo "<script> 
-                window.location.href='./index.php'; </script>";
+   
 } catch (PDOException $e) {
     echo "Error en el servidor";
 }
