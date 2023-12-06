@@ -1,4 +1,5 @@
 <?php 
+include('vencimientos.php');
 session_start();
 if (isset($_SESSION['ingreso'])) {
 	header('location: ../../index.php');
@@ -10,7 +11,7 @@ if (isset($_SESSION['ingreso'])) {
 	<html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>SADOC ZFIP</title>
+		<title>PLATAFORMA ZFIP</title>
 		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' /> 
 		<meta name="viewport" content="width=device-width" /> 
 

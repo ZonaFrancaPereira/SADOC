@@ -298,7 +298,7 @@ if ($_SESSION['ingreso'] == true) {
                                     </div>
                                     <div class="col-2 col-xs-10 col-sm-10">
                                       <label for="id_usuario">Nombre del Responsable:</label>
-                                      <input list="browsers" id="id_usuario_fk" name="id_usuario" class="form-control" placeholder="Nombre del responsable" required>
+                                      <input list="browsers" id="id_responsable" name="id_responsable" class="form-control" placeholder="Nombre del responsable" required>
                                       <datalist id="browsers">
                                         <?php
                                         try {
@@ -403,7 +403,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
             <!-- /.card -->
           </div>
-        </div>`
+        </div>
       </div>
       <!-- CIERRE DEL TAB -->
     </div>

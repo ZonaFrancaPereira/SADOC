@@ -5,6 +5,7 @@ if ($_SESSION['ingreso'] == true) {
   require('plantilla.php');
   $id_acpm = $_GET['id_acpm'];
   $descripcion = $_GET['descripcion'];
+  $id_actividad=0;
 ?>
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
