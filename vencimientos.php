@@ -109,10 +109,16 @@ try {
             }
         }
     } else {
+<<<<<<< HEAD
         //echo "Revisar";
     }
     
     
+=======
+       // echo "Revisar";
+    }
+   
+>>>>>>> e89e9be77dbae22a481f4b668589b51a60cd7a53
 } catch (PDOException $e) {
     echo "Error en el servidor";
 }

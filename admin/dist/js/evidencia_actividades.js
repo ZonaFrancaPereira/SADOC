@@ -68,8 +68,12 @@ function insertar_evidencia_actividad() {
 								'Buen Trabajo',
 								'Se Subio la Evidencia con exito',
 								'success'
-							)
-							$("#evidencia_actividad").load(location.href + " #evidencia_actividad");
+							).then((result) => {
+								// Redirige a la página después de cerrar el SweetAlert
+								if (result.isConfirmed) {
+									window.location.href = "acpm.php";
+								}
+							});
 						} else {
 							Swal.fire(
 								'Ups',
