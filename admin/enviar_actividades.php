@@ -7,20 +7,6 @@ if ($_SESSION['ingreso'] == true) {
   $descripcion = $_GET['descripcion'];
   $id_actividad = 0;
 ?>
-  <!-- Sidebar Menu -->
-  <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column">
-      <li class="nav-item">
-        <a  href="acpm.php#abiertas" class="nav-link active">
-          <i class="nav-icon fas fa-th"></i>
-          <p>
-            Acciones Abiertas
-          </p>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
   </footer>
@@ -48,7 +34,7 @@ if ($_SESSION['ingreso'] == true) {
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
                 <div class="col-md-12">
-                  <div class="card bg-info collapsed-card">
+                  <div class="card bg-primary collapsed-card">
                     <div class="card-header">
                       <h3 class="card-title col-md-10">ID ACPM: <?php echo $id_acpm ?> </h3>
 
@@ -94,13 +80,8 @@ if ($_SESSION['ingreso'] == true) {
                             <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                             <td><?php echo $row["fecha_actividad"] ?></td>
                             <td><?php echo $row["estado_actividad"] ?></td>
-<<<<<<< HEAD
-                            <td><button type="button" class=" btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>">Subir Evidencia</button></td>
-                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>">Visualizar Evidencias</button></td>
-=======
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
->>>>>>> 4c21dee64a5df809938a81aa11c6c53a0ce96432
                           </tr>
                       <?php }
                       } ?>
@@ -125,7 +106,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
           <div class="col-md-2" style="position: fixed; right: 100px;top: 60px;">
-            <button type="button" id="enviar_sig" class="btn bg-info btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
+            <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
           </div>
         </div>
         <?php
@@ -150,7 +131,7 @@ if ($_SESSION['ingreso'] == true) {
         <!-- MODAL PARA SUBIR EVIDENCIA -->
         <section class="content">
           <div class="modal fade" id="modal-success">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header btn btn-success btn-block">
                   <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
@@ -166,9 +147,10 @@ if ($_SESSION['ingreso'] == true) {
                           </div>
                           <div class="col-md-12 col-xs-12 col-sm-12">
                             <br>
-                            <textarea class="textarea" id="evidencia" name="evidencia" style="display: none;"></textarea>
+                            <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
                             <!-- Contenedor para el contenido de Quill -->
-                                                        <!-- Create the editor container -->
+                            <div class="quill-content"></div>
+                            <!-- Create the editor container -->
                           </div>
                           <!-- /.SUBIR EVIDENCIAS -->
                           <!-- /.card-header -->
@@ -176,8 +158,8 @@ if ($_SESSION['ingreso'] == true) {
                             <br><br><br><label>Recursos</label>
                             <select class="form-control" id="recursos" name="recursos" required>
                               <option>Selecciona una Opcion</option>
-                              <option value="Humanos y Tecnologicos">Humanos y Tecnologicos</option>
-                              <option value="Otros">Otros</option>
+                              <option value="Humanos">Humanos</option>
+                              <option value="Tecnologicos">Tecnologicos</option>
                             </select>
                           </div>
                           <!-- /.content -->
@@ -186,7 +168,7 @@ if ($_SESSION['ingreso'] == true) {
                             <br>
                             <div class="form-group">
                               <label>Numero de la Actividad</label>
-                              <input type="number" id="id_actividad" class="form-control" readonly required>
+                              <input type="number" id="id_actividad" class="form-control" readonly>
                             </div>
                             <!-- /.form-group -->
                           </div>

@@ -77,7 +77,8 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
         }
 
         td,
-        th {
+        th,
+        p {
             border: 1px solid #ccc;
             text-align: left;
             padding: 8px;
@@ -312,7 +313,9 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                     </tr>
 
                     <tr>
-                        <td colspan="4">Evidencia : <?php echo $fila["evidencia"]; ?></td>
+                        <td colspan="4">
+                        <?php echo $fila["evidencia"]; ?>
+                        </td>
                     </tr>
                 </table>
                        

@@ -29,13 +29,10 @@ function insertar_evidencia_actividad() {
 	if (fecha_evidencia == "" || recursos == "" || id_actividad_fk=="") {
 		Swal.fire(
 			'Atención',
-			'Tu evidencia sera procesada, debes estar seguro de haber diligenciado todos los campos, vuelve a abrir nuevamente tu evidencia para procesar la solicitud',
-			'warning'
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
 		)
-		$('#modal-success').modal('hide');
-		
-		
-    	} else {
+	} else {
 		const swalWithBootstrapButtons = Swal.mixin({
 			customClass: {
 				confirmButton: 'btn btn-success',

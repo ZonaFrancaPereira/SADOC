@@ -179,8 +179,6 @@ dom:"Bfrtilp",
 </script>
 <script>
   $(function () {
-    $(".boton-mostrar").hide();
-    
     // Summernote
     $('.textarea').summernote()
 
@@ -188,7 +186,19 @@ dom:"Bfrtilp",
     CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
       mode: "htmlmixed",
       theme: "monokai"
-      
     });
   })
+</script>
+<script>
+  $(document).ready(function() {
+    // Inicializa Quill en el contenedor
+    var quill = new Quill('.quill-content', {
+      theme: 'snow'
+    });
+
+    // Actualiza el contenido del textarea cuando cambia Quill
+    quill.on('text-change', function() {
+      $('.editor').val(quill.root.innerHTML);
+    });
+  });
 </script>
