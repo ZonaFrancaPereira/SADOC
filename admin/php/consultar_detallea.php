@@ -2,12 +2,14 @@
 require('conexion.php');
 $id_actividad = $_POST['id_actividad'];
 
+
 $query = "SELECT * FROM detalle_actividad a INNER JOIN actividades_acpm u ON a.id_actividad_fk = u.id_actividad WHERE u.id_actividad = $id_actividad";
 $result = $conn->query($query);
 // Verificar si hay resultados
 if ($result->rowCount() > 0) {
     foreach ($result as $row) {
 ?>
+
         <div class="btn bg-info btn-block">
             <h4 class="modal-title">NUMERO DE ACTIVIDAD: <?php echo $row["id_actividad"] ?></h4>
         </div>

@@ -7,6 +7,20 @@ if ($_SESSION['ingreso'] == true) {
   $descripcion = $_GET['descripcion'];
   $id_actividad = 0;
 ?>
+  <!-- Sidebar Menu -->
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column">
+      <li class="nav-item">
+        <a  href="acpm.php#abiertas" class="nav-link active">
+          <i class="nav-icon fas fa-th"></i>
+          <p>
+            Acciones Abiertas
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
   </footer>
@@ -34,7 +48,7 @@ if ($_SESSION['ingreso'] == true) {
             <div id="actividades_abiertas" class="tab-pane">
               <div class="card" class="">
                 <div class="col-md-12">
-                  <div class="card bg-primary collapsed-card">
+                  <div class="card bg-info collapsed-card">
                     <div class="card-header">
                       <h3 class="card-title col-md-10">ID ACPM: <?php echo $id_acpm ?> </h3>
 
@@ -80,8 +94,8 @@ if ($_SESSION['ingreso'] == true) {
                             <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                             <td><?php echo $row["fecha_actividad"] ?></td>
                             <td><?php echo $row["estado_actividad"] ?></td>
-                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>">Subir Evidencia</button></td>
-                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>">Visualizar Evidencias</button></td>
+                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
+                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
                           </tr>
                       <?php }
                       } ?>
@@ -106,7 +120,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
           <div class="col-md-2" style="position: fixed; right: 100px;top: 60px;">
-            <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
+            <button type="button" id="enviar_sig" class="btn bg-info btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
           </div>
         </div>
         <?php
