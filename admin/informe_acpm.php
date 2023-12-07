@@ -73,7 +73,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
-            
+
         }
 
         td,
@@ -256,72 +256,83 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
 
 
     <br>
-    <table>
-        <tr>
-            <th colspan="4">
-                <center><B>DETALLE DE LAS ACTIVIDADES</B></center>
-                <br>
-            </th>
-        </tr>
 
-        <?php
-        try {
-            $stmt2 = $conn->prepare('SELECT * FROM actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE a.id_acpm_fk="' . $id_acpm . '"');
-            $stmt2->execute();
-            $registros = 1;
-            if ($stmt2->rowCount() > 0) {
 
-                while ($row2 = $stmt2->fetch()) {
-                    $id_actividad = $row2['id_actividad'];
-                    $fecha_actividad = $row2["fecha_actividad"];
-                    $descripcion_actividad = $row2["descripcion_actividad"];
-                    $estado_actividad = $row2["estado_actividad"];
-                    $responsable = $row2["nombre_usuario"];
-                    $apellido_responsable = $row2["apellidos_usuario"];
-        ?>
+    <?php
+    try {
+        $stmt2 = $conn->prepare('SELECT * FROM actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE a.id_acpm_fk="' . $id_acpm . '"');
+        $stmt2->execute();
+        $registros = 1;
+        if ($stmt2->rowCount() > 0) {
+
+            while ($row2 = $stmt2->fetch()) {
+                $id_actividad = $row2['id_actividad'];
+                $fecha_actividad = $row2["fecha_actividad"];
+                $descripcion_actividad = $row2["descripcion_actividad"];
+                $estado_actividad = $row2["estado_actividad"];
+                $responsable = $row2["nombre_usuario"];
+                $apellido_responsable = $row2["apellidos_usuario"];
+    ?>
+                <table border="1" whidth="100">
                     <tr>
-                        <td colspan="2">
-                            <B>Fecha Finalización :</B> <br><?php echo $fecha_actividad; ?><br>
-                            <B>Descripción : </B><br><?php echo $descripcion_actividad; ?><br>
-                            <B>Responsable : </B><br><?php echo $responsable; ?> <?php echo $apellido_responsable; ?> <br>
-                            <B>Estado : </B><br><?php echo $estado_actividad; ?><br>
-                        </td>
-
-                        <td colspan="2">
-                            <?php
-
-                            $query = 'SELECT * FROM detalle_actividad a INNER JOIN actividades_acpm u ON a.id_actividad_fk = u.id_actividad WHERE u.id_actividad = "' . $id_actividad . '"';
-                            $result = $conn->query($query);
-                            // Verificar si hay resultados
-                            if ($result->rowCount() > 0) {
-                                foreach ($result as $fila) {
-
-
-                            ?>
-                            <B>Fecha Finalización :</B><br> <?php echo $fila["fecha_evidencia"] ?><br>
-                            <B>Recursos : </B><br><?php echo $fila["recursos"] ?><br>
-                            <B>Descripción : </B><br><?php echo $fila['evidencia'] ?><br>
-                            <hr>
-                            <?php
-                                }
-                            }
-
-                            ?>
+                        <td colspan="4">
+                            <center><B> ACTIVIDAD # <?php echo $id_actividad; ?></B></center>
+                            <br>
                         </td>
                     </tr>
-        <?php
+                    <tr>
+                        <td colspan="2">Fecha Finalización : <?php echo $fecha_actividad; ?> </td>
+                        <td colspan="2">Descripción<?php echo $descripcion_actividad; ?></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">Estado : <?php echo $estado_actividad; ?></td>
+                        <td colspan="2">Responsable : <?php echo $responsable; ?> <?php echo $apellido_responsable; ?></td>
+                    </tr>
+                </table>
+
+                <?php
+                //CONSULTAR LAS EVIDENCIAS DE LA ACTIVIDAD
+                $query = 'SELECT * FROM detalle_actividad a INNER JOIN actividades_acpm u ON a.id_actividad_fk = u.id_actividad WHERE u.id_actividad = "' . $id_actividad . '"';
+                $result = $conn->query($query);
+                // Verificar si hay resultados
+                if ($result->rowCount() > 0) {
+                    foreach ($result as $fila) {
+                ?>
+                <table border="1" whidth="100">
+                    <tr>
+                        <td colspan="4">
+                            <center><B>EVIDENCIAS DE LA ACTIVIDAD</B></center>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Fecha  : <?php echo $fila["fecha_evidencia"]; ?> </td>
+                        <td colspan="2">Recursos<?php echo $fila["recursos"]; ?></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">Evidencia : <?php echo $fila["evidencia"]; ?></td>
+                    </tr>
+                </table>
+                       
+                <?php
+                    }
                 }
+
+                ?>
+    <?php
             }
-        } catch (PDOException $e) {
-            echo "Error en el servidor";
         }
+    } catch (PDOException $e) {
+        echo "Error en el servidor";
+    }
 
-        ?>
+    ?>
 
 
-    </table>
-<br>
-    
+
+    <br>
 
 
 </body>
