@@ -22,16 +22,25 @@ if ($_SESSION['ingreso'] == true) {
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
       <a data-toggle="tab" href="#panela" class="nav-link active">
-        <i class="nav-icon fas fa-th"></i>
+      <i class="nav-icon fas fa-tachometer-alt"></i>
+      
         <p>
           Panel de Control
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a data-toggle="tab" href="#qr" class="nav-link ">
+      <i class="nav-icon fas fa-qrcode"></i>
+        <p>
+          QR
         </p>
       </a>
     </li>
     <?php if ($_SESSION['ingresar_activos'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#ingresar" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fas fa-cart-plus"></i>
           <p>
             Nuevo Activo
           </p>
@@ -41,7 +50,7 @@ if ($_SESSION['ingreso'] == true) {
     <?php if ($_SESSION['admin_activos'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#inventario" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fas fa-boxes"></i>
           <p>
             Nuevo Inventario
             <span class="right badge badge-success">Crear</span>
@@ -49,15 +58,15 @@ if ($_SESSION['ingreso'] == true) {
         </a>
       </li>
     <?php  } ?>
-   
-      <li class="nav-item" hidden>
-        <a data-toggle="tab" href="#consultar" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
-          <p>
-            Consultar Activos
-          </p>
-        </a>
-      </li>
+
+    <li class="nav-item" >
+      <a data-toggle="tab" href="#consultar" class="nav-link ">
+      <i class="nav-icon fas fa-search"></i>
+        <p>
+          Consultar Activos
+        </p>
+      </a>
+    </li>
 
 
 
@@ -77,7 +86,32 @@ if ($_SESSION['ingreso'] == true) {
       <div class="container-fluid">
         <div class="tab-content ">
           <!-- DIV DONDE SE MUESTRAN TODOS LOS ACTIVOS -->
+
+         
           <div class="tab-pane  show active" id="panela">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- /.card -->
+                <div class="card">
+                  
+                  <!-- /.card-header -->
+<div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tA6dWWs&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+
+
+
+                  <!-- /.card-footer -->
+                </div>
+              </div>
+            </div>
+          </div>
+           <!-- DIV DONDE SE MUESTRAN TODOS QR DE LOS ACTIVOS -->
+          <div class="tab-pane  " id="qr">
             <div class="row">
               <div class="col-lg-12">
                 <!-- /.card -->
@@ -96,26 +130,26 @@ if ($_SESSION['ingreso'] == true) {
                     <!-- /.card-header -->
                     <ul class="products-list product-list-in-card pl-2 pr-2">
                       <div class="row">
-                    
-                      <?php
-                      $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?id_activo='" .$_SESSION['Id']. "'", "");
-                      $qr = $svg;
-                      ?>
-                      <li class="col-md-6" style=" border: 1px solid black; background:white;">
-                                <div class="product-img">
-                                  <a href="javascript:void(0)" class="product-title"><?php echo $_SESSION['siglas_usuario']; ?></a>
-                                  <?= $qr ?>
-                                </div>
-                                <div class="product-info">
-                                  <img src="img/logo_zf.png" width="25%"><br>
-                                  <a href="javascript:void(0)" class="product-title">INVENTARIO GENERAL</a>
-                                  <p style="color:black;">Consulta todos los activos que tienes asignados aqui.</p>
-                                </div>
-                              
-                              </li>
+
+                        <?php
+                        $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?id_activo='" . $_SESSION['Id'] . "'", "");
+                        $qr = $svg;
+                        ?>
+                        <li class="col-md-6" style=" border: 1px solid black; background:white;">
+                          <div class="product-img">
+                            <a href="javascript:void(0)" class="product-title"><?php echo $_SESSION['siglas_usuario']; ?></a>
+                            <?= $qr ?>
+                          </div>
+                          <div class="product-info">
+                            <img src="img/logo_zf.png" width="25%"><br>
+                            <a href="javascript:void(0)" class="product-title">INVENTARIO GENERAL</a>
+                            <p style="color:black;">Consulta todos los activos que tienes asignados aqui.</p>
+                          </div>
+
+                        </li>
                         <?php
                         try {
-                          $stmt = $conn->prepare('SELECT * FROM activos WHERE id_usuario_fk="'.$_SESSION['Id'].'"');
+                          $stmt = $conn->prepare('SELECT * FROM activos WHERE id_usuario_fk="' . $_SESSION['Id'] . '"');
                           $stmt->execute();
                           $registros = 1;
                           if ($stmt->rowCount() > 0) {
@@ -134,7 +168,7 @@ if ($_SESSION['ingreso'] == true) {
                                 </div>
                                 <div class="product-info">
                                   <img src="img/logo_zf.png" width="25%"><br>
-                                  <a href="javascript:void(0)" class="product-title" ><?= $nombre_articulo ?></a>
+                                  <a href="javascript:void(0)" class="product-title"><?= $nombre_articulo ?></a>
                                   <span class="product-description" style="color:black;"><?= $id_activo ?></span>
                                 </div>
                               </li>
