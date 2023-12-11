@@ -50,6 +50,15 @@ if ($_SESSION['ingreso'] == true) {
 
         </ul>
       </li>
+      <li class="nav-item">
+      <a data-toggle="tab" href="#verificar" class="nav-link ">
+          <i class="nav-icon fas fa-th"></i>
+          <p>
+            Verificar ACPM
+            <span class="right badge badge-danger">Urgente</span>
+          </p>
+        </a>
+      </li>
     </ul>
 
   </nav>
@@ -388,6 +397,64 @@ if ($_SESSION['ingreso'] == true) {
                     </tr>
                   </tfoot>
                 </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+           <div id="verificar" class="tab-pane ">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Verificar ACPM</h3>
+              </div>
+              <!-- /.card-header -->
+             
+              <div class="card-body">
+                <table id="" class="display table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre del responsable</th>
+                      <th>Origen Acpm</th>
+                      <th>Fuente</th>
+                      <th>Tipo de Reporte</th>
+                      <th>Descripcion Acpm</th>
+                      <th>Fecha Correcion</th>
+                      <th>Fecha Finalizacion</th>
+                      <th>Estado</th>
+                      <th>Informe</th>
+                      <th>Responder</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { { 
+                      $id_acpm=$row["id_consecutivo"];
+                      ?>
+                        <tr style=text-align:center>
+                          <td><?php echo $row["id_consecutivo"] ?></td>
+                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                          <td>
+                            <p class="text-break product-description" style="width: 10rem"><?php echo $row["origen_acpm"] ?></p>
+                          </td>
+                          <td><?php echo $row["fuente_acpm"] ?></td>
+                          <td><?php echo $row["tipo_acpm"] ?></td>
+                          <td>
+                            <p class="text-break" style="width: 10rem"><?php echo $row["descripcion_acpm"] ?></p>
+                          </td>
+                          <td><?php echo $row["fecha_correccion"] ?></td>
+                          <td><?php echo $row["fecha_finalizacion"] ?></td>
+                          <td><?php echo $row["estado_acpm"] ?></td>
+                          <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                        <td>modal</td>
+                        </tr>
+                    <?php }
+                    } ?>
+                  </tbody>
+   
+                </table>
+              
               </div>
               <!-- /.card-body -->
             </div>
