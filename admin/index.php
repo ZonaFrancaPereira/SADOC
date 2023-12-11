@@ -141,8 +141,8 @@
             </div>
             <!-- /.info-box -->
           </div>
-          
-           <!-- /ESTA TARJETA ES PARA LA GERENTE -->
+
+          <!-- /ESTA TARJETA ES PARA LA GERENTE -->
           <?php if ($_SESSION['firmar_orden'] == "Si") { ?>
             <div class="col-md-8 col-sm-12 col-12">
               <!-- /.card -->
@@ -194,9 +194,9 @@
                             $id_orden = $row["id_orden"];
                             $nombre_usuario = $row["nombre_usuario"];
                             $apellidos_usuario = $row["apellidos_usuario"];
-                            $fecha_orden=$row["fecha_orden"];
-                            $total_orden=$row["total_orden"];
-                            $correo_usuario=$row["correo_usuario"];
+                            $fecha_orden = $row["fecha_orden"];
+                            $total_orden = $row["total_orden"];
+                            $correo_usuario = $row["correo_usuario"];
                             echo "<tr>";
                             echo "<td >" . $id_orden . "</td>";
                             echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
@@ -219,7 +219,7 @@
               <!-- /.card -->
             </div>
           <?php } ?>
-           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC -->
+          <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC -->
           <div class="card col-md-4 col-sm-6 col-12">
             <div class="card-header">
               <h3 class="card-title">Ultimos Documentos SADOC</h3>
@@ -276,7 +276,74 @@
             </div>
             <!-- /.card-footer -->
           </div>
+          <!-- /ESTA TARJETA ES PARA VER LAS 5 ULTIMAS ACCIONES POR REVISAR SOLO SIG-->
+          <?php
+          if($_SESSION['rol_usuario']=="admin_sig"){
+          ?>
+          <div class="card col-md-8 col-sm-8 col-12">
+            <div class="card-header">
+              <h3 class="card-title">Ultimos ACPM Por Aprobación</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <ul class="products-list product-list-in-card pl-2 pr-2">
 
+                <?php
+                try {
+
+                  $stmt = $conn->prepare("SELECT * FROM acpm a
+                  INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                  INNER JOIN proceso p ON p.id_proceso = u.proceso_usuario_fk
+                  INNER JOIN cargos c ON c.id_cargo = u.id_cargo_fk WHERE a.estado_acpm = 'Proceso'
+                  ORDER BY a.fecha_finalizacion DESC
+                  LIMIT 5");
+
+                  $stmt->execute();
+                  $registros = 1;
+                  if ($stmt->rowCount() > 0) {
+                    while ($row = $stmt->fetch()) {
+                      $fecha_finalizacion = $row["fecha_finalizacion"];
+                      $nombre_usuario = $row["nombre_usuario"];
+                      $apellidos_usuario = $row["apellidos_usuario"];
+                      $tipo_acpm = $row["tipo_acpm"];
+                      $descripcion_acpm = $row["descripcion_acpm"];
+                      $nombre_proceso = $row["nombre_proceso"];
+
+                ?>
+
+                      <li class="item">
+                        <div class="product-img">
+                          <button class="btn bg-warning"><i class="fas fa-calendar-check"></i></button>
+                        </div>
+                        <div class="product-info">
+                          <a href="javascript:void(0)" class="product-title"><?= $nombre_usuario ?> <?= $apellidos_usuario ?> - <?= $nombre_proceso ?>
+                            <span class="badge badge-success float-right"><?= $tipo_acpm ?></span></a>
+                          <span class="product-description">
+                            <B> Fecha de Finalizacion : </B><?= $fecha_finalizacion ?><br>
+                            <?= $descripcion_acpm ?>
+                          </span>
+                        </div>
+                      </li>
+
+                <?php
+                    }
+                  }
+                } catch (PDOException $e) {
+                  echo "Error en el servidor";
+                }
+                ?>
+
+
+                <!-- /.item -->
+              </ul>
+            </div>
+            <!-- /.card-body -->
+            <div class="card card-footer text-center bg-primary">
+              <a href="acpm.php" class="uppercase">VER TODAS</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+<?php } ?>
           <!-- /.col -->
         </div>
       </div><!-- /.container-fluid -->

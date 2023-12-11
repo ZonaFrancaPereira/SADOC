@@ -73,6 +73,7 @@ if ($_SESSION['ingreso'] == true) {
                       foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
                           $id_actividad = $row['id_actividad'];
                           $estado_actividad = $row["estado_actividad"];
+                          
                       ?>
                           <tr style=text-align:center>
                             <td><?php echo $row["id_actividad"] ?></td>
@@ -106,7 +107,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
           <div class="col-md-2" style="position: fixed; right: 100px;top: 60px;">
-            <button type="button" id="enviar_sig" class="btn btn-primary btn-block" data-estado="<?php echo $estado_actividad ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
+            <button type="button" id="enviar_sig" class="btn bg-black color-palette btn-block" data-estado="<?php echo $estado_actividad ?>" data-id_acpm="<?php echo $id_acpm ?>"><i class="fa fa-bell"></i> Enviar a SIG</button>
           </div>
         </div>
         <?php
@@ -285,6 +286,7 @@ if ($_SESSION['ingreso'] == true) {
 
   // Obtener el estado de la actividad desde el atributo de datos
   var estado_actividad = enviar_sig.dataset.estado;
+  var id_acpm_fk = enviar_sig.dataset.id_acpm;
 
   // Verificar el estado y deshabilitar el botón si es "Incompleta"
   if (estado_actividad === 'Incompleta') {
@@ -296,7 +298,7 @@ if ($_SESSION['ingreso'] == true) {
     // Verificar si la actividad está completa
     if (estado_actividad === 'Completa') {
       // Si está completa, realizar la acción deseada (enviar a SIG, en este caso)
-      enviarASIG();
+      enviarASIG(id_acpm_fk);
     } else {
       // Si no está completa, mostrar un mensaje o realizar otra acción
       alert("La actividad está incompleta. No se puede enviar a SIG.");
@@ -304,8 +306,62 @@ if ($_SESSION['ingreso'] == true) {
   });
 
   // Función para simular el envío a SIG
-  function enviarASIG() {
-    alert("Enviando a SIG...");
+  function enviarASIG(id_acpm_fk) {
+
+    
+    const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres enviar esto a revision por SIG?',
+			text: "Recuerda que una vez enviada quedara a disposición de SIG para desmontarla.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Enviar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+        var id_acpm = id_acpm_fk;
+    alert(id_acpm);
+        var json = {
+					'id_acpm': id_acpm
+				}
+				$.ajax({
+					type: "POST",
+					data: json,
+					url: 'php/estado_acpm.php',
+					success: function (resultactividad){
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se envio correctamente la ACPM a SIG',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = 'acpm.php';
+							}
+						});
+					}
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				)
+			}
+		})
+
+   
   }
 </script>
 
