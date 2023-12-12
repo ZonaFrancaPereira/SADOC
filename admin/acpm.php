@@ -467,7 +467,7 @@ if ($_SESSION['ingreso'] == true) {
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class=" btn btn-success btn-block">
-                    <h4 class="modal-title ">EFICACIA</h4>
+                    <h4 class="modal-title "><?php echo $id_acpm; ?></h4>
                   </div>
                   <div class="modal-body">
                     <form id="" method="POST">
@@ -485,8 +485,8 @@ if ($_SESSION['ingreso'] == true) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
-                                <label>JUSTIFIQUE POR QUE ES O NO CONFORME</label>
-                                <input type="text" id="justificacion_riesgo" class="form-control">
+                                <label>Justifique por que es o no es conforme</label>
+                                <textarea type="text" id="justificacion_riesgo" name="justificacion_riesgo" class="form-control"></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -501,7 +501,7 @@ if ($_SESSION['ingreso'] == true) {
                               <br>
                               <div class="form-group">
                                 <label>¿Qué cambios se deben contemplar y documentar? Describa brevemente</label>
-                                <input type="text" id="justificacion_sig" class="form-control">
+                                <textarea type="text" id="justificacion_sig" name="justificacion_sig" class="form-control"></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -516,7 +516,7 @@ if ($_SESSION['ingreso'] == true) {
                               <br>
                               <div class="form-group">
                                 <label>Justificacion Conforme o No conforme</label>
-                                <input type="text" id="justificacion_conforme_sig" class="form-control">
+                                <textarea type="text" id="justificacion_conforme_sig" name="justificacion_conforme_sig" class="form-control"></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -527,7 +527,7 @@ if ($_SESSION['ingreso'] == true) {
                               <br>
                               <div class="form-group">
                                 <td style="text-align: center;">
-                                  <button class='btn btn-success' style="width: 100%;" id="enviar_acpm_sig">
+                                  <button class='btn btn-success' style="width: 100%;" id="guardar" name="guardar">
                                     <i class="far fa-regular fa-thumbs-up">ENVIAR</i>
                                   </button>
                                 </td>

@@ -11,7 +11,7 @@ $justificacion_conforme_sig = $_POST['justificacion_conforme_sig'];
 $fecha_estado = $_POST['fecha_estado'];
 
 try {
-	$stmt = $conn->prepare('INSERT INTO acpm(riesgo_acpm, justificacion_riesgo, cambios_sig, justificacion_sig, conforme_sig, justificacion_conforme_sig, fecha_estado) VALUES(?,?,?,?,?,?,?)');
+	$stmt = $conn->prepare('INSERT INTO acpm (riesgo_acpm, justificacion_riesgo, cambios_sig, justificacion_sig, conforme_sig, justificacion_conforme_sig, fecha_estado) VALUES(?,?,?,?,?,?,?)');
 	$stmt->bindParam(1, $riesgo_acpm);
 	$stmt->bindParam(2, $justificacion_riesgo);
 	$stmt->bindParam(3, $cambios_sig);
