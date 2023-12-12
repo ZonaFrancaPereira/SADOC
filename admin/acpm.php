@@ -11,7 +11,8 @@ if ($_SESSION['ingreso'] == true) {
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <li class="nav-item">
         <a data-toggle="tab" href="#panelc" class="nav-link active">
-          <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+
           <p>
             Panel de Control
           </p>
@@ -19,7 +20,7 @@ if ($_SESSION['ingreso'] == true) {
       </li>
       <li class="nav-item">
         <a data-toggle="tab" href="#acpm" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-file-medical"></i>
           <p>
             Nueva ACPM
             <span class="right badge badge-success">Nueva</span>
@@ -28,7 +29,7 @@ if ($_SESSION['ingreso'] == true) {
       </li>
       <li class="nav-item">
         <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-edit"></i>
+          <i class="nav-icon fas fa-search-plus"></i>
           <p>
             Consultas
             <i class="fas fa-angle-left right"></i>
@@ -37,13 +38,13 @@ if ($_SESSION['ingreso'] == true) {
         <ul class="nav nav-treeview">
           <li class="nav-item">
             <a data-toggle="tab" href="#abiertas" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="nav-icon far fa-times-circle"></i>
               <p>Acciones Abiertas</p>
             </a>
           </li>
           <li class="nav-item" name="cerradas">
             <a data-toggle="tab" href="#cerradas" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="nav-icon far fa-check-circle"></i>
               <p>Acciones Cerradas</p>
             </a>
           </li>
@@ -52,7 +53,7 @@ if ($_SESSION['ingreso'] == true) {
       </li>
       <li class="nav-item">
       <a data-toggle="tab" href="#verificar" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-clipboard-check"></i>
           <p>
             Verificar ACPM
             <span class="right badge badge-danger">Urgente</span>

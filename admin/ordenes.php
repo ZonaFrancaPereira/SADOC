@@ -256,7 +256,7 @@ try {
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
       <a data-toggle="tab" href="#panelc" class="nav-link active">
-        <i class="nav-icon fas fa-th"></i>
+      <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
           Panel de Control
         </p>
@@ -265,7 +265,7 @@ try {
     <?php if ($_SESSION['radicar_orden'] == "Si") { ?>
       <li class="nav-item">
         <a data-toggle="tab" href="#orden" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-cart-plus"></i>
           <p>
             Nueva Orden
             <span class="right badge badge-success">Nueva</span>
@@ -274,7 +274,7 @@ try {
       </li>
       <li class="nav-item">
         <a data-toggle="tab" href="#pendientes" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-search-dollar"></i>
           <p>
             Consultar Ordenes
           </p>
@@ -282,13 +282,22 @@ try {
       </li>
       <li class="nav-item">
         <a data-toggle="tab" href="#proveedores" class="nav-link ">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-user-tie"></i>
           <p>
             Proveedores
           </p>
         </a>
       </li>
     <?php  } ?>
+    <li class="nav-item">
+      <a data-toggle="tab" href="#manual" class="nav-link ">
+        <i class="nav-icon fas fa-book"></i>
+        <p>
+          Manual
+        </p>
+      </a>
+
+    </li>
   </ul>
 </nav>
 <footer>
@@ -349,13 +358,7 @@ try {
                   </div>
                 </div>
               <?php } ?>
-              <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tRLHnr8&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
+
               <!-- /.col-md-6  -->
               <?php if ($_SESSION['firmar_orden'] == "Si") { ?>
                 <div class="col-lg-12">
@@ -408,9 +411,9 @@ try {
                                 $id_orden = $row["id_orden"];
                                 $nombre_usuario = $row["nombre_usuario"];
                                 $apellidos_usuario = $row["apellidos_usuario"];
-                                $fecha_orden=$row["fecha_orden"];
-                                $total_orden=$row["total_orden"];
-                                $correo_usuario=$row["correo_usuario"];
+                                $fecha_orden = $row["fecha_orden"];
+                                $total_orden = $row["total_orden"];
+                                $correo_usuario = $row["correo_usuario"];
                                 echo "<tr>";
                                 echo "<td >" . $id_orden . "</td>";
                                 echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
@@ -479,9 +482,9 @@ try {
                                 $id_orden = $row["id_orden"];
                                 $nombre_usuario = $row["nombre_usuario"];
                                 $apellidos_usuario = $row["apellidos_usuario"];
-                                $fecha_orden=$row["fecha_orden"];
-                                $total_orden=$row["total_orden"];
-                                $correo_usuario=$row["correo_usuario"];
+                                $fecha_orden = $row["fecha_orden"];
+                                $total_orden = $row["total_orden"];
+                                $correo_usuario = $row["correo_usuario"];
                                 echo "<tr>";
                                 echo "<td >" . $id_orden . "</td>";
                                 echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
@@ -549,9 +552,9 @@ try {
                                 $id_orden = $row["id_orden"];
                                 $nombre_usuario = $row["nombre_usuario"];
                                 $apellidos_usuario = $row["apellidos_usuario"];
-                                $fecha_orden=$row["fecha_orden"];
-                                $total_orden=$row["total_orden"];
-                                $correo_usuario=$row["correo_usuario"];
+                                $fecha_orden = $row["fecha_orden"];
+                                $total_orden = $row["total_orden"];
+                                $correo_usuario = $row["correo_usuario"];
                                 echo "<tr>";
                                 echo "<td >" . $id_orden . "</td>";
                                 echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
@@ -899,158 +902,177 @@ try {
               </div>
             </div>
           </div>
+          <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
+          <div id="manual" class="tab-pane">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+
+                  <!-- Button trigger modal -->
+                  <div class="card">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+                      <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tRLHnr8&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                      </iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- CIERRE MANUAL-->
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- /.content-wrapper -->
-<?php require('footer.php'); ?>
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Control sidebar content goes here -->
-</aside>
-<!-- EDITAR PROVEEDOR -->
-<div class="modal fade" id="editProveedorModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addItemModalLabel">Editar Datos Proveedor</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="" class="formularioProveedor" method="POST">
-          <div class="card ">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>NIT/CC </label>
-                  <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required readonly>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Razón Social</label>
-                  <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Correo</label>
-                  <input type="text" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Correo</label>
-                  <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
+  <!-- /.content-wrapper -->
+  <?php require('footer.php'); ?>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- EDITAR PROVEEDOR -->
+  <div class="modal fade" id="editProveedorModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addItemModalLabel">Editar Datos Proveedor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" class="formularioProveedor" method="POST">
+            <div class="card ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>NIT/CC </label>
+                    <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required readonly>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Razón Social</label>
+                    <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Correo</label>
+                    <input type="text" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Correo</label>
+                    <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
+                  </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <button type="submit" form="edititemform" class="btn btn-success" name="btnedit">Editar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button type="submit" form="edititemform" class="btn btn-success" name="btnedit">Editar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal PARA AGREGAR UN NUEVO PROVEEDOR-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-navy">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo Proveedor</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="" class="formularioProveedor" method="POST">
-          <div class="card ">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>NIT/CC </label>
-                  <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Razón Social</label>
-                  <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Correo</label>
-                  <input type="email" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <label>Correo</label>
-                  <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
+  <!-- Modal PARA AGREGAR UN NUEVO PROVEEDOR-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-navy">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo Proveedor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" class="formularioProveedor" method="POST">
+            <div class="card ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>NIT/CC </label>
+                    <input type="number" class="form-control input-lg" id="id_proveedor" name="id_proveedor" placeholder="Identificación del Proveedor" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Razón Social</label>
+                    <input type="text" class="form-control input-lg" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre Proveedor" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Correo</label>
+                    <input type="email" class="form-control input-lg" id="correo_proveedor" name="contacto_proveedor" placeholder="Correo Proveedor" required>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <label>Correo</label>
+                    <input type="text" class="form-control input-lg" id="telefono_proveedor" name="telefono_proveedor" placeholder="Telefono Proveedor" required>
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-success" id="guardarProveedor" name="guardarProveedor">Guardar Cambios</button>
-          </div>
-        </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-success" id="guardarProveedor" name="guardarProveedor">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- ./wrapper -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<script>
-  $(document).ready(function() {
-    $("#tiempo").hide();
-    $("#porcentaje").hide();
-    $("#otros").hide()
-    $("#forma_pago").change(function() {
-      var seleccion = $(this).val();
-      switch (seleccion) {
-        case "Credito":
-          $("#tiempo").show();
-          $("#porcentaje").hide();
-          $("#otros").hide();
-          break;
-        case "Anticipo":
-          $("#porcentaje").show();
-          $("#tiempo").hide();
-          $("#otros").hide();
-          break;
-        case "Otros":
-          $("#otros").show();
-          $("#tiempo").hide();
-          $("#porcentaje").hide();
-          break;
-        default:
-          $("#tiempo").hide();
-          $("#porcentaje").hide();
-          $("#otros").hide();
-      }
+  <!-- ./wrapper -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <script>
+    $(document).ready(function() {
+      $("#tiempo").hide();
+      $("#porcentaje").hide();
+      $("#otros").hide()
+      $("#forma_pago").change(function() {
+        var seleccion = $(this).val();
+        switch (seleccion) {
+          case "Credito":
+            $("#tiempo").show();
+            $("#porcentaje").hide();
+            $("#otros").hide();
+            break;
+          case "Anticipo":
+            $("#porcentaje").show();
+            $("#tiempo").hide();
+            $("#otros").hide();
+            break;
+          case "Otros":
+            $("#otros").show();
+            $("#tiempo").hide();
+            $("#porcentaje").hide();
+            break;
+          default:
+            $("#tiempo").hide();
+            $("#porcentaje").hide();
+            $("#otros").hide();
+        }
+
+      });
+    })
+    $('#editProveedorModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var id_proveedor = button.data('id_proveedor'); // Extract info from data-* attributes
+      var nombre_proveedor = button.data('nombre_proveedor');
+      var correo_proveedor = button.data('correo_proveedor');
+      var telefono_proveedor = button.data('telefono_proveedor');
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this);
+      modal.find('.modal-body #id_proveedor').val(id_proveedor);
+      modal.find('.modal-body #nombre_proveedor').val(nombre_proveedor);
+      modal.find('.modal-body #correo_proveedor').val(correo_proveedor);
+      modal.find('.modal-body #telefono_proveedor').val(telefono_proveedor);
 
     });
-  })
-  $('#editProveedorModal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var id_proveedor = button.data('id_proveedor'); // Extract info from data-* attributes
-    var nombre_proveedor = button.data('nombre_proveedor');
-    var correo_proveedor = button.data('correo_proveedor');
-    var telefono_proveedor = button.data('telefono_proveedor');
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-body #id_proveedor').val(id_proveedor);
-    modal.find('.modal-body #nombre_proveedor').val(nombre_proveedor);
-    modal.find('.modal-body #correo_proveedor').val(correo_proveedor);
-    modal.find('.modal-body #telefono_proveedor').val(telefono_proveedor);
+  </script>
 
-  });
-</script>
+  </body>
 
-</body>
-
-</html>
+  </html>
