@@ -11,7 +11,7 @@ if ($_SESSION['ingreso'] == true) {
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <li class="nav-item">
         <a data-toggle="tab" href="#panelc" class="nav-link active">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
+          <i class="nav-icon fas fa-tachometer-alt"></i>
 
           <p>
             Panel de Control
@@ -44,15 +44,21 @@ if ($_SESSION['ingreso'] == true) {
           </li>
           <li class="nav-item" name="cerradas">
             <a data-toggle="tab" href="#cerradas" class="nav-link">
-            <i class="nav-icon far fa-check-circle"></i>
+              <i class="nav-icon far fa-check-circle"></i>
               <p>Acciones Cerradas</p>
+            </a>
+          </li>
+          <li class="nav-item" name="cerradas">
+            <a data-toggle="tab" href="#" class="nav-link">
+            <i class="nav-icon far fa-times-circle"></i>
+              <p>Acciones Rechazada</p>
             </a>
           </li>
 
         </ul>
       </li>
       <li class="nav-item">
-      <a data-toggle="tab" href="#verificar" class="nav-link ">
+        <a data-toggle="tab" href="#verificar" class="nav-link ">
           <i class="nav-icon fas fa-clipboard-check"></i>
           <p>
             Verificar ACPM
@@ -404,15 +410,14 @@ if ($_SESSION['ingreso'] == true) {
             <!-- /.card -->
           </div>
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
-          <div id="verificar" class="tab-pane ">
+          <div id="verificar" class="tab-pane">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Verificar ACPM</h3>
               </div>
               <!-- /.card-header -->
-
               <div class="card-body">
-                <table id="" class="display table table-bordered table-striped">
+                <table id="" class="display table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -426,6 +431,7 @@ if ($_SESSION['ingreso'] == true) {
                       <th>Estado</th>
                       <th>Informe</th>
                       <th>Responder</th>
+                      <th>Rechazar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -449,6 +455,7 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["estado_acpm"] ?></td>
                           <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                           <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
+                          <td><button class='btn btn-danger' data-toggle="modal" data-target="#modal-rechazo"id="rechazar"><i class="fas fa-bomb"></i></button></td>
                         </tr>
                     <?php }
                     } ?>
@@ -467,26 +474,27 @@ if ($_SESSION['ingreso'] == true) {
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class=" btn btn-success btn-block">
-                    <h4 class="modal-title "><?php echo $id_acpm; ?></h4>
+                    <h4 class="modal-title ">EFICACIA</h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST">
+                    <form id="" method="POST" action="">
                       <div class="card card-navy">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-12 col-xs-12 col-sm-12">
+                            <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_sig" id="id_acpm_sig" hidden>
                               <label>SI (Conforme) NO (No conforme)</label>
-                              <select class="form-control" id="riesgo_acpm" name="riesgo_acpm" required>
+                              <select class="form-control" id="riesgo_acpm_sig" name="riesgo_acpm_sig"  required>
                                 <option>Selecciona una Opcion</option>
-                                <option value="SI">SI</option>
-                                <option value="NO">NO</option>
+                                <option value="Si">SI</option>
+                                <option value="No">NO</option>
                               </select>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
                                 <label>Justifique por que es o no es conforme</label>
-                                <textarea type="text" id="justificacion_riesgo" name="justificacion_riesgo" class="form-control"></textarea>
+                                <textarea type="text" id="justificacion_riesgo_sig" name="justificacion_riesgo_sig" class="form-control" required></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -501,7 +509,7 @@ if ($_SESSION['ingreso'] == true) {
                               <br>
                               <div class="form-group">
                                 <label>¿Qué cambios se deben contemplar y documentar? Describa brevemente</label>
-                                <textarea type="text" id="justificacion_sig" name="justificacion_sig" class="form-control"></textarea>
+                                <textarea type="text" id="justificacion_sig" name="justificacion_sig" class="form-control" required></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -516,24 +524,68 @@ if ($_SESSION['ingreso'] == true) {
                               <br>
                               <div class="form-group">
                                 <label>Justificacion Conforme o No conforme</label>
-                                <textarea type="text" id="justificacion_conforme_sig" name="justificacion_conforme_sig" class="form-control"></textarea>
+                                <textarea type="text" id="justificacion_conforme_sig" name="justificacion_conforme_sig" class="form-control" required></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <label for="fecha_estado">Fecha de Verificacion</label>
-                              <input type="date" name="fecha_estado" class="form-control" id="fecha_estado" required>
+                              <input type="date" name="fecha_estado_sig" class="form-control" id="fecha_estado_sig" required>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
                                 <td style="text-align: center;">
-                                  <button class='btn btn-success' style="width: 100%;" id="guardar" name="guardar">
+                                  <button type="button" class='btn btn-success' style="width: 100%;" id="guardar_sig" name="guardar">
                                     <i class="far fa-regular fa-thumbs-up">ENVIAR</i>
                                   </button>
                                 </td>
                               </div>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
+          </section>
+          <section class="content">
+            <div class="modal fade" id="modal-rechazo">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class=" btn btn-danger btn-block">
+                    <h4 class="modal-title ">RECHAZAR</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form id="" method="POST" action="php/acpm_rechazada.php">
+                      <div class="card card-navy">
+                        <div class="card-body">
+                          <div class="row">
+                          <div class="col-md-12 col-xs-12 col-sm-12">
+                              <label for="fecha_estado">Fecha</label>
+                              <input type="date" name="fecha_rechazo_sig" class="form-control" id="fecha_rechazo_sig" required>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <label>Describa el porque del rechazo</label>
+                                <textarea type="text" id="descripcion_rechazo_sig" name="descripcion_rechazo_sig" class="form-control" required></textarea>
+                              </div>
+                            </div>
+                            <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_fk" id="id_acpm_fk" >
+                              <br>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <td style="text-align: center;">
+                                  <button type="submit" class='btn btn-danger' style="width: 100%;" id="rechazar_sig" name="rechazar_sig">
+                                  <i class="fas fa-skull"> RECHAZAR</i>
+                                  </button>
+                                </td>
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </form>
@@ -550,6 +602,7 @@ if ($_SESSION['ingreso'] == true) {
   </div>
 </div>
 </div>
+
 
 <!-- /.content-wrapper -->
 
