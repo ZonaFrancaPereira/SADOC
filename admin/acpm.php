@@ -51,7 +51,7 @@ if ($_SESSION['ingreso'] == true) {
         </ul>
       </li>
       <li class="nav-item">
-      <a data-toggle="tab" href="#verificar" class="nav-link ">
+        <a data-toggle="tab" href="#verificar" class="nav-link ">
           <i class="nav-icon fas fa-th"></i>
           <p>
             Verificar ACPM
@@ -220,7 +220,7 @@ if ($_SESSION['ingreso'] == true) {
                   <thead>
                     <tr>
                       <th>#</th>
-                      
+
                       <th>Origen</th>
                       <th>Fuente</th>
                       <th>Tipo de Reporte</th>
@@ -402,14 +402,14 @@ if ($_SESSION['ingreso'] == true) {
             </div>
             <!-- /.card -->
           </div>
-           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
-           <div id="verificar" class="tab-pane ">
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
+          <div id="verificar" class="tab-pane ">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Verificar ACPM</h3>
               </div>
               <!-- /.card-header -->
-             
+
               <div class="card-body">
                 <table id="" class="display table table-bordered table-striped">
                   <thead>
@@ -429,9 +429,9 @@ if ($_SESSION['ingreso'] == true) {
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { { 
-                      $id_acpm=$row["id_consecutivo"];
-                      ?>
+                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { {
+                        $id_acpm = $row["id_consecutivo"];
+                    ?>
                         <tr style=text-align:center>
                           <td><?php echo $row["id_consecutivo"] ?></td>
                           <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -447,19 +447,101 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["fecha_finalizacion"] ?></td>
                           <td><?php echo $row["estado_acpm"] ?></td>
                           <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                        <td>modal</td>
+                          <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
                         </tr>
                     <?php }
                     } ?>
                   </tbody>
-   
+
                 </table>
-              
+
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
           </div>
+          <!-- /Modal para sig -->
+          <section class="content">
+            <div class="modal fade" id="modal-respuesta">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class=" btn btn-success btn-block">
+                    <h4 class="modal-title ">EFICACIA</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form id="" method="POST">
+                      <div class="card card-navy">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <label>SI (Conforme) NO (No conforme)</label>
+                              <select class="form-control" id="riesgo_acpm" name="riesgo_acpm" required>
+                                <option>Selecciona una Opcion</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                              </select>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <label>JUSTIFIQUE POR QUE ES O NO CONFORME</label>
+                                <input type="text" id="justificacion_riesgo" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <label>¿Es necesario hacer cambios al sistema de gestión? (gestión del cambio) (SI - NO)</label>
+                              <select class="form-control" id="cambios_sig" name="cambios_sig" required>
+                                <option>Selecciona una Opcion</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                              </select>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <label>¿Qué cambios se deben contemplar y documentar? Describa brevemente</label>
+                                <input type="text" id="justificacion_sig" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <label>Conforme</label>
+                              <select class="form-control" id="conforme_sig" name="conforme_sig" required>
+                                <option>Selecciona una Opcion</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                              </select>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <label>Justificacion Conforme o No conforme</label>
+                                <input type="text" id="justificacion_conforme_sig" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <label for="fecha_estado">Fecha de Verificacion</label>
+                              <input type="date" name="fecha_estado" class="form-control" id="fecha_estado" required>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                              <br>
+                              <div class="form-group">
+                                <td style="text-align: center;">
+                                  <button class='btn btn-success' style="width: 100%;" id="enviar_acpm_sig">
+                                    <i class="far fa-regular fa-thumbs-up">ENVIAR</i>
+                                  </button>
+                                </td>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
+          </section>
         </div>
       </div>
       <!-- CIERRE DEL TAB -->
@@ -507,6 +589,7 @@ if ($_SESSION['ingreso'] == true) {
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+
 <script>
   $(document).ready(function() {
     $("#similares").hide();
