@@ -3,15 +3,13 @@ include_once("conexion.php");
 
 // Obtener datos del formulario
 $estado_acpm = "Rechazada";
-$fecha_rechazo_sig = $_POST['fecha_rechazo_sig'];
 $descripcion_rechazo_sig = $_POST['descripcion_rechazo_sig'];
-$id_acpm_fk = $_POST['id_acpm_fk'];
+$id_acpm_fk_sig = $_POST['id_acpm_fk_sig'];
 
 try {
-    $stmt = $conn->prepare('INSERT INTO acpm_rechazada(fecha_rechazo, descripcion_rechazo, id_acpm_fk) VALUES(?,?,?)');
-    $stmt->bindParam(1, $fecha_rechazo_sig); // Cambié $riesgo_acpm a $fecha_rechazo_sig
-    $stmt->bindParam(2, $descripcion_rechazo_sig); // Cambié $justificacion_riesgo a $descripcion_rechazo_sig
-    $stmt->bindParam(3, $id_acpm_fk);
+    $stmt = $conn->prepare('INSERT INTO acpm_rechazada(fecha_rechazo, descripcion_rechazo, id_acpm_fk) VALUES(NOW(), ?, ?)');
+    $stmt->bindParam(1, $descripcion_rechazo_sig); // Agregué el tipo de dato
+    $stmt->bindParam(2, $id_acpm_fk_sig); // Agregué el tipo de dato
 
     if ($stmt->execute()) {
         echo "1";

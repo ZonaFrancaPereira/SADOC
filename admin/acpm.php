@@ -455,7 +455,7 @@ if ($_SESSION['ingreso'] == true) {
                           <td><?php echo $row["estado_acpm"] ?></td>
                           <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                           <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
-                          <td><button class='btn btn-danger' data-toggle="modal" data-target="#modal-rechazo"id="rechazar"><i class="fas fa-bomb"></i></button></td>
+                          <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo"id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                         </tr>
                     <?php }
                     } ?>
@@ -555,18 +555,14 @@ if ($_SESSION['ingreso'] == true) {
             <div class="modal fade" id="modal-rechazo">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                  <div class=" btn btn-danger btn-block">
+                  <div class=" btn bg-danger btn-block">
                     <h4 class="modal-title ">RECHAZAR</h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST" action="php/acpm_rechazada.php">
+                    <form id="" method="POST" action="">
                       <div class="card card-navy">
                         <div class="card-body">
                           <div class="row">
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label for="fecha_estado">Fecha</label>
-                              <input type="date" name="fecha_rechazo_sig" class="form-control" id="fecha_rechazo_sig" required>
-                            </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
@@ -574,13 +570,15 @@ if ($_SESSION['ingreso'] == true) {
                                 <textarea type="text" id="descripcion_rechazo_sig" name="descripcion_rechazo_sig" class="form-control" required></textarea>
                               </div>
                             </div>
-                            <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_fk" id="id_acpm_fk" >
+                            <div class="form-group">
+                                <input type="text" name="id_acpm_fk_sig" id="id_acpm_fk_sig" class="form-control" hidden>
+                              </div>
                               <br>
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
                                 <td style="text-align: center;">
-                                  <button type="submit" class='btn btn-danger' style="width: 100%;" id="rechazar_sig" name="rechazar_sig">
+                                  <button type="button" class='btn bg-danger' style="width: 100%;" id="rechazar_sig" name="rechazar_sig">
                                   <i class="fas fa-skull"> RECHAZAR</i>
                                   </button>
                                 </td>
@@ -710,6 +708,16 @@ if ($_SESSION['ingreso'] == true) {
     var modal = $(this);
 
     modal.find('.modal-body #id_acpm_fk').val(id_acpm_fk);
+  });
+
+  $('#modal-rechazo').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id_acpm_fk_sig = button.data('id_acpm_fk_sig'); // Extract info from data-* attributes
+
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+
+    modal.find('.modal-body #id_acpm_fk_sig').val(id_acpm_fk_sig);
   });
 </script>
 

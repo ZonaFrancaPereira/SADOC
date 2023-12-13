@@ -3,6 +3,7 @@ $(document).ready(iniciar_acpm);
 function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$("#guardar_sig").on("click", guardar_sig);
+	$("#rechazar_sig").on("click", rechazar_sig);
 	$('input').on('input', function () {
 
 		$('input').each(function () {
@@ -158,6 +159,68 @@ function guardar_sig() {
 				$.ajax({
 					type: 'POST',
 					url: 'php/insertar_acpmsig.php',
+					data: json,
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Su respuesta se registro con éxito',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				);
+			}
+		});
+	}
+}
+
+function rechazar_sig() {
+	var descripcion_rechazo_sig = $("#descripcion_rechazo_sig").val();
+	var id_acpm_fk_sig = $("#id_acpm_fk_sig").val();
+
+	if (descripcion_rechazo_sig == "" || id_acpm_fk_sig == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		);
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		});
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres RECHAZAR ESTA ACPM?',
+			text: 'Recuerda que NO ABRA RETORNO',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Enviar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+					'descripcion_rechazo_sig': descripcion_rechazo_sig,
+    				'id_acpm_fk_sig': id_acpm_fk_sig
+				};
+
+				$.ajax({
+					type: 'POST',
+					url: 'php/acpm_rechazada.php',
 					data: json,
 					success: function (resultacpm) {
 						Swal.fire({
