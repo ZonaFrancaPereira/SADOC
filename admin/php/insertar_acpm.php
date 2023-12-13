@@ -60,6 +60,8 @@ try {
 		if ($stmt2->execute()) {
 
 		}
+
+		
 		//CORREO DESTINATARIO (ESTO DESPUES LO VAMOS A CONFIGURAR DESDE LA APP)
 		$email = "ymontoyag@zonafrancadepereira.com";
 		//LIBRERIA

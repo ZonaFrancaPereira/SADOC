@@ -509,8 +509,6 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
 
-<<<<<<< HEAD
-=======
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -576,7 +574,6 @@ if ($_SESSION['ingreso'] == true) {
             </div>
 
           </div>
->>>>>>> 59292814b64d7258daa9ccb5951994fa00091ac3
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
@@ -749,6 +746,7 @@ if ($_SESSION['ingreso'] == true) {
                         <?php
                         foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Verificacion'") as $row) { {
                             $id_acpm = $row["id_consecutivo"];
+                            $id_consecutivo = $row["id_consecutivo"];
                             $estado_acpm_sig = $row["estado_acpm"];
                             $fechaOriginal = $row["fecha_finalizacion"];
                             // Crear un objeto DateTime con la fecha original
@@ -783,7 +781,7 @@ if ($_SESSION['ingreso'] == true) {
                               <td><?php echo $fecha_finalizacion ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                              <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
+                              <td><button class='btn btn-success btn-aprobado ' data-id="<?=$id_consecutivo?>"><i class="fas fa-user-check"></i></button></td>
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                             </tr>
                         <?php }
@@ -1046,6 +1044,15 @@ if ($_SESSION['ingreso'] == true) {
 
     modal.find('.modal-body #id_acpm_fk_sig').val(id_acpm_fk_sig);
   });
+
+  $(document).ready(function() {
+        $(".btn-aprobado").on("click", function() {
+            var id_consecutivo = $(this).data("id");
+
+            // Redirigir a la página de actualización con el id_consecutivo
+            window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
+        });
+    });
 </script>
 
 </body>
