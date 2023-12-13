@@ -220,7 +220,7 @@ if ($_SESSION['ingreso'] == true) {
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO-->
           <div id="abiertas" class="tab-pane">
-          <div class="row">
+            <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
                   <div class="card-header border-0 bg-primary">
@@ -230,66 +230,66 @@ if ($_SESSION['ingreso'] == true) {
                   </div>
                   <div class="card-body table-responsive p-0">
                     <table class="display table table-striped table-valign-middle " width="100%">
-                    <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Origen</th>
-                      <th>Fuente</th>
-                      <th>Tipo de Reporte</th>
-                      <th>Descripción </th>
-                      <th>Fecha Corrección</th>
-                      <th>Fecha Finalización</th>
-                      <th>Estado</th>
-                      <th>Informe</th>
-                      <th>Asignar</th>
-                      <th>Ver</th>
-                    </tr>
-                  </thead>
-                      <tbody>
-                      <?php
-                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Abierta' AND a.id_usuario_fk ='".$id_usuario_fk."'") as $row) { {
-                        $id_acpm = $row["id_consecutivo"];
-                        $descripcion = $row["descripcion_acpm"];
-                    ?>
-                        <tr style=text-align:center>
-                          <td><?php echo $row["id_consecutivo"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $origen_acpm = $row["origen_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fuente_acpm"] ?></td>
-                          <td><?php echo $row["tipo_acpm"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $descripcion_acpm = $row["descripcion_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fecha_correccion"] ?></td>
-                          <td><?php echo $row["fecha_finalizacion"] ?></td>
-                          <td><?php echo $row["estado_acpm"] ?></td>
-                          <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-
-                          <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
-                          <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Origen</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripción </th>
+                          <th>Fecha Corrección</th>
+                          <th>Fecha Finalización</th>
+                          <th>Estado</th>
+                          <th>Informe</th>
+                          <th>Asignar</th>
+                          <th>Ver</th>
                         </tr>
-                    <?php }
-                    } ?>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Abierta' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                            $descripcion = $row["descripcion_acpm"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fecha_correccion"] ?></td>
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+
+                              <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
+                              <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-           
+
             <!-- /.card -->
           </div>
           <!-- /.modal -->
@@ -367,7 +367,7 @@ if ($_SESSION['ingreso'] == true) {
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
           <div id="cerradas" class="tab-pane ">
-          <div class="row">
+            <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
                   <div class="card-header border-0 bg-primary">
@@ -377,58 +377,58 @@ if ($_SESSION['ingreso'] == true) {
                   </div>
                   <div class="card-body table-responsive p-0">
                     <table class="display table table-striped table-valign-middle " width="100%">
-                    <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre del responsable</th>
-                      <th>Origen Acpm</th>
-                      <th>Fuente</th>
-                      <th>Tipo de Reporte</th>
-                      <th>Descripcion Acpm</th>
-                      <th>Fecha Correcion</th>
-                      <th>Fecha Finalizacion</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                      <tbody>
-                      <?php
-                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='".$id_usuario_fk."'") as $row) { { ?>
-                        <tr style=text-align:center>
-                          <td><?php echo $row["id_consecutivo"] ?></td>
-                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $origen_acpm = $row["origen_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fuente_acpm"] ?></td>
-                          <td><?php echo $row["tipo_acpm"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $descripcion_acpm = $row["descripcion_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fecha_correccion"] ?></td>
-                          <td><?php echo $row["fecha_finalizacion"] ?></td>
-                          <td><?php echo $row["estado_acpm"] ?></td>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Correcion</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Estado</th>
                         </tr>
-                    <?php }
-                    } ?>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fecha_correccion"] ?></td>
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                            </tr>
+                        <?php }
+                        } ?>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-           
+
           </div>
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
@@ -458,7 +458,7 @@ if ($_SESSION['ingreso'] == true) {
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='".$id_usuario_fk."'") as $row) { { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -525,7 +525,7 @@ if ($_SESSION['ingreso'] == true) {
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso' AND a.id_usuario_fk ='".$id_usuario_fk."'") as $row) { { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -566,73 +566,79 @@ if ($_SESSION['ingreso'] == true) {
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES POR VERIFICAR DE CADA USUARIO-->
           <div id="verificar" class="tab-pane">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Verificar ACPM</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="" class="display table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre del responsable</th>
-                      <th>Origen Acpm</th>
-                      <th>Fuente</th>
-                      <th>Tipo de Reporte</th>
-                      <th>Descripción Acpm</th>
-                      <th>Fecha Corrección</th>
-                      <th>Fecha Finalización</th>
-                      <th>Estado</th>
-                      <th>Informe</th>
-                      <th>Responder</th>
-                      <th>Rechazar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { {
-                        $id_acpm = $row["id_consecutivo"];
-                        $estado_acpm_sig = $row["estado_acpm"];
-                    ?>
-                        <tr style=text-align:center>
-                          <td><?php echo $row["id_consecutivo"] ?></td>
-                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $origen_acpm = $row["origen_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fuente_acpm"] ?></td>
-                          <td><?php echo $row["tipo_acpm"] ?></td>
-                          <td>
-                            <p class="text-break" style="width: 10rem">
-                              <?php
-                              $descripcion_acpm = $row["descripcion_acpm"];
-                              $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                              echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
-                              ?>
-                            </p>
-                          </td>
-                          <td><?php echo $row["fecha_correccion"] ?></td>
-                          <td><?php echo $row["fecha_finalizacion"] ?></td>
-                          <td><?php echo $row["estado_acpm"] ?></td>
-                          <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                          <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
-                          <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Verificar ACPM</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripción Acpm</th>
+                          <th>Fecha Finalización</th>
+                          <th>Estado</th>
+                          <th>Informe</th>
+                          <th>Responder</th>
+                          <th>Rechazar</th>
                         </tr>
-                    <?php }
-                    } ?>
-                  </tbody>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                            $estado_acpm_sig = $row["estado_acpm"];
+                            $fechaOriginal = $row["fecha_finalizacion"];
+                            // Crear un objeto DateTime con la fecha original
+                            $fechaObjeto = new DateTime($fechaOriginal);
+                            // Formatear la fecha al formato deseado
+                            $fecha_finalizacion = $fechaObjeto->format('d/m/Y');
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
 
-                </table>
-
+                              <td><?php echo $fecha_finalizacion ?></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
+                              <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <!-- /.card-body -->
             </div>
             <!-- /.card -->
           </div>
