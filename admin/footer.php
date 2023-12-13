@@ -111,7 +111,8 @@ dom:"Bfrtilp",
 
 
 
-"order":[[0,'desc']]
+"order":[[0,'desc']],
+autoWidth: true
 
 });
 
