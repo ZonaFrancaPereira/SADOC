@@ -66,5 +66,21 @@ try {
 } catch (PDOException $e) {
   echo "Error en el servidor";
 }
+
+//TOTAL ACPM ABIERTAS
+try {
+  $stmt = $conn->prepare("SELECT COUNT(id_consecutivo) AS total_acpm
+  FROM acpm
+  WHERE (estado_acpm = 'Abierta' OR estado_acpm = 'Proceso'  OR estado_acpm = 'Rechazada') AND id_usuario_fk = '".$id_usuario_fk."' ");
+  $stmt->execute();
+  $registros = 1;
+  if ($stmt->rowCount() > 0) {
+    while ($row = $stmt->fetch()) {
+      $total_acpm=$row['total_acpm'];
+    }
+  }
+} catch (PDOException $e) {
+  echo "Error en el servidor";
+}
   ?>
 

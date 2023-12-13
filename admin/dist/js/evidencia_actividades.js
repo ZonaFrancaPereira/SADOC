@@ -43,7 +43,7 @@ function insertar_evidencia_actividad() {
 
 		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@ que quieres Subir esta Evidencia?',
-			text: "Recuerda que una vez enviada quedara a disposicion de SIG para desmontarla",
+			text: "Recuerda que una vez enviada quedara a disposición de SIG para desmontarla",
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Si, Radicar',
