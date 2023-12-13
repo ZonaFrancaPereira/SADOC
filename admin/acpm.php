@@ -509,6 +509,12 @@ if ($_SESSION['ingreso'] == true) {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
+=======
+
+<<<<<<< HEAD
+=======
+>>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -574,6 +580,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
 
           </div>
+>>>>>>> 59292814b64d7258daa9ccb5951994fa00091ac3
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
