@@ -22,8 +22,8 @@ if ($_SESSION['ingreso'] == true) {
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
       <a data-toggle="tab" href="#panela" class="nav-link active">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
-      
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+
         <p>
           Panel de Control
         </p>
@@ -31,7 +31,7 @@ if ($_SESSION['ingreso'] == true) {
     </li>
     <li class="nav-item">
       <a data-toggle="tab" href="#qr" class="nav-link ">
-      <i class="nav-icon fas fa-qrcode"></i>
+        <i class="nav-icon fas fa-qrcode"></i>
         <p>
           QR
         </p>
@@ -40,7 +40,7 @@ if ($_SESSION['ingreso'] == true) {
     <?php if ($_SESSION['ingresar_activos'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#ingresar" class="nav-link ">
-        <i class="nav-icon fas fa-cart-plus"></i>
+          <i class="nav-icon fas fa-cart-plus"></i>
           <p>
             Nuevo Activo
           </p>
@@ -50,7 +50,7 @@ if ($_SESSION['ingreso'] == true) {
     <?php if ($_SESSION['admin_activos'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#inventario" class="nav-link ">
-        <i class="nav-icon fas fa-boxes"></i>
+          <i class="nav-icon fas fa-boxes"></i>
           <p>
             Nuevo Inventario
             <span class="right badge badge-success">Crear</span>
@@ -59,9 +59,9 @@ if ($_SESSION['ingreso'] == true) {
       </li>
     <?php  } ?>
 
-    <li class="nav-item" >
+    <li class="nav-item">
       <a data-toggle="tab" href="#consultar" class="nav-link ">
-      <i class="nav-icon fas fa-search"></i>
+        <i class="nav-icon fas fa-search"></i>
         <p>
           Consultar Activos
         </p>
@@ -95,15 +95,15 @@ if ($_SESSION['ingreso'] == true) {
         <div class="tab-content ">
           <!-- DIV DONDE SE MUESTRAN TODOS LOS ACTIVOS -->
 
-         
+
           <div class="tab-pane  show active" id="panela">
             <div class="row">
               <div class="col-lg-12">
                 <!-- /.card -->
                 <div class="card">
-                  
- 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas asperiores nostrum blanditiis impedit hic vel. Corrupti dolor impedit sint. Vel animi ducimus architecto iste culpa dolor, aut eveniet?
+
+
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas asperiores nostrum blanditiis impedit hic vel. Corrupti dolor impedit sint. Vel animi ducimus architecto iste culpa dolor, aut eveniet?
 
 
                   <!-- /.card-footer -->
@@ -111,7 +111,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas as
               </div>
             </div>
           </div>
-           <!-- DIV DONDE SE MUESTRAN TODOS QR DE LOS ACTIVOS -->
+          <!-- DIV DONDE SE MUESTRAN TODOS QR DE LOS ACTIVOS -->
           <div class="tab-pane  " id="qr">
             <div class="row">
               <div class="col-lg-12">
@@ -133,7 +133,8 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas as
                       <div class="row">
 
                         <?php
-                        $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?id_activo='" . $_SESSION['Id'] . "'", "");
+                        $Id_usuario= $_SESSION['Id'];
+                        $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?Id_usuario=$Id_usuario", "");
                         $qr = $svg;
                         ?>
                         <li class="col-md-6" style=" border: 1px solid black; background:white;">
@@ -206,52 +207,72 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas as
           </div>
           <!-- DIV DONDE SE PUEDEN CONSULTAR Y DAR DE BAJA LOS ACTIVOS-->
           <div id="consultar" class="tab-pane">
-          <table id="" class="display table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre del responsable</th>
-                      <th>Origen Acpm</th>
-                      <th>Fuente</th>
-                      <th>Tipo de Reporte</th>
-                      <th>Descripcion Acpm</th>
-                      <th>Fecha Correcion</th>
-                      <th>Fecha Finalizacion</th>
-                      <th>Estado</th>
-                      <th>Informe</th>
-                      <th>Responder</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    foreach ($conn->query("SELECT * from activos a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { {
-                        $id_acpm = $row["id_consecutivo"];
-                    ?>
-                        <tr style="text-align:center">
-                        `, ``, ``, ``, ``,
-                         `referencia_articulo`, ``, ``, `ip`, `windows`, `office`, `factura_office`,
-                          `lugar_articulo`, `observaciones_articulo`, `numero_factura`, `fecha_garantia`, `valor_articulo`,
-                         `condicion_articulo`, `id_proveedor_fk`, `descripcion_proveedor`, `id_usuario_fk`, `estado_activo`, `recurso_tecnologico
-                          <td><?php echo $row["id_activo"] ?></td>
-                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
-
-                          <td><?php echo $row["nombre_articulo"] ?></td>
-                          <td><?php echo $row["descripcion_articulo"] ?></td>    
-                          <td><?php echo $row["modelo_articulo"] ?></td>
-                          <td><?php echo $row["marca_articulo"] ?></td>
-                          <td><?php echo $row["tipo_articulo"] ?></td>
-                          <td><?php echo $row["ip"] ?></td>
-                          <td><?php echo $row["windows"] ?></td>
-                          <td><?php echo $row["tipo_articulo"] ?></td>
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Mis Activos</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>Cod</th>
+                          <th>Fecha</th>
+                          <th>Articulo</th>
+                          <th>Descripción</th>
+                          <th>Modelo</th>
+                          <th>Referencia</th>
+                          <th>Marca</th>
+                          <th>Lugar</th>
+                          <th>Observaciones</th>
+                          <th>ID Proveedor</th>
+                          <th>Proveedor</th>
+                          <th>Descripción Proveedor</th>
+                          <th>Tecnológico</th>
+                          <th>Estado</th>
                         </tr>
-                    <?php }
-                    } ?>
-                  </tbody>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario , u.firma_usuario, u.dia_backup, u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk, 
+                        a.id_activo, a.fecha_asignacion, a.nombre_articulo, a.descripcion_articulo, a.modelo_articulo, a.referencia_articulo, a.marca_articulo, a.tipo_articulo, a.ip, a.windows, a.office, a.factura_office, a.lugar_articulo, a.observaciones_articulo, a.numero_factura, a.fecha_garantia, a.valor_articulo, a.condicion_articulo, a.id_proveedor_fk , a.descripcion_proveedor, a.id_usuario_fk, a.estado_activo, 
+                        p.id_proveedor, p.nombre_proveedor, p.contacto_proveedor, p.telefono_proveedor, p.id_usuario_fk
+                    FROM activos a
+                    INNER JOIN usuarios u
+                     ON u.Id_usuario = a.id_usuario_fk
+                    INNER JOIN proveedor_compras p
+                     ON a.id_proveedor_fk = p.id_proveedor WHERE a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                            <tr style=text-align:center>
 
-                </table>
+                              <td><?php echo $row["id_activo"]; ?></td>
+                              <td><?php echo $row["fecha_asignacion"];  ?></td>
+                              <td><?php echo $row["nombre_articulo"] ?></td>
+                              <td><?php echo $row["descripcion_articulo"] ?></td>
+                              <td><?php echo $row["modelo_articulo"] ?></td>
+                              <td><?php echo $row["referencia_articulo"] ?></td>
+                              <td><?php echo $row["marca_articulo"] ?></td>
+                              <td><?php echo $row["lugar_articulo"] ?></td>
+                              <td><?php echo $row["observaciones_articulo"] ?></td>
+                              <td><?php echo $row["id_proveedor"] ?></td>
+                              <td><?php echo $row["nombre_proveedor"] ?></td>
+                              <td><?php echo $row["descripcion_proveedor"] ?></td>
+                              <td><?php echo $row["recurso_tecnologico"] ?></td>
+                              <td><?php echo $row["estado_activo"] ?></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-                   <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
-                   <div id="manual" class="tab-pane">
+          <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
+          <div id="manual" class="tab-pane">
             <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
@@ -262,8 +283,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas as
                     <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
                     padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
                     border-radius: 8px; will-change: transform;">
-                      <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-                        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tA6dWWs&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                      <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tA6dWWs&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
                       </iframe>
                     </div>
                   </div>
