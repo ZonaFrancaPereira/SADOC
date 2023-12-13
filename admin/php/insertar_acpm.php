@@ -47,19 +47,32 @@ try {
 	if ($stmt->execute()) {
 		// Obtener el último ID insertado
 		$id_acpm_fk = $conn->lastInsertId();
-		$tipo_actividad = "Correccion";
-		$estado_actividad = "Incompleta";
-		$stmt2 = $conn->prepare('INSERT INTO actividades_acpm( fecha_actividad, descripcion_actividad, tipo_actividad, estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
-		$stmt2->bindParam(1, $fecha_correccion);
-		$stmt2->bindParam(2, $correccion_acpm);
-		$stmt2->bindParam(3, $tipo_actividad);
-		$stmt2->bindParam(4, $estado_actividad);
-		$stmt2->bindParam(5, $id_usuario_fk);
-		$stmt2->bindParam(6, $id_acpm_fk);
-
-		if ($stmt2->execute()) {
-
+		if ($tipo_acpm == "AC" || $tipo_acpm == "AP") {
+			$tipo_actividad = "Correccion";
+			$estado_actividad = "Incompleta";
+		
+			try {
+				$stmt2 = $conn->prepare('INSERT INTO actividades_acpm( fecha_actividad, descripcion_actividad, tipo_actividad, estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
+				$stmt2->bindParam(1, $fecha_correccion);
+				$stmt2->bindParam(2, $correccion_acpm);
+				$stmt2->bindParam(3, $tipo_actividad);
+				$stmt2->bindParam(4, $estado_actividad);
+				$stmt2->bindParam(5, $id_usuario_fk);
+				$stmt2->bindParam(6, $id_acpm_fk);
+		
+				if ($stmt2->execute()) {
+					// El código para el caso de éxito
+					echo "La inserción de la actividad fue exitosa.";
+				} else {
+					// El código para el caso de error
+					echo "Error al insertar la actividad.";
+				}
+			} catch (PDOException $e) {
+				// Manejo de excepciones
+				echo "Error en el servidor: " . $e->getMessage();
+			}
 		}
+	
 		//CORREO DESTINATARIO (ESTO DESPUES LO VAMOS A CONFIGURAR DESDE LA APP)
 		$email = "ymontoyag@zonafrancadepereira.com";
 		//LIBRERIA
@@ -88,7 +101,7 @@ try {
 		</div>
 		<div style="padding: 20px;">
 			<p>Hola, Yuli Viviana Rios 😊</p>
-			<p>Te informamos que hay una nueva ACPM, radicada por ' . $nombre_usuario . ' ' . $apellidos_usuario . ' la cual vence el dia ' . $fecha_finalizacion . '
+			<p>Te informamos que hay una nueva ACPM, radicada por ' . $nombre_usuario . ' ' . $apellidos_usuario . ' esperando tu revision para poder ser ejecutada la cual vence el dia ' . $fecha_finalizacion . '
 			</p>
 			<p><B>Descripción ACPM : </B> ' . $descripcion_acpm . '</p>
 			<p>Por favor, inicia sesión en nuestro sistema para revisar la ACPM. <br>
