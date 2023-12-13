@@ -72,6 +72,8 @@ try {
 				echo "Error en el servidor: " . $e->getMessage();
 			}
 		}
+
+		
 	
 		//CORREO DESTINATARIO (ESTO DESPUES LO VAMOS A CONFIGURAR DESDE LA APP)
 		$email = "ymontoyag@zonafrancadepereira.com";
