@@ -36,7 +36,7 @@ if ($_SESSION['ingreso'] == true) {
           </p>
         </a>
         <ul class="nav nav-treeview">
-        <li class="nav-item" name="verificacion">
+          <li class="nav-item" name="verificacion">
             <a data-toggle="tab" href="#verificacion" class="nav-link">
               <i class="nav-icon fas fa-sync-alt"></i>
               <p>Acciones en Verificación</p>
@@ -161,9 +161,10 @@ if ($_SESSION['ingreso'] == true) {
                     <div class="col-2 col-xs-12 col-sm-12">
                       <label>Tipo de Reporte</label>
                       <select class="form-control" id="tipo_acpm" name="tipo_acpm" required>
+                        <option value="AM">Accion de Mejora</option>
                         <option value="AC">Accion Correctiva</option>
                         <option value="AP">Accion Preventiva</option>
-                        <option value="AM">Accion de Mejora</option>
+
                       </select>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
@@ -197,13 +198,15 @@ if ($_SESSION['ingreso'] == true) {
                         <h5>Plan de Mejora</h5>
                       </center>
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Fecha Correcion</label>
-                      <input type="date" name="fecha_correccion" class="form-control" id="fecha_correccion" required>
-                    </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                      <label>Corrección ACPM</label>
-                      <textarea class="form-control" id="correccion_acpm" name="correccion_acpm" rows="3" required></textarea>
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="correccion">
+                      <div class="col-md-12 col-xs-12 col-sm-12">
+                        <label>Fecha Correcion</label>
+                        <input type="date" name="fecha_correccion" class="form-control" id="fecha_correccion" required>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12">
+                        <label>Corrección ACPM</label>
+                        <textarea class="form-control" id="correccion_acpm" name="correccion_acpm" rows="3" required></textarea>
+                      </div>
                     </div>
 
                     <div class="col-md-12 col-xs-12 col-sm-12">
@@ -235,13 +238,12 @@ if ($_SESSION['ingreso'] == true) {
           </div>
           <!-- DIV DONDE TERMINA EL FORMULARIO DE ACPM-->
           <div class="tab-pane  show " id="verificacion">
-          <div class="row">
+            <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
                   <div class="card-header border-0 bg-primary">
-                    <h3 class="card-title">ACPM en Verificacion</h3>
-                    <div class="card-tools">
-                    </div>
+                    <h3 class="card-title">ACPM en Verificación</h3>
+
                   </div>
                   <div class="card-body table-responsive p-0">
                     <table class="display table table-striped table-valign-middle " width="100%">
@@ -443,7 +445,6 @@ if ($_SESSION['ingreso'] == true) {
               <!-- /.modal -->
           </section>
           <!-- TERMINA LAS ACPM ABIERTAS-->
-
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES CERRADAS DE CADA USUARIO-->
           <div id="cerradas" class="tab-pane ">
             <div class="row">
@@ -508,7 +509,15 @@ if ($_SESSION['ingreso'] == true) {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
+=======
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
+>>>>>>> 0e6d2b76f31590a9618188122305d441e3b8b56c
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -794,7 +803,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
             <!-- /.card -->
           </div>
-          
+
           <!-- /Modal para sig -->
           <section class="content">
             <div class="modal fade" id="modal-respuesta">
@@ -972,6 +981,8 @@ if ($_SESSION['ingreso'] == true) {
     $("#similares").hide();
     $("#fuente").hide();
     $("#riesgos").hide();
+    $("#correccion").hide();
+
 
     $("#nc_similar").change(function() {
       var seleccion = $(this).val();
@@ -1000,20 +1011,14 @@ if ($_SESSION['ingreso'] == true) {
         $("#riesgos").hide();
       }
     });
-    $(".example1").DataTable({
-      "responsive": true,
-      "lengthChange": false,
-      "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+    $("#tipo_acpm").change(function() {
+      var seleccion = $(this).val();
+
+      if (seleccion === "AC" || seleccion === "AP") {
+        $("#correccion").show();
+      } else {
+        $("#correccion").hide();
+      }
     });
   });
   $('#modal-evidencia').on('show.bs.modal', function(event) {

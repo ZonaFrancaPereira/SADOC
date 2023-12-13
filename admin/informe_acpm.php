@@ -31,8 +31,7 @@ try {
             $causa_acpm = $row["causa_acpm"];
             $nc_similar = $row["nc_similar"];
             $descripcion_nsc = $row["descripcion_nsc"];
-            $correccion_acpm = $row["correccion_acpm"];
-            $fecha_correccion = $row["fecha_correccion"];
+
             $estado_acpm = $row["estado_acpm"];
             $riesgo_acpm = $row["riesgo_acpm"];
             $justificacion_riesgo = $row["justificacion_riesgo"];
@@ -165,7 +164,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
         <tr>
             <td colspan="1"><B>Fecha de Creación :</B></td>
             <td colspan="3">
-                <?php echo $fecha_acpm; ?>
+                <?php echo date("d/m/Y H:i:s", strtotime($fecha_acpm)); ?>
             </td>
         </tr>
         <tr>
@@ -192,18 +191,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 <?php echo $descripcion_nsc; ?>
             </td>
         </tr>
-        <tr>
-            <td colspan="1"><B>Corrección Inmediata:</B></td>
-            <td colspan="3">
-                <?php echo $correccion_acpm; ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="1"><B>Fecha Corrección :</B></td>
-            <td colspan="3">
-                <?php echo $fecha_correccion; ?>
-            </td>
-        </tr>
+
         <tr>
             <td colspan="1"><B>Estado :</B></td>
             <td colspan="3">
@@ -249,7 +237,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
         <tr>
             <td colspan="1"><B>Fecha de Finalizacion :</B></td>
             <td colspan="3">
-                <?php echo $fecha_finalizacion; ?>
+                <?php echo date("d/m/Y", strtotime($fecha_finalizacion)); ?>
             </td>
         </tr>
 
@@ -271,24 +259,36 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 $fecha_actividad = $row2["fecha_actividad"];
                 $descripcion_actividad = $row2["descripcion_actividad"];
                 $estado_actividad = $row2["estado_actividad"];
+                $tipo_actividad = $row2["tipo_actividad"];
+                if($tipo_actividad=="Correccion"){
+                    $nombre_actividad=$tipo_actividad." Inmediata";
+                }else{
+                    $nombre_actividad=$tipo_actividad;
+                }
                 $responsable = $row2["nombre_usuario"];
                 $apellido_responsable = $row2["apellidos_usuario"];
     ?>
                 <table border="1" whidth="100">
                     <tr>
                         <td colspan="4">
-                            <center><B> ACTIVIDAD # <?php echo $id_actividad; ?></B></center>
+                            <center><B><?php echo $nombre_actividad; ?>  # <?php echo $id_actividad; ?></B></center>
                             <br>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Fecha Finalización : <?php echo $fecha_actividad; ?> </td>
-                        <td colspan="2">Descripción<?php echo $descripcion_actividad; ?></td>
+                        <td colspan="2">Fecha de Cumplimiento : <?php echo date("d/m/Y", strtotime($fecha_actividad)); ?> </td>
+                        <td colspan="2">Descripción : <?php echo $descripcion_actividad; ?></td>
+
                     </tr>
 
                     <tr>
                         <td colspan="2">Estado : <?php echo $estado_actividad; ?></td>
                         <td colspan="2">Responsable : <?php echo $responsable; ?> <?php echo $apellido_responsable; ?></td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        
                     </tr>
                 </table>
 
@@ -300,27 +300,43 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 if ($result->rowCount() > 0) {
                     foreach ($result as $fila) {
                 ?>
-                <table border="1" whidth="100">
-                    <tr>
-                        <td colspan="4">
-                            <center><B>EVIDENCIAS DE LA ACTIVIDAD</B></center>
-                            <br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Fecha  : <?php echo $fila["fecha_evidencia"]; ?> </td>
-                        <td colspan="2">Recursos<?php echo $fila["recursos"]; ?></td>
-                    </tr>
+                        <table border="1" whidth="100">
+                            <tr>
+                                <td colspan="4">
+                                    <center><B>EVIDENCIAS DE LA ACTIVIDAD</B></center>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Fecha : <?php echo $fila["fecha_evidencia"]; ?> </td>
+                                <td colspan="2">Recursos<?php echo $fila["recursos"]; ?></td>
+                            </tr>
 
-                    <tr>
-                        <td colspan="4">
-                        <?php echo $fila["evidencia"]; ?>
-                        </td>
-                    </tr>
-                </table>
-                       
+                            <tr>
+                                <td colspan="4">
+                                    <?php echo $fila["evidencia"]; ?>
+                                </td>
+                            </tr>
+                        </table>
+
                 <?php
                     }
+                }else{
+                    ?>
+                     <table border="1" whidth="100">
+                            <tr>
+                                <td colspan="4">
+                                    <center><B>Evidencias de la <?php echo $nombre_actividad; ?></B></center>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">No existen evidencias para esta actividad</td>
+                              
+                            </tr>
+
+                        </table>
+                    <?php
                 }
 
                 ?>
