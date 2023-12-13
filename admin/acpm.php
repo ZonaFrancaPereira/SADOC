@@ -756,10 +756,7 @@ if ($_SESSION['ingreso'] == true) {
   </div>
 </div>
 </div>
-
-
 <!-- /.content-wrapper -->
-
 <?php require('footer.php'); ?>
 
 <script>
