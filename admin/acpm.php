@@ -509,78 +509,7 @@ if ($_SESSION['ingreso'] == true) {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
-=======
->>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
-          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
-          <div id="rechazadas" class="tab-pane">
-            <div class="row">
-              <div class="col-lg-12 ">
-                <div class="card">
-                  <div class="card-header border-0 bg-primary">
-                    <h3 class="card-title">ACPM Rechazadas</h3>
-                    <div class="card-tools">
-                    </div>
-                  </div>
-                  <div class="card-body table-responsive p-0">
-                    <table class="display table table-striped table-valign-middle " width="100%">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Nombre del responsable</th>
-                          <th>Origen Acpm</th>
-                          <th>Fuente</th>
-                          <th>Tipo de Reporte</th>
-                          <th>Descripcion Acpm</th>
-                          <th>Fecha Correcion</th>
-                          <th>Fecha Finalizacion</th>
-                          <th>Estado</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
-                            <tr style=text-align:center>
-                              <td><?php echo $row["id_consecutivo"] ?></td>
-                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
-                              <td>
-                                <p class="text-break" style="width: 10rem">
-                                  <?php
-                                  $origen_acpm = $row["origen_acpm"];
-                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
-                                  ?>
-                                </p>
-                              </td>
-                              <td><?php echo $row["fuente_acpm"] ?></td>
-                              <td><?php echo $row["tipo_acpm"] ?></td>
-                              <td>
-                                <p class="text-break" style="width: 10rem">
-                                  <?php
-                                  $descripcion_acpm = $row["descripcion_acpm"];
-                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
-                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
-                                  ?>
-                                </p>
-                              </td>
-                              <td><?php echo $row["fecha_correccion"] ?></td>
-                              <td><?php echo $row["fecha_finalizacion"] ?></td>
-                              <td><?php echo $row["estado_acpm"] ?></td>
-                            </tr>
-                        <?php }
-                        } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
->>>>>>> 59292814b64d7258daa9ccb5951994fa00091ac3
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
