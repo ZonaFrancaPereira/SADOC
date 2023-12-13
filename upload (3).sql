@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2023 a las 14:41:13
+-- Tiempo de generación: 13-12-2023 a las 20:50:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -40,7 +40,7 @@ CREATE TABLE `acpm` (
   `descripcion_nsc` text DEFAULT NULL,
   `correccion_acpm` text DEFAULT NULL,
   `fecha_correccion` date DEFAULT NULL,
-  `estado_acpm` enum('Abierta','Proceso','Cerrada','Rechazada') DEFAULT NULL,
+  `estado_acpm` enum('Abierta','Proceso','Cerrada','Rechazada','Verificacion') DEFAULT NULL,
   `riesgo_acpm` enum('Si','No') DEFAULT NULL,
   `justificacion_riesgo` text DEFAULT NULL,
   `cambios_sig` enum('Si','No') DEFAULT NULL,
@@ -57,7 +57,28 @@ CREATE TABLE `acpm` (
 --
 
 INSERT INTO `acpm` (`id_consecutivo`, `origen_acpm`, `fuente_acpm`, `descripcion_fuente`, `tipo_acpm`, `fecha_acpm`, `descripcion_acpm`, `causa_acpm`, `nc_similar`, `descripcion_nsc`, `correccion_acpm`, `fecha_correccion`, `estado_acpm`, `riesgo_acpm`, `justificacion_riesgo`, `cambios_sig`, `justificacion_sig`, `conforme_sig`, `justificacion_conforme_sig`, `fecha_estado`, `fecha_finalizacion`, `id_usuario_fk`) VALUES
-(7, 'PRUEBA', 'AI', '', 'AC', '2023-12-05 19:22:21', 'PRUEBA', 'PRUEBA', 'No', '', 'PRUEBA', '2023-12-05', 'Abierta', 'No', '', NULL, NULL, NULL, NULL, '2023-12-05', '2023-12-15', 2);
+(7, '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'AI', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'AC', '2023-12-05 19:22:21', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'No', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', 'Abierta', 'No', 'es confirm...', 'Si', 'sssss', 'Si', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', '2023-11-01', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acpm_rechazada`
+--
+
+CREATE TABLE `acpm_rechazada` (
+  `id_rechazada` int(11) NOT NULL,
+  `fecha_rechazo` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `descripcion_rechazo` text NOT NULL,
+  `tipo_movimiento` enum('Correcion','Accion') NOT NULL,
+  `id_acpm_fk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `acpm_rechazada`
+--
+
+INSERT INTO `acpm_rechazada` (`id_rechazada`, `fecha_rechazo`, `descripcion_rechazo`, `tipo_movimiento`, `id_acpm_fk`) VALUES
+(2, '2023-12-13 18:54:49', 'Analisis de causa mal hecho', 'Correcion', 7);
 
 -- --------------------------------------------------------
 
@@ -69,6 +90,7 @@ CREATE TABLE `actividades_acpm` (
   `id_actividad` int(11) NOT NULL,
   `fecha_actividad` date NOT NULL,
   `descripcion_actividad` text NOT NULL,
+  `tipo_actividad` enum('Correccion','Actividad') NOT NULL,
   `estado_actividad` enum('Completa','Incompleta') NOT NULL,
   `id_usuario_fk` int(11) NOT NULL,
   `id_acpm_fk` int(11) NOT NULL
@@ -78,19 +100,9 @@ CREATE TABLE `actividades_acpm` (
 -- Volcado de datos para la tabla `actividades_acpm`
 --
 
-INSERT INTO `actividades_acpm` (`id_actividad`, `fecha_actividad`, `descripcion_actividad`, `estado_actividad`, `id_usuario_fk`, `id_acpm_fk`) VALUES
-(1, '2023-11-01', 'actividad 1', 'Incompleta', 2, 1),
-(2, '2023-12-07', '11', 'Incompleta', 2, 1),
-(3, '2023-12-05', 'Manual TI', 'Incompleta', 2, 7),
-(4, '2023-12-05', 'Organizar rack', 'Incompleta', 2, 7),
-(5, '2023-12-05', 'trello', 'Incompleta', 2, 7),
-(6, '2023-12-05', 'aaaa', 'Incompleta', 2, 7),
-(7, '2023-12-05', 'h', 'Incompleta', 2, 7),
-(8, '2023-12-05', 'u', 'Incompleta', 2, 7),
-(9, '2023-12-05', 'yaque', 'Incompleta', 2, 7),
-(10, '2023-12-05', 'por fin', 'Incompleta', 2, 7),
-(11, '2023-12-05', 'organizar telefonos', 'Incompleta', 2, 7),
-(12, '2023-12-05', 'recolectar todas las licencias', 'Incompleta', 10, 7);
+INSERT INTO `actividades_acpm` (`id_actividad`, `fecha_actividad`, `descripcion_actividad`, `tipo_actividad`, `estado_actividad`, `id_usuario_fk`, `id_acpm_fk`) VALUES
+(14, '2023-11-08', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit laboriosam mollitia cupiditate? Illo ullam corporis tempora nam accusantium quis nihil minus consectetur alias. Rem at quo eveniet maxime consequuntur libero?\n', 'Correccion', 'Incompleta', 2, 7),
+(15, '2023-11-14', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam impedit quia iusto, perspiciatis est ut odit commodi in voluptates temporibus nostrum eveniet totam perferendis eaque facilis animi repellendus nobis enim.\n', 'Actividad', 'Completa', 2, 7);
 
 -- --------------------------------------------------------
 
@@ -645,7 +657,7 @@ INSERT INTO `cargos` (`id_cargo`, `nombre_cargo`) VALUES
 
 CREATE TABLE `detalle_actividad` (
   `id_detalle_acpm` int(11) NOT NULL,
-  `fecha_evidencia` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_evidencia` date NOT NULL DEFAULT current_timestamp(),
   `evidencia` text NOT NULL,
   `recursos` text NOT NULL,
   `id_actividad_fk` int(11) NOT NULL,
@@ -657,12 +669,10 @@ CREATE TABLE `detalle_actividad` (
 --
 
 INSERT INTO `detalle_actividad` (`id_detalle_acpm`, `fecha_evidencia`, `evidencia`, `recursos`, `id_actividad_fk`, `id_usuario_e_fk`) VALUES
-(1, '2023-11-29 05:00:00', '1                              ', 'Humanos', 1, 2),
-(2, '2023-11-29 05:00:00', '<p><a href=\"https://app.zonafrancadepereira.com/admin/orden_pdf.php?id_orden=4\" target=\"_blank\">DRIVE</a><br></p>', 'Humanos', 0, 2),
-(3, '2023-11-22 05:00:00', '                              ', 'Humanos', 1, 2),
-(4, '2023-11-29 05:00:00', 'DDDDDDDDDDD', 'Humanos', 1, 2),
-(5, '2023-11-29 05:00:00', '<p><a href=\"https://app.zonafrancadepereira.com/admin/orden_pdf.php?id_orden=4\" target=\"_blank\">https://app.zonafrancadepereira.com/admin/orden_pdf.php?id_orden=4</a></p>', 'Humanos', 1, 2),
-(6, '2023-12-21 05:00:00', '<p>265</p>', 'Humanos', 1, 2);
+(32, '2023-12-07', 'nueva <a href=\"http://localhost/SADOC/admin/informe_acpm.php?id_acpm=7\" target=\"_blank\">solucion</a>', 'Humanos', 14, 2),
+(33, '2023-12-22', '<a href=\"ddddddddddddddddd\" target=\"_blank\">ddddddddddddddddd</a>', 'Humanos', 14, 2),
+(34, '2023-12-20', '45', 'Humanos', 15, 2),
+(35, '2023-12-13', 'qqqqqqqq', 'Humanos', 16, 2);
 
 -- --------------------------------------------------------
 
@@ -888,7 +898,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `nombre_usuario`, `apellidos_usuario`, `siglas_usuario`, `estado_usuario`, `firma_usuario`, `dia_backup`, `proceso_usuario_fk`, `id_cargo_fk`, `tipo_usuario_fk`) VALUES
 (1, 'ssierra@zonafrancadepereira.com', '8521', 'Stefania', 'Sierra Loaiza', '', 'activo', '', 'lunes', 7, 9, 2),
-(2, 'ymontoyag@zonafrancadepereira.com', '2012', 'Yuliana Melissa', 'Montoya', 'ZFIP-TI01', 'activo', '65660ce9edcc9_650b541b0e691_firma meli.png', 'lunes', 2, 1, 5),
+(2, 'ymontoyag@zonafrancadepereira.com', '2012', 'Yuliana Melissa', 'Montoya', 'ZFIP-TI01', 'activo', '65660ce9edcc9_650b541b0e691_firma meli.png', 'lunes', 2, 1, 2),
 (3, 'jcardona@zonafrancadepereira.com', '6325', 'Jorge Eliecer', 'Garcia Cardona', '', 'activo', '', 'lunes', 2, 1, 3),
 (4, 'sbermudez@zonafrancadepereira.com', '5212', 'Santiago', 'Bermudez Marin', '', 'activo', '', 'lunes', 2, 1, 3),
 (5, 'mensajeria@zonafrancadepereira.com', '9632', 'Santiago', 'Rendon', '', 'activo', '', 'lunes', 2, 1, 3),
@@ -934,7 +944,7 @@ CREATE TABLE `vencimiento_acpm` (
 --
 
 INSERT INTO `vencimiento_acpm` (`id_notificacion`, `id_acpm_fk`, `fecha_vencimiento`) VALUES
-(2, 7, '2023-12-15');
+(3, 7, '2023-12-16');
 
 --
 -- Índices para tablas volcadas
@@ -946,6 +956,13 @@ INSERT INTO `vencimiento_acpm` (`id_notificacion`, `id_acpm_fk`, `fecha_vencimie
 ALTER TABLE `acpm`
   ADD PRIMARY KEY (`id_consecutivo`),
   ADD KEY `id_usuario_fk` (`id_usuario_fk`);
+
+--
+-- Indices de la tabla `acpm_rechazada`
+--
+ALTER TABLE `acpm_rechazada`
+  ADD PRIMARY KEY (`id_rechazada`),
+  ADD KEY `id_acpm_fk` (`id_acpm_fk`);
 
 --
 -- Indices de la tabla `actividades_acpm`
@@ -1042,13 +1059,19 @@ ALTER TABLE `vencimiento_acpm`
 -- AUTO_INCREMENT de la tabla `acpm`
 --
 ALTER TABLE `acpm`
-  MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `acpm_rechazada`
+--
+ALTER TABLE `acpm_rechazada`
+  MODIFY `id_rechazada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `actividades_acpm`
 --
 ALTER TABLE `actividades_acpm`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `activos`
@@ -1066,7 +1089,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `detalle_actividad`
 --
 ALTER TABLE `detalle_actividad`
-  MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_orden`
@@ -1108,7 +1131,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `vencimiento_acpm`
 --
 ALTER TABLE `vencimiento_acpm`
-  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

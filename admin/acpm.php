@@ -36,6 +36,12 @@ if ($_SESSION['ingreso'] == true) {
           </p>
         </a>
         <ul class="nav nav-treeview">
+        <li class="nav-item" name="verificacion">
+            <a data-toggle="tab" href="#verificacion" class="nav-link">
+              <i class="nav-icon fas fa-sync-alt"></i>
+              <p>Acciones en Verificación</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a data-toggle="tab" href="#abiertas" class="nav-link">
               <i class="nav-icon far fa-question-circle"></i>
@@ -60,6 +66,7 @@ if ($_SESSION['ingreso'] == true) {
               <p>Acciones en Proceso</p>
             </a>
           </li>
+
 
         </ul>
       </li>
@@ -217,7 +224,9 @@ if ($_SESSION['ingreso'] == true) {
             <!-- /.card -->
           </div>
           <!-- DIV DONDE TERMINA EL FORMULARIO DE ACPM-->
-
+          <div class="tab-pane  show active" id="panelc">
+            EN VERIFICACION
+          </div>
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO-->
           <div id="abiertas" class="tab-pane">
             <div class="row">
