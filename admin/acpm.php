@@ -494,9 +494,7 @@ if ($_SESSION['ingreso'] == true) {
                 </div>
               </div>
             </div>
-
           </div>
-
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
