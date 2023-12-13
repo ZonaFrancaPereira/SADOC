@@ -206,7 +206,49 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas as
           </div>
           <!-- DIV DONDE SE PUEDEN CONSULTAR Y DAR DE BAJA LOS ACTIVOS-->
           <div id="consultar" class="tab-pane">
-            CONSULTAR ACTIVOS
+          <table id="" class="display table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre del responsable</th>
+                      <th>Origen Acpm</th>
+                      <th>Fuente</th>
+                      <th>Tipo de Reporte</th>
+                      <th>Descripcion Acpm</th>
+                      <th>Fecha Correcion</th>
+                      <th>Fecha Finalizacion</th>
+                      <th>Estado</th>
+                      <th>Informe</th>
+                      <th>Responder</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    foreach ($conn->query("SELECT * from activos a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Proceso'") as $row) { {
+                        $id_acpm = $row["id_consecutivo"];
+                    ?>
+                        <tr style="text-align:center">
+                        `, ``, ``, ``, ``,
+                         `referencia_articulo`, ``, ``, `ip`, `windows`, `office`, `factura_office`,
+                          `lugar_articulo`, `observaciones_articulo`, `numero_factura`, `fecha_garantia`, `valor_articulo`,
+                         `condicion_articulo`, `id_proveedor_fk`, `descripcion_proveedor`, `id_usuario_fk`, `estado_activo`, `recurso_tecnologico
+                          <td><?php echo $row["id_activo"] ?></td>
+                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+
+                          <td><?php echo $row["nombre_articulo"] ?></td>
+                          <td><?php echo $row["descripcion_articulo"] ?></td>    
+                          <td><?php echo $row["modelo_articulo"] ?></td>
+                          <td><?php echo $row["marca_articulo"] ?></td>
+                          <td><?php echo $row["tipo_articulo"] ?></td>
+                          <td><?php echo $row["ip"] ?></td>
+                          <td><?php echo $row["windows"] ?></td>
+                          <td><?php echo $row["tipo_articulo"] ?></td>
+                        </tr>
+                    <?php }
+                    } ?>
+                  </tbody>
+
+                </table>
           </div>
                    <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
                    <div id="manual" class="tab-pane">

@@ -8,6 +8,8 @@ include "sumatorias.php";
    <meta charset="UTF-8">
    <title>SADOC Gestor</title>
    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0," name="viewport" >
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
  
    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon" />
    <!-- Google Font: Source Sans Pro -->
@@ -111,27 +113,26 @@ include "sumatorias.php";
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-danger navbar-badge">15</span>
+          <span class="badge badge-danger navbar-badge"><?= $notificaciones=($total_acpm+$cantidad_orden+$total_actividades_vencidas); ?></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header"><B><?= $notificaciones; ?> Pendientes</B></span>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+            <i class="far fa-times-circle mr-2"></i> <?= $total_acpm; ?> | ACPM Pendientes
+            <span class="float-right badge badge-info">Pendientes</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+            <i class="far fa-thumbs-down mr-2"></i>  <?= $total_actividades_vencidas; ?> | Actividades Vencidas
+            <span class="float-right badge badge-danger">Urgente</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
+            <i class="fas fa-cart-plus mr-2"></i>  <?= $cantidad_orden; ?> | Ordenes en Proceso
+            <span class="float-right badge badge-success">Proceso</span>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+         
         </div>
       </li>
          <!-- Notifications Dropdown Menu -->

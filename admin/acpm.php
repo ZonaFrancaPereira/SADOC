@@ -410,9 +410,9 @@ if ($_SESSION['ingreso'] == true) {
                 <h3 class="card-title">Verificar ACPM</h3>
               </div>
               <!-- /.card-header -->
-
-              <div class="card-body">
-                <table id="" class="display table table-bordered table-striped">
+ 
+              <div class="card-body table-responsive">
+                <table id="" class="display table table-bordered">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -624,12 +624,12 @@ if ($_SESSION['ingreso'] == true) {
         $("#riesgos").hide();
       }
     });
-    $("#example1").DataTable({
+    $(".example1").DataTable({
       "responsive": true,
       "lengthChange": false,
       "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
