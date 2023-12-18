@@ -102,15 +102,15 @@ if ($_SESSION['ingreso'] == true) {
               <p>Acciones en Proceso</p>
             </a>
           </li>
-          <li class="nav-item" name="actividades_asignadas">
+
+        </ul>
+      </li>
+      <li class="nav-item" name="actividades_asignadas">
             <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
-            <i class="fas fa-user-check"></i>
+            <i class="nav-icon fas fa-user-check"></i>
               Actividades Asignadas
             </a>
           </li>
-        </ul>
-      </li>
-
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -579,21 +579,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
->>>>>>> 0e6d2b76f31590a9618188122305d441e3b8b56c
->>>>>>> 5066e31cc50f12e7cd1e8f44b6a35cc6a642f1b8
->>>>>>> bbfa6d6072bc36eaa62a5d2151eedf461b99ffb4
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -614,9 +600,10 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
                           <th>Descripcion Acpm</th>
-                          <th>Fecha Correcion</th>
                           <th>Fecha Finalizacion</th>
                           <th>Estado</th>
+                          <th>Editar</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -645,9 +632,11 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-                              <td><?php echo $row["fecha_correccion"] ?></td>
+                           
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td>Boton editar</td>
+                              <td>Actividades</td>
                             </tr>
                         <?php }
                         } ?>
