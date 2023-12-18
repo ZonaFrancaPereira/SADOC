@@ -82,5 +82,6 @@ try {
 } catch (PDOException $e) {
   echo "Error en el servidor";
 }
-  ?>
+
+?>
 

@@ -117,7 +117,35 @@ if ($_SESSION['ingreso'] == true) {
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
-            AQUI VAMOS A PONER CONSULTAS DE ALERTAS, ACPM Y ACTIVIDADES PROXIMAS A VENCER.
+          <div class="col-lg-12 col-md-12">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">TUS ACPM</h3>
+                  <a href="javascript:void(0);">Ver Reporte</a>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex">
+                
+                  <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <i class="fas fa-arrow-up"></i> 
+                    </span>
+                    <span class="text-muted">Completa las Metas</span>
+                  </p>
+                </div>
+                <!-- /.d-flex -->
+
+                <div class="position-relative mb-4">
+                  <canvas id="sales-chart" height="200"></canvas>
+                </div>
+
+               
+              </div>
+            </div>
+            
+          </div>
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">
@@ -161,9 +189,9 @@ if ($_SESSION['ingreso'] == true) {
                     <div class="col-2 col-xs-12 col-sm-12">
                       <label>Tipo de Reporte</label>
                       <select class="form-control" id="tipo_acpm" name="tipo_acpm" required>
-                        <option value="AM">Accion de Mejora</option>
-                        <option value="AC">Accion Correctiva</option>
-                        <option value="AP">Accion Preventiva</option>
+                        <option value="AM">Acción de Mejora</option>
+                        <option value="AC">Acción Correctiva</option>
+                        <option value="AP">Acción Preventiva</option>
 
                       </select>
                     </div>
@@ -510,14 +538,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
->>>>>>> 0e6d2b76f31590a9618188122305d441e3b8b56c
+
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -583,7 +604,7 @@ if ($_SESSION['ingreso'] == true) {
             </div>
 
           </div>
->>>>>>> 2d1079e3d2ddadd008a7d2892de5efaff76e44b5
+
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
@@ -1059,6 +1080,148 @@ if ($_SESSION['ingreso'] == true) {
             window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
         });
     });
+</script>
+<script>
+  $(function () {
+
+'use strict';
+
+var ticksStyle = {
+  fontColor: '#FFFFFF',
+  fontStyle: 'bold',
+};
+
+var mode = 'index';
+var intersect = true;
+
+var $salesChart = $('#sales-chart');
+// eslint-disable-next-line no-unused-vars
+var salesChart = new Chart($salesChart, {
+  type: 'bar',
+  data: {
+    labels: ['Meta (2 Mejora - 1 Preventiva)', 'Auditoria Interna', 'Auditoria Externa'],
+    datasets: [
+      {
+        label: 'Acciones Correctivas',
+        backgroundColor: '#FF6060',
+        borderColor: '#FF6060',
+        
+        data: [
+          <?php 
+         $correctiva_interna=1;
+         $correctiva_externa=2;
+          foreach ($conn->query("SELECT COUNT(*) AS total_correctiva_c
+          FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+           WHERE  a.tipo_acpm = 'AC' AND a.fuente_acpm = 'Otros' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
+              $total_correctiva_c = $row["total_correctiva_c"];
+           }}
+            ?>
+            '<?php echo $total_correctiva_c; ?>','<?php echo $correctiva_interna; ?>','<?php echo $correctiva_externa; ?>'
+
+        ],
+      },
+      {
+        label: 'Acciones Correctivas Realizadas',
+        backgroundColor: '#dc3545',
+        borderColor: '#dc3545',
+       
+        data: [5, 5, 10],
+      },
+      {
+        label: 'Acciones Preventivas',
+        backgroundColor: '#FEE960',
+        borderColor: '#FEE960',
+        
+        data: [18, 5, 3],
+      },
+      {
+        label: 'Acciones Preventivas Realizadas',
+        backgroundColor: '#ffc107',
+        borderColor: '#ffc107',
+        data: [9, 2, 2],
+      },
+      {
+        label: 'Acciones de Mejora',
+        backgroundColor: '#71FE60',
+        borderColor: '#71FE60',
+        data: [10, 9, 4],
+      },
+      {
+        label: 'Acciones de Mejora Realizadas',
+        backgroundColor: '#28a745',
+        borderColor: '#28a745',
+        data: [8, 2, 1],
+      },
+    ],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      mode: mode,
+      intersect: intersect,
+    },
+    hover: {
+      mode: mode,
+      intersect: intersect,
+    },
+    legend: {
+      display: true,
+    },
+    scales: {
+      yAxes: [
+        {
+          gridLines: {
+            display: true,
+            lineWidth: '4px',
+            color: 'rgba(0, 0, 0, .1)',
+            zeroLineColor: 'transparent',
+          },
+          ticks: $.extend(
+            {
+              beginAtZero: true,
+              max: 20,
+              stepSize: 1,
+            },
+            ticksStyle
+          ),
+        },
+      ],
+      xAxes: [
+        {
+          display: true,
+          gridLines: {
+            display: false,
+          },
+          ticks: ticksStyle,
+        },
+      ],
+    },
+  },
+  
+  plugins: {
+    datalabels: {},
+  },
+  // Agregar etiquetas manualmente
+  plugins: [{
+    afterDatasetsDraw: function(chart) {
+      var ctx = chart.ctx;
+
+      chart.data.datasets.forEach(function(dataset, datasetIndex) {
+        var meta = chart.getDatasetMeta(datasetIndex);
+        if (!meta.hidden) {
+          meta.data.forEach(function(element, index) {
+            var model = element._model;
+            var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
+            ctx.fillText(dataset.data[index], model.x, yPos);
+          });
+        }
+      });
+    }
+  }]
+});
+});
 </script>
 
 </body>
