@@ -66,6 +66,7 @@ if ($_SESSION['ingreso'] == true) {
                         <th>Estado</th>
                         <th>Subir evidencia</th>
                         <th>Visualizar Evidencias</th>
+                        <th>Eliminar Actividad</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -73,7 +74,7 @@ if ($_SESSION['ingreso'] == true) {
                       foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
                           $id_actividad = $row['id_actividad'];
                           $estado_actividad = $row["estado_actividad"];
-                          
+
                       ?>
                           <tr style=text-align:center>
                             <td><?php echo $row["id_actividad"] ?></td>
@@ -83,21 +84,18 @@ if ($_SESSION['ingreso'] == true) {
                             <td><?php echo $row["estado_actividad"] ?></td>
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
+                            <td>
+                              <div class="description-block">
+                                <form id="form_eliminar" method="POST">
+                                  <input type="hidden" id="id_actividad_eliminar" name="id_actividad_eliminar" value="<?php echo $row["id_actividad"] ?>">
+                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"><?php echo $row["id_actividad"] ?></i></button>
+                                </form>
+                              </div>
+                            </td>
                           </tr>
                       <?php }
                       } ?>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Id actividad</th>
-                        <th>Descripción de la actividad</th>
-                        <th>Nombre del responsable</th>
-                        <th>Fecha de la actividad</th>
-                        <th>Estado actividad</th>
-                        <th>Subir evidencia</th>
-                        <th>Visualizar Evidencias</th>
-                      </tr>
-                    </tfoot>
                   </table>
 
                 </div>
@@ -308,63 +306,94 @@ if ($_SESSION['ingreso'] == true) {
   // Función para simular el envío a SIG
   function enviarASIG(id_acpm_fk) {
 
-    
+
     const swalWithBootstrapButtons = Swal.mixin({
-			customClass: {
-				confirmButton: 'btn btn-success',
-				cancelButton: 'btn btn-danger'
-			},
-			buttonsStyling: false
-		})
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
 
-		swalWithBootstrapButtons.fire({
-			title: '¿Estas segur@ que quieres enviar esto a revision por SIG?',
-			text: "Recuerda que una vez enviada quedara a disposición de SIG para desmontarla.",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Si, Enviar',
-			cancelButtonText: 'No, Cancelar!',
-			reverseButtons: true
-		}).then((result) => {
-			if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: '¿Estas segur@ que quieres enviar esto a revision por SIG?',
+      text: "Recuerda que una vez enviada quedara a disposición de SIG para desmontarla.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, Enviar',
+      cancelButtonText: 'No, Cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
         var id_acpm = id_acpm_fk;
-    alert(id_acpm);
+        alert(id_acpm);
         var json = {
-					'id_acpm': id_acpm
-				}
-				$.ajax({
-					type: "POST",
-					data: json,
-					url: 'php/estado_acpm.php',
-					success: function (resultactividad){
-						Swal.fire({
-							title: 'Buen Trabajo',
-							text: 'Se envio correctamente la ACPM a SIG',
-							icon: 'success',
-						}).then((result) => {
-							// Redirige a la página después de cerrar el SweetAlert
-							if (result.isConfirmed) {
-								window.location.href = 'acpm.php';
-							}
-						});
-					}
-				});
-			} else if (
-				/* Read more about handling dismissals below */
-				result.dismiss === Swal.DismissReason.cancel
-			) {
-				swalWithBootstrapButtons.fire(
-					'Envio Cancelado',
-					'Aun estas a salvo :)',
-					'error'
-				)
-			}
-		})
+          'id_acpm': id_acpm
+        }
+        $.ajax({
+          type: "POST",
+          data: json,
+          url: 'php/estado_acpm.php',
+          success: function(resultactividad) {
+            Swal.fire({
+              title: 'Buen Trabajo',
+              text: 'Se envio correctamente la ACPM a SIG',
+              icon: 'success',
+            }).then((result) => {
+              // Redirige a la página después de cerrar el SweetAlert
+              if (result.isConfirmed) {
+                window.location.href = 'acpm.php';
+              }
+            });
+          }
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Envio Cancelado',
+          'Aun estas a salvo :)',
+          'error'
+        )
+      }
+    })
 
-   
+
   }
-</script>
+  
+  $(document).ready(function() {
+    $('#eliminar_actividad').click(function() {
+      var id_actividad_eliminar = $('#id_actividad_eliminar').val();
 
+      // Enviar una solicitud AJAX al archivo PHP
+      $.ajax({
+        type: 'POST',
+        url: 'php/eliminar_actividad.php',
+        data: {
+          eliminar_actividad: true,
+          id_actividad_eliminar: id_actividad_eliminar
+        },
+        success: function(response) {
+          // Manejar la respuesta del servidor (puedes mostrar un mensaje de éxito, recargar la página, etc.)
+          Swal.fire({
+            title: 'Buen Trabajo',
+            text: 'Se eliminó la actividad con éxito',
+            icon: 'success',
+          }).then((result) => {
+            // Redirige a la página después de cerrar el SweetAlert
+            if (result.isConfirmed) {
+              window.location.href = 'acpm.php';
+            }
+          });
+        },
+        error: function() {
+          alert('Error al enviar la solicitud al servidor.');
+        }
+      });
+    });
+  });
+</script>
 </body>
 
 </html>

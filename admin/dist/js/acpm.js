@@ -4,6 +4,9 @@ function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$("#guardar_sig").on("click", guardar_sig);
 	$("#rechazar_sig").on("click", rechazar_sig);
+	$("#eliminar_evidencia").on("click", eliminar_evidencia);
+	$("#eliminar_actividad").on("click", eliminar_actividad);
+
 
 	$('input').on('input', function () {
 
@@ -246,4 +249,9 @@ function rechazar_sig() {
 		});
 	}
 }
+
+function eliminar_evidencia() {
+	
+}
+
 

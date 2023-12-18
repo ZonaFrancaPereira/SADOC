@@ -392,7 +392,7 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Estado</th>
                           <th>Informe</th>
                           <th>Asignar</th>
-                          <th>Ver</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -636,7 +636,7 @@ if ($_SESSION['ingreso'] == true) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td>Boton editar</td>
-                              <td>Actividades</td>
+                              <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-warning" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-edit"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
