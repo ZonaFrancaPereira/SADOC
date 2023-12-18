@@ -1162,6 +1162,7 @@ if ($_SESSION['ingreso'] == true) {
     });
   });
 </script>
+<<<<<<< HEAD
 <script>
   $(function() {
 
@@ -1298,6 +1299,9 @@ if ($_SESSION['ingreso'] == true) {
     });
   });
 </script>
+=======
+
+>>>>>>> dc91b3532f43f3d50fd75ece0aa6adca7dcbd936
 
 </body>
 

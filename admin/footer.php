@@ -72,7 +72,7 @@
 <script src="dist/js/ordenes.js"></script>
 <script src="dist/js/actividades.js"></script>
 <script src="dist/js/evidencia_actividades.js"></script>
-<script src="dist/js/pages/graficas.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 <script>
@@ -205,3 +205,272 @@ autoWidth: true
     });
   });
 </script>
+
+<script>
+   $(function() {
+
+     'use strict';
+
+     var ticksStyle = {
+       fontColor: '#FFFFFF',
+       fontStyle: 'bold',
+     };
+
+     var mode = 'index';
+     var intersect = true;
+
+     var $salesChart = $('#sales-chart');
+     // eslint-disable-next-line no-unused-vars
+     var salesChart = new Chart($salesChart, {
+       type: 'bar',
+       data: {
+         labels: ['Meta (2 Mejora - 1 Preventiva)', 'Auditoria Interna', 'Auditoria Externa'],
+         datasets: [{
+             label: 'Acciones Correctivas',
+             backgroundColor: '#FF6060',
+             borderColor: '#FF6060',
+
+             data: [
+               <?php
+                $total_correctiva_c = 0;
+                $total_correctiva_ai = 0;
+                $total_correctiva_ae = 0;
+                foreach ($conn->query("SELECT
+          (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+           WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'Otros'  AND a.id_usuario_fk = '$id_usuario_fk ') AS total_correctiva_otros,
+          
+          (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+           WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'AI'  AND a.id_usuario_fk = '$id_usuario_fk') AS total_correctiva_ai,
+          
+          (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+           WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'AE'  AND a.id_usuario_fk = '$id_usuario_fk') AS total_correctiva_ae
+        ") as $row) { {
+                    $total_correctiva_otros = $row["total_correctiva_otros"];
+                    $total_correctiva_ai = $row["total_correctiva_ai"];
+                    $total_correctiva_ae = $row["total_correctiva_ae"];
+                  }
+                }
+                ?> '<?php echo $total_correctiva_otros; ?>', '<?php echo $total_correctiva_ai; ?>', '<?php echo $total_correctiva_ae; ?>'
+
+             ],
+           },
+           {
+             label: 'Acciones Correctivas Realizadas',
+             backgroundColor: '#dc3545',
+             borderColor: '#dc3545',
+
+             data: [
+               <?php
+                $total_correctiva_cr = 0;
+                $total_correctiva_air = 0;
+                $total_correctiva_aer = 0;
+
+                foreach ($conn->query("SELECT
+      (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+       WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'Otros' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk ') AS total_correctiva_otrosr,
+      
+      (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+       WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'AI' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_correctiva_air,
+      
+      (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+       WHERE a.tipo_acpm = 'AC' AND a.fuente_acpm = 'AE' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_correctiva_aer
+    ") as $row) {
+                  $total_correctiva_otrosr = $row["total_correctiva_otrosr"];
+                  $total_correctiva_air = $row["total_correctiva_air"];
+                  $total_correctiva_aer = $row["total_correctiva_aer"];
+                }
+                ?> '<?php echo $total_correctiva_otrosr; ?>',
+               '<?php echo $total_correctiva_air; ?>',
+               '<?php echo $total_correctiva_aer; ?>'
+             ],
+
+           },
+           {
+             label: 'Acciones Preventivas',
+             backgroundColor: '#FEE960',
+             borderColor: '#FEE960',
+
+             data: [
+               <?php
+                $total_preventivas_m = 0;
+                $total_preventivas_ai = 0;
+                $total_preventivas_ae = 0;
+
+                foreach ($conn->query("SELECT
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'Otros' AND a.id_usuario_fk = '$id_usuario_fk ') AS total_preventivas_m,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'AI' AND a.id_usuario_fk = '$id_usuario_fk') AS total_preventivas_ai,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'AE' AND a.id_usuario_fk = '$id_usuario_fk') AS total_preventivas_ae
+                ") as $row) {
+                  $total_preventivas_m = $row["total_preventivas_m"];
+                  $total_preventivas_ai = $row["total_preventivas_ai"];
+                  $total_preventivas_ae = $row["total_preventivas_ae"];
+                }
+                ?> '<?php echo $total_preventivas_m; ?>',
+               '<?php echo $total_preventivas_ai; ?>',
+               '<?php echo $total_preventivas_ae; ?>'
+             ],
+           },
+           {
+             label: 'Acciones Preventivas Realizadas',
+             backgroundColor: '#ffc107',
+             borderColor: '#ffc107',
+            
+             data: [
+               <?php
+                $total_preventivas_mr = 0;
+                $total_preventivas_air = 0;
+                $total_preventivas_aer = 0;
+
+                foreach ($conn->query("SELECT
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'Otros' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk ') AS total_preventivas_mr,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'AI' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_preventivas_air,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AP' AND a.fuente_acpm = 'AE' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_preventivas_aer
+                ") as $row) {
+                  $total_preventivas_mr = $row["total_preventivas_mr"];
+                  $total_preventivas_air = $row["total_preventivas_air"];
+                  $total_preventivas_aer = $row["total_preventivas_aer"];
+                }
+                ?> 
+                '<?php echo $total_preventivas_mr; ?>',
+               '<?php echo $total_preventivas_air; ?>',
+               '<?php echo $total_preventivas_aer; ?>'
+             ],
+           },
+           {
+             label: 'Acciones de Mejora',
+             backgroundColor: '#71FE60',
+             borderColor: '#71FE60',
+                      
+             data: [
+               <?php
+                $total_mejora_m = 0;
+                $total_mejora_ai = 0;
+                $total_mejora_ae = 0;
+
+                foreach ($conn->query("SELECT
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'Otros'  AND a.id_usuario_fk = '$id_usuario_fk ') AS total_mejora_m,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'AI'  AND a.id_usuario_fk = '$id_usuario_fk') AS total_mejora_ai,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'AE'  AND a.id_usuario_fk = '$id_usuario_fk') AS total_mejora_ae
+                ") as $row) {
+                  $total_mejora_m = $row["total_mejora_m"];
+                  $total_mejora_ai = $row["total_mejora_ai"];
+                  $total_mejora_ae = $row["total_mejora_ae"];
+                }
+                ?> 
+                '<?php echo $total_mejora_m; ?>',
+               '<?php echo $total_mejora_ai; ?>',
+               '<?php echo $total_mejora_ae; ?>'
+             ],
+           },
+           {
+             label: 'Acciones de Mejora Realizadas',
+             backgroundColor: '#28a745',
+             borderColor: '#28a745',
+                    
+             data: [
+               <?php
+                 $total_mejora_mr = 0;
+                 $total_mejora_air = 0;
+                 $total_mejora_aer = 0;
+
+                foreach ($conn->query("SELECT
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'Otros' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk ') AS total_mejora_mr,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'AI' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_mejora_air,
+                
+                (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                WHERE a.tipo_acpm = 'AM' AND a.fuente_acpm = 'AE' AND a.estado_acpm='Cerrada' AND a.id_usuario_fk = '$id_usuario_fk') AS total_mejora_aer
+                ") as $row) {
+                  $total_mejora_mr = $row["total_mejora_mr"];
+                  $total_mejora_air = $row["total_mejora_air"];
+                  $total_mejora_aer = $row["total_mejora_aer"];
+                }
+                ?> 
+                '<?php echo $total_mejora_mr; ?>',
+               '<?php echo $total_mejora_air; ?>',
+               '<?php echo $total_mejora_aer; ?>'
+             ],
+           },
+         ],
+       },
+       options: {
+         maintainAspectRatio: false,
+         tooltips: {
+           mode: mode,
+           intersect: intersect,
+         },
+         hover: {
+           mode: mode,
+           intersect: intersect,
+         },
+         legend: {
+           display: true,
+         },
+         scales: {
+           yAxes: [{
+             gridLines: {
+               display: true,
+               lineWidth: '4px',
+               color: 'rgba(0, 0, 0, .1)',
+               zeroLineColor: 'transparent',
+             },
+             ticks: $.extend({
+                 beginAtZero: true,
+                 max: 10,
+                 stepSize: 1,
+               },
+               ticksStyle
+             ),
+           }, ],
+           xAxes: [{
+             display: true,
+             gridLines: {
+               display: false,
+             },
+             ticks: ticksStyle,
+           }, ],
+         },
+       },
+
+       plugins: {
+      datalabels: {},
+    },
+    // Agregar etiquetas manualmente
+    plugins: [{
+      afterDatasetsDraw: function(chart) {
+        var ctx = chart.ctx;
+
+        chart.data.datasets.forEach(function(dataset, datasetIndex) {
+          var meta = chart.getDatasetMeta(datasetIndex);
+          if (!meta.hidden) {
+            meta.data.forEach(function(element, index) {
+              var model = element._model;
+              var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
+              ctx.fillStyle = '#FFFFFF';
+              ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
+              ctx.fillText(dataset.data[index], model.x, yPos);
+            });
+          }
+        });
+      }
+    }]
+     });
+   });
+ </script>

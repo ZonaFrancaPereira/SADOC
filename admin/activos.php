@@ -103,8 +103,7 @@ if ($_SESSION['ingreso'] == true) {
                 <div class="card">
 
 
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto possimus, quas asperiores nostrum blanditiis impedit hic vel. Corrupti dolor impedit sint. Vel animi ducimus architecto iste culpa dolor, aut eveniet?
-
+                  Gestiona tus activos
 
                   <!-- /.card-footer -->
                 </div>
@@ -133,7 +132,7 @@ if ($_SESSION['ingreso'] == true) {
                       <div class="row">
 
                         <?php
-                        $Id_usuario= $_SESSION['Id'];
+                        $Id_usuario = $_SESSION['Id'];
                         $svg = $generator->render_svg("qr", "https://app.zonafrancadepereira.com/admin/mis_activos.php?Id_usuario=$Id_usuario", "");
                         $qr = $svg;
                         ?>
@@ -151,7 +150,7 @@ if ($_SESSION['ingreso'] == true) {
                         </li>
                         <?php
                         try {
-                          $stmt = $conn->prepare('SELECT * FROM activos WHERE id_usuario_fk="' . $_SESSION['Id'] . '"');
+                          $stmt = $conn->prepare('SELECT * FROM activos WHERE estado_activo="Activo" AND id_usuario_fk="' . $_SESSION['Id'] . '"');
                           $stmt->execute();
                           $registros = 1;
                           if ($stmt->rowCount() > 0) {
@@ -237,6 +236,7 @@ if ($_SESSION['ingreso'] == true) {
                       </thead>
                       <tbody>
                         <?php
+                        $estado_activo = "Activo";
                         foreach ($conn->query("SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario , u.firma_usuario, u.dia_backup, u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk, 
                         a.id_activo, a.fecha_asignacion, a.nombre_articulo, a.descripcion_articulo, a.modelo_articulo, a.referencia_articulo, a.marca_articulo, a.tipo_articulo, a.ip, a.windows, a.office, a.factura_office, a.lugar_articulo, a.observaciones_articulo, a.numero_factura, a.fecha_garantia, a.valor_articulo, a.condicion_articulo, a.id_proveedor_fk , a.descripcion_proveedor, a.id_usuario_fk, a.estado_activo, 
                         p.id_proveedor, p.nombre_proveedor, p.contacto_proveedor, p.telefono_proveedor, p.id_usuario_fk
@@ -244,7 +244,7 @@ if ($_SESSION['ingreso'] == true) {
                     INNER JOIN usuarios u
                      ON u.Id_usuario = a.id_usuario_fk
                     INNER JOIN proveedor_compras p
-                     ON a.id_proveedor_fk = p.id_proveedor WHERE a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                     ON a.id_proveedor_fk = p.id_proveedor WHERE a.estado_activo='$estado_activo' AND a.id_usuario_fk ='$id_usuario_fk'") as $row) { { ?>
                             <tr style=text-align:center>
 
                               <td><?php echo $row["id_activo"]; ?></td>
