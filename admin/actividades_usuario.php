@@ -34,6 +34,24 @@ if ($_SESSION['ingreso'] == true) {
               <div class="card" class="">
 
 
+<<<<<<< HEAD
+=======
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      DESCRIPCIÓN ACPM: <?php echo $descripcion ?>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+
+>>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="" class="display table table-bordered table-striped">
@@ -131,9 +149,9 @@ if ($_SESSION['ingreso'] == true) {
                           <div class="col-md-12 col-xs-12 col-sm-12">
                             <br><br><br><label>Recursos</label>
                             <select class="form-control" id="recursos" name="recursos" required>
-                              <option>Selecciona una Opcion</option>
+                              <option>Selecciona una Opción</option>
                               <option value="Humanos">Humanos</option>
-                              <option value="Tecnologicos">Tecnologicos</option>
+                              <option value="Tecnologicos">Tecnológicos</option>
                             </select>
                           </div>
                           <!-- /.content -->

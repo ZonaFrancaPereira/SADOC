@@ -47,7 +47,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                      DESCRIPCION ACPM: <?php echo $descripcion ?>
+                      DESCRIPCIÓN ACPM: <?php echo $descripcion ?>
                     </div>
                     <!-- /.card-body -->
                   </div>
@@ -88,7 +88,7 @@ if ($_SESSION['ingreso'] == true) {
                               <div class="description-block">
                                 <form id="form_eliminar" method="POST">
                                   <input type="hidden" id="id_actividad_eliminar" name="id_actividad_eliminar" value="<?php echo $row["id_actividad"] ?>">
-                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"><?php echo $row["id_actividad"] ?></i></button>
+                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                               </div>
                             </td>
@@ -156,9 +156,9 @@ if ($_SESSION['ingreso'] == true) {
                           <div class="col-md-12 col-xs-12 col-sm-12">
                             <br><br><br><label>Recursos</label>
                             <select class="form-control" id="recursos" name="recursos" required>
-                              <option>Selecciona una Opcion</option>
+                              <option>Selecciona una Opción</option>
                               <option value="Humanos">Humanos</option>
-                              <option value="Tecnologicos">Tecnologicos</option>
+                              <option value="Tecnologicos">Tecnológicos</option>
                             </select>
                           </div>
                           <!-- /.content -->
@@ -361,7 +361,7 @@ if ($_SESSION['ingreso'] == true) {
 
 
   }
-  
+
   $(document).ready(function() {
     $('#eliminar_actividad').click(function() {
       var id_actividad_eliminar = $('#id_actividad_eliminar').val();

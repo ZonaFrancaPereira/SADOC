@@ -121,7 +121,7 @@
                   <div class="progress-bar" style="width: <?= $proxima_vencer; ?>%"></div>
                 </div>
                 <span class="progress-description">
-                  Proximas a Vencer
+                  Próximas a Vencer
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -229,7 +229,7 @@
           <!-- /ESTA TARJETA ES PARA VER LOS ULTIMOS DOCUMENTOS SUBIDOS A SADOC -->
           <div class="card col-md-4 col-sm-6 col-12">
             <div class="card-header">
-              <h3 class="card-title">Ultimos Documentos SADOC</h3>
+              <h3 class="card-title">Últimos Documentos SADOC</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
@@ -289,7 +289,7 @@
           ?>
           <div class="card col-md-8 col-sm-8 col-12">
             <div class="card-header">
-              <h3 class="card-title">Ultimos ACPM Por Aprobación</h3>
+              <h3 class="card-title">Últimas ACPM Por Aprobación</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
@@ -326,7 +326,7 @@
                           <a href="javascript:void(0)" class="product-title"><?= $nombre_usuario ?> <?= $apellidos_usuario ?> - <?= $nombre_proceso ?>
                             <span class="badge badge-success float-right"><?= $tipo_acpm ?></span></a>
                           <span class="product-description">
-                            <B> Fecha de Finalizacion : </B><?= $fecha_finalizacion ?><br>
+                            <B> Fecha de Finalización : </B><?= $fecha_finalizacion ?><br>
                             <?= $descripcion_acpm ?>
                           </span>
                         </div>
