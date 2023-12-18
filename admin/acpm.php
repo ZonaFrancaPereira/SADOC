@@ -191,7 +191,7 @@ if ($_SESSION['ingreso'] == true) {
               <div class="card card-navy">
                 <div class="card-header">
                   <center>
-                    <h4>Nueva Accion Correctiva, Preventiva o de Mejora</h4>
+                    <h4>Nueva Acción Correctiva, Preventiva o de Mejora</h4>
                   </center>
                 </div>
                 <div class="card-body">
@@ -201,7 +201,7 @@ if ($_SESSION['ingreso'] == true) {
                       <input type="text" name="id_usuario_fk" id="id_usuario_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
                     </div>
                     <div class="col-md-6 col-xs-6 col-sm-6">
-                      <label>Nombre del Resposable</label>
+                      <label>Nombre del Responsable</label>
                       <input type="text" name="" value="<?php echo $_SESSION['nombre_usuario'] . " " . $_SESSION['apellidos_usuario'] ?>" class="form-control" readonly>
                     </div>
                     <div class="col-md-6 col-xs-6 col-sm-6">
@@ -221,7 +221,7 @@ if ($_SESSION['ingreso'] == true) {
                       </select>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
-                      <label>Descripcion Fuente</label>
+                      <label>Descripción Fuente</label>
                       <textarea class="form-control" id="descripcion_fuente" name="descripcion_fuente" rows="3"></textarea>
                     </div>
                     <div class="col-2 col-xs-12 col-sm-12">
@@ -266,7 +266,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="correccion">
                       <div class="col-md-12 col-xs-12 col-sm-12">
-                        <label>Fecha Correcion</label>
+                        <label>Fecha Corrección</label>
                         <input type="date" name="fecha_correccion" class="form-control" id="fecha_correccion" required>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12">
@@ -278,7 +278,7 @@ if ($_SESSION['ingreso'] == true) {
                     <div class="col-md-12 col-xs-12 col-sm-12">
                       <label>Se identificó peligros de SST nuevos o que han cambiado, o la necesidad de generar controles nuevos o modificar los existentes</label>
                       <select class="form-control" id="riesgo_acpm" name="riesgo_acpm" required>
-                        <option>Selecciona una Opcion</option>
+                        <option>Selecciona una Opción</option>
                         <option value="Si">Si</option>
                         <option value="No">No</option>
                       </select>
@@ -320,9 +320,9 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripcion Acpm</th>
-                          <th>Fecha Correcion</th>
-                          <th>Fecha Finalizacion</th>
+                          <th>Descripción Acpm</th>
+                          <th>Fecha Corrección</th>
+                          <th>Fecha Finalización</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
@@ -595,8 +595,8 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripcion Acpm</th>
-                          <th>Fecha Finalizacion</th>
+                          <th>Descripción Acpm</th>
+                          <th>Fecha Finalización</th>
                           <th>Estado</th>
                           <th>Informe</th>
                         </tr>
@@ -665,9 +665,9 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripcion Acpm</th>
-                          <th>Fecha Correcion</th>
-                          <th>Fecha Finalizacion</th>
+                          <th>Descripción Acpm</th>
+                          <th>Fecha Corrección</th>
+                          <th>Fecha Finalización</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
@@ -906,7 +906,7 @@ if ($_SESSION['ingreso'] == true) {
                               <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_sig" id="id_acpm_sig" hidden>
                               <label>SI (Conforme) NO (No conforme)</label>
                               <select class="form-control" id="riesgo_acpm_sig" name="riesgo_acpm_sig" required>
-                                <option>Selecciona una Opcion</option>
+                                <option>Selecciona una Opción</option>
                                 <option value="Si">SI</option>
                                 <option value="No">NO</option>
                               </select>
@@ -936,7 +936,7 @@ if ($_SESSION['ingreso'] == true) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <label>Conforme</label>
                               <select class="form-control" id="conforme_sig" name="conforme_sig" required>
-                                <option>Selecciona una Opcion</option>
+                                <option>Selecciona una Opción</option>
                                 <option value="SI">SI</option>
                                 <option value="NO">NO</option>
                               </select>
@@ -944,12 +944,12 @@ if ($_SESSION['ingreso'] == true) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
-                                <label>Justificacion Conforme o No conforme</label>
+                                <label>Justificación Conforme o No conforme</label>
                                 <textarea type="text" id="justificacion_conforme_sig" name="justificacion_conforme_sig" class="form-control" required></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label for="fecha_estado">Fecha de Verificacion</label>
+                              <label for="fecha_estado">Fecha de Verificación</label>
                               <input type="date" name="fecha_estado_sig" class="form-control" id="fecha_estado_sig" required>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -1162,146 +1162,7 @@ if ($_SESSION['ingreso'] == true) {
     });
   });
 </script>
-<<<<<<< HEAD
-<script>
-  $(function() {
 
-    'use strict';
-
-    var ticksStyle = {
-      fontColor: '#FFFFFF',
-      fontStyle: 'bold',
-    };
-
-    var mode = 'index';
-    var intersect = true;
-
-    var $salesChart = $('#sales-chart');
-    // eslint-disable-next-line no-unused-vars
-    var salesChart = new Chart($salesChart, {
-      type: 'bar',
-      data: {
-        labels: ['Meta (2 Mejora - 1 Preventiva)', 'Auditoria Interna', 'Auditoria Externa'],
-        datasets: [{
-            label: 'Acciones Correctivas',
-            backgroundColor: '#FF6060',
-            borderColor: '#FF6060',
-
-            data: [
-              <?php
-              $correctiva_interna = 1;
-              $correctiva_externa = 2;
-              foreach ($conn->query("SELECT COUNT(*) AS total_correctiva_c
-          FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
-           WHERE  a.tipo_acpm = 'AC' AND a.fuente_acpm = 'Otros' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
-                  $total_correctiva_c = $row["total_correctiva_c"];
-                }
-              }
-              ?> '<?php echo $total_correctiva_c; ?>', '<?php echo $correctiva_interna; ?>', '<?php echo $correctiva_externa; ?>'
-
-            ],
-          },
-          {
-            label: 'Acciones Correctivas Realizadas',
-            backgroundColor: '#dc3545',
-            borderColor: '#dc3545',
-
-            data: [5, 5, 10],
-          },
-          {
-            label: 'Acciones Preventivas',
-            backgroundColor: '#FEE960',
-            borderColor: '#FEE960',
-
-            data: [18, 5, 3],
-          },
-          {
-            label: 'Acciones Preventivas Realizadas',
-            backgroundColor: '#ffc107',
-            borderColor: '#ffc107',
-            data: [9, 2, 2],
-          },
-          {
-            label: 'Acciones de Mejora',
-            backgroundColor: '#71FE60',
-            borderColor: '#71FE60',
-            data: [10, 9, 4],
-          },
-          {
-            label: 'Acciones de Mejora Realizadas',
-            backgroundColor: '#28a745',
-            borderColor: '#28a745',
-            data: [8, 2, 1],
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        tooltips: {
-          mode: mode,
-          intersect: intersect,
-        },
-        hover: {
-          mode: mode,
-          intersect: intersect,
-        },
-        legend: {
-          display: true,
-        },
-        scales: {
-          yAxes: [{
-            gridLines: {
-              display: true,
-              lineWidth: '4px',
-              color: 'rgba(0, 0, 0, .1)',
-              zeroLineColor: 'transparent',
-            },
-            ticks: $.extend({
-                beginAtZero: true,
-                max: 20,
-                stepSize: 1,
-              },
-              ticksStyle
-            ),
-          }, ],
-          xAxes: [{
-            display: true,
-            gridLines: {
-              display: false,
-            },
-            ticks: ticksStyle,
-          }, ],
-        },
-      },
-
-      plugins: {
-        datalabels: {},
-      },
-      // Agregar etiquetas manualmente
-      plugins: [{
-        afterDatasetsDraw: function(chart) {
-          var ctx = chart.ctx;
-
-          chart.data.datasets.forEach(function(dataset, datasetIndex) {
-            var meta = chart.getDatasetMeta(datasetIndex);
-            if (!meta.hidden) {
-              meta.data.forEach(function(element, index) {
-                var model = element._model;
-                var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
-                ctx.fillText(dataset.data[index], model.x, yPos);
-              });
-            }
-          });
-        }
-      }]
-    });
-  });
-</script>
-=======
-
->>>>>>> dc91b3532f43f3d50fd75ece0aa6adca7dcbd936
 
 </body>
 

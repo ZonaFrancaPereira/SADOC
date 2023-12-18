@@ -47,7 +47,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                      DESCRIPCION ACPM: <?php echo $descripcion ?>
+                      DESCRIPCIÓN ACPM: <?php echo $descripcion ?>
                     </div>
                     <!-- /.card-body -->
                   </div>
@@ -156,9 +156,9 @@ if ($_SESSION['ingreso'] == true) {
                           <div class="col-md-12 col-xs-12 col-sm-12">
                             <br><br><br><label>Recursos</label>
                             <select class="form-control" id="recursos" name="recursos" required>
-                              <option>Selecciona una Opcion</option>
+                              <option>Selecciona una Opción</option>
                               <option value="Humanos">Humanos</option>
-                              <option value="Tecnologicos">Tecnologicos</option>
+                              <option value="Tecnologicos">Tecnológicos</option>
                             </select>
                           </div>
                           <!-- /.content -->
