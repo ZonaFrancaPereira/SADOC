@@ -3,6 +3,42 @@ session_start();
 if ($_SESSION['ingreso'] == true) {
   require('php/conexion.php');
   require('plantilla.php');
+
+  if (isset($_POST['enviar_verificacion'])) {
+    $id_consecutivo = $_POST['id_acpm'];
+    try {
+     
+        // Construye y ejecuta la consulta UPDATE con parámetros
+        $stmt = $conn->prepare("UPDATE acpm
+        SET estado_acpm = 'abierta'
+        WHERE id_consecutivo  = :id_acpm");
+        
+        $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $registros = $stmt->rowCount();
+    
+        if ($registros > 0) {
+            echo "<script>
+            Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Su respuesta se registro con éxito',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+            </script>";
+        }
+        
+    } catch (Exception $e) {
+        echo "ERROR: " . $e->getMessage();
+    
+    }
+    
+    }
 ?>
 
 
@@ -66,10 +102,15 @@ if ($_SESSION['ingreso'] == true) {
               <p>Acciones en Proceso</p>
             </a>
           </li>
-
-
+          <li class="nav-item" name="actividades_asignadas">
+            <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
+            <i class="fas fa-user-check"></i>
+              Actividades Asignadas
+            </a>
+          </li>
         </ul>
       </li>
+
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -538,7 +579,21 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 230032ddb7ddc075753daef005dcb310c2a3481c
+>>>>>>> 0e6d2b76f31590a9618188122305d441e3b8b56c
+>>>>>>> 5066e31cc50f12e7cd1e8f44b6a35cc6a642f1b8
+>>>>>>> bbfa6d6072bc36eaa62a5d2151eedf461b99ffb4
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -664,6 +719,22 @@ if ($_SESSION['ingreso'] == true) {
                         } ?>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACTIVIDADES ASIGNADAS AL USUARIO-->
+          <div id="actividades_asignadas" class="tab-pane">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Actividades Asignadas</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
                   </div>
                 </div>
               </div>
@@ -812,7 +883,13 @@ if ($_SESSION['ingreso'] == true) {
                               <td><?php echo $fecha_finalizacion ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                              <td><button class='btn btn-success btn-aprobado ' data-id="<?=$id_consecutivo?>"><i class="fas fa-user-check"></i></button></td>
+
+                              <td>
+                                <form action="" method="POST">
+                                  <input type="number" name="id_acpm" value="<?php echo $row["id_consecutivo"] ?>" hidden>
+                                  <button type="submit" class="btn btn-success "  name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
+                                </form>
+                              </td>
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                             </tr>
                         <?php }
@@ -961,7 +1038,16 @@ if ($_SESSION['ingreso'] == true) {
 </div>
 <!-- /.content-wrapper -->
 <?php require('footer.php'); ?>
+<script>
+    function redirectActividadesUsuario() {
+        // Obtener los valores de las variables PHP
+        var id_acpm = <?php echo json_encode($id_acpm); ?>;
+        var descripcion = <?php echo json_encode($descripcion); ?>;
 
+        // Redireccionar con las variables
+        window.location.href = "actividades_usuario.php?id_acpm=" + id_acpm + "&descripcion=" + descripcion;
+    }
+</script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -1073,13 +1159,13 @@ if ($_SESSION['ingreso'] == true) {
   });
 
   $(document).ready(function() {
-        $(".btn-aprobado").on("click", function() {
-            var id_consecutivo = $(this).data("id");
+    $(".btn-aprobado").on("click", function() {
+      var id_consecutivo = $(this).data("id");
 
-            // Redirigir a la página de actualización con el id_consecutivo
-            window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
-        });
+      // Redirigir a la página de actualización con el id_consecutivo
+      window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
     });
+  });
 </script>
 <script>
   $(function () {

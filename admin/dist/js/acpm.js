@@ -4,6 +4,7 @@ function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$("#guardar_sig").on("click", guardar_sig);
 	$("#rechazar_sig").on("click", rechazar_sig);
+
 	$('input').on('input', function () {
 
 		$('input').each(function () {
@@ -245,3 +246,4 @@ function rechazar_sig() {
 		});
 	}
 }
+
