@@ -54,6 +54,9 @@ if ($_SESSION['ingreso'] == true) {
           </p>
         </a>
       </li>
+      <?php
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo"  ){
+          ?>
       <li class="nav-item">
         <a data-toggle="tab" href="#acpm" class="nav-link ">
           <i class="nav-icon fas fa-file-medical"></i>
@@ -105,12 +108,18 @@ if ($_SESSION['ingreso'] == true) {
 
         </ul>
       </li>
+      <?php
+          }
+          ?>
       <li class="nav-item" name="actividades_asignadas">
             <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
             <i class="nav-icon fas fa-user-check"></i>
               Actividades Asignadas
             </a>
           </li>
+          <?php
+          if($_SESSION['rol_usuario']=="admin_sig"){
+          ?>
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -130,6 +139,9 @@ if ($_SESSION['ingreso'] == true) {
           </p>
         </a>
       </li>
+      <?php
+          }
+          ?>
     </ul>
 
   </nav>
@@ -158,6 +170,10 @@ if ($_SESSION['ingreso'] == true) {
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
+          <p>Gestiona tus ACPM</p>
+          <?php
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo"  ){
+          ?>
           <div class="col-lg-12 col-md-12">
             <div class="card">
               <div class="card-header border-0">
@@ -187,6 +203,9 @@ if ($_SESSION['ingreso'] == true) {
             </div>
             
           </div>
+          <?php
+          }
+          ?>
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">
@@ -1029,12 +1048,10 @@ if ($_SESSION['ingreso'] == true) {
 <?php require('footer.php'); ?>
 <script>
     function redirectActividadesUsuario() {
-        // Obtener los valores de las variables PHP
-        var id_acpm = <?php echo json_encode($id_acpm); ?>;
-        var descripcion = <?php echo json_encode($descripcion); ?>;
+       
 
         // Redireccionar con las variables
-        window.location.href = "actividades_usuario.php?id_acpm=" + id_acpm + "&descripcion=" + descripcion;
+        window.location.href = "actividades_usuario.php";
     }
 </script>
 <script>

@@ -68,11 +68,16 @@ include "sumatorias.php";
          <li class="nav-item d-none d-sm-inline-block">
            <a href="acpm.php" class="nav-link">ACPM</a>
          </li>
-        
+         <?php
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="superadmin" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="gerencia" || $_SESSION['rol_usuario']=="aux_cotizacion" || $_SESSION['rol_usuario']=="aux_contable" || $_SESSION['rol_usuario']=="admin_contable"){
+          ?>
+          
          <li class="nav-item d-none d-sm-inline-block">
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
-      
+         <?php
+         }
+          ?>
          <li class="nav-item d-none d-sm-inline-block">
            <a href="activos.php" class="nav-link">Activos Fijos</a>
          </li>

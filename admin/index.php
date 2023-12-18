@@ -81,7 +81,11 @@
             </div>
             <!-- /.info-box -->
           </div>
-          <!-- /.col -->
+          <!-- ORDENES DE COMPRA EXCLUYEN LOS AUX -->
+          <?php
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" ||
+           $_SESSION['rol_usuario']=="superadmin" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="gerencia" || $_SESSION['rol_usuario']=="admin_contable"){
+          ?>
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-success">
               <span class="info-box-icon"><i class="fas fa-dollar-sign"></i></span>
@@ -100,6 +104,9 @@
             </div>
             <!-- /.info-box -->
           </div>
+          <?php
+}
+          ?>
           <!-- /.col -->
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-warning">

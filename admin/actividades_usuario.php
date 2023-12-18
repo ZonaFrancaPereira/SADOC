@@ -3,8 +3,7 @@ session_start();
 if ($_SESSION['ingreso'] == true) {
   require('php/conexion.php');
   require('plantilla.php');
-  $id_acpm = $_GET['id_acpm'];
-  $descripcion = $_GET['descripcion'];
+
   $id_actividad = 0;
 ?>
   <footer>
@@ -33,30 +32,11 @@ if ($_SESSION['ingreso'] == true) {
           <div class="tab-pane  show active" id="panelc">
             <div id="" class="tab-pane">
               <div class="card" class="">
-                <div class="col-md-12">
-                  <div class="card bg-primary collapsed-card">
-                    <div class="card-header">
-                      <h3 class="card-title col-md-10">ID ACPM: <?php echo $id_acpm ?> </h3>
 
-
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-                      <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      DESCRIPCION ACPM: <?php echo $descripcion ?>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                  <!-- /.card -->
-                </div>
 
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="" class="display table table-bordered table-striped">
                     <thead class="bg-info">
                       <tr>
                         <th>#</th>
@@ -64,6 +44,7 @@ if ($_SESSION['ingreso'] == true) {
                         <th>Responsable</th>
                         <th>Fecha Vencimiento</th>
                         <th>Estado</th>
+                        <th>Informe</th>
                         <th>Subir evidencia</th>
                         <th>Visualizar Evidencias</th>
                       </tr>
@@ -85,23 +66,14 @@ if ($_SESSION['ingreso'] == true) {
                             <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
                             <td><?php echo $row["fecha_actividad"] ?></td>
                             <td><?php echo $row["estado_actividad"] ?></td>
+                            <td><a href='informe_acpm.php?id_acpm=<?php echo  $row['id_acpm_fk']; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
                             <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
                           </tr>
                       <?php }
                       } ?>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Id actividad</th>
-                        <th>Descripción de la actividad</th>
-                        <th>Nombre del responsable</th>
-                        <th>Fecha de la actividad</th>
-                        <th>Estado actividad</th>
-                        <th>Subir evidencia</th>
-                        <th>Visualizar Evidencias</th>
-                      </tr>
-                    </tfoot>
+           
                   </table>
 
                 </div>
