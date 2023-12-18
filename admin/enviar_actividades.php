@@ -88,7 +88,7 @@ if ($_SESSION['ingreso'] == true) {
                               <div class="description-block">
                                 <form id="form_eliminar" method="POST">
                                   <input type="hidden" id="id_actividad_eliminar" name="id_actividad_eliminar" value="<?php echo $row["id_actividad"] ?>">
-                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"><?php echo $row["id_actividad"] ?></i></button>
+                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                               </div>
                             </td>
@@ -361,7 +361,7 @@ if ($_SESSION['ingreso'] == true) {
 
 
   }
-  
+
   $(document).ready(function() {
     $('#eliminar_actividad').click(function() {
       var id_actividad_eliminar = $('#id_actividad_eliminar').val();

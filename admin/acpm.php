@@ -7,19 +7,19 @@ if ($_SESSION['ingreso'] == true) {
   if (isset($_POST['enviar_verificacion'])) {
     $id_consecutivo = $_POST['id_acpm'];
     try {
-     
-        // Construye y ejecuta la consulta UPDATE con parámetros
-        $stmt = $conn->prepare("UPDATE acpm
+
+      // Construye y ejecuta la consulta UPDATE con parámetros
+      $stmt = $conn->prepare("UPDATE acpm
         SET estado_acpm = 'abierta'
         WHERE id_consecutivo  = :id_acpm");
-        
-        $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
-        $stmt->execute();
-    
-        $registros = $stmt->rowCount();
-    
-        if ($registros > 0) {
-            echo "<script>
+
+      $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
+      $stmt->execute();
+
+      $registros = $stmt->rowCount();
+
+      if ($registros > 0) {
+        echo "<script>
             Swal.fire({
 							title: 'Buen Trabajo',
 							text: 'Su respuesta se registro con éxito',
@@ -31,14 +31,11 @@ if ($_SESSION['ingreso'] == true) {
 							}
 						});
             </script>";
-        }
-        
+      }
     } catch (Exception $e) {
-        echo "ERROR: " . $e->getMessage();
-    
+      echo "ERROR: " . $e->getMessage();
     }
-    
-    }
+  }
 ?>
 
 
@@ -106,11 +103,11 @@ if ($_SESSION['ingreso'] == true) {
         </ul>
       </li>
       <li class="nav-item" name="actividades_asignadas">
-            <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
-            <i class="nav-icon fas fa-user-check"></i>
-              Actividades Asignadas
-            </a>
-          </li>
+        <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
+          <i class="nav-icon fas fa-user-check"></i>
+          Actividades Asignadas
+        </a>
+      </li>
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -158,35 +155,35 @@ if ($_SESSION['ingreso'] == true) {
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
-          <div class="col-lg-12 col-md-12">
-            <div class="card">
-              <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">TUS ACPM</h3>
-                  <a href="javascript:void(0);">Ver Reporte</a>
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                <div class="card-header border-0">
+                  <div class="d-flex justify-content-between">
+                    <h3 class="card-title">TUS ACPM</h3>
+                    <a href="javascript:void(0);">Ver Reporte</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex">
+
+                    <p class="ml-auto d-flex flex-column text-right">
+                      <span class="text-success">
+                        <i class="fas fa-arrow-up"></i>
+                      </span>
+                      <span class="text-muted">Completa las Metas</span>
+                    </p>
+                  </div>
+                  <!-- /.d-flex -->
+
+                  <div class="position-relative mb-4">
+                    <canvas id="sales-chart" height="200"></canvas>
+                  </div>
+
+
                 </div>
               </div>
-              <div class="card-body">
-                <div class="d-flex">
-                
-                  <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 
-                    </span>
-                    <span class="text-muted">Completa las Metas</span>
-                  </p>
-                </div>
-                <!-- /.d-flex -->
 
-                <div class="position-relative mb-4">
-                  <canvas id="sales-chart" height="200"></canvas>
-                </div>
-
-               
-              </div>
             </div>
-            
-          </div>
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">
@@ -579,7 +576,6 @@ if ($_SESSION['ingreso'] == true) {
             </div>
           </div>
 
-
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -602,13 +598,14 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Descripcion Acpm</th>
                           <th>Fecha Finalizacion</th>
                           <th>Estado</th>
-                          <th>Editar</th>
-                          <th>Actividades</th>
+                          <th>Informe</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) {
+                          $editar_acpm = $row["id_consecutivo"]; 
+                          { ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -632,11 +629,11 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-                           
+
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
-                              <td>Boton editar</td>
-                              <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-warning" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-edit"></i></button></a></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+            
                             </tr>
                         <?php }
                         } ?>
@@ -646,9 +643,9 @@ if ($_SESSION['ingreso'] == true) {
                 </div>
               </div>
             </div>
-
           </div>
-
+          <!-- /.modal -->
+          
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
@@ -876,7 +873,7 @@ if ($_SESSION['ingreso'] == true) {
                               <td>
                                 <form action="" method="POST">
                                   <input type="number" name="id_acpm" value="<?php echo $row["id_consecutivo"] ?>" hidden>
-                                  <button type="submit" class="btn btn-success "  name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
+                                  <button type="submit" class="btn btn-success " name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
                                 </form>
                               </td>
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
@@ -1028,14 +1025,14 @@ if ($_SESSION['ingreso'] == true) {
 <!-- /.content-wrapper -->
 <?php require('footer.php'); ?>
 <script>
-    function redirectActividadesUsuario() {
-        // Obtener los valores de las variables PHP
-        var id_acpm = <?php echo json_encode($id_acpm); ?>;
-        var descripcion = <?php echo json_encode($descripcion); ?>;
+  function redirectActividadesUsuario() {
+    // Obtener los valores de las variables PHP
+    var id_acpm = <?php echo json_encode($id_acpm); ?>;
+    var descripcion = <?php echo json_encode($descripcion); ?>;
 
-        // Redireccionar con las variables
-        window.location.href = "actividades_usuario.php?id_acpm=" + id_acpm + "&descripcion=" + descripcion;
-    }
+    // Redireccionar con las variables
+    window.location.href = "actividades_usuario.php?id_acpm=" + id_acpm + "&descripcion=" + descripcion;
+  }
 </script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -1146,6 +1143,15 @@ if ($_SESSION['ingreso'] == true) {
 
     modal.find('.modal-body #id_acpm_fk_sig').val(id_acpm_fk_sig);
   });
+  $('#modal-').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id_acpm_fk = button.data('id_acpm_fk'); // Extract info from data-* attributes
+
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+
+    modal.find('.modal-body #id_acpm_fk').val(id_acpm_fk);
+  });
 
   $(document).ready(function() {
     $(".btn-aprobado").on("click", function() {
@@ -1157,146 +1163,140 @@ if ($_SESSION['ingreso'] == true) {
   });
 </script>
 <script>
-  $(function () {
+  $(function() {
 
-'use strict';
+    'use strict';
 
-var ticksStyle = {
-  fontColor: '#FFFFFF',
-  fontStyle: 'bold',
-};
+    var ticksStyle = {
+      fontColor: '#FFFFFF',
+      fontStyle: 'bold',
+    };
 
-var mode = 'index';
-var intersect = true;
+    var mode = 'index';
+    var intersect = true;
 
-var $salesChart = $('#sales-chart');
-// eslint-disable-next-line no-unused-vars
-var salesChart = new Chart($salesChart, {
-  type: 'bar',
-  data: {
-    labels: ['Meta (2 Mejora - 1 Preventiva)', 'Auditoria Interna', 'Auditoria Externa'],
-    datasets: [
-      {
-        label: 'Acciones Correctivas',
-        backgroundColor: '#FF6060',
-        borderColor: '#FF6060',
-        
-        data: [
-          <?php 
-         $correctiva_interna=1;
-         $correctiva_externa=2;
-          foreach ($conn->query("SELECT COUNT(*) AS total_correctiva_c
+    var $salesChart = $('#sales-chart');
+    // eslint-disable-next-line no-unused-vars
+    var salesChart = new Chart($salesChart, {
+      type: 'bar',
+      data: {
+        labels: ['Meta (2 Mejora - 1 Preventiva)', 'Auditoria Interna', 'Auditoria Externa'],
+        datasets: [{
+            label: 'Acciones Correctivas',
+            backgroundColor: '#FF6060',
+            borderColor: '#FF6060',
+
+            data: [
+              <?php
+              $correctiva_interna = 1;
+              $correctiva_externa = 2;
+              foreach ($conn->query("SELECT COUNT(*) AS total_correctiva_c
           FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
            WHERE  a.tipo_acpm = 'AC' AND a.fuente_acpm = 'Otros' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
-              $total_correctiva_c = $row["total_correctiva_c"];
-           }}
-            ?>
-            '<?php echo $total_correctiva_c; ?>','<?php echo $correctiva_interna; ?>','<?php echo $correctiva_externa; ?>'
+                  $total_correctiva_c = $row["total_correctiva_c"];
+                }
+              }
+              ?> '<?php echo $total_correctiva_c; ?>', '<?php echo $correctiva_interna; ?>', '<?php echo $correctiva_externa; ?>'
 
+            ],
+          },
+          {
+            label: 'Acciones Correctivas Realizadas',
+            backgroundColor: '#dc3545',
+            borderColor: '#dc3545',
+
+            data: [5, 5, 10],
+          },
+          {
+            label: 'Acciones Preventivas',
+            backgroundColor: '#FEE960',
+            borderColor: '#FEE960',
+
+            data: [18, 5, 3],
+          },
+          {
+            label: 'Acciones Preventivas Realizadas',
+            backgroundColor: '#ffc107',
+            borderColor: '#ffc107',
+            data: [9, 2, 2],
+          },
+          {
+            label: 'Acciones de Mejora',
+            backgroundColor: '#71FE60',
+            borderColor: '#71FE60',
+            data: [10, 9, 4],
+          },
+          {
+            label: 'Acciones de Mejora Realizadas',
+            backgroundColor: '#28a745',
+            borderColor: '#28a745',
+            data: [8, 2, 1],
+          },
         ],
       },
-      {
-        label: 'Acciones Correctivas Realizadas',
-        backgroundColor: '#dc3545',
-        borderColor: '#dc3545',
-       
-        data: [5, 5, 10],
-      },
-      {
-        label: 'Acciones Preventivas',
-        backgroundColor: '#FEE960',
-        borderColor: '#FEE960',
-        
-        data: [18, 5, 3],
-      },
-      {
-        label: 'Acciones Preventivas Realizadas',
-        backgroundColor: '#ffc107',
-        borderColor: '#ffc107',
-        data: [9, 2, 2],
-      },
-      {
-        label: 'Acciones de Mejora',
-        backgroundColor: '#71FE60',
-        borderColor: '#71FE60',
-        data: [10, 9, 4],
-      },
-      {
-        label: 'Acciones de Mejora Realizadas',
-        backgroundColor: '#28a745',
-        borderColor: '#28a745',
-        data: [8, 2, 1],
-      },
-    ],
-  },
-  options: {
-    maintainAspectRatio: false,
-    tooltips: {
-      mode: mode,
-      intersect: intersect,
-    },
-    hover: {
-      mode: mode,
-      intersect: intersect,
-    },
-    legend: {
-      display: true,
-    },
-    scales: {
-      yAxes: [
-        {
-          gridLines: {
-            display: true,
-            lineWidth: '4px',
-            color: 'rgba(0, 0, 0, .1)',
-            zeroLineColor: 'transparent',
-          },
-          ticks: $.extend(
-            {
-              beginAtZero: true,
-              max: 20,
-              stepSize: 1,
-            },
-            ticksStyle
-          ),
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          mode: mode,
+          intersect: intersect,
         },
-      ],
-      xAxes: [
-        {
+        hover: {
+          mode: mode,
+          intersect: intersect,
+        },
+        legend: {
           display: true,
-          gridLines: {
-            display: false,
-          },
-          ticks: ticksStyle,
         },
-      ],
-    },
-  },
-  
-  plugins: {
-    datalabels: {},
-  },
-  // Agregar etiquetas manualmente
-  plugins: [{
-    afterDatasetsDraw: function(chart) {
-      var ctx = chart.ctx;
+        scales: {
+          yAxes: [{
+            gridLines: {
+              display: true,
+              lineWidth: '4px',
+              color: 'rgba(0, 0, 0, .1)',
+              zeroLineColor: 'transparent',
+            },
+            ticks: $.extend({
+                beginAtZero: true,
+                max: 20,
+                stepSize: 1,
+              },
+              ticksStyle
+            ),
+          }, ],
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false,
+            },
+            ticks: ticksStyle,
+          }, ],
+        },
+      },
 
-      chart.data.datasets.forEach(function(dataset, datasetIndex) {
-        var meta = chart.getDatasetMeta(datasetIndex);
-        if (!meta.hidden) {
-          meta.data.forEach(function(element, index) {
-            var model = element._model;
-            var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
-            ctx.fillText(dataset.data[index], model.x, yPos);
+      plugins: {
+        datalabels: {},
+      },
+      // Agregar etiquetas manualmente
+      plugins: [{
+        afterDatasetsDraw: function(chart) {
+          var ctx = chart.ctx;
+
+          chart.data.datasets.forEach(function(dataset, datasetIndex) {
+            var meta = chart.getDatasetMeta(datasetIndex);
+            if (!meta.hidden) {
+              meta.data.forEach(function(element, index) {
+                var model = element._model;
+                var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
+                ctx.fillText(dataset.data[index], model.x, yPos);
+              });
+            }
           });
         }
-      });
-    }
-  }]
-});
-});
+      }]
+    });
+  });
 </script>
 
 </body>
