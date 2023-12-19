@@ -1,138 +1,335 @@
 <?php
-include('includes/connection.php');
-require('fpdf/fpdf.php');
-date_default_timezone_set('America/Bogota');
-class PDF extends FPDF
-{
+require('php/conexion.php');
+ob_start();
+$id_orden = $_GET['id_orden'];
+try {
+	$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk,
+								  o.id_orden, o.fecha_orden, o.proveedor_recurrente, o.forma_pago, o.tiempo_pago, o.porcentaje_anticipo, o.condiciones_negociacion, o.comentario_orden, o.tiempo_entrega, o.total_orden, 
+								  o.analisis_cotizacion, o.estado_orden, o.descripcion_declinado, o.fecha_aprobacion, o.id_cotizante, o.id_proveedor_fk, o.id_gerente,
+								  d.id_orden_detalle, d.articulo_compra, d.cantidad_orden, d.valor_neto, d.valor_iva, d.valor_total, d.observaciones_articulo, d.id_orden_compra,car.id_cargo, car.nombre_cargo
+                                  FROM orden_compra o
+                                  INNER JOIN detalle_orden d
+                                  ON o.id_orden= d.id_orden_compra
+								  INNER JOIN proveedor_compras p
+								  ON p.id_proveedor=o.id_proveedor_fk
+								  INNER JOIN usuarios u
+								  ON u.Id_usuario=o.id_cotizante
+								  INNER JOIN cargos car
+								  ON car.id_cargo=u.id_cargo_fk
+								  WHERE o.id_orden="' . $id_orden . '"
+								  ');
+	$stmt->execute();
+	$registros = 1;
+	if ($stmt->rowCount() > 0) {
 
-	function Header()
-	{
-        //$this->Image('fondo.png',-10,-1,110);
-		$this->Image('img/logo.png',240,4,30);
-		$this->SetY(15);
-		$this->SetX(19);
-		$this->SetFont('Arial','B',20);
-		$this->Cell(89, 8,  utf8_decode('SISTEMA DE GESTIÓN DE SEGURIDAD VIAL'),0,1);
-		$this->SetY(20);
-		$this->SetX(19);
-		$this->SetFont('Arial','',12);
-		$this->Cell(40, 8, utf8_decode('REGISTRO PREOPERATIVO'));
-		$this->Ln(5);
+		while ($row = $stmt->fetch()) {
+			$fecha_orden = $row["fecha_orden"];
+			$id_proveedor = $row["id_proveedor"];
+			$nombre_proveedor = $row["nombre_proveedor"];
+			$correo_proveedor = $row["contacto_proveedor"];
+			$telefono_proveedor = $row["telefono_proveedor"];
+			$forma_pago = $row["forma_pago"];
+			$tiempo_pago = $row["tiempo_pago"];
+			$porcentaje_anticipo = $row["porcentaje_anticipo"];
+			$condiciones_negociacion = $row["condiciones_negociacion"];
+			$comentario_orden = $row["comentario_orden"];
+			$tiempo_entrega = $row["tiempo_entrega"];
+			$nombre_usuario = $row["nombre_usuario"];
+			$apellidos_usuario = $row["apellidos_usuario"];
+			$nombre_cargo = $row["nombre_cargo"];
+			$firma_usuario = $row["firma_usuario"];
+			$id_gerente = $row["id_gerente"];
+			$fecha_aprobacion = $row["fecha_aprobacion"];
+		}
 	}
-	function Footer()
-	{
-		$this->SetFont('helvetica', 'B', 8);
-		$this->SetY(-15);
-		$this->Cell(95,5,utf8_decode('Página ').$this->PageNo().' / {nb}',0,0,'L');
-		$this->Cell(170,5,date('d/m/Y | g:i:a') ,00,1,'R');
-		$this->Line(10,287,200,287);
-		$this->Cell(0,5,utf8_decode("AyL Riesgos y Seguros © Todos los derechos reservados."),0,0,"C");
+} catch (PDOException $e) {
+	echo "Error en el servidor";
+}
+try {
+	$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,o.id_orden,o.id_gerente,car.id_cargo, car.nombre_cargo
+                                  FROM orden_compra o
+    
+								  INNER JOIN usuarios u
+								  ON u.Id_usuario=o.id_gerente
+								  INNER JOIN cargos car
+								  ON car.id_cargo=u.id_cargo_fk
+								  WHERE o.id_gerente="' . $id_gerente . '"
+								  ');
+	$stmt->execute();
+	$registros = 1;
+	if ($stmt->rowCount() > 0) {
 
+		while ($row = $stmt->fetch()) {
+			$nombre_gerente = $row["nombre_usuario"];
+			$apellidos_gerente = $row["apellidos_usuario"];
+			$nombre_cargog = $row["nombre_cargo"];
+			$firma_gerente = $row["firma_usuario"];
+		}
 	}
-	    // Tabla horizontal
-    function HorizontalTable($header, $data)
-    {
-        // Cabecera
-        $this->SetFont('Arial', 'B', 10);
-        foreach ($header as $col) {
-            $this->Cell(70, 15, $col, 1);
-        }
-        $this->Ln();
-
-        // Datos
-        $this->SetFont('Arial', '', 10);
-        foreach ($data as $row) {
-            foreach ($row as $col) {
-                $this->Cell(70, 15, $col, 1);
-            }
-            $this->Ln();
-        }
-    }
+} catch (PDOException $e) {
+	echo "Error en el servidor";
+}
+$fecha = date("d/m/Y", strtotime($fecha_orden));
+$nombreImagen = "img/zf.png";
+$imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
+$firma = "firmas/" . $firma_usuario;
+$firma_cotizante = "data:image/png;base64," . base64_encode(file_get_contents($firma));
+if ($firma_gerente == "") {
+	$firmag = "firmas/noautorizado.png";
+	$gerente = "data:image/png;base64," . base64_encode(file_get_contents($firmag));
+} else {
+	$firmag = "firmas/" . $firma_gerente;
+	$gerente = "data:image/png;base64," . base64_encode(file_get_contents($firmag));
 }
 
-$id_registro=$_GET['id_registro'];
-$pdf = new PDF();
-$pdf->AliasNbPages();
-$pdf->AddPage();
-$pdf->SetDrawColor(33, 47, 61); // Color rojo
-$pdf->SetFillColor(255, 0, 0); // Color de relleno rojo
-$pdf->SetLineWidth(1); // Ancho de línea de 1 punto
-$pdf->SetFillColor(255, 255, 255); // Establecer el color de relleno en blanco
- $pdf->Line(0, 45, 340, 45); // 50mm from each edge
-     // Salto de línea
- $pdf->Ln(30);
-//CUERPO DE LA TABLA
-$pdf->SetFillColor(233, 229, 235);//color de fondo rgb
-$pdf->SetDrawColor(61, 61, 61);//color de linea  rgb
-$pdf->SetFont('Arial','',10);
-$displayStaffQuery = "SELECT r.id_registro, r.placa_casco, r.fecha_registro, r.baja, r.alta, r.stop, r.direccionales, r.pito, r.frenos, r.guaya_acelerador, r.guaya_clutch, r.estado_llantas, r.nivel_aceite, r.kit_arrastre, r.chaleco, r.espejos, r.combustible, r.boton_panico, r.soat, r.tecnomecanica, r.tarjeta_propiedad, r.observaciones, r.firma, r.id_vehiculo_a_fk,va.id_asignacion, va.fecha_asignacion, va.id_vehiculo_fk, va.id_usuario_fk,u.id, u.identificacion, u.username, u.firstname,u.lastname,u.email,v.id_vehiculo, v.placa, v.color, v.marca, v.motor, v.modelo, v.soat, v.tecnomecanica, v.rodamiento,v.ciudad, v.estado, v.observaciones_vehiculo FROM registro r
-INNER JOIN asignacion_vehiculo va
-ON r.id_vehiculo_a_fk=va.id_asignacion
-INNER JOIN users u 
-ON va.id_usuario_fk=u.id
-INNER JOIN vehiculo v
-ON va.id_vehiculo_fk=v.id_vehiculo WHERE r.id_registro='{$id_registro}'
-";
-if ($result33 = $sqlconnection->query($displayStaffQuery)) {
+?>
+<!DOCTYPE html>
+<html>
 
-	if ($result33->num_rows == 0) {
-		echo '<div class="alert alert-info alert-dismissible">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<h5><i class="icon fas fa-info"></i> Atención!</h5>
-		Actualmente no hay ningun vehiculo asignado.
-		</div>';
+<head>
+	<meta charset="utf-8">
+	<title>Orden de Compra # <?php echo $id_orden; ?></title>
 
-	}
-    //CONTADOR PARA QUE EL PRIMER SLIDER SEA EL ACTIVO
-	while($filam = $result33->fetch_array(MYSQLI_ASSOC)) {
-		$fecha_registro=$filam['fecha_registro'];
-		$placa=$filam['placa'];
-		$estado=$filam['estado'];
-		$ciudad=$filam['ciudad'];
-		$color=$filam['color'];
-		$firstname=$filam['firstname'];
-		$identificacion=$filam['identificacion'];
-		$id_registro=$filam['id_registro'];
-		$lastname=$filam['lastname'];
-		$firma=$filam['firma'];
-		$baja=$filam['baja']; 
-		$alta=$filam['alta'];
-		$stop=$filam['stop'];
-		$direccionales=$filam['direccionales'];
-		$pito=$filam['pito'];
-		$frenos=$filam['frenos'];
-		$guaya_acelerador=$filam['guaya_acelerador'];
-		$guaya_clutch=$filam['guaya_clutch'];
-		$estado_llantas=$filam['estado_llantas'];
-		$nivel_aceite=$filam['nivel_aceite'];
-		$kit_arrastre=$filam['kit_arrastre'];
-		$chaleco=$filam['chaleco'];
-		$espejos=$filam['espejos'];
-		$combustible=$filam['combustible'];
-		$boton_panico=$filam['boton_panico'];
-		$soat=$filam['soat'];
-		$tecnomecanica=$filam['tecnomecanica'];
-		$tarjeta_propiedad=$filam['tarjeta_propiedad'];
-		$observaciones=$filam['observaciones'];
-	$header = array('  Fecha Registro : '.$fecha_registro. '', 'Identificacion : '.$identificacion.'', 'Conductor : '.$firstname.' '.$lastname.'','PLACA : '.$placa);
-$data = array(
-    array('Guaya de Clutch : '.$guaya_clutch. '', 'Luz Baja : '.$baja. '', 'Luz Alta : '.$alta.'','Stop : '.$stop.''),
-    array('Direccionales : '.$direccionales.'', 'Pito : '.$pito.'', 'Frenos : '.$frenos. '','Guaya Acelerador : '.$guaya_acelerador.''),
-    array('Estado de Llantas : '.$estado_llantas.'', 'Nivel de Aceite : '.$nivel_aceite.'', 'Kit de Arrastre : '.$kit_arrastre.'','Chaleco : '.$chaleco.''),
-    array('Espejos : '.$espejos. '','Combustible : '.$combustible.'','Boton Panico : '.$boton_panico.'','Soat : '.$soat.''),
-    array('Tecno/Mecanica : '.$tecnomecanica.'','Tarjeta de Propiedad : '.$tarjeta_propiedad.'','Observaciones: '.$observaciones.'','Ciudad: '.$ciudad.'')
-);
-$pdf->HorizontalTable($header, $data);
-	}
-}
-if($firma!=""){
-	$pdf->Image('firmas/'.$firma, 50, 155,  150, 27);
-}
-$pdf->setY(180);
-$pdf->setX(10);
-$pdf->Cell(5,0,'FIRMA CONDUCTOR ___________________________________________________________________________________________________.' );
+</head>
 
+<body>
+	<style>
+		body {
+			font-family: "Gill Sans", sans-serif;
+		}
 
-$pdf->Output();
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
 
+		td,
+		th {
+			border: 1px solid #ccc;
+			text-align: left;
+			padding: 8px;
+			font-size: 8;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+
+		.sinBorde th {
+			border: 0;
+		}
+
+		.sinBorde tr {
+			border: 1px solid #ccc
+		}
+	</style>
+	<table>
+		<tr class="sinBorde">
+			<th><img src="<?php echo $imagenBase64; ?>" alt="" width="140"></th>
+			<th>
+				<h3>
+					<center>ORDEN DE COMPRA Nº <?php echo $id_orden; ?></center>
+				</h3>
+			</th>
+		</tr>
+	</table>
+
+	<table border="1" whidth="100">
+		<tr>
+			<td colspan="4">
+				<center><B> Datos Proveedor</B></center>
+			</td>
+		</tr>
+		<tr>
+			<td>Fecha</td>
+			<td><?php echo $fecha; ?></td>
+			<td>Proveedor</td>
+			<td><?php echo $nombre_proveedor; ?></td>
+		</tr>
+		<tr>
+			<td>Contacto</td>
+			<td><?php echo $correo_proveedor; ?></td>
+			<td>Telefono</td>
+			<td><?php echo $telefono_proveedor; ?></td>
+		</tr>
+	</table>
+	<br>
+	<table>
+		<tr>
+			<th colspan="6">
+				<center><B>Detalle Orden de Compra</B></center>
+			</th>
+		</tr>
+		<tr>
+			<th>Articulo</th>
+			<th>Cantidad</th>
+			<th>Valor Unitario</th>
+			<th>Valor Iva</th>
+			<th>Total</th>
+			<th>Descripción</th>
+		</tr>
+		<?php
+		try {
+			$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
+										  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+										  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk,
+										  o.id_orden, o.fecha_orden, o.proveedor_recurrente, o.forma_pago, o.tiempo_pago, o.porcentaje_anticipo, o.condiciones_negociacion, o.comentario_orden, o.tiempo_entrega, o.total_orden, 
+										  o.analisis_cotizacion, o.estado_orden, o.descripcion_declinado, o.fecha_aprobacion, o.id_cotizante, o.id_proveedor_fk, o.id_gerente,
+										  d.id_orden_detalle, d.articulo_compra, d.cantidad_orden, d.valor_neto, d.valor_iva, d.valor_total, d.observaciones_articulo, d.id_orden_compra
+										  FROM orden_compra o
+										  INNER JOIN detalle_orden d
+										  ON o.id_orden= d.id_orden_compra
+										  INNER JOIN proveedor_compras p
+										  ON p.id_proveedor=o.id_proveedor_fk
+										  INNER JOIN usuarios u
+										  ON u.Id_usuario=o.id_cotizante
+										  WHERE o.id_orden="' . $id_orden . '"
+										  ');
+			$stmt->execute();
+			$registros = 1;
+			if ($stmt->rowCount() > 0) {
+
+				while ($row = $stmt->fetch()) {
+					$articulo_compra = $row["articulo_compra"];
+					$cantidad_orden = $row["cantidad_orden"];
+					$valor_neto = $row["valor_neto"];
+					$valor_iva = $row["valor_iva"];
+					$valor_total = $row["valor_total"];
+					$total_orden = $row["total_orden"];
+					$observaciones_articulo = $row["observaciones_articulo"];
+					echo "
+					<tr >
+					<td>" . $articulo_compra . "</td>
+					<td>" . $cantidad_orden . "</td>
+					<td>$ " . number_format($valor_neto) . "</td>
+					<td>$ " . number_format($valor_iva) . "</td>
+					<td>$ " . number_format($valor_total) . "</td>
+					<td>" . $observaciones_articulo . "</td>
+					</tr>";
+				}
+			}
+		} catch (PDOException $e) {
+			echo "Error en el servidor";
+		}
+
+		?>
+		<tr>
+			<td colspan="4">Total</td>
+			<td colspan="2">$ <?php echo number_format($total_orden); ?></td>
+		</tr>
+
+	</table>
+	
+	<table whidth="100">
+		<tr>
+			<td colspan="3">
+				<center><B>Detalles Forma de Pago</B></center>
+			</td>
+		</tr>
+		<tr>
+			<td><B>Forma de Pago : </B> <?php echo $forma_pago; ?></td>
+			<td><B>Tiempo (Dias) </B> <?php echo $tiempo_pago; ?></td>
+			<td><B>Porcentaje Anticipo : </B> <?php echo $porcentaje_anticipo; ?> %</td>
+		</tr>
+		<tr>
+			<td><B>Otras condiciones de negociación</B></td>
+			<td colspan="2"><?php echo $porcentaje_anticipo; ?></td>
+		</tr>
+	</table>
+
+	<table whidth="100">
+		<tr>
+			<td>
+				<center><B>Comentarios</B></center>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo $comentario_orden; ?></td>
+		</tr>
+	</table>
+	<br>
+	<table whidth="100">
+		<tr>
+			<td colspan="3">
+				<center><B>Cotizado por :</B></center>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Tiempo de Entrega :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B></td>
+			<td colspan="2">
+				<center><?php echo $tiempo_entrega; ?></center>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Firma :</B></td>
+			<td colspan="2">
+				<center><img src="<?php echo $firma_cotizante; ?>" alt="" width="100">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Cotizado por :</B></td>
+			<td colspan="2">
+				<center><?php echo $nombre_usuario . " " . $apellidos_usuario; ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Cargo :</B></td>
+			<td colspan="2">
+				<center><?php echo $nombre_cargo; ?>
+			</td>
+		</tr>
+	</table>
+	
+	<table whidth="100">
+		<tr>
+			<td colspan="3">
+				<center><B>Autorizado por :</B></center>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="1"><B>Firma :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B></td>
+			<td colspan="2">
+				<center><img src="<?php echo $gerente; ?>" alt="" width="80">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Aprobo :</B></td>
+			<td colspan="2">
+				<center><?php echo $nombre_gerente . " " . $apellidos_gerente; ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Cargo :</B></td>
+			<td colspan="2">
+				<center><?php echo $nombre_cargog; ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1"><B>Fecha Aprobación :</B></td>
+			<td colspan="2">
+				<center><?php echo $fecha_aprobacion; ?>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+<?php
+
+require_once 'dompdf/autoload.inc.php';
+
+use Dompdf\Dompdf;
+
+$dompdf = new DOMPDF();
+$dompdf->load_html(ob_get_clean());
+$dompdf->render();
+header("Content-type: application/pdf");
+header("Content-Disposition: inline; filename=documento.pdf");
+echo $dompdf->output();
 ?>

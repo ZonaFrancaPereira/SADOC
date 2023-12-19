@@ -1,12 +1,16 @@
- <!DOCTYPE html>
+<?php 
+include "sumatorias.php";
+?>
+<!DOCTYPE html>
  <html lang="en">
 
  <head>
    <meta charset="UTF-8">
-   <title>SADOC Gestor</title>
-   <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
-   <meta name="viewport" content="width=device-width" />
-   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Plataforma ZFIP</title>
+   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0," name="viewport" >
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ 
    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon" />
    <!-- Google Font: Source Sans Pro -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,21 +36,23 @@
    <!-- CodeMirror -->
    <link rel="stylesheet" href="plugins/codemirror/codemirror.css">
    <link rel="stylesheet" href="plugins/codemirror/theme/monokai.css">
+   
    <!-- DataTables -->
    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
  </head>
 
- <body class="hold-transition sidebar-mini layout-fixed">
+ <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
 
    <div class="wrapper">
      <!-- Navbar PARA CERRAR SESION Y AÑADIR OPCIONES DENTRO DEL SISTEMA -->
-     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+     <nav class="main-header navbar navbar-expand navbar-dark">
        <!-- Left navbar links -->
        <ul class="navbar-nav">
          <li class="nav-item">
@@ -58,13 +64,24 @@
          <li class="nav-item d-none d-sm-inline-block">
            <a href="sadoc.php" class="nav-link" target="_blank">SADOC</a>
          </li>
+         
          <li class="nav-item d-none d-sm-inline-block">
            <a href="acpm.php" class="nav-link">ACPM</a>
          </li>
+         <?php
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="superadmin" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="gerencia" || $_SESSION['rol_usuario']=="aux_cotizacion" || $_SESSION['rol_usuario']=="aux_contable" || $_SESSION['rol_usuario']=="admin_contable"){
+          ?>
+          
          <li class="nav-item d-none d-sm-inline-block">
            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
          </li>
-
+         <?php
+         }
+          ?>
+         <li class="nav-item d-none d-sm-inline-block">
+           <a href="activos.php" class="nav-link">Activos Fijos</a>
+         </li>
+         
        </ul>
 
        <!-- Right navbar links -->
@@ -82,11 +99,13 @@
           <i class="fas fa-folder-open"></i> SADOC
             <span class="float-right text-muted text-sm">Ir</span>
           </a>
+          <?php if($_SESSION['ordenes']=="Si"){ ?>
           <div class="dropdown-divider"></div>
           <a href="ordenes.php" class="dropdown-item">
           <i class="fas fa-money-check-alt"></i> Ordenes de Compra
             <span class="float-right text-muted text-sm">Ir</span>
           </a>
+          <?php } ?>
           <div class="dropdown-divider"></div>
           <a href="acpm.php" class="dropdown-item">
           <i class="fas fa-tasks"></i> ACPM
@@ -94,6 +113,31 @@
           </a>
           <div class="dropdown-divider"></div>
           <a href="index.php" class="dropdown-item dropdown-footer">Plataforma ZFIP</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-danger navbar-badge"><?= $notificaciones=($total_acpm+$cantidad_orden+$total_actividades_vencidas); ?></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header"><B><?= $notificaciones; ?> Pendientes</B></span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="far fa-times-circle mr-2"></i> <?= $total_acpm; ?> | ACPM Pendientes
+            <span class="float-right badge badge-info">Pendientes</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="far fa-thumbs-down mr-2"></i>  <?= $total_actividades_vencidas; ?> | Actividades Vencidas
+            <span class="float-right badge badge-danger">Urgente</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-cart-plus mr-2"></i>  <?= $cantidad_orden; ?> | Ordenes en Proceso
+            <span class="float-right badge badge-success">Proceso</span>
+          </a>
+         
         </div>
       </li>
          <!-- Notifications Dropdown Menu -->
