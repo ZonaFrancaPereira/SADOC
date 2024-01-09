@@ -31,27 +31,9 @@ if ($_SESSION['ingreso'] == true) {
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
             <div id="" class="tab-pane">
-              <div class="card" class="">
+              
+                
 
-
-<<<<<<< HEAD
-=======
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-                      <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      DESCRIPCIÓN ACPM: <?php echo $descripcion ?>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                  <!-- /.card -->
-                </div>
-
->>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="" class="display table table-bordered table-striped">
@@ -118,6 +100,25 @@ if ($_SESSION['ingreso'] == true) {
 
         // Ejecuta la consulta preparada
         $stmt->execute();
+        
+    $registros = $stmt->rowCount();
+
+    if ($registros > 0) {
+      
+      echo "<script>
+      Swal.fire({
+        title: 'Buen Trabajo',
+        text: 'Se registró la ACPM con éxito',
+        icon: 'success',
+      }).then((result) => {
+        // Redirige a la página después de cerrar el SweetAlert
+        if (result.isConfirmed) {
+          window.location.href = 'acpm.php';
+        }
+      });
+      </script>";
+
+    }
         ?>
 
         <!-- MODAL PARA SUBIR EVIDENCIA -->

@@ -83,8 +83,7 @@
           </div>
           <!-- ORDENES DE COMPRA EXCLUYEN LOS AUX -->
           <?php
-          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" ||
-           $_SESSION['rol_usuario']=="superadmin" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="gerencia" || $_SESSION['rol_usuario']=="admin_contable"){
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" ||  $_SESSION['rol_usuario']=="superadmin" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="gerencia" || $_SESSION['rol_usuario']=="admin_contable"){
           ?>
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-success">
@@ -317,7 +316,6 @@
                       $nombre_proceso = $row["nombre_proceso"];
 
                 ?>
-
                       <li class="item">
                         <div class="product-img">
                           <button class="btn bg-warning"><i class="fas fa-calendar-check"></i></button>
@@ -339,8 +337,6 @@
                   echo "Error en el servidor";
                 }
                 ?>
-
-
                 <!-- /.item -->
               </ul>
             </div>

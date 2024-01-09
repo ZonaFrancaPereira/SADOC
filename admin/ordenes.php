@@ -20,7 +20,7 @@ if ($_SESSION['ingreso'] == true) {
     $tiempo_entrega = $_POST['tiempo_entrega'];
     $total_orden = $_POST['total_orden'];
     $proveedor_recurrente = $_POST['proveedor_recurrente'];
-    if ($total_orden >= "1000000") {
+    if ($total_orden >= "1000001" AND $proveedor_recurrente=="No") {
       $estado_orden = "Analisis de Cotizacion";
       $analisis_cotizacion = "Si";
     } else {
@@ -102,6 +102,7 @@ if ($_SESSION['ingreso'] == true) {
       if ($item1 === false && $item2 === false && $item3 === false && $item4 === false && $item5 === false && $item6 === false) break;
     }
     if ($analisis_cotizacion == "Si" && $proveedor_recurrente == "No") {
+      //$email = "cbustamante@zonafrancadepereira.com";
       $email = "ymontoyag@zonafrancadepereira.com";
       $nombre_usuario = $_SESSION['nombre_usuario'];
       $apellidos_usuario = $_SESSION['apellidos_usuario'];
@@ -112,7 +113,7 @@ if ($_SESSION['ingreso'] == true) {
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
       $mail->Username = 'info@zonafrancadepereira.com';
-      $mail->Password = 'svmzgjdkntzpkjln';
+     $mail->Password = 'lwohsrzjdnqfhsyx';
       $mail->SMTPSecure = 'ssl';
       $mail->Port = 465;
       $mail->CharSet = 'UTF-8';
@@ -129,7 +130,7 @@ if ($_SESSION['ingreso'] == true) {
                     <h1>Nueva Orden de Compra #' . $id_orden_compra . ' <h1/>
                 </div>
                 <div style="padding: 20px;">
-                    <p>Hola, Isabel Cristina Bustamante</p>
+                    <p>CON ANALISIS</p>
                     <p>Te informamos que hay una nueva orden de compra de ' . $nombre_usuario . ' ' . $apellidos_usuario . ' por un valor de $' . number_format($total_orden) . ' esperando a que revises el análisis de cotización.</p>
                     <p>Por favor, inicia sesión en nuestro sistema para revisar y procesar la orden. <br>
                     <center>
@@ -153,7 +154,8 @@ if ($_SESSION['ingreso'] == true) {
       echo "<script> 
                   window.location.href='./index.php'; </script>";
     } else {
-      $email = "agalan@zonafrancadepereira.com";
+      $email = "ymontoyag@zonafrancadepereira.com";
+      //$email = "agalan@zonafrancadepereira.com";
       $nombre_usuario = $_SESSION['nombre_usuario'];
       $apellidos_usuario = $_SESSION['apellidos_usuario'];
       require 'mail/autoload.php';
@@ -163,7 +165,7 @@ if ($_SESSION['ingreso'] == true) {
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
       $mail->Username = 'info@zonafrancadepereira.com';
-      $mail->Password = 'svmzgjdkntzpkjln';
+      $mail->Password = 'lwohsrzjdnqfhsyx';
       $mail->SMTPSecure = 'ssl';
       $mail->Port = 465;
       $mail->CharSet = 'UTF-8';
@@ -180,7 +182,7 @@ if ($_SESSION['ingreso'] == true) {
                     <h1>Nueva Orden de Compra #' . $id_orden_compra . ' <h1/>
                 </div>
                 <div style="padding: 20px;">
-                    <p>Hola, Andrea Galan</p>
+                    <p>SIN ANALISIS</p>
                     <p>Te informamos que hay una nueva orden de compra de ' . $nombre_usuario . ' ' . $apellidos_usuario . ' por un valor de $' . number_format($total_orden) . ' esperando tu aprobación</p>
                     <p>Por favor, inicia sesión en nuestro sistema para revisar y procesar la orden. <br>
                     <center>
@@ -219,7 +221,18 @@ if ($_SESSION['ingreso'] == true) {
 
 
       if ($stmt->execute()) {
-        echo "1";
+        echo "<script>
+        Swal.fire({
+          title: 'Buen Trabajo',
+          text: 'Se registró el proveedor con éxito',
+          icon: 'success',
+        }).then((result) => {
+          // Redirige a la página después de cerrar el SweetAlert
+          if (result.isConfirmed) {
+            window.location.href = 'ordenes.php';
+          }
+        });
+        </script>";
       } else {
         echo "ERROR";
       }
@@ -608,7 +621,7 @@ try {
                     </div>
                     <div class="col-md-4 col-xs-12 col-sm-12">
                       <label for="exampleDataList" class="form-label">Proveedor</label>
-                      <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Identificacion de Proveedor" name="id_proveedor_fk" required>
+                      <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Identificación de Proveedor" name="id_proveedor_fk" required>
                       <datalist id="datalistOptions">
 
                         <?php
@@ -658,13 +671,13 @@ try {
                               <textarea name="articulo_compra[]" id="articulo_compra" class="form-control" cols="10" rows="5"></textarea>
                             </td>
                             <td class=" col-md-2">
-                              <input type="number" name="cantidad_orden[]" class="cantidad_orden form-control" placeholder="Unidades" step="any">
+                              <input type="number" name="cantidad_orden[]" class="cantidad_orden form-control" placeholder="Unidades" step="any" oninput="actualizarSuma()">
                             </td>
                             <td class=" col-md-2">
-                              <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" onkeyup="myFunction()">
+                              <input type="number" class="valor_neto form-control" placeholder="Valor sin Iva" value="" name="valor_neto[]" oninput="actualizarSuma()">
                             </td>
                             <td class=" col-md-2">
-                              <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]">
+                              <input type="number" class="valor_iva form-control" placeholder="Valor Iva" value="" name="valor_iva[]" oninput="actualizarSuma()">
                             </td>
                             <td class=" col-md-2">
                               <input type="number" class="valor_total form-control" placeholder="Toltal" value="" name="valor_total[]" step="any">
@@ -681,10 +694,11 @@ try {
                       <div class="row">
                         <div class="col-md-6">
                           <label for=""><B>TOTAL ORDEN</B></label>
-                          <input type="number" class="form-control input-lg" id="totalOrden" name="total_orden" total="0" value="0" placeholder="0" readonly>
+                    
+                          <input type="number" class="form-control input-lg" id="sumaTotal" name="total_orden" total="0" value="0" placeholder="0" readonly>
                         </div>
                         <div class="col-md-6">
-                          <label for=""><B>Añade más articulos a la Orden de Compra</B></label>
+                          <label for=""><B>Añade más artículos a la Orden de Compra</B></label>
                           <button id="adicional" name="adicional" type="button" class="adicional btn btn-info btn-block"> <i class="fas fa-plus"></i> Agregar</button>
                         </div>
                       </div>
@@ -806,8 +820,8 @@ try {
                                 case "Pendiente de Pago":
                                   echo "<td><center><span class='badge bg-navy'>" . $estado_orden . "</span></center></td>";
                                   break;
-                                case "Ejectutada":
-                                  echo "<td><center><span class='badge-success'>" . $estado_orden . "</span></center></td>";
+                                case "Ejecutada":
+                                  echo "<td><center><span class='badge badge-success'>" . $estado_orden . "</span></center></td>";
                                   break;
                               }
                               echo "<td><a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></a></td>";
@@ -837,14 +851,14 @@ try {
                   <div class="card">
                     <div class="card-header" id="headingOne">
                       <h5 class="mb-0">
-                        <button type="button" class="btn btn-primary col-md-12 btn-block" data-toggle="modal" data-target="#exampleModal">
+                        <button type="button" class="btn bg-primary col-md-12 btn-block" data-toggle="modal" data-target="#exampleModal">
                           Agregar Proveedor
                         </button>
                       </h5>
                     </div>
                   </div>
                   <div class="card">
-                    <div class="card-header bg-teal">
+                    <div class="card-header bg-success">
                       <i class="fas fa-list-alt"></i>
                       Lista Actual de Proveedores
                     </div>
@@ -884,7 +898,7 @@ try {
                                 echo "<td>" . $correo_proveedor . "</td>";
                                 echo "<td>" . $telefono_proveedor . "</td>";
                                 echo '<td> 	<a class="btn btn-warning" href="#editProveedorModal" data-toggle="modal"  data-id_proveedor="' . $id_proveedor . '"  data-nombre_proveedor="' . $nombre_proveedor . '"  data-correo_proveedor="' . $correo_proveedor . '"  data-telefono_proveedor="' . $telefono_proveedor . '"><i class="fas fa-edit"></i> </a></td>';
-                                echo "<td>  <button class='btn btn-danger'><i class='fas fa-trash'></i> </button></td>";
+                                echo "<td>  <button class='btn btn-danger eliminar-proveedor' data-id_proveedor='" . $id_proveedor . "'><i class='fas fa-trash'></i> </button></td>";
 
                                 echo "</tr>";
                                 $registros++;
@@ -926,6 +940,7 @@ try {
       </div>
     </div>
   </div>
+  
   <!-- /.content-wrapper -->
   <?php require('footer.php'); ?>
   <!-- Control Sidebar -->

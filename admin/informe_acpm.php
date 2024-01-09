@@ -299,17 +299,18 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 // Verificar si hay resultados
                 if ($result->rowCount() > 0) {
                     foreach ($result as $fila) {
+                        $id_actividad = $fila['id_actividad'];
                 ?>
                         <table border="1" whidth="100">
                             <tr>
                                 <td colspan="4">
-                                    <center><B>EVIDENCIAS DE LA ACTIVIDAD</B></center>
+                                    <center><B>EVIDENCIAS DE LA ACTIVIDAD  # <?php echo $id_actividad; ?></B></center>
                                     <br>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">Fecha : <?php echo $fila["fecha_evidencia"]; ?> </td>
-                                <td colspan="2">Recursos<?php echo $fila["recursos"]; ?></td>
+                                <td colspan="2">Recursos : <?php echo $fila["recursos"]; ?></td>
                             </tr>
 
                             <tr>

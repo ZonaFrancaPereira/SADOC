@@ -4,7 +4,7 @@ ob_start();
 $id_orden = $_GET['id_orden'];
 try {
 	$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk,
 								  o.id_orden, o.fecha_orden, o.proveedor_recurrente, o.forma_pago, o.tiempo_pago, o.porcentaje_anticipo, o.condiciones_negociacion, o.comentario_orden, o.tiempo_entrega, o.total_orden, 
 								  o.analisis_cotizacion, o.estado_orden, o.descripcion_declinado, o.fecha_aprobacion, o.id_cotizante, o.id_proveedor_fk, o.id_gerente,
@@ -49,7 +49,7 @@ try {
 }
 try {
 	$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
-                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,o.id_orden,o.id_gerente,car.id_cargo, car.nombre_cargo
                                   FROM orden_compra o
     
@@ -176,7 +176,7 @@ if ($firma_gerente == "") {
 		<?php
 		try {
 			$stmt = $conn->prepare('SELECT u.Id_usuario, u.correo_usuario,
-										  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.salario_usuario, u.estado_usuario, u.firma_usuario,
+										  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
 										  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk,
 										  o.id_orden, o.fecha_orden, o.proveedor_recurrente, o.forma_pago, o.tiempo_pago, o.porcentaje_anticipo, o.condiciones_negociacion, o.comentario_orden, o.tiempo_entrega, o.total_orden, 
 										  o.analisis_cotizacion, o.estado_orden, o.descripcion_declinado, o.fecha_aprobacion, o.id_cotizante, o.id_proveedor_fk, o.id_gerente,

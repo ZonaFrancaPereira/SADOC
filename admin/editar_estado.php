@@ -26,7 +26,8 @@ try {
     if ($registros > 0) {
         switch ($estado_orden) {
             case "Proceso":
-                $email = "ymontoyag@zonafrancadepereira.com";
+                 //$email = "ymontoyag@zonafrancadepereira.com";
+                $email = "agalan@zonafrancadepereira.com";
                 require 'mail/autoload.php';
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -34,7 +35,7 @@ try {
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'info@zonafrancadepereira.com';
-                $mail->Password = 'svmzgjdkntzpkjln';
+                 $mail->Password = 'lwohsrzjdnqfhsyx';
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
                 $mail->CharSet = 'UTF-8';
@@ -51,7 +52,7 @@ try {
                     <h1>Nueva Orden de Compra #' . $id_orden . ' <h1/>
                 </div>
                 <div style="padding: 20px;">
-                    <p>Hola, Andrea Galan</p>
+                    <p>Hola, Andrea Galán</p>
                     <p>Te informamos que hay una nueva orden de compra de ' . $nombre_usuario . ' ' . $apellidos_usuario . ' por un valor de $' . number_format($total_orden) . ' esperando tu aprobación</p>
                     <p>Por favor, inicia sesión en nuestro sistema para revisar y procesar la orden. <br>
                     <center>
@@ -76,6 +77,7 @@ try {
                 break;
 
             case "Aprobada":
+                 //$email = "ymontoyag@zonafrancadepereira.com";
                 $email = "facturacion@zonafrancadepereira.com";
                 require 'mail/autoload.php';
                 $mail = new PHPMailer(true);
@@ -83,8 +85,8 @@ try {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'info@zonafrancadepereira.com';
-                $mail->Password = 'svmzgjdkntzpkjln';
+               $mail->Username = 'info@zonafrancadepereira.com';
+                     $mail->Password = 'lwohsrzjdnqfhsyx';
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
                 $mail->CharSet = 'UTF-8';
@@ -120,6 +122,16 @@ try {
                 $mail->Body =  $message;
                 $mail->send();
                 echo 'Correo enviado';
+                // PROCESO MANUAL
+                $id_gerente=11;
+                $fecha_aprobacion = date("Y-m-d H:i:s");
+                $stmt3 = $conn->prepare("UPDATE orden_compra SET id_gerente = :id_gerente,fecha_aprobacion = :fecha_aprobacion WHERE id_orden = :id_orden");
+                $stmt3->bindParam(':id_gerente', $id_gerente, PDO::PARAM_STR);
+                $stmt3->bindParam(':fecha_aprobacion', $fecha_aprobacion, PDO::PARAM_STR);
+                $stmt3->bindParam(':id_orden', $id_orden, PDO::PARAM_INT);
+                $stmt3->execute();
+            
+                $registros = $stmt3->rowCount();
                 echo "<script> 
                   window.location.href='./index.php'; </script>";
                 break;
@@ -133,7 +145,7 @@ try {
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'info@zonafrancadepereira.com';
-                    $mail->Password = 'svmzgjdkntzpkjln';
+                     $mail->Password = 'lwohsrzjdnqfhsyx';
                     $mail->SMTPSecure = 'ssl';
                     $mail->Port = 465;
                     $mail->CharSet = 'UTF-8';

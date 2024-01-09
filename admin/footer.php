@@ -122,7 +122,31 @@ autoWidth: true
 </script>
 
 
+
 <script>
+    // Función para actualizar la suma total
+    function actualizarSuma() {
+    var filas = document.getElementById('tabla').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    var sumaTotal = 0;
+
+    // Itera sobre cada fila y suma los valores de los campos
+    for (var i = 0; i < filas.length; i++) {
+      var cantidad = parseFloat(filas[i].getElementsByClassName('cantidad_orden')[0].value) || 0;
+      var valorNeto = parseFloat(filas[i].getElementsByClassName('valor_neto')[0].value) || 0;
+      var valorIva = parseFloat(filas[i].getElementsByClassName('valor_iva')[0].value) || 0;
+
+      // Realiza la suma
+      var total = cantidad * valorNeto + valorIva;
+      sumaTotal += total;
+
+      // Actualiza el valor en la columna 'Total'
+      filas[i].getElementsByClassName('valor_total')[0].value = total.toFixed(0);
+      
+    }
+
+    // Actualiza el valor del input de suma total
+    document.getElementById('sumaTotal').value = sumaTotal.toFixed(0);
+    }
   /*=============================================
      Suma todos los valores de la tabla
      =============================================*/
@@ -166,6 +190,7 @@ autoWidth: true
     $("#adicional").on('click', function() {
       $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
       sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
 
     });
     /*=============================================
@@ -175,6 +200,7 @@ autoWidth: true
       var parent = $(this).parents().get(0);
       $(parent).remove();
       sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
 
 
     });
@@ -474,3 +500,142 @@ autoWidth: true
      });
    });
  </script>
+<script>
+  $(function() {
+    'use strict';
+
+    var ticksStyle = {
+      fontColor: '#FFFFFF',
+      fontStyle: 'bold',
+    };
+
+    var mode = 'index';
+    var intersect = true;
+
+    var $salesChart = $('#seguimiento_acpm');
+    // eslint-disable-next-line no-unused-vars
+    var salesChart = new Chart($salesChart, {
+      type: 'bar',
+      data: {
+        labels: ['Seguimiento Gestión ACPM <?php echo $_SESSION["nombre_proceso"]?>'],
+        datasets: [{
+            label: 'Cerradas',
+            backgroundColor: '#28a745',
+             borderColor: '#28a745',
+            data: [
+              <?php
+                $acpm_cerrada = 0;
+                foreach ($conn->query("SELECT
+                  (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                   WHERE a.estado_acpm = 'Cerrada'  AND a.id_usuario_fk = '$id_usuario_fk ') AS acpm_cerrada
+                ") as $row) {
+                  $acpm_cerrada = $row["acpm_cerrada"];
+                }
+                echo $acpm_cerrada;
+              ?>
+            ],
+          },
+          {
+            label: 'Abiertas con Tiempo',
+            backgroundColor: '#FFD700',
+            borderColor: '#FFD700',
+            data: [
+              <?php
+              $fecha_actual = date('Y-m-d');
+              $fecha_limite = date('Y-m-d', strtotime('+10 days', strtotime($fecha_actual)));
+                $tiempo_vencimiento = 0;
+                foreach ($conn->query("SELECT
+                  (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                   WHERE a.fecha_finalizacion >= '$fecha_limite' AND a.id_usuario_fk = '$id_usuario_fk') AS tiempo_vencimiento
+                ") as $row) {
+                  $tiempo_vencimiento = $row["tiempo_vencimiento"];
+                }
+                echo $tiempo_vencimiento;
+              ?>
+            ],
+          },
+          {
+            label: 'Vencidas',
+            backgroundColor: '#dc3545',
+             borderColor: '#dc3545',
+            data: [
+              <?php
+              $fecha_actual = date('Y-m-d');
+              $fecha_limite = date('Y-m-d', strtotime('-10 days', strtotime($fecha_actual)));
+                $vencidas = 0;
+                foreach ($conn->query("SELECT
+                  (SELECT COUNT(*) FROM acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario
+                   WHERE a.fecha_finalizacion <= '$fecha_limite' AND a.id_usuario_fk = '$id_usuario_fk') AS vencidas
+                ") as $row) {
+                  $vencidas = $row["vencidas"];
+                }
+                echo $vencidas;
+              ?>
+            ],
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          mode: mode,
+          intersect: intersect,
+        },
+        hover: {
+          mode: mode,
+          intersect: intersect,
+        },
+        legend: {
+          display: true,
+        },
+        scales: {
+          yAxes: [{
+            gridLines: {
+              display: true,
+              lineWidth: '4px',
+              color: 'rgba(0, 0, 0, .1)',
+              zeroLineColor: 'transparent',
+            },
+            ticks: $.extend({
+                beginAtZero: true,
+                max: 10,
+                stepSize: 1,
+              },
+              ticksStyle
+            ),
+          }, ],
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false,
+            },
+            ticks: ticksStyle,
+          }, ],
+        },
+      },
+
+      plugins: {
+        datalabels: {},
+      },
+      // Agregar etiquetas manualmente
+      plugins: [{
+        afterDatasetsDraw: function(chart) {
+          var ctx = chart.ctx;
+
+          chart.data.datasets.forEach(function(dataset, datasetIndex) {
+            var meta = chart.getDatasetMeta(datasetIndex);
+            if (!meta.hidden) {
+              meta.data.forEach(function(element, index) {
+                var model = element._model;
+                var yPos = model.y - 10; // Ajusta la posición vertical de la etiqueta
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = ticksStyle.fontStyle + ' ' + ticksStyle.fontColor;
+                ctx.fillText(dataset.data[index], model.x, yPos);
+              });
+            }
+          });
+        }
+      }]
+    });
+  });
+</script>

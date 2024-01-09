@@ -7,19 +7,19 @@ if ($_SESSION['ingreso'] == true) {
   if (isset($_POST['enviar_verificacion'])) {
     $id_consecutivo = $_POST['id_acpm'];
     try {
-
-      // Construye y ejecuta la consulta UPDATE con parámetros
-      $stmt = $conn->prepare("UPDATE acpm
+     
+        // Construye y ejecuta la consulta UPDATE con parámetros
+        $stmt = $conn->prepare("UPDATE acpm
         SET estado_acpm = 'abierta'
         WHERE id_consecutivo  = :id_acpm");
-
-      $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
-      $stmt->execute();
-
-      $registros = $stmt->rowCount();
-
-      if ($registros > 0) {
-        echo "<script>
+        
+        $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $registros = $stmt->rowCount();
+    
+        if ($registros > 0) {
+            echo "<script>
             Swal.fire({
 							title: 'Buen Trabajo',
 							text: 'Su respuesta se registro con éxito',
@@ -31,11 +31,14 @@ if ($_SESSION['ingreso'] == true) {
 							}
 						});
             </script>";
-      }
+        }
+        
     } catch (Exception $e) {
-      echo "ERROR: " . $e->getMessage();
+        echo "ERROR: " . $e->getMessage();
+    
     }
-  }
+    
+    }
 ?>
 
 
@@ -52,7 +55,7 @@ if ($_SESSION['ingreso'] == true) {
         </a>
       </li>
       <?php
-          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo"  ){
+          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="admin_contable" || $_SESSION['rol_usuario']=="gerencia"  ){
           ?>
       <li class="nav-item">
         <a data-toggle="tab" href="#acpm" class="nav-link ">
@@ -109,7 +112,6 @@ if ($_SESSION['ingreso'] == true) {
           }
           ?>
       <li class="nav-item" name="actividades_asignadas">
-<<<<<<< HEAD
             <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
             <i class="nav-icon fas fa-user-check"></i>
               Actividades Asignadas
@@ -118,13 +120,6 @@ if ($_SESSION['ingreso'] == true) {
           <?php
           if($_SESSION['rol_usuario']=="admin_sig"){
           ?>
-=======
-        <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
-          <i class="nav-icon fas fa-user-check"></i>
-          Actividades Asignadas
-        </a>
-      </li>
->>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -147,6 +142,15 @@ if ($_SESSION['ingreso'] == true) {
       <?php
           }
           ?>
+             <li class="nav-item">
+      <a data-toggle="tab" href="#manual" class="nav-link ">
+        <i class="nav-icon fas fa-book"></i>
+        <p>
+          Manual
+        </p>
+      </a>
+
+    </li>
     </ul>
 
   </nav>
@@ -175,56 +179,71 @@ if ($_SESSION['ingreso'] == true) {
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
-<<<<<<< HEAD
           <p>Gestiona tus ACPM</p>
           <?php
           if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo"  ){
           ?>
-          <div class="col-lg-12 col-md-12">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                   <h3 class="card-title">TUS ACPM</h3>
                   <a href="javascript:void(0);">Ver Reporte</a>
-=======
-            <div class="col-lg-12 col-md-12">
-              <div class="card">
-                <div class="card-header border-0">
-                  <div class="d-flex justify-content-between">
-                    <h3 class="card-title">TUS ACPM</h3>
-                    <a href="javascript:void(0);">Ver Reporte</a>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="d-flex">
-
-                    <p class="ml-auto d-flex flex-column text-right">
-                      <span class="text-success">
-                        <i class="fas fa-arrow-up"></i>
-                      </span>
-                      <span class="text-muted">Completa las Metas</span>
-                    </p>
-                  </div>
-                  <!-- /.d-flex -->
-
-                  <div class="position-relative mb-4">
-                    <canvas id="sales-chart" height="200"></canvas>
-                  </div>
-
-
->>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
                 </div>
               </div>
+              <div class="card-body">
+                <div class="d-flex">
+                
+                  <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <i class="fas fa-arrow-up"></i> 
+                    </span>
+                    <span class="text-muted">Completa las Metas</span>
+                  </p>
+                </div>
+                <!-- /.d-flex -->
 
+                <div class="position-relative mb-4">
+                  <canvas id="sales-chart" height="200"></canvas>
+                </div>
+
+               
+              </div>
             </div>
-<<<<<<< HEAD
+            
+          </div>
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">SEGUIMIENTO ACPM</h3>
+                  <a href="javascript:void(0);">Ver Reporte</a>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex">
+                
+                  <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <i class="fas fa-arrow-up"></i> 
+                    </span>
+                    <span class="text-muted">Completa tus ACPM a tiempo</span>
+                  </p>
+                </div>
+                <!-- /.d-flex -->
+
+                <div class="position-relative mb-4">
+                  <canvas id="seguimiento_acpm" height="200"></canvas>
+                </div>
+
+               
+              </div>
+            </div>
             
           </div>
           <?php
           }
           ?>
-=======
->>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">
@@ -232,7 +251,7 @@ if ($_SESSION['ingreso'] == true) {
               <div class="card card-navy">
                 <div class="card-header">
                   <center>
-                    <h4>Nueva Acción Correctiva, Preventiva o de Mejora</h4>
+                    <h4>Nueva Accion Correctiva, Preventiva o de Mejora</h4>
                   </center>
                 </div>
                 <div class="card-body">
@@ -242,7 +261,7 @@ if ($_SESSION['ingreso'] == true) {
                       <input type="text" name="id_usuario_fk" id="id_usuario_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
                     </div>
                     <div class="col-md-6 col-xs-6 col-sm-6">
-                      <label>Nombre del Responsable</label>
+                      <label>Nombre del Resposable</label>
                       <input type="text" name="" value="<?php echo $_SESSION['nombre_usuario'] . " " . $_SESSION['apellidos_usuario'] ?>" class="form-control" readonly>
                     </div>
                     <div class="col-md-6 col-xs-6 col-sm-6">
@@ -262,7 +281,7 @@ if ($_SESSION['ingreso'] == true) {
                       </select>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="fuente">
-                      <label>Descripción Fuente</label>
+                      <label>Descripcion Fuente</label>
                       <textarea class="form-control" id="descripcion_fuente" name="descripcion_fuente" rows="3"></textarea>
                     </div>
                     <div class="col-2 col-xs-12 col-sm-12">
@@ -307,7 +326,7 @@ if ($_SESSION['ingreso'] == true) {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="correccion">
                       <div class="col-md-12 col-xs-12 col-sm-12">
-                        <label>Fecha Corrección</label>
+                        <label>Fecha Correcion</label>
                         <input type="date" name="fecha_correccion" class="form-control" id="fecha_correccion" required>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12">
@@ -319,7 +338,7 @@ if ($_SESSION['ingreso'] == true) {
                     <div class="col-md-12 col-xs-12 col-sm-12">
                       <label>Se identificó peligros de SST nuevos o que han cambiado, o la necesidad de generar controles nuevos o modificar los existentes</label>
                       <select class="form-control" id="riesgo_acpm" name="riesgo_acpm" required>
-                        <option>Selecciona una Opción</option>
+                        <option>Selecciona una Opcion</option>
                         <option value="Si">Si</option>
                         <option value="No">No</option>
                       </select>
@@ -361,15 +380,17 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripción Acpm</th>
-                          <th>Fecha Corrección</th>
-                          <th>Fecha Finalización</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Verificacion' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Verificacion' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { 
+                          $id_acpm=$row["id_consecutivo"];
+                          ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -393,8 +414,10 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-                              <td><?php echo $row["fecha_correccion"] ?></td>
+                             
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+
                               <td><?php echo $row["estado_acpm"] ?></td>
                             </tr>
                         <?php }
@@ -425,7 +448,7 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
                           <th>Descripción </th>
-                          <th>Fecha Corrección</th>
+            
                           <th>Fecha Finalización</th>
                           <th>Estado</th>
                           <th>Informe</th>
@@ -461,7 +484,7 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-                              <td><?php echo $row["fecha_correccion"] ?></td>
+                           
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
@@ -572,14 +595,16 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
                           <th>Descripcion Acpm</th>
-                          <th>Fecha Correcion</th>
                           <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { 
+                          $id_acpm=$row["id_consecutivo"];
+                          ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -603,8 +628,9 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-                              <td><?php echo $row["fecha_correccion"] ?></td>
+                         
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                             </tr>
                         <?php }
@@ -616,6 +642,7 @@ if ($_SESSION['ingreso'] == true) {
               </div>
             </div>
           </div>
+
 
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
@@ -636,17 +663,16 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripción Acpm</th>
-                          <th>Fecha Finalización</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
                           <th>Estado</th>
-                          <th>Informe</th>
+                          <th>Editar</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) {
-                          $editar_acpm = $row["id_consecutivo"]; 
-                          { ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Rechazada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -670,11 +696,11 @@ if ($_SESSION['ingreso'] == true) {
                                   ?>
                                 </p>
                               </td>
-
+                           
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
-                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-            
+                              <td>Boton editar</td>
+                              <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-warning" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-edit"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -684,9 +710,9 @@ if ($_SESSION['ingreso'] == true) {
                 </div>
               </div>
             </div>
+
           </div>
-          <!-- /.modal -->
-          
+
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
@@ -706,9 +732,9 @@ if ($_SESSION['ingreso'] == true) {
                           <th>Origen Acpm</th>
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
-                          <th>Descripción Acpm</th>
-                          <th>Fecha Corrección</th>
-                          <th>Fecha Finalización</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Correcion</th>
+                          <th>Fecha Finalizacion</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
@@ -914,7 +940,7 @@ if ($_SESSION['ingreso'] == true) {
                               <td>
                                 <form action="" method="POST">
                                   <input type="number" name="id_acpm" value="<?php echo $row["id_consecutivo"] ?>" hidden>
-                                  <button type="submit" class="btn btn-success " name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
+                                  <button type="submit" class="btn btn-success "  name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
                                 </form>
                               </td>
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
@@ -947,7 +973,7 @@ if ($_SESSION['ingreso'] == true) {
                               <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_sig" id="id_acpm_sig" hidden>
                               <label>SI (Conforme) NO (No conforme)</label>
                               <select class="form-control" id="riesgo_acpm_sig" name="riesgo_acpm_sig" required>
-                                <option>Selecciona una Opción</option>
+                                <option>Selecciona una Opcion</option>
                                 <option value="Si">SI</option>
                                 <option value="No">NO</option>
                               </select>
@@ -977,7 +1003,7 @@ if ($_SESSION['ingreso'] == true) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <label>Conforme</label>
                               <select class="form-control" id="conforme_sig" name="conforme_sig" required>
-                                <option>Selecciona una Opción</option>
+                                <option>Selecciona una Opcion</option>
                                 <option value="SI">SI</option>
                                 <option value="NO">NO</option>
                               </select>
@@ -990,7 +1016,7 @@ if ($_SESSION['ingreso'] == true) {
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label for="fecha_estado">Fecha de Verificación</label>
+                              <label for="fecha_estado">Fecha de Verificacion</label>
                               <input type="date" name="fecha_estado_sig" class="form-control" id="fecha_estado_sig" required>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -1056,6 +1082,28 @@ if ($_SESSION['ingreso'] == true) {
               </div>
               <!-- /.modal -->
           </section>
+          <div id="manual" class="tab-pane">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+
+                  <!-- Button trigger modal -->
+                  <div class="card">
+                    <!-- /.card-header -->
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?utm_content=DAF2-DXLBbQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- CIERRE MANUAL-->
         </div>
       </div>
       <!-- CIERRE DEL TAB -->
@@ -1066,23 +1114,12 @@ if ($_SESSION['ingreso'] == true) {
 <!-- /.content-wrapper -->
 <?php require('footer.php'); ?>
 <script>
-<<<<<<< HEAD
     function redirectActividadesUsuario() {
        
 
         // Redireccionar con las variables
         window.location.href = "actividades_usuario.php";
     }
-=======
-  function redirectActividadesUsuario() {
-    // Obtener los valores de las variables PHP
-    var id_acpm = <?php echo json_encode($id_acpm); ?>;
-    var descripcion = <?php echo json_encode($descripcion); ?>;
-
-    // Redireccionar con las variables
-    window.location.href = "actividades_usuario.php?id_acpm=" + id_acpm + "&descripcion=" + descripcion;
-  }
->>>>>>> 8afdeec953c283f9d95ed40fad12a82550f91b60
 </script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -1192,15 +1229,6 @@ if ($_SESSION['ingreso'] == true) {
     var modal = $(this);
 
     modal.find('.modal-body #id_acpm_fk_sig').val(id_acpm_fk_sig);
-  });
-  $('#modal-').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var id_acpm_fk = button.data('id_acpm_fk'); // Extract info from data-* attributes
-
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-
-    modal.find('.modal-body #id_acpm_fk').val(id_acpm_fk);
   });
 
   $(document).ready(function() {

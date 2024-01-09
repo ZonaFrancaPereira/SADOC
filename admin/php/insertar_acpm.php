@@ -77,6 +77,7 @@ try {
 	
 		//CORREO DESTINATARIO (ESTO DESPUES LO VAMOS A CONFIGURAR DESDE LA APP)
 		$email = "ymontoyag@zonafrancadepereira.com";
+		//$email = "yrios@zonafrancadepereira.com";
 		//LIBRERIA
 		require '../mail/autoload.php';
 		$mail = new PHPMailer(true);
@@ -85,7 +86,7 @@ try {
 		$mail->Host = 'smtp.gmail.com';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'info@zonafrancadepereira.com';
-		$mail->Password = 'svmzgjdkntzpkjln';
+		$mail->Password = 'lwohsrzjdnqfhsyx';
 		$mail->SMTPSecure = 'ssl';
 		$mail->Port = 465;
 		$mail->CharSet = 'UTF-8';
