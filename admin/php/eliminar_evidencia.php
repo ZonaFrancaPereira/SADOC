@@ -5,7 +5,7 @@ include_once("conexion.php");
 // Verifica si se ha enviado la solicitud para eliminar evidencia
 if (isset($_POST['eliminar_evidencia'])) {
     // Obtiene el ID de la evidencia desde la solicitud POST
-    $id_detalle_acpm_eliminar = $_POST['id_detalle_acpm_eliminar'];
+    $id_evidencia_eliminar = $_POST['id_evidencia_eliminar'];
 
     try {
         // Consulta de eliminación
@@ -14,7 +14,7 @@ if (isset($_POST['eliminar_evidencia'])) {
 
         // Prepara la consulta
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(1, $id_detalle_acpm_eliminar);
+        $stmt->bindParam(1, $id_evidencia_eliminar);
 
         // Ejecuta la consulta
         if ($stmt->execute()) {

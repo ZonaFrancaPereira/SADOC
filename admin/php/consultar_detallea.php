@@ -45,9 +45,9 @@ if ($result->rowCount() > 0) {
                             </div>
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
-                                    <form id="form_eliminar" method="POST">
-                                        <input type="hidden" id="id_detalle_acpm_eliminar" name="id_detalle_acpm_eliminar" value="<?php echo $row["id_detalle_acpm"] ?>">
-                                        <button type="button" id="eliminar_evidencia" class='btn bg-danger'>Eliminar Evidencia</button>
+                                    <form id="form_eliminar_evidencia" method="POST">
+                                        <input type="hidden" class="id_evidencia_eliminar" name="id_evidencia_eliminar" value="<?php echo $row["id_detalle_acpm"] ?>">
+                                        <button type="button" class='btn bg-danger eliminar_evidencia'>Eliminar Evidencia</button>
                                     </form>
                                 </div>
                                 <!-- /.description-block -->
@@ -67,37 +67,41 @@ if ($result->rowCount() > 0) {
 }
 ?>
 <script>
-$(document).ready(function() {
-    $('#eliminar_evidencia').click(function() {
-        var id_detalle_acpm_eliminar = $('#id_detalle_acpm_eliminar').val();
+    $(document).ready(function() {
+        $('.eliminar_evidencia').click(function() {
+            // Encuentra el formulario más cercano al botón clickeado
+            var form = $(this).closest('form');
 
-        // Enviar una solicitud AJAX al archivo PHP
-        $.ajax({
-            type: 'POST',
-            url: 'php/eliminar_evidencia.php',
-            data: {
-                eliminar_evidencia: true,
-                id_detalle_acpm_eliminar: id_detalle_acpm_eliminar
-            },
-            success: function(response) {
-                // Manejar la respuesta del servidor (puedes mostrar un mensaje de éxito, recargar la página, etc.)
-                Swal.fire({
-							title: 'Buen Trabajo',
-							text: 'Se elimino la evidencia con éxito',
-							icon: 'success',
-						}).then((result) => {
-							// Redirige a la página después de cerrar el SweetAlert
-							if (result.isConfirmed) {
-								window.location.href = 'acpm.php';
-							}
-						});
-            },
-            error: function() {
-                alert('Error al enviar la solicitud al servidor.');
-            }
+            // Obtiene el valor del input dentro del formulario
+            var id_evidencia_eliminar = form.find('.id_evidencia_eliminar').val();
+
+            // Enviar una solicitud AJAX al archivo PHP
+            $.ajax({
+                type: 'POST',
+                url: 'php/eliminar_evidencia.php',
+                data: {
+                    eliminar_evidencia: true,
+                    id_evidencia_eliminar: id_evidencia_eliminar
+                },
+                success: function(response) {
+                    // Manejar la respuesta del servidor (puedes mostrar un mensaje de éxito, recargar la página, etc.)
+                    Swal.fire({
+                        title: 'Buen Trabajo',
+                        text: 'Se eliminó la evidencia con éxito',
+                        icon: 'success',
+                    }).then((result) => {
+                        // Redirige a la página después de cerrar el SweetAlert
+                        if (result.isConfirmed) {
+                            window.location.href = 'acpm.php';
+                        }
+                    });
+                },
+                error: function() {
+                    alert('Error al enviar la solicitud al servidor.');
+                }
+            });
         });
     });
-});
 </script>
 </body>
 

@@ -71,30 +71,30 @@ if ($_SESSION['ingreso'] == true) {
                     </thead>
                     <tbody>
                       <?php
-                      foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) { {
-                          $id_actividad = $row['id_actividad'];
-                          $estado_actividad = $row["estado_actividad"];
-
+                      foreach ($conn->query("SELECT * from actividades_acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE id_acpm_fk = $id_acpm") as $row) {
+                        $id_actividad = $row['id_actividad'];
+                        $estado_actividad = $row["estado_actividad"];
                       ?>
-                          <tr style=text-align:center>
-                            <td><?php echo $row["id_actividad"] ?></td>
-                            <td><?php echo $row["descripcion_actividad"] ?></td>
-                            <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
-                            <td><?php echo $row["fecha_actividad"] ?></td>
-                            <td><?php echo $row["estado_actividad"] ?></td>
-                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
-                            <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
-                            <td>
-                              <div class="description-block">
-                                <form id="form_eliminar" method="POST">
-                                  <input type="hidden" id="id_actividad_eliminar" name="id_actividad_eliminar" value="<?php echo $row["id_actividad"] ?>">
-                                  <button type="button" class="btn bg-danger" id="eliminar_actividad"><i class="fas fa-trash-alt"></i></button>
-                                </form>
-                              </div>
-                            </td>
-                          </tr>
-                      <?php }
-                      } ?>
+                        <tr style=text-align:center>
+                          <td><?php echo $row["id_actividad"] ?></td>
+                          <td><?php echo $row["descripcion_actividad"] ?></td>
+                          <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                          <td><?php echo $row["fecha_actividad"] ?></td>
+                          <td><?php echo $row["estado_actividad"] ?></td>
+                          <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-success" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-folder-plus"></i></button></td>
+                          <td><button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-evidencia" data-id_actividad="<?php echo $row['id_actividad'] ?>"><i class="fas fa-eye"></i></button></td>
+                          <td>
+                            <div class="description-block">
+                              <form class="form_eliminar" method="POST">
+                                <input type="hidden" class="id_actividad_eliminar" name="id_actividad_eliminar" value="<?php echo $row["id_actividad"] ?>">
+                                <button type="button" class="btn bg-danger eliminar_actividad"><i class="fas fa-trash-alt"></i></button>
+                              </form>
+                            </div>
+                          </td>
+                        </tr>
+                      <?php
+                      }
+                      ?>
                     </tbody>
                   </table>
 
@@ -363,8 +363,12 @@ if ($_SESSION['ingreso'] == true) {
   }
 
   $(document).ready(function() {
-    $('#eliminar_actividad').click(function() {
-      var id_actividad_eliminar = $('#id_actividad_eliminar').val();
+    $('.eliminar_actividad').click(function() {
+      // Encuentra el formulario más cercano al botón clickeado
+      var form = $(this).closest('form');
+
+      // Obtiene el valor del input dentro del formulario
+      var id_actividad_eliminar = form.find('.id_actividad_eliminar').val();
 
       // Enviar una solicitud AJAX al archivo PHP
       $.ajax({
