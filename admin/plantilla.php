@@ -81,21 +81,9 @@ include "sumatorias.php";
         <li class="nav-item d-none d-sm-inline-block">
           <a href="activos.php" class="nav-link">Activos Fijos</a>
         </li>
-        <div class="btn-group">
-          <a class="nav-link default">GESTIÓN TI</a>
-          <a class="nav-link default dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>
-          <span class="sr-only">Toggle Dropdown</span>
-          <div class="dropdown-menu" role="menu">
-            <a class="dropdown-item" href="ti.php#actualizar_usuario">Actualizar Usuario</a>
-            <a class="dropdown-item" href="ti.php#agregar_usuario">Agregar Usuario</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </div>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="ti.php" class="nav-link">GESTIÓN TI</a>
         </li>
-
-
       </ul>
 
       <!-- Right navbar links -->

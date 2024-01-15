@@ -3,6 +3,7 @@ $(document).ready(gestion_ti);
 function gestion_ti() {
 	$("#editarUsuario").on("click", editarUsuario);
     $("#actualizar").on("click", actualizarEstadoUsuario);
+	$("#nuevo_usuario").on("click", nuevoUsuario);
 
 
 	$('input').on('input', function () {
@@ -77,6 +78,86 @@ function actualizarEstadoUsuario() {
 						Swal.fire({
 							title: 'Buen Trabajo',
 							text: 'Se actualizo el usuario correctamente',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				)
+			}
+		})
+
+	}
+}
+
+function nuevoUsuario() {
+    // Obtener los valores de los campos del formulario
+    var  correo_usuario2= $('#correo_usuario2').val();
+	var  contrasena_usuario2 = $('#contrasena_usuario2').val();
+	var  nombre_usuario2 = $('#nombre_usuario2').val();
+	var  apellidos_usuario2 = $('#apellidos_usuario2').val();
+	var  estado_usuario_nuevo = $('#estado_usuario_nuevo').val();
+	var  proceso_usuario_fk2= $('#proceso_usuario_fk2').val();
+	var  id_cargo_fk2= $('#id_cargo_fk2').val();
+	var  tipo_usuario_fk2= $('#tipo_usuario_fk2').val();
+
+     //   alert (estado_usuario_nuevo + correo_usuario2 + contrasena_usuario2 + nombre_usuario2 + apellidos_usuario2 + proceso_usuario_fk2 + id_cargo_fk2 + tipo_usuario_fk2);
+    // Enviar la solicitud AJAX para actualizar el estado del usuario
+	if (correo_usuario2 == "" || nombre_usuario2 == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		)
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres Agregar este Usuario?',
+			text: "Recuerda que una vez Agregado el usuario podrá ingresar al sistema",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Agregar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+                    'correo_usuario2': correo_usuario2 ,
+					'contrasena_usuario2': contrasena_usuario2,
+					'nombre_usuario2': nombre_usuario2,
+					'apellidos_usuario2': apellidos_usuario2,
+					'estado_usuario_nuevo': estado_usuario_nuevo,
+					'proceso_usuario_fk2': proceso_usuario_fk2,
+					'id_cargo_fk2': id_cargo_fk2,
+                    'tipo_usuario_fk2': tipo_usuario_fk2
+				}
+                $.ajax({
+                    type: 'POST',
+                    data: json,
+                    url: 'php/agregar_usuario.php',
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se Agrego el usuario correctamente',
 							icon: 'success',
 						}).then((result) => {
 							// Redirige a la página después de cerrar el SweetAlert
