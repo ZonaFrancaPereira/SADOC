@@ -61,31 +61,52 @@ include "sumatorias.php";
         <li class="nav-item d-none d-sm-inline-block">
           <a href="index.php" class="nav-link">Inicio</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="sadoc.php" class="nav-link" target="_blank">SADOC</a>
-        </li>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Sistema Integrado de Gestión">SIG</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li><a href="sadoc.php" class="dropdown-item" target="_blank">SADOC </a></li>
+            <li><a href="acpm.php" class="dropdown-item">ACPM</a></li>
 
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="acpm.php" class="nav-link">ACPM</a>
+          </ul>
         </li>
-        <?php
-        if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "superadmin" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "gerencia" || $_SESSION['rol_usuario'] == "aux_cotizacion" || $_SESSION['rol_usuario'] == "aux_contable" || $_SESSION['rol_usuario'] == "admin_contable") {
-        ?>
-
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="ordenes.php" class="nav-link">Ordenes de Compra</a>
-          </li>
-        <?php
-        }
-        ?>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="activos.php" class="nav-link">Activos Fijos</a>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Contabilidad y Finanzas">CT</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <?php
+            if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "superadmin" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "gerencia" || $_SESSION['rol_usuario'] == "aux_cotizacion" || $_SESSION['rol_usuario'] == "aux_contable" || $_SESSION['rol_usuario'] == "admin_contable") {
+            ?>
+              <li>
+                <a href="ordenes.php" class="dropdown-item">Ordenes de Compra</a>
+              </li>
+              <li>
+                <a href="activos.php" class="dropdown-item">Activos Fijos</a>
+              </li>
+            <?php
+            }
+            ?>
+          </ul>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="ti.php" class="nav-link">GESTIÓN TI</a>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Gestión Tecnología e Informática">G-TI</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li><a href="asignacion_ti.php" class="dropdown-item">Asignación de Equipos</a></li>
+            <li><a href="backup_ti.php" class="dropdown-item">Backup</a></li>
+            <li><a href="inventario_ti.php" class="dropdown-item">Inventario TI</a></li>
+            <li><a href="licencias_ti..php" class="dropdown-item">Licencias</a></li>
+            <li><a href="mantenimientos_ti.php" class="dropdown-item">Mantenimientos</a></li>
+            <li><a href="mantenimientos_ti.php" class="dropdown-item">Matriz de Usuarios y Criticidad</a></li>
+            <li><a href="soporte_ti.php" class="dropdown-item">Soporte</a></li>
+            <li><a href="ti.php" class="dropdown-item">Usuarios</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Gestión Jurídica">JU</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li><a href="asociados_ju.php" class="dropdown-item">Asociados de Negocios</a></li>
+        
+          </ul>
         </li>
       </ul>
-
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- MENU PARA DISPOSITIVOS MOVILES -->
