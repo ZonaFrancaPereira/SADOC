@@ -84,78 +84,107 @@ if ($_SESSION['ingreso'] == true) {
 
 <?php require('footer.php'); ?>
 <script>
-    $(document).ready(function() {
-
-
-
-
-        $(document).on("click", ".agregar_empresa", function() {
-            agregarAccionistaEmpresa($(this).siblings(".empresas_container"));
-        });
-
-        $(document).on("click", ".agregar_accionista", function() {
-            agregarAccionistaEmpresa($(this).siblings(".empresas_container"));
-        });
-
-        $(document).on("click", ".eliminar_accionista", function() {
-            $(this).closest("fieldset").remove();
-        });
-
-        $(document).on("click", ".eliminar_empresa", function() {
-            $(this).closest("fieldset").remove();
-        });
-
-        $(document).on("input", "[id^=num_accionistas_empresa]", function() {
-            var empresasContainer = $(this).closest("fieldset").find(".empresas_container");
-            agregarAccionistasDentroDeEmpresa(empresasContainer, $(this).val());
-        });
+$(document).ready(function() {
+    $(document).on("click", ".agregar_empresa", function() {
+        agregarAccionistaEmpresa($(this).siblings(".empresas_container"));
     });
 
+    $(document).on("click", ".agregar_accionista", function() {
+        var nombreEmpresa = $(this).closest("fieldset").find("[id^=nombre_empresa_accionista]").val();
+        agregarAccionistaEmpresa($(this).siblings(".empresas_container"), nombreEmpresa);
+    });
 
+    $(document).on("click", ".eliminar_accionista", function() {
+        $(this).closest("fieldset").remove();
+        actualizarTitulos($(this));
+    });
 
-    function agregarAccionistaEmpresa(empresasContainer) {
-        var empresaFieldset = $("<fieldset class='border p-2 mt-2'>");
-        var numEmpresas = empresasContainer.children().length + 1;
+    $(document).on("click", ".eliminar_empresa", function() {
+        $(this).closest("fieldset").remove();
+        actualizarTitulos($(this));
+    });
 
-        empresaFieldset.html(`
-    <legend class='text-primary'>Asociado de Negocio ${numEmpresas}</legend>
-    <div class="form-group">
-      <label for="nombre_empresa_accionista${numEmpresas}">Nombre de la Empresa:</label>
-      <input type="text" class="form-control" name="nombre_empresa_accionista${numEmpresas}" id="nombre_empresa_accionista${numEmpresas}" required>
-    </div>
+    $(document).on("input", "[id^=nombre_empresa_accionista]", function() {
+        actualizarTitulos($(this));
+    });
 
-    <div class="form-group">
-      <label for="num_accionistas_empresa${numEmpresas}">Número de Accionistas (Personas Naturales):</label>
-      <input type="number" class="form-control" name="num_accionistas_empresa${numEmpresas}" id="num_accionistas_empresa${numEmpresas}" required>
-    </div>
+    $(document).on("input", "[id^=num_accionistas_empresa]", function() {
+        var empresasContainer = $(this).closest("fieldset").find(".empresas_container");
+        agregarAccionistasDentroDeEmpresa(empresasContainer, $(this).val());
+        actualizarTitulos($(this));
+    });
+});
 
-    <div class="empresas_container">
-      <!-- Espacio para agregar empresas -->
-    </div>
+function agregarAccionistaEmpresa(empresasContainer, nombreEmpresa) {
+    var numEmpresas = empresasContainer.children().length + 1;
 
-    <button type="button" class="btn btn-success agregar_accionista mt-2">Agregar Empresa Accionistas ${numEmpresas}</button>
-    <button type="button" class="btn btn-danger eliminar_empresa mt-2">Eliminar Empresa</button>
-  `);
+    var empresaFieldset = $("<fieldset class='border p-2 mt-2'>");
+    empresaFieldset.html(`
+        <legend class='text-primary titulo_asociado_negocio'>Asociado de Negocio - ${nombreEmpresa || "Empresa sin nombre"}</legend>
+        <div class="form-group">
+            <label for="nombre_empresa_accionista${numEmpresas}">Nombre de la Empresa:</label>
+            <input type="text" class="form-control" name="nombre_empresa_accionista${numEmpresas}" id="nombre_empresa_accionista${numEmpresas}" value="${nombreEmpresa}" required>
+        </div>
 
-        empresasContainer.append(empresaFieldset);
-    }
+        <div class="form-group">
+            <label for="num_accionistas_empresa${numEmpresas}">Número de Accionistas (Personas Naturales):</label>
+            <input type="number" class="form-control" name="num_accionistas_empresa${numEmpresas}" id="num_accionistas_empresa${numEmpresas}" required>
+        </div>
 
-    function agregarAccionistasDentroDeEmpresa(empresasContainer, numAccionistas) {
-        empresasContainer.empty(); // Limpiar los campos anteriores
+        <div class="empresas_container">
+            <!-- Espacio para agregar empresas -->
+        </div>
 
-        for (var i = 0; i < numAccionistas; i++) {
-            var accionistaFieldset = $("<fieldset class='border p-2 mt-2'>");
-            accionistaFieldset.html(`
-      <legend class='text-success'>Accionista ${i + 1}</legend>
-      <div class="form-group">
-        <label for="nombre_accionista${i + 1}">Nombre del Accionista:</label>
-        <input type="text" class="form-control" name="nombre_accionista${i + 1}" id="nombre_accionista${i + 1}" required>
-      </div>
-      <button type="button" class="btn btn-danger eliminar_accionista mt-2">Eliminar Accionista</button>
+        <button type="button" class="btn btn-success agregar_accionista mt-2">Agregar Empresa Accionista - ${nombreEmpresa}</button>
+        <button type="button" class="btn btn-danger eliminar_empresa mt-2">Eliminar Empresa - ${nombreEmpresa}</button>
     `);
-            empresasContainer.append(accionistaFieldset);
-        }
+
+    empresasContainer.append(empresaFieldset);
+    actualizarTitulos(empresaFieldset.find("[id^=nombre_empresa_accionista]"));
+
+    empresaFieldset.find(".agregar_accionista").on("click", function() {
+        var nombreEmpresa = $(this).closest("fieldset").find("[id^=nombre_empresa_accionista]").val();
+        agregarAccionistaEmpresa($(this).siblings(".empresas_container"), nombreEmpresa);
+    });
+}
+
+function agregarAccionistasDentroDeEmpresa(empresasContainer, numAccionistas) {
+    empresasContainer.empty(); // Limpiar los campos anteriores
+
+    for (var i = 0; i < numAccionistas; i++) {
+        var accionistaFieldset = $("<fieldset class='border p-2 mt-2'>");
+        accionistaFieldset.html(`
+            <legend class='text-success'>Accionista ${i + 1}</legend>
+            <div class="form-group">
+                <label for="nombre_accionista${i + 1}">Nombre del Accionista:</label>
+                <input type="text" class="form-control" name="nombre_accionista${i + 1}" id="nombre_accionista${i + 1}" required>
+            </div>
+            <button type="button" class="btn btn-danger eliminar_accionista mt-2">Eliminar Accionista</button>
+        `);
+        empresasContainer.append(accionistaFieldset);
     }
+}
+
+function actualizarTitulos(inputNombreEmpresa) {
+    var nombreEmpresa = inputNombreEmpresa.val() || "Empresa sin nombre";
+    var numEmpresas = inputNombreEmpresa.closest("fieldset").find(".empresas_container fieldset").length + 1;
+
+    inputNombreEmpresa.closest("fieldset").find(".titulo_asociado_negocio").text(`Asociado de Negocio - ${nombreEmpresa}`);
+    inputNombreEmpresa.closest("fieldset").find(".agregar_accionista").text(`Agregar Empresa Accionista - ${nombreEmpresa}`);
+    inputNombreEmpresa.closest("fieldset").find(".eliminar_empresa").text(`Eliminar Empresa - ${nombreEmpresa}`);
+
+    // Actualizar también los títulos dentro de las empresas
+    inputNombreEmpresa.closest("fieldset").find(".empresas_container fieldset").each(function(index) {
+        var nombreEmpresaAccionista = $(this).find("[id^=nombre_empresa_accionista]").val() || `Empresa sin nombre (${index + 1})`;
+        $(this).find(".titulo_asociado_negocio").text(`Asociado de Negocio - ${nombreEmpresaAccionista}`);
+        $(this).find(".agregar_accionista").text(`Agregar Empresa Accionista - ${nombreEmpresaAccionista}`);
+        $(this).find(".eliminar_empresa").text(`Eliminar Empresa - ${nombreEmpresaAccionista}`);
+    });
+}
+
+
+
+
 </script>
 
 </body>
