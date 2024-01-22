@@ -94,7 +94,7 @@ include "sumatorias.php";
             <li><a href="inventario_ti.php" class="dropdown-item">Inventario TI</a></li>
             <li><a href="licencias_ti..php" class="dropdown-item">Licencias</a></li>
             <li><a href="mantenimientos_ti.php" class="dropdown-item">Mantenimientos</a></li>
-            <li><a href="mantenimientos_ti.php" class="dropdown-item">Matriz de Usuarios y Criticidad</a></li>
+            <li><a href=".php" class="dropdown-item">Matriz de Usuarios y Criticidad</a></li>
             <li><a href="soporte_ti.php" class="dropdown-item">Soporte</a></li>
             <li><a href="ti.php" class="dropdown-item">Usuarios</a></li>
           </ul>

@@ -265,7 +265,7 @@ if ($_SESSION['ingreso'] == true) {
                                             <datalist id="browsers">
                                                 <?php
                                                 try {
-                                                    $stmt = $conn->prepare('SELECT * FROM  cargos ');
+                                                    $stmt = $conn->prepare('SELECT * FROM  tipo_usuario ');
                                                     $stmt->execute();
                                                     if ($stmt->rowCount() > 0) {
                                                         while ($row = $stmt->fetch()) {

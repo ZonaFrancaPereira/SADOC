@@ -4,6 +4,9 @@ function gestion_ti() {
 	$("#editarUsuario").on("click", editarUsuario);
     $("#actualizar").on("click", actualizarEstadoUsuario);
 	$("#nuevo_usuario").on("click", nuevoUsuario);
+	$("#enviar_formulario_mantenimiento").on("click", enviarFormularioMantenimiento);
+	$("#enviar_formulario_impresoras").on("click", enviarFormularioImpresoras);
+	$("#enviar_formulario_general").on("click", enviarFormularioGeneral);
 
 
 	$('input').on('input', function () {
@@ -20,6 +23,7 @@ function gestion_ti() {
 		console.log('Enviado!!');
 	});
 }
+
 function editarUsuario(id, correo, contrasena, nombre, apellidos, estado, proceso, cargo, tipo) {
     // Abrir el modal
     $('#modal-editar').modal('show');
@@ -158,6 +162,332 @@ function nuevoUsuario() {
 						Swal.fire({
 							title: 'Buen Trabajo',
 							text: 'Se Agrego el usuario correctamente',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				)
+			}
+		})
+
+	}
+}
+
+function enviarFormularioMantenimiento() {
+    // Obtener los valores de los campos del formulario
+	var id_proceso_fk= $('#id_proceso_fk').val();
+	var fecha_mantenimiento= $('#fecha_mantenimiento').val();
+	var Id_usuario_fk= $('#Id_usuario_fk').val();
+	var id_cargo_fk= $('#id_cargo_fk').val();
+	var marca= $('#marca').val();
+	var modelo= $('#modelo').val();
+	var serie= $('#serie').val();
+	var nombre_usuario= $('#nombre_usuario').val();
+	var soplar_partes_externas= $('#soplar_partes_externas').val();
+	var verificar_usuario= $('#verificar_usuario').val();
+	var liberar_espacio= $('#liberar_espacio').val();
+	var actualizar_logos= $('#actualizar_logos').val();
+	var lubricar_puertos= $('#lubricar_puertos').val();
+	var verificar_contraseñas= $('#verificar_contraseñas').val();
+	var desinstalar_programas= $('#desinstalar_programas').val();
+	var organizar_cableado= $('#organizar_cableado').val();
+	var limpieza_equipo= $('#limpieza_equipo').val();
+	var formato_asignacion_equipo= $('#formato_asignacion_equipo').val();
+	var desfragmentar= $('#desfragmentar').val();
+	var limpiar_partes_interna= $('#limpiar_partes_interna').val();
+	var depurar_temporales= $('#depurar_temporales').val();
+	var verificar_actualizaciones= $('#verificar_actualizaciones').val();
+	var usuario = $('#usuario').is(':checked') ? 'SI' : 'NO';
+	var clave = $('#clave').is(':checked') ? 'SI' : 'NO';
+	var estandar = $('#estandar').is(':checked') ? 'SI' : 'NO';
+	var administrador = $('#administrador').is(':checked') ? 'SI' : 'NO';
+	var analisis_completo = $('#analisis_completo').is(':checked') ? 'SI' : 'NO';
+	var bloqueo_usb = $('#bloqueo_usb').is(':checked') ? 'SI' : 'NO';
+	var dominio_zfip = $('#dominio_zfip').is(':checked') ? 'SI' : 'NO';
+	var apagar_pantalla = $('#apagar_pantalla').is(':checked') ? 'SI' : 'NO';
+	var estado_suspension = $('#estado_suspension').is(':checked') ? 'SI' : 'NO';
+	var firma= $('#firma').val();
+	var estado_mantenimiento_equipo= $('#estado_mantenimiento_equipo').val();
+
+	
+     // alert (id_proceso_fk + fecha_mantenimiento + Id_usuario_fk + id_cargo_fk + marca + modelo + serie + nombre_usuario + soplar_partes_externas + verificar_usuario + liberar_espacio + actualizar_logos + lubricar_puertos + verificar_contraseñas + desinstalar_programas + organizar_cableado + limpieza_equipo + formato_asignacion_equipo + desfragmentar + limpiar_partes_interna + depurar_temporales + verificar_actualizaciones + usuario + clave + estandar + administrador + analisis_completo + bloqueo_usb + dominio_zfip + apagar_pantalla + estado_suspension + firma);
+    // Enviar la solicitud AJAX para actualizar el estado del usuario
+	if (id_cargo_fk == "" || fecha_mantenimiento == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		)
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres guardar este mantenimiento?',
+			text: "Recuerda que una vez guardado este no podrá ser eliminado",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Agregar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+					'id_proceso_fk': id_proceso_fk,
+					'fecha_mantenimiento': fecha_mantenimiento,
+					'Id_usuario_fk': Id_usuario_fk,
+					'id_cargo_fk': id_cargo_fk,
+					'marca': marca,
+					'modelo': modelo,
+					'serie': serie,
+					'nombre_usuario': nombre_usuario,
+					'soplar_partes_externas': soplar_partes_externas,
+					'verificar_usuario': verificar_usuario,
+					'liberar_espacio': liberar_espacio,
+					'actualizar_logos': actualizar_logos,
+					'lubricar_puertos': lubricar_puertos,
+					'verificar_contraseñas': verificar_contraseñas,
+					'desinstalar_programas': desinstalar_programas,
+					'organizar_cableado': organizar_cableado,
+					'limpieza_equipo': limpieza_equipo,
+					'formato_asignacion_equipo': formato_asignacion_equipo,
+					'desfragmentar': desfragmentar,
+					'limpiar_partes_interna': limpiar_partes_interna,
+					'depurar_temporales': depurar_temporales,
+					'verificar_actualizaciones': verificar_actualizaciones,
+					'usuario': usuario,
+					'clave': clave,
+					'estandar': estandar,
+					'administrador': administrador,
+					'analisis_completo': analisis_completo,
+					'bloqueo_usb': bloqueo_usb,
+					'dominio_zfip': dominio_zfip,
+					'apagar_pantalla': apagar_pantalla,
+					'estado_suspension': estado_suspension,
+					'firma': firma,
+					'estado_mantenimiento_equipo': estado_mantenimiento_equipo
+				}
+                $.ajax({
+                    type: 'POST',
+                    data: json,
+                    url: 'php/insertar_mantenimiento.php',
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se guardo el mantenimiento correctamente',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				)
+			}
+		})
+
+	}
+}
+
+function enviarFormularioImpresoras() {
+    // Obtener los valores de los campos del formulario
+	var id_proceso_fk_2= $('#id_proceso_fk_2').val();
+	var fecha_mantenimiento_impresora= $('#fecha_mantenimiento_impresora').val();
+	var Id_usuario_fk2= $('#Id_usuario_fk2').val();
+	var id_cargo_fk2= $('#id_cargo_fk2').val();
+	var nombre_impresora= $('#nombre_impresora').val();
+	var marca_impresora= $('#marca_impresora').val();
+	var modelo_impresora= $('#modelo_impresora').val();
+	var serial_impresora= $('#serial_impresora').val();
+	var soplar_exterior= $('#soplar_exterior').val();
+	var isopropilico= $('#isopropilico').val();
+	var toner= $('#toner').val();
+	var alinear= $('#alinear').val();
+	var verificar_cableado= $('#verificar_cableado').val();
+	var rodillos= $('#rodillos').val();
+	var reemplazar= $('#reemplazar').val();
+	var limpiar= $('#limpiar').val();
+	var imprimir= $('#imprimir').val();
+	var verificar= $('#verificar').val();
+	var estado_mantenimiento_impresora= $('#estado_mantenimiento_impresora').val();
+
+
+     // alert (id_proceso_fk_2 + fecha_mantenimiento_impresora + Id_usuario_fk2 + id_cargo_fk2 + nombre_impresora + marca_impresora + modelo_impresora + serial_impresora + soplar_exterior + isopropilico + toner + alinear + verificar_cableado + rodillos + reemplazar + limpiar + imprimir + verificar);
+    // Enviar la solicitud AJAX para actualizar el estado del usuario
+	if (id_cargo_fk2 == "" || fecha_mantenimiento_impresora == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		)
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres guardar este mantenimiento?',
+			text: "Recuerda que una vez guardado este no podrá ser eliminado",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Agregar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+					'id_proceso_fk_2': id_proceso_fk_2,
+					'fecha_mantenimiento_impresora': fecha_mantenimiento_impresora,
+					'Id_usuario_fk2': Id_usuario_fk2,
+					'id_cargo_fk2': id_cargo_fk2,
+					'nombre_impresora': nombre_impresora,
+					'marca_impresora': marca_impresora,
+					'modelo_impresora': modelo_impresora,
+					'serial_impresora': serial_impresora,
+					'soplar_exterior': soplar_exterior,
+					'isopropilico': isopropilico,
+					'toner': toner,
+					'alinear': alinear,
+					'verificar_cableado': verificar_cableado,
+					'rodillos': rodillos,
+					'reemplazar': reemplazar,
+					'limpiar': limpiar,
+					'imprimir': imprimir,
+					'verificar': verificar,
+					'estado_mantenimiento_impresora': estado_mantenimiento_impresora
+
+				}
+                $.ajax({
+                    type: 'POST',
+                    data: json,
+                    url: 'php/insertar_mantenimiento_impresora.php',
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se guardo el mantenimiento correctamente',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				)
+			}
+		})
+
+	}
+}
+
+function enviarFormularioGeneral() {
+    // Obtener los valores de los campos del formulario
+	var id_proceso_fk_3= $('#id_proceso_fk_3').val();
+	var fecha_mantenimiento3= $('#fecha_mantenimiento3').val();
+	var Id_usuario_fk3= $('#Id_usuario_fk3').val();
+	var id_cargo_fk3= $('#id_cargo_fk3').val();
+	var articulo= $('#articulo').val();
+	var marca_general= $('#marca_general').val();
+	var modelo_general= $('#modelo_general').val();
+	var serial_general= $('#serial_general').val();
+	var partes_externas= $('#partes_externas').val();
+	var condiciones_fisicas= $('#condiciones_fisicas').val();
+	var cableado_verificar= $('#cableado_verificar').val();
+	var dispositivo= $('#dispositivo').val();
+	var estado_general= $('#estado_general').val();
+
+
+     // alert (id_proceso_fk_3 + fecha_mantenimiento3 + Id_usuario_fk3 + id_cargo_fk3 + articulo + marca_general + modelo_general + serial_general + partes_externas + condiciones_fisicas + cableado_verificar + dispositivo );
+    // Enviar la solicitud AJAX para actualizar el estado del usuario
+	if (id_cargo_fk3 == "" || fecha_mantenimiento3 == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		)
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres guardar este mantenimiento?',
+			text: "Recuerda que una vez guardado este no podrá ser eliminado",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Agregar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+					'id_proceso_fk_3': id_proceso_fk_3,
+					'fecha_mantenimiento3': fecha_mantenimiento3,
+					'Id_usuario_fk3': Id_usuario_fk3,
+					'id_cargo_fk3': id_cargo_fk3,
+					'articulo': articulo,
+					'marca_general': marca_general,
+					'modelo_general': modelo_general,
+					'serial_general': serial_general,
+					'partes_externas': partes_externas,
+					'condiciones_fisicas': condiciones_fisicas,
+					'cableado_verificar': cableado_verificar,
+					'dispositivo': dispositivo,
+					'estado_general': estado_general
+				}
+                $.ajax({
+                    type: 'POST',
+                    data: json,
+                    url: 'php/insertar_mantenimiento_general.php',
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se guardo el mantenimiento correctamente',
 							icon: 'success',
 						}).then((result) => {
 							// Redirige a la página después de cerrar el SweetAlert
