@@ -31,7 +31,7 @@ function editarUsuario(id, correo, contrasena, nombre, apellidos, estado, proces
     $('#id_usuario').val(id);
     $('#correo_usuario').val(correo);
     $('#contrasena_usuario').val(contrasena);
-    $('#nombre_usuario').val(nombre);
+    $('#nombre_usuario_equipo').val(nombre);
     $('#apellidos_usuario').val(apellidos);
     $('#estado_usuario').val(estado);
     $('#proceso_usuario_fk').val(proceso);

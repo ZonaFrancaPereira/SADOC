@@ -83,7 +83,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                    <tr>
+                                                <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -95,18 +95,19 @@ if ($_SESSION['ingreso'] == true) {
                                                 <tbody>
                                                     <?php
                                                     foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
-                                        FROM mantenimientos m
-                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
-                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
-                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
-                                                    ?>
+                                                        FROM mantenimientos m
+                                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
+                                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
+                                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
+                                                            $id_mantenimiento_equipo = $row["id_mantenimiento"];
+                                                                    ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_proceso"] ?></td>
                                                                 <td><?php echo $row["fecha_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></td>
+                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -127,7 +128,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                    <tr>
+                                                    <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -137,23 +138,23 @@ if ($_SESSION['ingreso'] == true) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
-                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
-                                        FROM mantenimientos m
-                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
-                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
-                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
-                                                    ?>
-                                                            <tr style=text-align:center>
-                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["nombre_proceso"] ?></td>
-                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["nombre_usuario"] ?></td>
-                                                                <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></td>
-                                                            </tr>
-                                                    <?php }
-                                                    } ?>
+                                                <?php
+                                                    foreach ($conn->query("SELECT * FROM mantenimiento_impresora a 
+                                                    INNER JOIN proceso b ON b.id_proceso = a.id_proceso_fk_2
+                                                    INNER JOIN usuarios d ON d.Id_usuario = a.Id_usuario_fk2
+                                                    INNER JOIN cargos e ON e.id_cargo = a.id_cargo_fk2") as $row) {
+                                                ?>
+                                                        <tr style="text-align:center">
+                                                            <td><?php echo $row["id_impresora"] ?></td>
+                                                            <td><?php echo $row["nombre_proceso"] ?></td>
+                                                            <td><?php echo $row["fecha_mantenimiento_impresora"] ?></td>
+                                                            <td><?php echo $row["nombre_usuario"] ?></td>
+                                                            <td><?php echo $row["nombre_cargo"] ?></td>
+                                                            <td><button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></td>
+                                                        </tr>
+                                                <?php
+                                                    }
+                                                ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -171,7 +172,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                    <tr>
+                                                <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -182,19 +183,18 @@ if ($_SESSION['ingreso'] == true) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
-                                        FROM mantenimientos m
-                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
-                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
-                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
+                                                    foreach ($conn->query("SELECT * FROM mantenimiento_general f
+                                                    INNER JOIN proceso g ON g.id_proceso = f.id_proceso_fk_3
+                                                    INNER JOIN usuarios h ON h.Id_usuario = f.Id_usuario_fk3
+                                                    INNER JOIN cargos i ON i.id_cargo = f.id_cargo_fk3") as $row) { {
                                                     ?>
                                                             <tr style=text-align:center>
-                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["id_general"] ?></td>
                                                                 <td><?php echo $row["nombre_proceso"] ?></td>
-                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["fecha_mantenimiento3"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></td>
+                                                                <td><a href='; ?>' target=''> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -738,13 +738,13 @@ if ($_SESSION['ingreso'] == true) {
                                                                         <option value="NO">NO</option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-3"><br><br><br><br>
                                                                     <label for="estado_mantenimiento_impresora">Estado</label>
                                                                     <input list="browsers" id="estado_mantenimiento_impresora" name="estado_mantenimiento_impresora" class="form-control" value="Proceso" readonly>
                                                                 </div>
                                                                 <div class="col-3">
                                                                 </div>
-                                                                <div class="col-md-3 col-xs-3 col-sm-3"><br><br>
+                                                                <div class="col-md-3 col-xs-3 col-sm-3"><br>
                                                                     <br>
                                                                     <button type="button" class="btn bg-info btn-block" id="enviar_formulario_impresoras" name="enviar_formulario_impresoras" onclick="enviarFormularioImpresoras()">ENVIAR</button>
                                                                 </div>
@@ -937,7 +937,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="estado_general">Estado</label>
                                                                     <input list="browsers" id="estado_general" name="estado_general" class="form-control" value="Proceso" readonly>
                                                                 </div>
-                                                                <div class="col-md-3 col-xs-3 col-sm-3">
+                                                                <div class="col-md-3 col-xs-3 col-sm-3"><br>
                                                                     <br>
                                                                     <button type="button" class="btn bg-info btn-block" id="enviar_formulario_general" name="enviar_formulario_general" onclick="enviarFormularioGeneral()">ENVIAR</button>
                                                                 </div>
