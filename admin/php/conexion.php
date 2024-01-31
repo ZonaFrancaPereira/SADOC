@@ -1,20 +1,23 @@
+<<<<<<< HEAD
 <?php
 $host = 'localhost'; // Puede ser localhost o proporcionado por Hostinguer
 $dbname = 'upload';
 $username = 'root';
 $password = '';
+=======
+<?php 
+	$conn = new PDO(
+      'mysql:host=localhost;
+      dbname=upload',
+      'root',
+      '');
+	try {
+		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->exec("set names utf8");
+>>>>>>> be5e1c9beb83f70fdf62da8caf57c26b58afb055
 
-try {
-    $conn = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8",
-        $username,
-        $password
-    );
+	} catch(PDOException $e) {
+      echo $sql . "<br>" . $e->getMessage();
+    }
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (PDOException $e) {
-    echo "Error de conexión: " . $e->getMessage();
-}
-?>
-
+ ?>

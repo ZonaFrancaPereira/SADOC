@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2023 a las 20:50:10
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 30-01-2024 a las 15:39:01
+-- Versión del servidor: 10.6.15-MariaDB-cll-lve
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,20 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `upload`
+-- Base de datos: `u446101023_prueba`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accionista`
+--
+
+CREATE TABLE `accionista` (
+  `id_accionista` char(11) NOT NULL,
+  `nombre_accionista` varchar(255) NOT NULL,
+  `asociado_negocio_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -57,7 +69,16 @@ CREATE TABLE `acpm` (
 --
 
 INSERT INTO `acpm` (`id_consecutivo`, `origen_acpm`, `fuente_acpm`, `descripcion_fuente`, `tipo_acpm`, `fecha_acpm`, `descripcion_acpm`, `causa_acpm`, `nc_similar`, `descripcion_nsc`, `correccion_acpm`, `fecha_correccion`, `estado_acpm`, `riesgo_acpm`, `justificacion_riesgo`, `cambios_sig`, `justificacion_sig`, `conforme_sig`, `justificacion_conforme_sig`, `fecha_estado`, `fecha_finalizacion`, `id_usuario_fk`) VALUES
-(7, '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'AI', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'AC', '2023-12-05 19:22:21', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'No', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', 'Abierta', 'No', 'es confirm...', 'Si', 'sssss', 'Si', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', '2023-11-01', 2);
+(7, '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'AI', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'AC', '2023-12-05 19:22:21', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', 'No', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.', 'PRUEBA            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', 'Abierta', 'No', 'es confirm...', 'Si', 'sssss', 'Si', '            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi repudiandae earum iusto eligendi ad modi minus ipsa quibusdam voluptatibus aliquam unde harum dolorem tenetur dicta mollitia, rem veritatis reprehenderit sapiente.\n', '2023-12-05', '2023-11-01', 10),
+(9, '12', 'AI', '', 'AC', '2023-12-13 20:29:12', '12', '12', 'No', '', NULL, NULL, 'Cerrada', 'No', '', NULL, NULL, NULL, NULL, '2023-12-13', '2023-12-21', 10),
+(10, 'a', 'AI', '', 'AM', '2023-12-14 16:41:50', 'a', 'a', 'No', '', NULL, NULL, 'Rechazada', 'Si', 'a', NULL, NULL, NULL, NULL, '2023-12-14', '2023-12-21', 10),
+(11, '1', 'AI', '', 'AC', '2023-12-18 20:18:01', '2', '3', 'No', '', NULL, NULL, 'Rechazada', 'No', '', NULL, NULL, NULL, NULL, '2023-12-18', '2023-12-29', 10),
+(12, '1', 'AI', '', 'AM', '2023-12-18 20:59:17', '2', '3', 'No', '', NULL, NULL, 'Rechazada', 'No', '', NULL, NULL, NULL, NULL, '2023-12-18', '2023-12-19', 10),
+(13, '1', 'AI', '', 'AM', '2023-12-19 13:08:57', '1', '1', 'No', '', NULL, NULL, 'Abierta', 'No', '', NULL, NULL, NULL, NULL, '2023-12-19', '2023-12-22', 10),
+(14, '\\php\\acpm', 'AI', '', 'AM', '2024-01-10 18:00:16', '\\php\\acpm', '\\php\\acpm', 'No', '', NULL, NULL, 'Verificacion', 'No', '', NULL, NULL, NULL, NULL, '2024-01-10', '2024-01-25', 10),
+(15, '\\php\\acpm', 'AI', '', 'AM', '2024-01-10 18:04:59', '\\php\\acpm', '\\php\\acpm', 'No', '', NULL, NULL, 'Verificacion', 'No', '', NULL, NULL, NULL, NULL, '2024-01-10', '2024-01-26', 10),
+(16, 'a', 'AI', '', 'AM', '2024-01-10 19:32:40', 'a', 'a', 'No', '', NULL, NULL, 'Verificacion', 'No', '', NULL, NULL, NULL, NULL, '2024-01-10', '2024-01-24', 10),
+(17, 'a', 'AI', '', 'AM', '2024-01-10 19:32:58', 'a', 'a', 'No', '', NULL, NULL, 'Verificacion', '', '', NULL, NULL, NULL, NULL, '2024-01-10', '2024-02-02', 10);
 
 -- --------------------------------------------------------
 
@@ -78,7 +99,10 @@ CREATE TABLE `acpm_rechazada` (
 --
 
 INSERT INTO `acpm_rechazada` (`id_rechazada`, `fecha_rechazo`, `descripcion_rechazo`, `tipo_movimiento`, `id_acpm_fk`) VALUES
-(2, '2023-12-13 18:54:49', 'Analisis de causa mal hecho', 'Correcion', 7);
+(2, '2023-12-13 18:54:49', 'Analisis de causa mal hecho', 'Correcion', 7),
+(3, '2023-12-15 14:28:37', '123', 'Correcion', 10),
+(4, '2023-12-18 20:33:27', '1', 'Correcion', 11),
+(5, '2023-12-18 21:00:47', '23', 'Correcion', 12);
 
 -- --------------------------------------------------------
 
@@ -101,8 +125,9 @@ CREATE TABLE `actividades_acpm` (
 --
 
 INSERT INTO `actividades_acpm` (`id_actividad`, `fecha_actividad`, `descripcion_actividad`, `tipo_actividad`, `estado_actividad`, `id_usuario_fk`, `id_acpm_fk`) VALUES
-(14, '2023-11-08', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit laboriosam mollitia cupiditate? Illo ullam corporis tempora nam accusantium quis nihil minus consectetur alias. Rem at quo eveniet maxime consequuntur libero?\n', 'Correccion', 'Incompleta', 2, 7),
-(15, '2023-11-14', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam impedit quia iusto, perspiciatis est ut odit commodi in voluptates temporibus nostrum eveniet totam perferendis eaque facilis animi repellendus nobis enim.\n', 'Actividad', 'Completa', 2, 7);
+(22, '2023-12-19', '12', 'Correccion', 'Incompleta', 22, 9),
+(23, '2023-12-29', '4', 'Correccion', 'Incompleta', 10, 11),
+(35, '2024-01-20', '10', 'Correccion', 'Completa', 10, 13);
 
 -- --------------------------------------------------------
 
@@ -615,6 +640,32 @@ INSERT INTO `activos` (`id_activo`, `fecha_asignacion`, `nombre_articulo`, `desc
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `asignacion_equipos`
+--
+
+CREATE TABLE `asignacion_equipos` (
+  `id_asignacion` int(11) NOT NULL,
+  `fecha_asignacion` date NOT NULL,
+  `estado_asignacion` enum('Activa','Inactiva') NOT NULL,
+  `id_detalles_activo` int(11) NOT NULL,
+  `id_ti_fk` int(11) NOT NULL,
+  `id_usuario_fk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asociado_negocio`
+--
+
+CREATE TABLE `asociado_negocio` (
+  `nit_asociado_n` char(11) NOT NULL,
+  `nombre_empresa` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `cargos`
 --
 
@@ -652,6 +703,43 @@ INSERT INTO `cargos` (`id_cargo`, `nombre_cargo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `detalles_equipos`
+--
+
+CREATE TABLE `detalles_equipos` (
+  `id_asignacion` int(11) NOT NULL,
+  `msd` varchar(50) NOT NULL,
+  `antivirus` varchar(50) NOT NULL,
+  `visio_pro` varchar(50) NOT NULL,
+  `mac_osx` varchar(50) NOT NULL,
+  `windows` varchar(50) NOT NULL,
+  `autocad` varchar(50) NOT NULL,
+  `office` varchar(50) NOT NULL,
+  `appolo` varchar(50) NOT NULL,
+  `zeus` varchar(50) NOT NULL,
+  `otros` text NOT NULL,
+  `procesador` varchar(100) NOT NULL,
+  `disco_duro` varchar(50) NOT NULL,
+  `memoria_ram` varchar(50) NOT NULL,
+  `cd_dvd` varchar(300) NOT NULL,
+  `tarjeta_video` varchar(300) NOT NULL,
+  `tarjeta_red` varchar(300) NOT NULL,
+  `tipo_red` enum('Cableada','Wifi') NOT NULL,
+  `tiempo_bloqueo` enum('Si','No') NOT NULL,
+  `usuario` enum('Si','No') NOT NULL,
+  `clave` enum('Si','No') NOT NULL,
+  `zfip` enum('Si','No') NOT NULL,
+  `privilegios` enum('Estandar','Administrador') NOT NULL,
+  `backup` varchar(300) NOT NULL,
+  `dia_backup` enum('Lunes','Martes','Miercoles','Jueves','Viernes') NOT NULL,
+  `realiza_backup` enum('Si','No') NOT NULL,
+  `justificacion_backup` text NOT NULL,
+  `id_activo_fk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detalle_actividad`
 --
 
@@ -663,16 +751,6 @@ CREATE TABLE `detalle_actividad` (
   `id_actividad_fk` int(11) NOT NULL,
   `id_usuario_e_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `detalle_actividad`
---
-
-INSERT INTO `detalle_actividad` (`id_detalle_acpm`, `fecha_evidencia`, `evidencia`, `recursos`, `id_actividad_fk`, `id_usuario_e_fk`) VALUES
-(32, '2023-12-07', 'nueva <a href=\"http://localhost/SADOC/admin/informe_acpm.php?id_acpm=7\" target=\"_blank\">solucion</a>', 'Humanos', 14, 2),
-(33, '2023-12-22', '<a href=\"ddddddddddddddddd\" target=\"_blank\">ddddddddddddddddd</a>', 'Humanos', 14, 2),
-(34, '2023-12-20', '45', 'Humanos', 15, 2),
-(35, '2023-12-13', 'qqqqqqqq', 'Humanos', 16, 2);
 
 -- --------------------------------------------------------
 
@@ -708,6 +786,158 @@ INSERT INTO `detalle_orden` (`id_orden_detalle`, `articulo_compra`, `cantidad_or
 (24, '1', 1, 1, 1, 1, '', 9),
 (25, '1', 1, 1200000, 0, 1200000, '', 10),
 (26, '1', 1, 1200000, 0, 1200000, '', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empresa_accionista`
+--
+
+CREATE TABLE `empresa_accionista` (
+  `nit_e_accionista` char(11) NOT NULL,
+  `nombre_empresa_accionista` varchar(255) NOT NULL,
+  `num_accionistas` float NOT NULL,
+  `nit_asociado_n` char(11) DEFAULT NULL,
+  `empresa_padre_id` char(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inventario`
+--
+
+CREATE TABLE `inventario` (
+  `id_inventario` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `estado_inventario` enum('Activo','Finalizado') NOT NULL,
+  `id_usuario_fk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mantenimientos`
+--
+
+CREATE TABLE `mantenimientos` (
+  `id_mantenimiento` int(11) NOT NULL,
+  `id_proceso_fk` int(11) NOT NULL,
+  `fecha_mantenimiento` date NOT NULL,
+  `Id_usuario_fk` int(11) NOT NULL,
+  `id_cargo_fk` int(11) NOT NULL,
+  `correo_destinatario` varchar(100) NOT NULL,
+  `marca` varchar(200) NOT NULL,
+  `modelo` varchar(200) NOT NULL,
+  `serie` varchar(100) NOT NULL,
+  `usuario_equipo` varchar(100) NOT NULL,
+  `soplar_partes_externas` enum('SI','NO') NOT NULL,
+  `verificar_usuario` enum('SI','NO') NOT NULL,
+  `liberar_espacio` enum('SI','NO') NOT NULL,
+  `actualizar_logos` enum('SI','NO') NOT NULL,
+  `lubricar_puertos` enum('SI','NO') NOT NULL,
+  `verificar_contraseñas` enum('SI','NO') NOT NULL,
+  `desinstalar_programas` enum('SI','NO') NOT NULL,
+  `organizar_cableado` enum('SI','NO') NOT NULL,
+  `limpieza_equipo` enum('SI','NO') NOT NULL,
+  `formato_asignacion_equipo` enum('SI','NO') NOT NULL,
+  `desfragmentar` enum('SI','NO') NOT NULL,
+  `limpiar_partes_interna` enum('SI','NO') NOT NULL,
+  `depurar_temporales` enum('SI','NO') NOT NULL,
+  `verificar_actualizaciones` enum('SI','NO') NOT NULL,
+  `usuario` enum('SI','NO') NOT NULL,
+  `clave` enum('SI','NO') NOT NULL,
+  `estandar` enum('SI','NO') NOT NULL,
+  `administrador` enum('SI','NO') NOT NULL,
+  `analisis_completo` enum('SI','NO') NOT NULL,
+  `bloqueo_usb` enum('SI','NO') NOT NULL,
+  `dominio_zfip` enum('SI','NO') NOT NULL,
+  `apagar_pantalla` enum('SI','NO') NOT NULL,
+  `estado_suspension` enum('SI','NO') NOT NULL,
+  `firma` text NOT NULL,
+  `estado_mantenimiento_equipo` enum('Proceso','Pre Aprovado','Aprovado','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mantenimientos`
+--
+
+INSERT INTO `mantenimientos` (`id_mantenimiento`, `id_proceso_fk`, `fecha_mantenimiento`, `Id_usuario_fk`, `id_cargo_fk`, `correo_destinatario`, `marca`, `modelo`, `serie`, `usuario_equipo`, `soplar_partes_externas`, `verificar_usuario`, `liberar_espacio`, `actualizar_logos`, `lubricar_puertos`, `verificar_contraseñas`, `desinstalar_programas`, `organizar_cableado`, `limpieza_equipo`, `formato_asignacion_equipo`, `desfragmentar`, `limpiar_partes_interna`, `depurar_temporales`, `verificar_actualizaciones`, `usuario`, `clave`, `estandar`, `administrador`, `analisis_completo`, `bloqueo_usb`, `dominio_zfip`, `apagar_pantalla`, `estado_suspension`, `firma`, `estado_mantenimiento_equipo`) VALUES
+(42, 2, '2024-01-30', 10, 2, 'ygarciaz@zonafrancadepereira.com', '1', '1', '1', '1', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', '1', 'Proceso'),
+(43, 2, '2024-01-31', 10, 2, 'ygarciaz@zonafrancadepereira.com', '2', '2', '2', '2', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'SI', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', '1', 'Proceso');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mantenimiento_general`
+--
+
+CREATE TABLE `mantenimiento_general` (
+  `id_general` int(100) NOT NULL,
+  `id_proceso_fk_3` int(11) NOT NULL,
+  `fecha_mantenimiento3` date NOT NULL,
+  `Id_usuario_fk3` int(11) NOT NULL,
+  `id_cargo_fk3` int(11) NOT NULL,
+  `correo_destinatario2` varchar(100) NOT NULL,
+  `articulo` varchar(100) NOT NULL,
+  `marca_general` varchar(100) NOT NULL,
+  `modelo_general` varchar(100) NOT NULL,
+  `serial_general` varchar(100) NOT NULL,
+  `partes_externas` enum('SI','NO') NOT NULL,
+  `condiciones_fisicas` enum('SI','NO') NOT NULL,
+  `cableado_verificar` enum('SI','NO') NOT NULL,
+  `dispositivo` enum('SI','NO') NOT NULL,
+  `estado_general` enum('Proceso','Pre Aprovado','Aprovado','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mantenimiento_general`
+--
+
+INSERT INTO `mantenimiento_general` (`id_general`, `id_proceso_fk_3`, `fecha_mantenimiento3`, `Id_usuario_fk3`, `id_cargo_fk3`, `correo_destinatario2`, `articulo`, `marca_general`, `modelo_general`, `serial_general`, `partes_externas`, `condiciones_fisicas`, `cableado_verificar`, `dispositivo`, `estado_general`) VALUES
+(1, 1, '2024-01-20', 1, 1, '', '1', '1', '1', '1', 'SI', 'SI', 'SI', 'SI', 'Proceso'),
+(2, 2, '2024-01-20', 2, 2, '', '2', '2', '2', '2', 'SI', 'SI', 'SI', 'SI', 'Proceso'),
+(3, 6, '2024-01-25', 6, 6, '', '1', '414', '14', '14', 'SI', 'SI', 'SI', 'SI', 'Proceso'),
+(4, 9, '2024-01-23', 9, 9, '', '9', '9', '9', '9', 'SI', 'SI', 'SI', 'SI', 'Proceso');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mantenimiento_impresora`
+--
+
+CREATE TABLE `mantenimiento_impresora` (
+  `id_impresora` int(200) NOT NULL,
+  `id_proceso_fk_2` int(11) NOT NULL,
+  `fecha_mantenimiento_impresora` date NOT NULL,
+  `Id_usuario_fk2` int(11) NOT NULL,
+  `id_cargo_fk2` int(11) NOT NULL,
+  `correo_destinatario1` varchar(100) NOT NULL,
+  `nombre_impresora` varchar(200) NOT NULL,
+  `marca_impresora` varchar(200) NOT NULL,
+  `modelo_impresora` varchar(200) NOT NULL,
+  `serial_impresora` varchar(200) NOT NULL,
+  `soplar_exterior` enum('Si','No') NOT NULL,
+  `isopropilico` enum('Si','No') NOT NULL,
+  `toner` enum('Si','No') NOT NULL,
+  `alinear` enum('Si','No') NOT NULL,
+  `verificar_cableado` enum('Si','No') NOT NULL,
+  `rodillos` enum('Si','No') NOT NULL,
+  `reemplazar` enum('Si','No') NOT NULL,
+  `limpiar` enum('Si','No') NOT NULL,
+  `imprimir` enum('Si','No') NOT NULL,
+  `verificar` enum('SI','NO') NOT NULL,
+  `estado_mantenimiento_impresora` enum('Proceso','Pre Aprovado','Aprovado','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mantenimiento_impresora`
+--
+
+INSERT INTO `mantenimiento_impresora` (`id_impresora`, `id_proceso_fk_2`, `fecha_mantenimiento_impresora`, `Id_usuario_fk2`, `id_cargo_fk2`, `correo_destinatario1`, `nombre_impresora`, `marca_impresora`, `modelo_impresora`, `serial_impresora`, `soplar_exterior`, `isopropilico`, `toner`, `alinear`, `verificar_cableado`, `rodillos`, `reemplazar`, `limpiar`, `imprimir`, `verificar`, `estado_mantenimiento_impresora`) VALUES
+(9, 1, '0000-00-00', 1, 1, '0001-01-01', '1', '1', '1', '1', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'SI', 'Proceso'),
+(10, 1, '0000-00-00', 3, 4, '2024-01-31', '5', '6', '7', '8', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'Si', 'SI', 'Proceso');
 
 -- --------------------------------------------------------
 
@@ -748,7 +978,7 @@ INSERT INTO `orden_compra` (`id_orden`, `fecha_orden`, `proveedor_recurrente`, `
 (7, '2023-12-04', 'No', 'Contado', '', 0, '', '<p><u>22</u></p>', '2', 2, 'No', 'Denegada', NULL, NULL, 2, 42024431, NULL),
 (8, '2023-12-04', 'No', 'Contado', '', 0, '', '<p><u>22</u></p>', '2', 2, 'No', 'Denegada', NULL, NULL, 2, 42024431, NULL),
 (9, '2023-12-04', 'No', 'Contado', '', 0, '', '<p>111</p>', '111', 1, 'No', 'Denegada', NULL, NULL, 2, 515, NULL),
-(10, '2023-12-04', 'No', 'Contado', '', 0, '', '<p>1</p>', '1', 2400000, 'Si', 'Proceso', NULL, NULL, 2, 1087561072, NULL);
+(10, '2023-12-04', 'No', 'Contado', '', 0, '', '<p>1</p>', '1', 2400000, 'Si', 'Aprobada', NULL, NULL, 2, 1087561072, NULL);
 
 -- --------------------------------------------------------
 
@@ -761,7 +991,7 @@ CREATE TABLE `proceso` (
   `siglas_proceso` varchar(20) NOT NULL,
   `nombre_proceso` varchar(30) NOT NULL,
   `estado_proceso` enum('Activo','Inactivo') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `proceso`
@@ -880,13 +1110,13 @@ INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `rol_usuario`, `admin_acpm`, `rad
 CREATE TABLE `usuarios` (
   `Id_usuario` int(11) NOT NULL,
   `correo_usuario` varchar(100) DEFAULT NULL,
-  `contrasena_usuario` varchar(10) DEFAULT NULL,
+  `contrasena_usuario` varchar(200) DEFAULT NULL,
   `nombre_usuario` varchar(20) DEFAULT NULL,
   `apellidos_usuario` varchar(20) DEFAULT NULL,
-  `siglas_usuario` varchar(50) NOT NULL,
+  `siglas_usuario` varchar(50) DEFAULT NULL,
   `estado_usuario` enum('activo','inactivo') DEFAULT NULL,
-  `firma_usuario` text NOT NULL,
-  `dia_backup` enum('lunes','martes','miercoles','jueves','viernes') NOT NULL,
+  `firma_usuario` text DEFAULT NULL,
+  `dia_backup` enum('lunes','martes','miercoles','jueves','viernes') DEFAULT NULL,
   `proceso_usuario_fk` int(11) NOT NULL,
   `id_cargo_fk` int(11) NOT NULL,
   `tipo_usuario_fk` int(11) NOT NULL
@@ -925,7 +1155,8 @@ INSERT INTO `usuarios` (`Id_usuario`, `correo_usuario`, `contrasena_usuario`, `n
 (26, 'alagos@zonafrancadepereira.com', '7895', 'Ana Luisa', ' Lagos Pati¤o', '', 'activo', '', 'lunes', 2, 1, 3),
 (27, 'diradministrativo@zonafrancadepereira.com', '9654', 'Cristian', 'Benavides', '', 'activo', '', 'lunes', 2, 1, 3),
 (28, 'kechavarria@zonafrancadepereira.com', '9632', 'Kevin David', 'Echavarria Gonzalez', '', 'activo', '', 'lunes', 2, 1, 3),
-(55, 'correo_usuario', 'contrasena', 'nombre_usuario', 'apellidos_usuario', 'salario_us', '', 'firma_usuario', 'lunes', 0, 0, 0);
+(55, 'correo_usuario', 'contrasena', 'nombre_usuario', 'apellidos_usuario', 'salario_us', 'activo', 'firma_usuario', 'lunes', 0, 0, 0),
+(62, 'ygarcia@zona.com', '$2y$10$8wVtsn9Q1Vqd8WLpkzw.nev/l9s425ErdvgMrJ0DRvjUvJvDg9ub6', 'y', 'y', NULL, 'activo', NULL, NULL, 2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -949,6 +1180,13 @@ INSERT INTO `vencimiento_acpm` (`id_notificacion`, `id_acpm_fk`, `fecha_vencimie
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `accionista`
+--
+ALTER TABLE `accionista`
+  ADD PRIMARY KEY (`id_accionista`),
+  ADD KEY `asociado_negocio_id` (`asociado_negocio_id`);
 
 --
 -- Indices de la tabla `acpm`
@@ -981,10 +1219,31 @@ ALTER TABLE `activos`
   ADD KEY `id_proveedor` (`id_proveedor_fk`);
 
 --
+-- Indices de la tabla `asignacion_equipos`
+--
+ALTER TABLE `asignacion_equipos`
+  ADD PRIMARY KEY (`id_asignacion`),
+  ADD KEY `id_ti_fk` (`id_ti_fk`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`);
+
+--
+-- Indices de la tabla `asociado_negocio`
+--
+ALTER TABLE `asociado_negocio`
+  ADD PRIMARY KEY (`nit_asociado_n`);
+
+--
 -- Indices de la tabla `cargos`
 --
 ALTER TABLE `cargos`
   ADD PRIMARY KEY (`id_cargo`);
+
+--
+-- Indices de la tabla `detalles_equipos`
+--
+ALTER TABLE `detalles_equipos`
+  ADD PRIMARY KEY (`id_asignacion`),
+  ADD KEY `id_activo_fk` (`id_activo_fk`);
 
 --
 -- Indices de la tabla `detalle_actividad`
@@ -1000,6 +1259,48 @@ ALTER TABLE `detalle_actividad`
 ALTER TABLE `detalle_orden`
   ADD PRIMARY KEY (`id_orden_detalle`),
   ADD KEY `id_orden_compra` (`id_orden_compra`);
+
+--
+-- Indices de la tabla `empresa_accionista`
+--
+ALTER TABLE `empresa_accionista`
+  ADD PRIMARY KEY (`nit_e_accionista`),
+  ADD KEY `nit_asociado_n` (`nit_asociado_n`),
+  ADD KEY `empresa_padre_id` (`empresa_padre_id`);
+
+--
+-- Indices de la tabla `inventario`
+--
+ALTER TABLE `inventario`
+  ADD PRIMARY KEY (`id_inventario`),
+  ADD KEY `id_usuario_fk` (`id_usuario_fk`);
+
+--
+-- Indices de la tabla `mantenimientos`
+--
+ALTER TABLE `mantenimientos`
+  ADD PRIMARY KEY (`id_mantenimiento`),
+  ADD KEY `id_proceso_fk` (`id_proceso_fk`),
+  ADD KEY `id_usuario_fk` (`Id_usuario_fk`),
+  ADD KEY `id_cargo_fk` (`id_cargo_fk`);
+
+--
+-- Indices de la tabla `mantenimiento_general`
+--
+ALTER TABLE `mantenimiento_general`
+  ADD PRIMARY KEY (`id_general`),
+  ADD KEY `id_proceso_fk_3` (`id_proceso_fk_3`),
+  ADD KEY `Id_usuario_fk3` (`Id_usuario_fk3`),
+  ADD KEY `id_cargo_fk3` (`id_cargo_fk3`);
+
+--
+-- Indices de la tabla `mantenimiento_impresora`
+--
+ALTER TABLE `mantenimiento_impresora`
+  ADD PRIMARY KEY (`id_impresora`),
+  ADD KEY `id_proceso_fk_2` (`id_proceso_fk_2`),
+  ADD KEY `Id_usuario_fk2` (`Id_usuario_fk2`),
+  ADD KEY `id_cargo_fk2` (`id_cargo_fk2`);
 
 --
 -- Indices de la tabla `orden_compra`
@@ -1059,19 +1360,19 @@ ALTER TABLE `vencimiento_acpm`
 -- AUTO_INCREMENT de la tabla `acpm`
 --
 ALTER TABLE `acpm`
-  MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_consecutivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `acpm_rechazada`
 --
 ALTER TABLE `acpm_rechazada`
-  MODIFY `id_rechazada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rechazada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `actividades_acpm`
 --
 ALTER TABLE `actividades_acpm`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `activos`
@@ -1080,22 +1381,58 @@ ALTER TABLE `activos`
   MODIFY `id_activo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182324;
 
 --
+-- AUTO_INCREMENT de la tabla `asignacion_equipos`
+--
+ALTER TABLE `asignacion_equipos`
+  MODIFY `id_asignacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
   MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT de la tabla `detalles_equipos`
+--
+ALTER TABLE `detalles_equipos`
+  MODIFY `id_asignacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `detalle_actividad`
 --
 ALTER TABLE `detalle_actividad`
-  MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_detalle_acpm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
   MODIFY `id_orden_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `inventario`
+--
+ALTER TABLE `inventario`
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `mantenimientos`
+--
+ALTER TABLE `mantenimientos`
+  MODIFY `id_mantenimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT de la tabla `mantenimiento_general`
+--
+ALTER TABLE `mantenimiento_general`
+  MODIFY `id_general` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `mantenimiento_impresora`
+--
+ALTER TABLE `mantenimiento_impresora`
+  MODIFY `id_impresora` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_compra`
@@ -1125,7 +1462,7 @@ ALTER TABLE `tipo_usuario`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `vencimiento_acpm`
@@ -1138,19 +1475,35 @@ ALTER TABLE `vencimiento_acpm`
 --
 
 --
--- Filtros para la tabla `activos`
+-- Filtros para la tabla `empresa_accionista`
 --
-ALTER TABLE `activos`
-  ADD CONSTRAINT `activos_ibfk_1` FOREIGN KEY (`id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`),
-  ADD CONSTRAINT `activos_ibfk_2` FOREIGN KEY (`id_proveedor_fk`) REFERENCES `proveedor_compras` (`id_proveedor`);
+ALTER TABLE `empresa_accionista`
+  ADD CONSTRAINT `empresa_accionista_ibfk_1` FOREIGN KEY (`nit_asociado_n`) REFERENCES `asociado_negocio` (`nit_asociado_n`),
+  ADD CONSTRAINT `empresa_accionista_ibfk_2` FOREIGN KEY (`empresa_padre_id`) REFERENCES `empresa_accionista` (`nit_e_accionista`);
 
 --
--- Filtros para la tabla `usuarios`
+-- Filtros para la tabla `mantenimientos`
 --
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`proceso_usuario_fk`) REFERENCES `proceso` (`id_proceso`),
-  ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`id_cargo_fk`) REFERENCES `cargos` (`id_cargo`),
-  ADD CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`tipo_usuario_fk`) REFERENCES `tipo_usuario` (`id_tipo_usuario`);
+ALTER TABLE `mantenimientos`
+  ADD CONSTRAINT `mantenimientos_ibfk_1` FOREIGN KEY (`id_proceso_fk`) REFERENCES `proceso` (`id_proceso`),
+  ADD CONSTRAINT `mantenimientos_ibfk_2` FOREIGN KEY (`Id_usuario_fk`) REFERENCES `usuarios` (`Id_usuario`),
+  ADD CONSTRAINT `mantenimientos_ibfk_3` FOREIGN KEY (`id_cargo_fk`) REFERENCES `cargos` (`id_cargo`);
+
+--
+-- Filtros para la tabla `mantenimiento_general`
+--
+ALTER TABLE `mantenimiento_general`
+  ADD CONSTRAINT `mantenimiento_general_ibfk_1` FOREIGN KEY (`id_proceso_fk_3`) REFERENCES `proceso` (`id_proceso`),
+  ADD CONSTRAINT `mantenimiento_general_ibfk_2` FOREIGN KEY (`Id_usuario_fk3`) REFERENCES `usuarios` (`Id_usuario`),
+  ADD CONSTRAINT `mantenimiento_general_ibfk_3` FOREIGN KEY (`id_cargo_fk3`) REFERENCES `cargos` (`id_cargo`);
+
+--
+-- Filtros para la tabla `mantenimiento_impresora`
+--
+ALTER TABLE `mantenimiento_impresora`
+  ADD CONSTRAINT `mantenimiento_impresora_ibfk_1` FOREIGN KEY (`id_proceso_fk_2`) REFERENCES `proceso` (`id_proceso`),
+  ADD CONSTRAINT `mantenimiento_impresora_ibfk_2` FOREIGN KEY (`Id_usuario_fk2`) REFERENCES `usuarios` (`Id_usuario`),
+  ADD CONSTRAINT `mantenimiento_impresora_ibfk_3` FOREIGN KEY (`id_cargo_fk2`) REFERENCES `cargos` (`id_cargo`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
