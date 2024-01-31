@@ -1,8 +1,8 @@
 <?php
-$host = 'srv1148.hstgr.io'; // Puede ser localhost o proporcionado por Hostinguer
-$dbname = 'u446101023_prueba';
-$username = 'u446101023_prueba';
-$password = 'Az2314zf*';
+$host = 'localhost'; // Puede ser localhost o proporcionado por Hostinguer
+$dbname = 'upload';
+$username = 'root';
+$password = '';
 
 try {
     $conn = new PDO(

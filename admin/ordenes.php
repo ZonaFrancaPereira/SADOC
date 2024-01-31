@@ -732,7 +732,7 @@ try {
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12">
                       <label>Comentarios</label>
-                      <textarea class="form-control textarea" id="comentario_orden" name="comentario_orden" rows="3"></textarea>
+                      <textarea class="form-control " id="comentario_orden" name="comentario_orden" rows="3"></textarea>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12" id="tiempo">
                       <label>Tiempo de entrega en dias</label>

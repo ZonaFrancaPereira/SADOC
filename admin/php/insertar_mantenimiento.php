@@ -36,7 +36,7 @@ $firma=$_POST["firma"];
 $estado_mantenimiento_equipo=$_POST["estado_mantenimiento_equipo"];
 
 try {
-	$stmt = $conn->prepare('INSERT INTO mantenimientos(id_mantenimiento, id_proceso_fk, fecha_mantenimiento, Id_usuario_fk, id_cargo_fk, marca, modelo, serie, nombre_usuario, soplar_partes_externas, verificar_usuario, liberar_espacio, actualizar_logos, lubricar_puertos, verificar_contraseñas, desinstalar_programas, organizar_cableado, limpieza_equipo, formato_asignacion_equipo, desfragmentar, limpiar_partes_interna, depurar_temporales, verificar_actualizaciones, usuario, clave, estandar, administrador, analisis_completo, bloqueo_usb, dominio_zfip, apagar_pantalla, estado_suspension, firma, estado_mantenimiento_equipo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+	$stmt = $conn->prepare('INSERT INTO mantenimientos(id_mantenimiento, id_proceso_fk, fecha_mantenimiento, Id_usuario_fk, id_cargo_fk, marca, modelo, serie, usuario_equipo, soplar_partes_externas, verificar_usuario, liberar_espacio, actualizar_logos, lubricar_puertos, verificar_contraseñas, desinstalar_programas, organizar_cableado, limpieza_equipo, formato_asignacion_equipo, desfragmentar, limpiar_partes_interna, depurar_temporales, verificar_actualizaciones, usuario, clave, estandar, administrador, analisis_completo, bloqueo_usb, dominio_zfip, apagar_pantalla, estado_suspension, firma, estado_mantenimiento_equipo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
 	$stmt->bindParam(1, $id_mantenimiento);
 	$stmt->bindParam(2, $id_proceso_fk);
 	$stmt->bindParam(3, $fecha_mantenimiento);
