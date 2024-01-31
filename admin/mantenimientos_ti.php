@@ -143,6 +143,7 @@ if ($_SESSION['ingreso'] == true) {
                                                     INNER JOIN proceso b ON b.id_proceso = a.id_proceso_fk_2
                                                     INNER JOIN usuarios d ON d.Id_usuario = a.Id_usuario_fk2
                                                     INNER JOIN cargos e ON e.id_cargo = a.id_cargo_fk2") as $row) {
+                                                        $id_mantenimiento_impresora = $row["id_impresora"];
                                                 ?>
                                                         <tr style="text-align:center">
                                                             <td><?php echo $row["id_impresora"] ?></td>
@@ -150,7 +151,7 @@ if ($_SESSION['ingreso'] == true) {
                                                             <td><?php echo $row["fecha_mantenimiento_impresora"] ?></td>
                                                             <td><?php echo $row["nombre_usuario"] ?></td>
                                                             <td><?php echo $row["nombre_cargo"] ?></td>
-                                                            <td><button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></td>
+                                                            <td><a href='formato_mantenimiento_impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                         </tr>
                                                 <?php
                                                     }
@@ -187,6 +188,7 @@ if ($_SESSION['ingreso'] == true) {
                                                     INNER JOIN proceso g ON g.id_proceso = f.id_proceso_fk_3
                                                     INNER JOIN usuarios h ON h.Id_usuario = f.Id_usuario_fk3
                                                     INNER JOIN cargos i ON i.id_cargo = f.id_cargo_fk3") as $row) { {
+                                                        $id_mantenimiento_general = $row["id_general"];
                                                     ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_general"] ?></td>
@@ -194,7 +196,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                 <td><?php echo $row["fecha_mantenimiento3"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='; ?>' target=''> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                                <td><a href='formato_mantenimiento_generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -253,7 +255,7 @@ if ($_SESSION['ingreso'] == true) {
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <br>
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     <br>
                                                                     <label for="id_proceso_fk">Proceso</label>
                                                                     <input list="proceso_usuario_browsers" class="form-control" id="id_proceso_fk" name="id_proceso_fk" placeholder="Proceso">
@@ -276,11 +278,11 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="fecha_mantenimiento">Fecha</label>
                                                                     <input type="date" name="fecha_mantenimiento" class="form-control" id="fecha_mantenimiento" required>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="Id_usuario_fk">Responsable</label>
                                                                     <input list="responsable_browsers" class="form-control" id="Id_usuario_fk" name="Id_usuario_fk" placeholder="responsable">
                                                                     <datalist id="responsable_browsers">
@@ -302,7 +304,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="id_cargo_fk">Cargo Funcionario</label>
                                                                     <input list="cargo_browsers" class="form-control" id="id_cargo_fk" name="id_cargo_fk" placeholder="Cargo funcionario">
                                                                     <datalist id="cargo_browsers">
@@ -315,6 +317,28 @@ if ($_SESSION['ingreso'] == true) {
                                                                                     $id_cargo = $row["id_cargo"];
                                                                                     $nombre_cargo = $row["nombre_cargo"];
                                                                                     echo '<option value=' . $id_cargo . '>' . $nombre_cargo . ' </option>';
+                                                                                }
+                                                                            }
+                                                                        } catch (PDOException $e) {
+                                                                            echo "Error en el servidor";
+                                                                        }
+                                                                        ?>
+                                                                    </datalist>
+                                                                </div>
+                                                                <div class="col-3"><br>
+                                                                    <label for="correo_destinatario">Correo</label>
+                                                                    <input list="correo_browsers" class="form-control" id="correo_destinatario" name="correo_destinatario">
+                                                                    <datalist id="correo_browsers">
+                                                                    <?php
+                                                                        try {
+                                                                            $stmt = $conn->prepare('SELECT * FROM  usuarios ');
+                                                                            $stmt->execute();
+                                                                            if ($stmt->rowCount() > 0) {
+                                                                                while ($row = $stmt->fetch()) {
+                                                                                    $correo_usuario = $row["correo_usuario"];
+                                                                                    $nombre_usuario = $row["nombre_usuario"];
+                                                                                    $apellidos_usuario = $row["apellidos_usuario"];
+                                                                                    echo '<option value=' . $correo_usuario . '>' . $nombre_usuario . ' ' .  $apellidos_usuario . '</option>';
                                                                                 }
                                                                             }
                                                                         } catch (PDOException $e) {
@@ -568,7 +592,7 @@ if ($_SESSION['ingreso'] == true) {
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <br>
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     <br>
                                                                     <label for="id_proceso_fk_2">Proceso</label>
                                                                     <input list="proceso_usuario_browsers" class="form-control" id="id_proceso_fk_2" name="id_proceso_fk_2" placeholder="Proceso">
@@ -591,11 +615,11 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="fecha_mantenimiento_impresora">Fecha</label>
                                                                     <input type="date" name="fecha_mantenimiento_impresora" class="form-control" id="fecha_mantenimiento_impresora" required>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="Id_usuario_fk2">Responsable</label>
                                                                     <input list="responsable_browsers" class="form-control" id="Id_usuario_fk2" name="Id_usuario_fk2" placeholder="responsable">
                                                                     <datalist id="responsable_browsers">
@@ -617,7 +641,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="id_cargo_fk2">Cargo Funcionario</label>
                                                                     <input list="cargo_browsers" class="form-control" id="id_cargo_fk2" name="id_cargo_fk2" placeholder="Cargo funcionario">
                                                                     <datalist id="cargo_browsers">
@@ -630,6 +654,28 @@ if ($_SESSION['ingreso'] == true) {
                                                                                     $id_cargo = $row["id_cargo"];
                                                                                     $nombre_cargo = $row["nombre_cargo"];
                                                                                     echo '<option value=' . $id_cargo . '>' . $nombre_cargo . ' </option>';
+                                                                                }
+                                                                            }
+                                                                        } catch (PDOException $e) {
+                                                                            echo "Error en el servidor";
+                                                                        }
+                                                                        ?>
+                                                                    </datalist>
+                                                                </div>
+                                                                <div class="col-3"><br>
+                                                                    <label for="correo_destinatario1">Correo</label>
+                                                                    <input list="correo_browsers" class="form-control" id="correo_destinatario1" name="correo_destinatario1">
+                                                                    <datalist id="correo_browsers">
+                                                                    <?php
+                                                                        try {
+                                                                            $stmt = $conn->prepare('SELECT * FROM  usuarios ');
+                                                                            $stmt->execute();
+                                                                            if ($stmt->rowCount() > 0) {
+                                                                                while ($row = $stmt->fetch()) {
+                                                                                    $correo_usuario = $row["correo_usuario"];
+                                                                                    $nombre_usuario = $row["nombre_usuario"];
+                                                                                    $apellidos_usuario = $row["apellidos_usuario"];
+                                                                                    echo '<option value=' . $correo_usuario . '>' . $nombre_usuario . ' ' .  $apellidos_usuario . '</option>';
                                                                                 }
                                                                             }
                                                                         } catch (PDOException $e) {
@@ -805,7 +851,7 @@ if ($_SESSION['ingreso'] == true) {
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <br>
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     <br>
                                                                     <label for="id_proceso_fk_3">Proceso</label>
                                                                     <input list="proceso_usuario_browsers" class="form-control" id="id_proceso_fk_3" name="id_proceso_fk_3" placeholder="Proceso">
@@ -828,11 +874,11 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="fecha_mantenimiento3">Fecha</label>
                                                                     <input type="date" name="fecha_mantenimiento3" class="form-control" id="fecha_mantenimiento3" required>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="Id_usuario_fk3">Responsable</label>
                                                                     <input list="responsable_browsers" class="form-control" id="Id_usuario_fk3" name="Id_usuario_fk3" placeholder="responsable">
                                                                     <datalist id="responsable_browsers">
@@ -854,7 +900,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                         ?>
                                                                     </datalist>
                                                                 </div>
-                                                                <div class="col-3"><br>
+                                                                <div class="col-2"><br>
                                                                     <label for="id_cargo_fk3">Cargo Funcionario</label>
                                                                     <input list="cargo_browsers" class="form-control" id="id_cargo_fk3" name="id_cargo_fk3" placeholder="Cargo funcionario">
                                                                     <datalist id="cargo_browsers">
@@ -867,6 +913,28 @@ if ($_SESSION['ingreso'] == true) {
                                                                                     $id_cargo = $row["id_cargo"];
                                                                                     $nombre_cargo = $row["nombre_cargo"];
                                                                                     echo '<option value=' . $id_cargo . '>' . $nombre_cargo . ' </option>';
+                                                                                }
+                                                                            }
+                                                                        } catch (PDOException $e) {
+                                                                            echo "Error en el servidor";
+                                                                        }
+                                                                        ?>
+                                                                    </datalist>
+                                                                </div>
+                                                                <div class="col-3"><br>
+                                                                    <label for="correo_destinatario2">Correo</label>
+                                                                    <input list="general_browsers" class="form-control" id="correo_destinatario2" name="correo_destinatario2">
+                                                                    <datalist id="general_browsers">
+                                                                    <?php
+                                                                        try {
+                                                                            $stmt = $conn->prepare('SELECT * FROM  usuarios ');
+                                                                            $stmt->execute();
+                                                                            if ($stmt->rowCount() > 0) {
+                                                                                while ($row = $stmt->fetch()) {
+                                                                                    $correo_usuario = $row["correo_usuario"];
+                                                                                    $nombre_usuario = $row["nombre_usuario"];
+                                                                                    $apellidos_usuario = $row["apellidos_usuario"];
+                                                                                    echo '<option value=' . $correo_usuario . '>' . $nombre_usuario . ' ' .  $apellidos_usuario . '</option>';
                                                                                 }
                                                                             }
                                                                         } catch (PDOException $e) {
@@ -951,6 +1019,55 @@ if ($_SESSION['ingreso'] == true) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
+                    <div id="panel-mantenimiento" class="tab-pane">
+                    <div class="card card-lightblue">
+                                    <div class="card-header">
+                                        <h3 class="card-title" style="font-family: serif;">MANTENIMIENTOS EQUIPOS DE COMPUTO</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="card-body table-responsive p-0">
+                                            <table class="display table table-striped table-valign-middle " width="100%">
+                                                <thead>
+                                                <tr style="text-align: center;">
+                                                        <th>#</th>
+                                                        <th>Proceso</th>
+                                                        <th>Fecha Mantenimiento</th>
+                                                        <th>Responsable</th>
+                                                        <th>Cargo</th>
+                                                        <th>Formato</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
+                                                        FROM mantenimientos m
+                                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
+                                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
+                                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
+                                                            $id_mantenimiento_equipo = $row["id_mantenimiento"];
+                                                                    ?>
+                                                            <tr style=text-align:center>
+                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["nombre_proceso"] ?></td>
+                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["nombre_usuario"] ?></td>
+                                                                <td><?php echo $row["nombre_cargo"] ?></td>
+                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                            </tr>
+                                                    <?php }
+                                                    } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
                     </div>
                 </div>
             </div>

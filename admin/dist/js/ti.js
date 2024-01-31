@@ -192,6 +192,7 @@ function enviarFormularioMantenimiento() {
 	var fecha_mantenimiento= $('#fecha_mantenimiento').val();
 	var Id_usuario_fk= $('#Id_usuario_fk').val();
 	var id_cargo_fk= $('#id_cargo_fk').val();
+	var correo_destinatario= $('#correo_destinatario').val();
 	var marca= $('#marca').val();
 	var modelo= $('#modelo').val();
 	var serie= $('#serie').val();
@@ -222,8 +223,9 @@ function enviarFormularioMantenimiento() {
 	var firma= $('#firma').val();
 	var estado_mantenimiento_equipo= $('#estado_mantenimiento_equipo').val();
 
+
 	
-     // alert (id_proceso_fk + fecha_mantenimiento + Id_usuario_fk + id_cargo_fk + marca + modelo + serie + nombre_usuario + soplar_partes_externas + verificar_usuario + liberar_espacio + actualizar_logos + lubricar_puertos + verificar_contraseñas + desinstalar_programas + organizar_cableado + limpieza_equipo + formato_asignacion_equipo + desfragmentar + limpiar_partes_interna + depurar_temporales + verificar_actualizaciones + usuario + clave + estandar + administrador + analisis_completo + bloqueo_usb + dominio_zfip + apagar_pantalla + estado_suspension + firma);
+    // alert (id_proceso_fk + fecha_mantenimiento + Id_usuario_fk + id_cargo_fk + correo_destinatario + marca + modelo + serie + nombre_usuario + soplar_partes_externas + verificar_usuario + liberar_espacio + actualizar_logos + lubricar_puertos + verificar_contraseñas + desinstalar_programas + organizar_cableado + limpieza_equipo + formato_asignacion_equipo + desfragmentar + limpiar_partes_interna + depurar_temporales + verificar_actualizaciones + usuario + clave + estandar + administrador + analisis_completo + bloqueo_usb + dominio_zfip + apagar_pantalla + estado_suspension + firma);
     // Enviar la solicitud AJAX para actualizar el estado del usuario
 	if (id_cargo_fk == "" || fecha_mantenimiento == "") {
 		Swal.fire(
@@ -255,6 +257,7 @@ function enviarFormularioMantenimiento() {
 					'fecha_mantenimiento': fecha_mantenimiento,
 					'Id_usuario_fk': Id_usuario_fk,
 					'id_cargo_fk': id_cargo_fk,
+					'correo_destinatario': correo_destinatario,
 					'marca': marca,
 					'modelo': modelo,
 					'serie': serie,
@@ -284,6 +287,7 @@ function enviarFormularioMantenimiento() {
 					'estado_suspension': estado_suspension,
 					'firma': firma,
 					'estado_mantenimiento_equipo': estado_mantenimiento_equipo
+					
 				}
                 $.ajax({
                     type: 'POST',
@@ -323,6 +327,7 @@ function enviarFormularioImpresoras() {
 	var fecha_mantenimiento_impresora= $('#fecha_mantenimiento_impresora').val();
 	var Id_usuario_fk2= $('#Id_usuario_fk2').val();
 	var id_cargo_fk2= $('#id_cargo_fk2').val();
+	var correo_destinatario1= $('#correo_destinatario1').val();
 	var nombre_impresora= $('#nombre_impresora').val();
 	var marca_impresora= $('#marca_impresora').val();
 	var modelo_impresora= $('#modelo_impresora').val();
@@ -340,7 +345,7 @@ function enviarFormularioImpresoras() {
 	var estado_mantenimiento_impresora= $('#estado_mantenimiento_impresora').val();
 
 
-     // alert (id_proceso_fk_2 + fecha_mantenimiento_impresora + Id_usuario_fk2 + id_cargo_fk2 + nombre_impresora + marca_impresora + modelo_impresora + serial_impresora + soplar_exterior + isopropilico + toner + alinear + verificar_cableado + rodillos + reemplazar + limpiar + imprimir + verificar);
+    // alert (id_proceso_fk_2 + fecha_mantenimiento_impresora + Id_usuario_fk2 + id_cargo_fk2 + correo_destinatario1 + nombre_impresora + marca_impresora + modelo_impresora + serial_impresora + soplar_exterior + isopropilico + toner + alinear + verificar_cableado + rodillos + reemplazar + limpiar + imprimir + verificar);
     // Enviar la solicitud AJAX para actualizar el estado del usuario
 	if (id_cargo_fk2 == "" || fecha_mantenimiento_impresora == "") {
 		Swal.fire(
@@ -372,6 +377,7 @@ function enviarFormularioImpresoras() {
 					'fecha_mantenimiento_impresora': fecha_mantenimiento_impresora,
 					'Id_usuario_fk2': Id_usuario_fk2,
 					'id_cargo_fk2': id_cargo_fk2,
+					'correo_destinatario1': correo_destinatario1,
 					'nombre_impresora': nombre_impresora,
 					'marca_impresora': marca_impresora,
 					'modelo_impresora': modelo_impresora,
@@ -427,6 +433,7 @@ function enviarFormularioGeneral() {
 	var fecha_mantenimiento3= $('#fecha_mantenimiento3').val();
 	var Id_usuario_fk3= $('#Id_usuario_fk3').val();
 	var id_cargo_fk3= $('#id_cargo_fk3').val();
+	var correo_destinatario2= $('#correo_destinatario2').val();
 	var articulo= $('#articulo').val();
 	var marca_general= $('#marca_general').val();
 	var modelo_general= $('#modelo_general').val();
@@ -438,7 +445,7 @@ function enviarFormularioGeneral() {
 	var estado_general= $('#estado_general').val();
 
 
-     // alert (id_proceso_fk_3 + fecha_mantenimiento3 + Id_usuario_fk3 + id_cargo_fk3 + articulo + marca_general + modelo_general + serial_general + partes_externas + condiciones_fisicas + cableado_verificar + dispositivo );
+    // alert (id_proceso_fk_3 + fecha_mantenimiento3 + Id_usuario_fk3 + id_cargo_fk3 + correo_destinatario2 + articulo + marca_general + modelo_general + serial_general + partes_externas + condiciones_fisicas + cableado_verificar + dispositivo );
     // Enviar la solicitud AJAX para actualizar el estado del usuario
 	if (id_cargo_fk3 == "" || fecha_mantenimiento3 == "") {
 		Swal.fire(
@@ -470,6 +477,7 @@ function enviarFormularioGeneral() {
 					'fecha_mantenimiento3': fecha_mantenimiento3,
 					'Id_usuario_fk3': Id_usuario_fk3,
 					'id_cargo_fk3': id_cargo_fk3,
+					'correo_destinatario2': correo_destinatario2,
 					'articulo': articulo,
 					'marca_general': marca_general,
 					'modelo_general': modelo_general,
