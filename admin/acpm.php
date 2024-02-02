@@ -1,8 +1,6 @@
 <?php
-session_start();
-if ($_SESSION['ingreso'] == true) {
-  require('php/conexion.php');
-  require('plantilla.php');
+ require('seguridad.php');
+
 
   if (isset($_POST['enviar_verificacion'])) {
     $id_consecutivo = $_POST['id_acpm'];
@@ -161,15 +159,7 @@ if ($_SESSION['ingreso'] == true) {
   </div>
   <!-- /.sidebar -->
   </aside>
-<?php
-  //require('include/footer.php');
 
-} else {
-  session_unset();
-  session_destroy();
-  header('location: index.php');
-}
-?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">

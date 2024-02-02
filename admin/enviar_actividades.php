@@ -1,8 +1,5 @@
 <?php
-session_start();
-if ($_SESSION['ingreso'] == true) {
-  require('php/conexion.php');
-  require('plantilla.php');
+require('seguridad.php');
   $id_acpm = $_GET['id_acpm'];
   $descripcion = $_GET['descripcion'];
   $id_actividad = 0;
@@ -14,15 +11,7 @@ if ($_SESSION['ingreso'] == true) {
   </div>
   <!-- /.sidebar -->
   </aside>
-<?php
-  //require('include/footer.php');
 
-} else {
-  session_unset();
-  session_destroy();
-  header('location: index.php');
-}
-?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">

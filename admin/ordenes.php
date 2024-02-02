@@ -1,13 +1,10 @@
 <?php
-session_start();
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-if ($_SESSION['ingreso'] == true) {
-  require('php/conexion.php');
-  require('plantilla.php');
+require('seguridad.php');
+
   if (isset($_POST['enviar_orden'])) {
     $id_cotizante = $_SESSION['Id'];
     $fecha_orden = $_POST['fecha_orden'];
@@ -240,7 +237,7 @@ if ($_SESSION['ingreso'] == true) {
       echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
     }
   }
-}
+
 try {
   $stmt = $conn->prepare("SELECT 
           SUM(CASE WHEN estado_orden = 'Proceso' THEN 1 ELSE 0 END) AS Proceso,
