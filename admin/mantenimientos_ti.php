@@ -517,7 +517,7 @@
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_mantenimiento_equipo">Estado</label>
-                                                                    <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Proceso" readonly>
+                                                                    <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-3 col-sm-3">
                                                                     <br>
