@@ -1,10 +1,7 @@
 <?php
-session_start();
-if ($_SESSION['ingreso'] == true) {
-  require('php/conexion.php');
-  require('plantilla.php');
-
-  $id_actividad = 0;
+require('seguridad.php');
+//INICIALIZAR VARIABLE
+$id_actividad = 0;
 ?>
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
@@ -13,15 +10,8 @@ if ($_SESSION['ingreso'] == true) {
   </div>
   <!-- /.sidebar -->
   </aside>
-<?php
-  //require('include/footer.php');
 
-} else {
-  session_unset();
-  session_destroy();
-  header('location: index.php');
-}
-?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">
@@ -31,9 +21,6 @@ if ($_SESSION['ingreso'] == true) {
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
             <div id="" class="tab-pane">
-              
-                
-
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="" class="display table table-bordered table-striped">

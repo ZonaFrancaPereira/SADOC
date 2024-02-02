@@ -1,10 +1,6 @@
 <?php
 $Id_usuario = $_GET['Id_usuario'];
 require('php/conexion.php');
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

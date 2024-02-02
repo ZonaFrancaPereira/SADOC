@@ -1,8 +1,6 @@
-<?php 
-session_start();
-if ($_SESSION['ingreso']==true) {
- require('php/conexion.php');
- ?>
+<?php
+ require('seguridad.php');
+?>
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -280,15 +278,7 @@ if ($_SESSION['ingreso']==true) {
 </div>
 <!-- /.sidebar -->
 </aside>
-<?php
-  //require('include/footer.php');
 
-}else{
-  session_unset();
-  session_destroy();
-  header('location: index.php');
-}
-?>
 <div class="content-wrapper">
   <div id="wrapper" class="toggled">
 

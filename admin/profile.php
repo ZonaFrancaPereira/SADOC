@@ -1,10 +1,6 @@
 <?php
-session_start();
-if ($_SESSION['ingreso'] == true) {
-	require('php/conexion.php');
-	require('plantilla.php');
 
-
+require('seguridad.php');
 	$Id = $_SESSION['Id'];
 	try {
 		$stmt = $conn->prepare("SELECT * FROM usuarios
@@ -129,15 +125,7 @@ if ($_SESSION['ingreso'] == true) {
 	</div>
 	<!-- /.sidebar -->
 	</aside>
-<?php
-	//require('include/footer.php');
 
-} else {
-	session_unset();
-	session_destroy();
-	header('location: index.php');
-}
-?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->

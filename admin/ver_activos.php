@@ -2,7 +2,6 @@
 $id_activo = $_GET['id_activo'];
 require('php/conexion.php');
 
-
 try {
     $stmt = $conn->prepare("SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario, u.dia_backup, u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk, 
     a.id_activo, a.cod_renta, a.fecha_asignacion, a.nombre_articulo, a.descripcion_articulo, a.modelo_articulo, a.referencia_articulo, a.marca_articulo, a.tipo_articulo, a.ip, a.windows, a.office, a.factura_office, a.lugar_articulo, a.observaciones_articulo, a.numero_factura, a.fecha_garantia, a.valor_articulo, a.condicion_articulo, a.id_proveedor_fk, a.descripcion_proveedor, a.id_usuario_fk, a.estado_activo, 

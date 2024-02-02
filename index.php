@@ -2,7 +2,7 @@
 //include('vencimientos.php');
 session_start();
 if (isset($_SESSION['ingreso'])) {
-	header('location: ../../index.php');
+	header('location: admin/index.php');
 }else{
 	session_unset();
 	session_destroy();

@@ -1,8 +1,5 @@
 <?php
-session_start();
-if ($_SESSION['ingreso'] == true) {
-    require('php/conexion.php');
-    require('plantilla.php');
+ require('seguridad.php');
 ?>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -41,15 +38,7 @@ if ($_SESSION['ingreso'] == true) {
     </div>
     <!-- /.sidebar -->
     </aside>
-<?php
-    //require('include/footer.php');
 
-} else {
-    session_unset();
-    session_destroy();
-    header('location: index.php');
-}
-?>
 <!-- /TABLA  -->
 <div class="content-wrapper">
     <div id="wrapper" class="toggled">
