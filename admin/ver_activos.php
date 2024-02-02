@@ -2,20 +2,25 @@
 $id_activo = $_GET['id_activo'];
 require('php/conexion.php');
 
+
 try {
-    $stmt = $conn->prepare("SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario , u.firma_usuario, u.dia_backup, u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk, 
-    a.id_activo, a.fecha_asignacion, a.nombre_articulo, a.descripcion_articulo, a.modelo_articulo, a.referencia_articulo, a.marca_articulo, a.tipo_articulo, a.ip, a.windows, a.office, a.factura_office, a.lugar_articulo, a.observaciones_articulo, a.numero_factura, a.fecha_garantia, a.valor_articulo, a.condicion_articulo, a.id_proveedor_fk , a.descripcion_proveedor, a.id_usuario_fk, a.estado_activo, 
+    $stmt = $conn->prepare("SELECT u.Id_usuario, u.correo_usuario, u.contrasena_usuario, u.nombre_usuario, u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario, u.dia_backup, u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk, 
+    a.id_activo, a.cod_renta, a.fecha_asignacion, a.nombre_articulo, a.descripcion_articulo, a.modelo_articulo, a.referencia_articulo, a.marca_articulo, a.tipo_articulo, a.ip, a.windows, a.office, a.factura_office, a.lugar_articulo, a.observaciones_articulo, a.numero_factura, a.fecha_garantia, a.valor_articulo, a.condicion_articulo, a.id_proveedor_fk, a.descripcion_proveedor, a.id_usuario_fk, a.estado_activo, 
     p.id_proveedor, p.nombre_proveedor, p.contacto_proveedor, p.telefono_proveedor, p.id_usuario_fk
 FROM activos a
-INNER JOIN usuarios u
- ON u.Id_usuario = a.id_usuario_fk
-INNER JOIN proveedor_compras p
- ON a.id_proveedor_fk = p.id_proveedor
-WHERE a.id_activo = '" . $id_activo . "'");
+INNER JOIN usuarios u ON u.Id_usuario = a.id_usuario_fk
+INNER JOIN proveedor_compras p ON a.id_proveedor_fk = p.id_proveedor
+WHERE a.id_activo = :id_activo OR a.cod_renta = :id_activo");
+
+    $stmt->bindParam(':id_activo', $id_activo, PDO::PARAM_STR);
     $stmt->execute();
-    $registros = 1;
+
+    // ¿De dónde viene la variable $registros? No se utiliza en este fragmento.
+
     if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch()) {
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($resultados as $row) {
             $id_activo = $row["id_activo"];
             $nombre_activo = $row["nombre_articulo"];
             $descripcion_articulo = $row["descripcion_articulo"];
@@ -27,7 +32,7 @@ WHERE a.id_activo = '" . $id_activo . "'");
             $windows = $row["windows"];
             $office = $row["office"];
             $factura_office = $row["factura_office"];
-   
+
             $lugar_articulo = $row["lugar_articulo"];
             $observaciones_articulo = $row["observaciones_articulo"];
             $numero_factura = $row["numero_factura"];
@@ -47,8 +52,9 @@ WHERE a.id_activo = '" . $id_activo . "'");
         }
     }
 } catch (PDOException $e) {
-    echo "Error en el servidor";
+    echo "Error en el servidor: " . $e->getMessage();
 }
+
 
 
 ?>

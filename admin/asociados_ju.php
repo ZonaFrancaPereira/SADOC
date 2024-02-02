@@ -58,7 +58,7 @@ if ($_SESSION['ingreso'] == true) {
                 <div class="tab-content card">
                     <!-- /ACTUALIZAR USUARIO -->
                     <div id="asociados" class="tab-pane">
-                        <form id="formulario_accionistas" method="post" action="procesar_formulario.php">
+                        <form id="formulario_accionistas" method="post" action="php/insertar_asociados.php">
                             <div class="card mb-3 accionista_empresa">
                                 <div class="card-body">
                                     <h5 class="card-title">Datos del Asociado</h5><br>
@@ -122,13 +122,15 @@ function agregarAccionistaEmpresa(empresasContainer, nombreEmpresa) {
     empresaFieldset.html(`
         <legend class='text-primary titulo_asociado_negocio'>Asociado de Negocio - ${nombreEmpresa || "Empresa sin nombre"}</legend>
         <div class="form-group">
-            <label for="nombre_empresa_accionista${numEmpresas}">Nombre de la Empresa:</label>
-            <input type="text" class="form-control" name="nombre_empresa_accionista${numEmpresas}" id="nombre_empresa_accionista${numEmpresas}" value="${nombreEmpresa}" required>
+            <label for="num_accionistas_empresa${numEmpresas}">Ingresa el número de accionistas (<B>Personas Naturales</B>):</label>
+            <input type="number" class="form-control" name="num_accionistas_empresa[${numEmpresas}]" id="num_accionistas_empresa${numEmpresas}" required placeholder="5">
+        </div> <div class="form-group">
+            <label for="nit_empresa_accionista">NIT Asociado de Negocio</label>
+            <input type="text" class="form-control" name="nit_empresa_accionista[]" id="nit_empresa_accionista${numEmpresas}" value="" required placeholder="900311215">
         </div>
-
         <div class="form-group">
-            <label for="num_accionistas_empresa${numEmpresas}">Número de Accionistas (Personas Naturales):</label>
-            <input type="number" class="form-control" name="num_accionistas_empresa${numEmpresas}" id="num_accionistas_empresa${numEmpresas}" required>
+            <label for="nombre_empresa_accionista${numEmpresas}">Nombre de la Empresa:</label>
+            <input type="text" class="form-control" name="nombre_empresa_accionista[${numEmpresas}]" id="nombre_empresa_accionista${numEmpresas}" value="${nombreEmpresa}" required>
         </div>
 
         <div class="empresas_container">
@@ -155,9 +157,13 @@ function agregarAccionistasDentroDeEmpresa(empresasContainer, numAccionistas) {
         var accionistaFieldset = $("<fieldset class='border p-2 mt-2'>");
         accionistaFieldset.html(`
             <legend class='text-success'>Accionista ${i + 1}</legend>
+            </div> <div class="form-group">
+            <label for="id_accionista">Identificación Accionista</label>
+            <input type="text" class="form-control" name="id_accionista[]" id="id_accionista[]" value="" required placeholder="900311215">
+        </div>
             <div class="form-group">
                 <label for="nombre_accionista${i + 1}">Nombre del Accionista:</label>
-                <input type="text" class="form-control" name="nombre_accionista${i + 1}" id="nombre_accionista${i + 1}" required>
+                <input type="text" class="form-control" name="nombre_accionista[${i + 1}]" id="nombre_accionista${i + 1}" required placeholder="Nombre Completo del Accionista">
             </div>
             <button type="button" class="btn btn-danger eliminar_accionista mt-2">Eliminar Accionista</button>
         `);
@@ -181,6 +187,7 @@ function actualizarTitulos(inputNombreEmpresa) {
         $(this).find(".eliminar_empresa").text(`Eliminar Empresa - ${nombreEmpresaAccionista}`);
     });
 }
+
 
 
 
