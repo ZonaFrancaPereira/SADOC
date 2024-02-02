@@ -5,7 +5,7 @@ ob_start();
 $id_mantenimiento_equipo = $_GET['id_mantenimiento_equipo'];
 
 try {
-    $stmt = $conn->prepare('SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
+    $stmt = $conn->prepare('SELECT m.*, p.nombre_proceso, u.*, c.nombre_cargo
     FROM mantenimientos m
     INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
     INNER JOIN usuarios u ON m.Id_usuario_fk = u.Id_usuario
@@ -51,6 +51,7 @@ try {
             $estado_suspension = $row["estado_suspension"];
             $firma = $_POST["firma"];
             $estado_mantenimiento_equipo = $row["estado_mantenimiento_equipo"];
+            $firma_usuario = $row["firma_usuario"];
         }
     }
 } catch (PDOException $e) {
@@ -60,9 +61,15 @@ try {
 $fecha = date("d/m/Y", strtotime($fecha_mantenimiento));
 $nombreImagen = "img/zf.png";
 $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
-
-
+//FIRMA DEL USUARIO AL QUE PERTENECE EL EQUIPO
+if(isset($_GET['firmar']) && $_GET['firmar'] === 'true') {
+    // El botón "firma" ha sido clicado, mostrar la firma
+    $firmaUsuario = "firmas/" . $firma_usuario;
+    $firmar = "data:image/png;base64," . base64_encode(file_get_contents($firmaUsuario));
+   
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -311,14 +318,19 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 <?php echo $estado_mantenimiento_equipo; ?>
             </td>
         </tr>
-
+        <tr>
+            <td colspan="1">
+                <center><B>FIRMA</B></center>
+                <br>
+            </td>
+           <td colspan="3"><br><br><br><br>
+           
+				<center><img src="<?php echo $firmar; ?>" alt="" width="180"></center>
+			</td>
+        </tr>
     </table>
-
-
     <br>
     <br>
-
-
 </body>
 
 </html>
