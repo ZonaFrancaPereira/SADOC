@@ -35,11 +35,10 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="tab-content card">
-
                     <div id="panel-ti" class="tab-pane  show active">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#mantenimientos_firma">Home</a>
+                                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#mantenimientos_realizados">Realizados</a>
@@ -55,98 +54,9 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
-                            <div id="mantenimientos_firma" class="tab-pane fade ">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title" style="font-family: serif;">MANTENIMIENTOS POR FIRMAR</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-body table-responsive p-0">
-                                            <table class="display table table-striped table-valign-middle " width="100%">
-                                                <thead>
-                                                    <tr style="text-align: center;">
-                                                        <th>#</th>
-                                                        <th>Fecha Mantenimiento</th>
-                                                        <th>Estado</th>
-                                                        <th>Formato</th>
-                                                        <th>Firma</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $id_usuario = $_SESSION['Id'];
-                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
-                                                        FROM mantenimientos m
-                                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
-                                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
-                                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo
-                                                        WHERE m.Id_usuario_fk = $id_usuario;") as $row) { {
-                                                            $id_mantenimiento_equipo = $row["id_mantenimiento"];
-                                                    ?>
-                                                            <tr style=text-align:center>
-                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["estado_mantenimiento_equipo"] ?></td>
-                                                                <td><a href='equipospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                                                                <td><a href="equipospdf.php?firmar=true" target="_blank"><button type="button" class='btn bg-primary' id="firmar"><i class="fas fa-file-signature"></i></button></td>
-
-                                                            </tr>
-                                                    <?php }
-                                                    } ?>
-                                                </tbody>
-                                                
-                                                <tbody>
-                                                    <?php
-                                                    foreach ($conn->query("SELECT * FROM mantenimiento_impresora a 
-                                                    INNER JOIN proceso b ON b.id_proceso = a.id_proceso_fk_2
-                                                    INNER JOIN usuarios d ON d.Id_usuario = a.Id_usuario_fk2
-                                                    INNER JOIN cargos e ON e.id_cargo = a.id_cargo_fk2
-                                                    WHERE a.Id_usuario_fk2 = $id_usuario;") as $row) {
-                                                        $id_mantenimiento_impresora = $row["id_impresora"];
-                                                    ?>
-                                                        <tr style="text-align:center">
-                                                            <td><?php echo $row["id_impresora"] ?></td>
-                                                            <td><?php echo $row["nombre_proceso"] ?></td>
-                                                            <td><?php echo $row["fecha_mantenimiento_impresora"] ?></td>
-                                                            <td><?php echo $row["nombre_usuario"] ?></td>
-                                                            <td><?php echo $row["nombre_cargo"] ?></td>
-                                                            <td><a href='impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                                                            <td><button class='btn bg-primary'><i class="fas fa-file-signature"></i> </button></td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                                <tbody>
-                                                    <?php
-                                                    foreach ($conn->query("SELECT * FROM mantenimiento_general f
-                                                    INNER JOIN proceso g ON g.id_proceso = f.id_proceso_fk_3
-                                                    INNER JOIN usuarios h ON h.Id_usuario = f.Id_usuario_fk3
-                                                    INNER JOIN cargos i ON i.id_cargo = f.id_cargo_fk3
-                                                    WHERE f.Id_usuario_fk3 = $id_usuario;") as $row) { {
-                                                            $id_mantenimiento_general = $row["id_general"];
-                                                    ?>
-                                                            <tr style=text-align:center>
-                                                                <td><?php echo $row["id_general"] ?></td>
-                                                                <td><?php echo $row["nombre_proceso"] ?></td>
-                                                                <td><?php echo $row["fecha_mantenimiento3"] ?></td>
-                                                                <td><?php echo $row["nombre_usuario"] ?></td>
-                                                                <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                                                                <td><button class='btn bg-primary'><i class="fas fa-file-signature"></i> </button></td>
-                                                            </tr>
-                                                    <?php }
-                                                    } ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div id="home" class="tab-pane fade in active">
+                                <h3>HOME</h3>
+                                <p>Some content.</p>
                             </div>
                             <!-- /MANRTENIMIENTOS REALIZADOS -->
                             <div id="mantenimientos_realizados" class="tab-pane fade">
@@ -162,7 +72,7 @@
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                    <tr style="text-align: center;">
+                                                <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -179,18 +89,17 @@
                                                         INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
                                                         INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
                                                             $id_mantenimiento_equipo = $row["id_mantenimiento"];
-                                                    ?>
+                                                                    ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_proceso"] ?></td>
                                                                 <td><?php echo $row["fecha_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='equipospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -218,24 +127,24 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
+                                                <?php
                                                     foreach ($conn->query("SELECT * FROM mantenimiento_impresora a 
                                                     INNER JOIN proceso b ON b.id_proceso = a.id_proceso_fk_2
                                                     INNER JOIN usuarios d ON d.Id_usuario = a.Id_usuario_fk2
                                                     INNER JOIN cargos e ON e.id_cargo = a.id_cargo_fk2") as $row) {
                                                         $id_mantenimiento_impresora = $row["id_impresora"];
-                                                    ?>
+                                                ?>
                                                         <tr style="text-align:center">
                                                             <td><?php echo $row["id_impresora"] ?></td>
                                                             <td><?php echo $row["nombre_proceso"] ?></td>
                                                             <td><?php echo $row["fecha_mantenimiento_impresora"] ?></td>
                                                             <td><?php echo $row["nombre_usuario"] ?></td>
                                                             <td><?php echo $row["nombre_cargo"] ?></td>
-                                                            <td><a href='impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                            <td><a href='formato_mantenimiento_impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                         </tr>
-                                                    <?php
+                                                <?php
                                                     }
-                                                    ?>
+                                                ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -253,7 +162,7 @@
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                    <tr style="text-align: center;">
+                                                <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -268,7 +177,7 @@
                                                     INNER JOIN proceso g ON g.id_proceso = f.id_proceso_fk_3
                                                     INNER JOIN usuarios h ON h.Id_usuario = f.Id_usuario_fk3
                                                     INNER JOIN cargos i ON i.id_cargo = f.id_cargo_fk3") as $row) { {
-                                                            $id_mantenimiento_general = $row["id_general"];
+                                                        $id_mantenimiento_general = $row["id_general"];
                                                     ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_general"] ?></td>
@@ -276,7 +185,7 @@
                                                                 <td><?php echo $row["fecha_mantenimiento3"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                                <td><a href='formato_mantenimiento_generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -328,6 +237,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- /AGREGAR USUARIO -->
+
                                                 <div class="card card-info">
                                                     <form id="mantenimiento" method="POST">
                                                         <div class="card-body">
@@ -407,7 +318,7 @@
                                                                     <label for="correo_destinatario">Correo</label>
                                                                     <input list="correo_browsers" class="form-control" id="correo_destinatario" name="correo_destinatario">
                                                                     <datalist id="correo_browsers">
-                                                                        <?php
+                                                                    <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -442,11 +353,11 @@
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="serie">Serie</label>
-                                                                    <input id="serie" name="serie" class="form-control" placeholder="serie" required>
+                                                                    <input  id="serie" name="serie" class="form-control" placeholder="serie" required>
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="nombre_usuario">Nombre de Usuario</label>
-                                                                    <input id="nombre_usuario" name="nombre_usuario" class="form-control" placeholder="Nombre usuario" required>
+                                                                    <input  id="nombre_usuario" name="nombre_usuario" class="form-control" placeholder="Nombre usuario" required>
                                                                 </div>
                                                                 <div class="col-md-12"> <br>
                                                                     <div class="card card-info collapsed-card">
@@ -600,9 +511,13 @@
                                                                     <label for="estado_suspension">Poner el equipo en estado de suspensión 10 minutos</label>
                                                                     <input type="checkbox" id="estado_suspension" name="estado_suspension" value="SI">
                                                                 </div>
+                                                                <div class="col-3" hidden><br>
+                                                                    <label for="firma">Firma</label>
+                                                                    <input type="text" class="form-control" id="firma" name="firma" value="1" hidden>
+                                                                </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_mantenimiento_equipo">Estado</label>
-                                                                    <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
+                                                                    <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Proceso" readonly>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-3 col-sm-3">
                                                                     <br>
@@ -660,6 +575,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- /AGREGAR MANTENIMIENTO IMPRESORA -->
+
                                                 <div class="card card-info">
                                                     <form id="mantenimiento" method="POST">
                                                         <div class="card-body">
@@ -739,7 +655,7 @@
                                                                     <label for="correo_destinatario1">Correo</label>
                                                                     <input list="correo_browsers" class="form-control" id="correo_destinatario1" name="correo_destinatario1">
                                                                     <datalist id="correo_browsers">
-                                                                        <?php
+                                                                    <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -859,7 +775,7 @@
                                                                 </div>
                                                                 <div class="col-3"><br><br><br><br>
                                                                     <label for="estado_mantenimiento_impresora">Estado</label>
-                                                                    <input list="browsers" id="estado_mantenimiento_impresora" name="estado_mantenimiento_impresora" class="form-control" value="Sin Firmar" readonly>
+                                                                    <input list="browsers" id="estado_mantenimiento_impresora" name="estado_mantenimiento_impresora" class="form-control" value="Proceso" readonly>
                                                                 </div>
                                                                 <div class="col-3">
                                                                 </div>
@@ -998,7 +914,7 @@
                                                                     <label for="correo_destinatario2">Correo</label>
                                                                     <input list="general_browsers" class="form-control" id="correo_destinatario2" name="correo_destinatario2">
                                                                     <datalist id="general_browsers">
-                                                                        <?php
+                                                                    <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -1076,7 +992,7 @@
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_general">Estado</label>
-                                                                    <input list="browsers" id="estado_general" name="estado_general" class="form-control" value="Sin Firmar" readonly>
+                                                                    <input list="browsers" id="estado_general" name="estado_general" class="form-control" value="Proceso" readonly>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-3 col-sm-3"><br>
                                                                     <br>
@@ -1093,6 +1009,55 @@
                             </div>
                         </div>
                     </div>
+                    <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
+                    <div id="panel-mantenimiento" class="tab-pane">
+                    <div class="card card-lightblue">
+                                    <div class="card-header">
+                                        <h3 class="card-title" style="font-family: serif;">MANTENIMIENTOS EQUIPOS DE COMPUTO</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="card-body table-responsive p-0">
+                                            <table class="display table table-striped table-valign-middle " width="100%">
+                                                <thead>
+                                                <tr style="text-align: center;">
+                                                        <th>#</th>
+                                                        <th>Proceso</th>
+                                                        <th>Fecha Mantenimiento</th>
+                                                        <th>Responsable</th>
+                                                        <th>Cargo</th>
+                                                        <th>Formato</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
+                                                        FROM mantenimientos m
+                                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
+                                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
+                                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
+                                                            $id_mantenimiento_equipo = $row["id_mantenimiento"];
+                                                                    ?>
+                                                            <tr style=text-align:center>
+                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["nombre_proceso"] ?></td>
+                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
+                                                                <td><?php echo $row["nombre_usuario"] ?></td>
+                                                                <td><?php echo $row["nombre_cargo"] ?></td>
+                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                            </tr>
+                                                    <?php }
+                                                    } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -1100,22 +1065,7 @@
 </div>
 
 <?php require('footer.php'); ?>
-<script>
-    function obtenerFirmaUsuario(callback) {
-    $.ajax({
-        type: 'GET',
-        url: 'obtener_firma_usuario.php', // Reemplaza con la ruta correcta
-        success: function (firma_usuario) {
-            callback(firma_usuario);
-        },
-        error: function () {
-            callback(null); // Maneja el error si no se puede obtener la firma
-        }
-    });
-}
 
-
-</script>
 </body>
 
 </html>
