@@ -62,14 +62,9 @@ $fecha = date("d/m/Y", strtotime($fecha_mantenimiento));
 $nombreImagen = "img/zf.png";
 $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
 //FIRMA DEL USUARIO AL QUE PERTENECE EL EQUIPO
-if(isset($_GET['firmar']) && $_GET['firmar'] === 'true') {
-    // El botón "firma" ha sido clicado, mostrar la firma
-    $firmaUsuario = "firmas/" . $firma_usuario;
-    $firmar = "data:image/png;base64," . base64_encode(file_get_contents($firmaUsuario));
-   
-}
+$firmaUsuario = "firmas/" . $firma_usuario;
+$firmar = "data:image/png;base64," . base64_encode(file_get_contents($firmaUsuario));
 ?>
-
 <!DOCTYPE html>
 <html>
 

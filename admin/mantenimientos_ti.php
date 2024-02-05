@@ -66,6 +66,10 @@ if ($_SESSION['ingreso'] == true) {
                             </li>
                         </ul>
                         <div class="tab-content">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e0362859844e6fc7ba0e86600624df699357d0f4
                             <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
                             <div id="mantenimientos_firma" class="tab-pane fade ">
                                 <div class="card card-primary">
@@ -157,6 +161,14 @@ if ($_SESSION['ingreso'] == true) {
                                         </div>
                                     </div>
                                 </div>
+<<<<<<< HEAD
+=======
+=======
+                            <div id="home" class="tab-pane fade in active">
+                                <h3>HOME</h3>
+                                <p>Some content.</p>
+>>>>>>> ffb03b3ba0ccffedfbf4ab69835d2e69ddb54dba
+>>>>>>> e0362859844e6fc7ba0e86600624df699357d0f4
                             </div>
                             <!-- /MANRTENIMIENTOS REALIZADOS -->
                             <div id="mantenimientos_realizados" class="tab-pane fade">
