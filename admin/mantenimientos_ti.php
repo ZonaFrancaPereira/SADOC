@@ -49,7 +49,7 @@ if ($_SESSION['ingreso'] == true) {
                     <div id="panel-ti" class="tab-pane  show active">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+                                <a class="nav-link active" data-toggle="tab" href="#mantenimientos_firma">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#mantenimientos_realizados">Realizados</a>
@@ -65,7 +65,6 @@ if ($_SESSION['ingreso'] == true) {
                             </li>
                         </ul>
                         <div class="tab-content">
-<<<<<<< HEAD
                             <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
                             <div id="mantenimientos_firma" class="tab-pane fade ">
                                 <div class="card card-primary">
@@ -157,11 +156,6 @@ if ($_SESSION['ingreso'] == true) {
                                         </div>
                                     </div>
                                 </div>
-=======
-                            <div id="home" class="tab-pane fade in active">
-                                <h3>HOME</h3>
-                                <p>Some content.</p>
->>>>>>> ffb03b3ba0ccffedfbf4ab69835d2e69ddb54dba
                             </div>
                             <!-- /MANRTENIMIENTOS REALIZADOS -->
                             <div id="mantenimientos_realizados" class="tab-pane fade">
@@ -880,7 +874,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                 </div>
                                                                 <div class="col-3"><br><br><br><br>
                                                                     <label for="estado_mantenimiento_impresora">Estado</label>
-                                                                    <input list="browsers" id="estado_mantenimiento_impresora" name="estado_mantenimiento_impresora" class="form-control" value="Proceso" readonly>
+                                                                    <input list="browsers" id="estado_mantenimiento_impresora" name="estado_mantenimiento_impresora" class="form-control" value="Sin Firmar" readonly>
                                                                 </div>
                                                                 <div class="col-3">
                                                                 </div>
@@ -1097,7 +1091,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_general">Estado</label>
-                                                                    <input list="browsers" id="estado_general" name="estado_general" class="form-control" value="Proceso" readonly>
+                                                                    <input list="browsers" id="estado_general" name="estado_general" class="form-control" value="Sin Firmar" readonly>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-3 col-sm-3"><br>
                                                                     <br>
