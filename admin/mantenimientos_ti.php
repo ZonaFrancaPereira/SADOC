@@ -1,5 +1,8 @@
 <?php
- require('seguridad.php');
+session_start();
+if ($_SESSION['ingreso'] == true) {
+    require('php/conexion.php');
+    require('plantilla.php');
 ?>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -28,7 +31,15 @@
     </div>
     <!-- /.sidebar -->
     </aside>
+<?php
+    //require('include/footer.php');
 
+} else {
+    session_unset();
+    session_destroy();
+    header('location: index.php');
+}
+?>
 <!-- /TABLA  -->
 <div class="content-wrapper">
     <div id="wrapper" class="toggled">
@@ -93,8 +104,7 @@
                                                                 <td><?php echo $row["fecha_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["estado_mantenimiento_equipo"] ?></td>
                                                                 <td><a href='equipospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                                                                <td><a href="equipospdf.php?firmar=true" target="_blank"><button type="button" class='btn bg-primary' id="firmar"><i class="fas fa-file-signature"></i></button></td>
-
+                                                                <td><button type="button" class='btn bg-primary' id="firma"><i class="fas fa-file-signature"></i></button></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -1100,22 +1110,7 @@
 </div>
 
 <?php require('footer.php'); ?>
-<script>
-    function obtenerFirmaUsuario(callback) {
-    $.ajax({
-        type: 'GET',
-        url: 'obtener_firma_usuario.php', // Reemplaza con la ruta correcta
-        success: function (firma_usuario) {
-            callback(firma_usuario);
-        },
-        error: function () {
-            callback(null); // Maneja el error si no se puede obtener la firma
-        }
-    });
-}
 
-
-</script>
 </body>
 
 </html>

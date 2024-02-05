@@ -7,7 +7,7 @@ function gestion_ti() {
 	$("#enviar_formulario_mantenimiento").on("click", enviarFormularioMantenimiento);
 	$("#enviar_formulario_impresoras").on("click", enviarFormularioImpresoras);
 	$("#enviar_formulario_general").on("click", enviarFormularioGeneral);
-	$("#firma").on("click", enviarFirma);
+	$("#firma").on("click", firma);
 
 
 	$('input').on('input', function () {
@@ -520,6 +520,4 @@ function enviarFormularioGeneral() {
 
 	}
 }
-
-
 
