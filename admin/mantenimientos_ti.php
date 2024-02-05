@@ -46,6 +46,7 @@ if ($_SESSION['ingreso'] == true) {
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="tab-content card">
+
                     <div id="panel-ti" class="tab-pane  show active">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -65,6 +66,13 @@ if ($_SESSION['ingreso'] == true) {
                             </li>
                         </ul>
                         <div class="tab-content">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e0362859844e6fc7ba0e86600624df699357d0f4
+>>>>>>> 1f6c2fc44d196f6f7265070f9f651ef9765ae2d5
                             <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
                             <div id="mantenimientos_firma" class="tab-pane fade ">
                                 <div class="card card-primary">
@@ -156,6 +164,17 @@ if ($_SESSION['ingreso'] == true) {
                                         </div>
                                     </div>
                                 </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+                            <div id="home" class="tab-pane fade in active">
+                                <h3>HOME</h3>
+                                <p>Some content.</p>
+>>>>>>> ffb03b3ba0ccffedfbf4ab69835d2e69ddb54dba
+>>>>>>> e0362859844e6fc7ba0e86600624df699357d0f4
+>>>>>>> 1f6c2fc44d196f6f7265070f9f651ef9765ae2d5
                             </div>
                             <!-- /MANRTENIMIENTOS REALIZADOS -->
                             <div id="mantenimientos_realizados" class="tab-pane fade">
@@ -171,7 +190,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                <tr style="text-align: center;">
+                                                    <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -188,17 +207,18 @@ if ($_SESSION['ingreso'] == true) {
                                                         INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
                                                         INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
                                                             $id_mantenimiento_equipo = $row["id_mantenimiento"];
-                                                                    ?>
+                                                    ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_proceso"] ?></td>
                                                                 <td><?php echo $row["fecha_mantenimiento"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                                <td><a href='equipospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -226,24 +246,24 @@ if ($_SESSION['ingreso'] == true) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php
+                                                    <?php
                                                     foreach ($conn->query("SELECT * FROM mantenimiento_impresora a 
                                                     INNER JOIN proceso b ON b.id_proceso = a.id_proceso_fk_2
                                                     INNER JOIN usuarios d ON d.Id_usuario = a.Id_usuario_fk2
                                                     INNER JOIN cargos e ON e.id_cargo = a.id_cargo_fk2") as $row) {
                                                         $id_mantenimiento_impresora = $row["id_impresora"];
-                                                ?>
+                                                    ?>
                                                         <tr style="text-align:center">
                                                             <td><?php echo $row["id_impresora"] ?></td>
                                                             <td><?php echo $row["nombre_proceso"] ?></td>
                                                             <td><?php echo $row["fecha_mantenimiento_impresora"] ?></td>
                                                             <td><?php echo $row["nombre_usuario"] ?></td>
                                                             <td><?php echo $row["nombre_cargo"] ?></td>
-                                                            <td><a href='formato_mantenimiento_impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                            <td><a href='impresorapdf.php?id_mantenimiento_impresora=<?php echo $id_mantenimiento_impresora; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                         </tr>
-                                                <?php
+                                                    <?php
                                                     }
-                                                ?>
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -261,7 +281,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <div class="card-body table-responsive p-0">
                                             <table class="display table table-striped table-valign-middle " width="100%">
                                                 <thead>
-                                                <tr style="text-align: center;">
+                                                    <tr style="text-align: center;">
                                                         <th>#</th>
                                                         <th>Proceso</th>
                                                         <th>Fecha Mantenimiento</th>
@@ -276,7 +296,7 @@ if ($_SESSION['ingreso'] == true) {
                                                     INNER JOIN proceso g ON g.id_proceso = f.id_proceso_fk_3
                                                     INNER JOIN usuarios h ON h.Id_usuario = f.Id_usuario_fk3
                                                     INNER JOIN cargos i ON i.id_cargo = f.id_cargo_fk3") as $row) { {
-                                                        $id_mantenimiento_general = $row["id_general"];
+                                                            $id_mantenimiento_general = $row["id_general"];
                                                     ?>
                                                             <tr style=text-align:center>
                                                                 <td><?php echo $row["id_general"] ?></td>
@@ -284,7 +304,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                 <td><?php echo $row["fecha_mantenimiento3"] ?></td>
                                                                 <td><?php echo $row["nombre_usuario"] ?></td>
                                                                 <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='formato_mantenimiento_generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                                                                <td><a href='generalpdf.php?id_mantenimiento_general=<?php echo $id_mantenimiento_general; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -299,45 +319,11 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-                                            <div class="widget-user-header text-white d-flex align-items-center">
-                                                <img src="img/logo_zf - copia.png" style="width: 400px; height: auto;" class="ml-3">
-                                                <h3 class="widget-user-username text-right flex-grow-1">MANTENIMIENTO PREVENTIVO</h3>
-                                            </div>
+                                            
                                             <div class="card-footer">
-                                                <div class="row">
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">CÓDIGO</h5>
-                                                            <span class="description-text">FO-TI-02</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA IMPLEMENTACIÓN</h5>
-                                                            <span class="description-text">6/06/2017</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA DE ACTUALIZACIÓN</h5>
-                                                            <span class="description-text">24/07/2023</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">VERSIÓN</h5>
-                                                            <span class="description-text">7</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">PÁGINA</h5>
-                                                            <span class="description-text">1</span>
-                                                        </div>
-                                                    </div>
+                                            <div class="row text-center pb-3">
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO EQUIPOS DE COMPUTO</B></h3>
                                                 </div>
-                                                <!-- /AGREGAR USUARIO -->
-
                                                 <div class="card card-info">
                                                     <form id="mantenimiento" method="POST">
                                                         <div class="card-body">
@@ -417,7 +403,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="correo_destinatario">Correo</label>
                                                                     <input list="correo_browsers" class="form-control" id="correo_destinatario" name="correo_destinatario">
                                                                     <datalist id="correo_browsers">
-                                                                    <?php
+                                                                        <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -452,11 +438,11 @@ if ($_SESSION['ingreso'] == true) {
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="serie">Serie</label>
-                                                                    <input  id="serie" name="serie" class="form-control" placeholder="serie" required>
+                                                                    <input id="serie" name="serie" class="form-control" placeholder="serie" required>
                                                                 </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="nombre_usuario">Nombre de Usuario</label>
-                                                                    <input  id="nombre_usuario" name="nombre_usuario" class="form-control" placeholder="Nombre usuario" required>
+                                                                    <input id="nombre_usuario" name="nombre_usuario" class="form-control" placeholder="Nombre usuario" required>
                                                                 </div>
                                                                 <div class="col-md-12"> <br>
                                                                     <div class="card card-info collapsed-card">
@@ -610,10 +596,6 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="estado_suspension">Poner el equipo en estado de suspensión 10 minutos</label>
                                                                     <input type="checkbox" id="estado_suspension" name="estado_suspension" value="SI">
                                                                 </div>
-                                                                <div class="col-3" hidden><br>
-                                                                    <label for="firma">Firma</label>
-                                                                    <input type="text" class="form-control" id="firma" name="firma" value="1" hidden>
-                                                                </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_mantenimiento_equipo">Estado</label>
                                                                     <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
@@ -636,45 +618,12 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-                                            <div class="widget-user-header text-white d-flex align-items-center">
-                                                <img src="img/logo_zf - copia.png" style="width: 400px; height: auto;" class="ml-3">
-                                                <h3 class="widget-user-username text-right flex-grow-1">MANTENIMIENTO PREVENTIVO</h3>
-                                            </div>
+                                            
                                             <div class="card-footer">
-                                                <div class="row">
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">CÓDIGO</h5>
-                                                            <span class="description-text">FO-TI-02</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA IMPLEMENTACIÓN</h5>
-                                                            <span class="description-text">6/06/2017</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA DE ACTUALIZACIÓN</h5>
-                                                            <span class="description-text">24/07/2023</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">VERSIÓN</h5>
-                                                            <span class="description-text">7</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">PÁGINA</h5>
-                                                            <span class="description-text">2</span>
-                                                        </div>
-                                                    </div>
+                                            <div class="row text-center pb-3">
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO IMPRESORA</B></h3>
                                                 </div>
                                                 <!-- /AGREGAR MANTENIMIENTO IMPRESORA -->
-
                                                 <div class="card card-info">
                                                     <form id="mantenimiento" method="POST">
                                                         <div class="card-body">
@@ -754,7 +703,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="correo_destinatario1">Correo</label>
                                                                     <input list="correo_browsers" class="form-control" id="correo_destinatario1" name="correo_destinatario1">
                                                                     <datalist id="correo_browsers">
-                                                                    <?php
+                                                                        <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -896,42 +845,10 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-                                            <div class="widget-user-header text-white d-flex align-items-center">
-                                                <img src="img/logo_zf - copia.png" style="width: 400px; height: auto;" class="ml-3">
-                                                <h3 class="widget-user-username text-right flex-grow-1">MANTENIMIENTO PREVENTIVO</h3>
-                                            </div>
+                                            
                                             <div class="card-footer">
-                                                <div class="row">
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">CÓDIGO</h5>
-                                                            <span class="description-text">FO-TI-02</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA IMPLEMENTACIÓN</h5>
-                                                            <span class="description-text">6/06/2017</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">FECHA DE ACTUALIZACIÓN</h5>
-                                                            <span class="description-text">24/07/2023</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">VERSIÓN</h5>
-                                                            <span class="description-text">7</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">PÁGINA</h5>
-                                                            <span class="description-text">3</span>
-                                                        </div>
-                                                    </div>
+                                                <div class="row text-center pb-3">
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO GENERAL</B></h3>
                                                 </div>
                                                 <!-- /AGREGAR MANTENIMIENTO GENERAL -->
                                                 <div class="card card-info">
@@ -1013,7 +930,7 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="correo_destinatario2">Correo</label>
                                                                     <input list="general_browsers" class="form-control" id="correo_destinatario2" name="correo_destinatario2">
                                                                     <datalist id="general_browsers">
-                                                                    <?php
+                                                                        <?php
                                                                         try {
                                                                             $stmt = $conn->prepare('SELECT * FROM  usuarios ');
                                                                             $stmt->execute();
@@ -1107,55 +1024,6 @@ if ($_SESSION['ingreso'] == true) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /MANTENIMIENTOS PARA FIRMAR CADA USUARIO  -->
-                    <div id="panel-mantenimiento" class="tab-pane">
-                    <div class="card card-lightblue">
-                                    <div class="card-header">
-                                        <h3 class="card-title" style="font-family: serif;">MANTENIMIENTOS EQUIPOS DE COMPUTO</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-body table-responsive p-0">
-                                            <table class="display table table-striped table-valign-middle " width="100%">
-                                                <thead>
-                                                <tr style="text-align: center;">
-                                                        <th>#</th>
-                                                        <th>Proceso</th>
-                                                        <th>Fecha Mantenimiento</th>
-                                                        <th>Responsable</th>
-                                                        <th>Cargo</th>
-                                                        <th>Formato</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    foreach ($conn->query("SELECT m.*, p.nombre_proceso, u.nombre_usuario, c.nombre_cargo
-                                                        FROM mantenimientos m
-                                                        INNER JOIN proceso p ON m.id_proceso_fk = p.id_proceso
-                                                        INNER JOIN usuarios u ON m.Id_usuario_fk = u.id_usuario
-                                                        INNER JOIN cargos c ON m.id_cargo_fk = c.id_cargo") as $row) { {
-                                                            $id_mantenimiento_equipo = $row["id_mantenimiento"];
-                                                                    ?>
-                                                            <tr style=text-align:center>
-                                                                <td><?php echo $row["id_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["nombre_proceso"] ?></td>
-                                                                <td><?php echo $row["fecha_mantenimiento"] ?></td>
-                                                                <td><?php echo $row["nombre_usuario"] ?></td>
-                                                                <td><?php echo $row["nombre_cargo"] ?></td>
-                                                                <td><a href='formato_mantenimientospdf.php?id_mantenimiento_equipo=<?php echo $id_mantenimiento_equipo; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                                                            </tr>
-                                                    <?php }
-                                                    } ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
                     </div>
                 </div>
             </div>
