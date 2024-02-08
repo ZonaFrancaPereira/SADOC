@@ -1,4 +1,4 @@
- <aside class="control-sidebar control-sidebar-dark">
+<aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.content-wrapper -->
@@ -75,7 +75,22 @@
 <script src="dist/js/ti.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<<<<<<< HEAD
 
+=======
+<script>
+  $(function () {
+    
+    $("input[data-bootstrap-switch]").each(function(){
+ 
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+
+    })
+
+  })
+  
+</script>
+>>>>>>> e8c480ba5d1d23cceae80e836a5fa8a7ecc811da
 <script>
   $(document).ready(function() {
     $("table.display").DataTable({
