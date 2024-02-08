@@ -1,4 +1,4 @@
- <aside class="control-sidebar control-sidebar-dark">
+<aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.content-wrapper -->
@@ -77,7 +77,6 @@
 <script src="dist/js/ti.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script>
   $(function () {
     
@@ -90,7 +89,6 @@
   })
   
 </script>
-
 <script>
   $(document).ready(function() {
     $("table.display").DataTable({
