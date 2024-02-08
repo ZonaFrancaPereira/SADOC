@@ -64,6 +64,8 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
 //FIRMA DEL USUARIO AL QUE PERTENECE EL EQUIPO
 $firmaUsuario = "firmas/" . $firma_usuario;
 $firmar = "data:image/png;base64," . base64_encode(file_get_contents($firmaUsuario));
+
+
 ?>
 <!DOCTYPE html>
 <html>
