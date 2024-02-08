@@ -53,8 +53,6 @@
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
-<!-- Bootstrap Switch -->
-<script src="plugins/bootstrap-switch/js/bootstrap-switch.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -77,19 +75,6 @@
 <script src="dist/js/ti.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script>
-  $(function () {
-    
-    $("input[data-bootstrap-switch]").each(function(){
- 
-      $(this).bootstrapSwitch('state', $(this).prop('checked'));
-
-    })
-
-  })
-  
-</script>
 
 <script>
   $(document).ready(function() {
