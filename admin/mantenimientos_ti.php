@@ -109,7 +109,7 @@ if ($_SESSION['ingreso'] == true) {
                                                     <?php }
                                                     } ?>
                                                 </tbody>
-
+                                                
                                                 <tbody>
                                                     <?php
                                                     foreach ($conn->query("SELECT * FROM mantenimiento_impresora a 
@@ -157,6 +157,9 @@ if ($_SESSION['ingreso'] == true) {
                                         </div>
                                     </div>
                                 </div>
+                                <h3>HOME</h3>
+                                <p>Some content.</p>
+
                             </div>
                             <!-- /MANRTENIMIENTOS REALIZADOS -->
                             <div id="mantenimientos_realizados" class="tab-pane fade">
@@ -301,10 +304,10 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-
+                                            
                                             <div class="card-footer">
-                                                <div class="row text-center pb-3">
-                                                    <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO EQUIPOS DE COMPUTO</B></h3>
+                                            <div class="row text-center pb-3">
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO EQUIPOS DE COMPUTO</B></h3>
                                                 </div>
                                                 <div class="card card-info">
                                                     <form id="mantenimiento" method="POST">
@@ -538,83 +541,67 @@ if ($_SESSION['ingreso'] == true) {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-sm-2 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="usuario" name="usuario" value="SI">
-                                                                            <label class="form-check-label" for="usuario">Usuario</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-1 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="clave" name="clave" value="SI">
-                                                                            <label class="form-check-label" for="clave">Clave</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-2 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="estandar" name="estandar" value="SI">
-                                                                            <label class="form-check-label" for="estandar">Estandar</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-2 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="administrador" name="administrador" value="SI">
-                                                                            <label class="form-check-label" for="administrador">Administrador</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-2 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="analisis_completo" name="analisis_completo" value="SI">
-                                                                            <label class="form-check-label" for="analisis_completo">Análisis Completo</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-3 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="bloqueo_usb" name="bloqueo_usb" value="SI">
-                                                                            <label class="form-check-label" for="bloqueo_usb">Bloqueo de memorias USB</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-12">
-                                                                        <hr style="border: 5px solid #2C9EB2;">
-                                                                    </div>
-
-                                                                    <div class="col-sm-4 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="dominio_zfip" name="dominio_zfip" value="SI">
-                                                                            <label class="form-check-label" for="dominio_zfip">Dentro del Dominio de ZFIP</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-4 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input" type="checkbox" id="apagar_pantalla" name="apagar_pantalla" value="SI">
-                                                                            <label class="form-check-label" for="apagar_pantalla">Apagar pantalla a los 3 min</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-4 border-right"><br>
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input checkbox-rojo" type="checkbox" id="estado_suspension" name="estado_suspension">
-                                                                            <label class="form-check-label" for="estado_suspension">Poner el equipo en estado de suspensión 10 minutos</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <label for="estado_mantenimiento_equipo">Estado</label>
-                                                                        <input id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
-                                                                    </div>
-
-                                                                    <div class="col-md-3 col-xs-3 col-sm-3"><br>
-                                                                        <button type="button" class="btn bg-info btn-block" id="enviar_formulario_mantenimiento" name="enviar_formulario_mantenimiento" onclick="enviarFormularioMantenimiento()">ENVIAR</button>
-                                                                    </div>
+                                                                <div class="col-sm-1 border-right"><br>
+                                                                    <label for="usuario">Usuario</label>
+                                                                    <input type="checkbox" id="usuario" name="usuario" value="SI">
                                                                 </div>
+                                                                <div class="col-sm-1 border-right"><br>
+                                                                    <label for="">Clave</label>
+                                                                    <input type="checkbox" id="clave" name="clave" value="SI">
+                                                                </div>
+                                                                <div class="col-sm-1 border-right"><br>
+                                                                    <label for="estandar">Estandar</label>
+                                                                    <input type="checkbox" id="estandar" name="estandar" value="SI">
+                                                                </div>
+                                                                <div class="col-sm-2 border-right"><br>
+                                                                    <label for="administrador">Administrador</label>
+                                                                    <input type="checkbox" id="administrador" name="administrador" value="SI">
+                                                                </div>
+<<<<<<< HEAD
+=======
+
+                                                                <div class="col-sm-2 border-right"><br>
+                                                                    <label for="analisis_completo">Analisis Completo</label>
+                                                                    <input type="checkbox" id="analisis_completo" name="analisis_completo" value="SI">
+                                                                </div>
+                                                                <div class="col-sm-3 border-right"><br>
+                                                                    <label for="bloqueo_usb">Bloqueo de memorias USB</label>
+                                                                    <input type="checkbox" id="bloqueo_usb" name="bloqueo_usb" value="SI">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <hr style="border: 5px solid #2C9EB2;">
+                                                                </div>
+                                                                <div class="col-sm-3 border-right"><br>
+                                                                    <label for="dominio_zfip">Dentro del Dominio de ZFIP</label>
+                                                                    <input type="checkbox" id="dominio_zfip" name="dominio_zfip" value="SI">
+                                                                </div>
+                                                                <div class="col-sm-3 border-right"><br>
+                                                                    <label for="apagar_pantalla">Apagar pantalla a los 3 min</label>
+                                                                    <input type="checkbox" id="apagar_pantalla" name="apagar_pantalla" value="SI">
+                                                                </div>
+                                                                <div class="col-sm-4 border-right"><br>
+                                                                    <label for="estado_suspension">Poner el equipo en estado de suspensión 10 minutos</label>
+                                                                    <input type="checkbox" id="estado_suspension" name="estado_suspension" value="SI">
+                                                                    
+                                                                </div>
+                                                                <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Bootstrap Switch</h3>
+              </div>
+              <div class="card-body">
+                <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch>
+                <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
+              </div>
+            </div>
+                                                                <div class="col-3"><br>
+                                                                    <label for="estado_mantenimiento_equipo">Estado</label>
+                                                                    <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
+                                                                </div>
+                                                                <div class="col-md-3 col-xs-3 col-sm-3">
+                                                                    <br>
+                                                                    <button type="button" class="btn bg-info btn-block" id="enviar_formulario_mantenimiento" name="enviar_formulario_mantenimiento" onclick="enviarFormularioMantenimiento()">ENVIAR</button>
+                                                                </div>
+>>>>>>> be85368eea9a07e6e62db1698ea77b117ec56471
                                                             </div>
                                                         </div>
                                                     </form>
@@ -629,10 +616,10 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-
+                                            
                                             <div class="card-footer">
-                                                <div class="row text-center pb-3">
-                                                    <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO IMPRESORA</B></h3>
+                                            <div class="row text-center pb-3">
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO IMPRESORA</B></h3>
                                                 </div>
                                                 <!-- /AGREGAR MANTENIMIENTO IMPRESORA -->
                                                 <div class="card card-info">
@@ -856,10 +843,10 @@ if ($_SESSION['ingreso'] == true) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-widget widget-user">
-
+                                            
                                             <div class="card-footer">
                                                 <div class="row text-center pb-3">
-                                                    <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO GENERAL</B></h3>
+                                                <h3 class="widget-user-username flex-grow-1"><B>MANTENIMIENTO PREVENTIVO GENERAL</B></h3>
                                                 </div>
                                                 <!-- /AGREGAR MANTENIMIENTO GENERAL -->
                                                 <div class="card card-info">
@@ -1025,7 +1012,6 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <br>
                                                                     <button type="button" class="btn bg-info btn-block" id="enviar_formulario_general" name="enviar_formulario_general" onclick="enviarFormularioGeneral()">ENVIAR</button>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </form>
@@ -1042,11 +1028,87 @@ if ($_SESSION['ingreso'] == true) {
         </div>
     </div>
 </div>
-
-
+<!-- Bootstrap Switch -->
+<script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <!-- BS-Stepper -->
 <?php require('footer.php'); ?>
+<script>
+    $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
 
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    })
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    })
+
+  })
+</script>
 </body>
 
 </html>

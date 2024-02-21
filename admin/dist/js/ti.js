@@ -225,11 +225,10 @@ function enviarFormularioMantenimiento() {
 	var estado_suspension = $('#estado_suspension').is(':checked') ? 'SI' : 'NO';
 	var firma= $('#firma').val();
 	var estado_mantenimiento_equipo= $('#estado_mantenimiento_equipo').val();
-	
 
 
 	
-     alert (estado_suspension);
+     alert (id_proceso_fk + fecha_mantenimiento + Id_usuario_fk + id_cargo_fk + correo_destinatario + marca + modelo + serie + nombre_usuario + soplar_partes_externas + verificar_usuario + liberar_espacio + actualizar_logos + lubricar_puertos + verificar_contraseñas + desinstalar_programas + organizar_cableado + limpieza_equipo + formato_asignacion_equipo + desfragmentar + limpiar_partes_interna + depurar_temporales + verificar_actualizaciones + usuario + clave + estandar + administrador + analisis_completo + bloqueo_usb + dominio_zfip + apagar_pantalla + estado_suspension + firma);
     // Enviar la solicitud AJAX para actualizar el estado del usuario
 	if (id_cargo_fk == "" || fecha_mantenimiento == "") {
 		Swal.fire(
