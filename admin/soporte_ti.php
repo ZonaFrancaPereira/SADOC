@@ -15,6 +15,12 @@ if ($_SESSION['ingreso'] == true) {
             <?php
             }
             ?>
+            <li class="nav-item" name="">
+                <a data-toggle="tab" href="#principal" class="nav-link">
+                    <i class="fas fa-th-large"></i>
+                    <p>Principal</p>
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-search-plus"></i>
@@ -24,14 +30,9 @@ if ($_SESSION['ingreso'] == true) {
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+
                     <li class="nav-item" name="">
-                        <a data-toggle="tab" href="#principal" class="nav-link">
-                            <i class="fas fa-th-large"></i>
-                            <p>Principal</p>
-                        </a>
-                    </li>
-                    <li class="nav-item" name="">
-                        <a data-toggle="tab" href="#solicitudes" class="nav-link">
+                        <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
                             <i class="nav-icon fas fa-sync-alt"></i>
                             <p>Solicitudes de Soporte</p>
                         </a>
@@ -70,126 +71,309 @@ if ($_SESSION['ingreso'] == true) {
                 <div class="tab-content card">
                     <!-- /.panel principal -->
                     <div id="principal" class="tab-pane">
-                        1
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-default">
+                                    <div class="card-header bg-gradient-danger">
+                                        <h3 class="card-title text-white">
+                                            <i class="fas fa-bullhorn mr-2"></i>
+                                            Escala de Urgencia
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="alert bg-danger text-center">
+                                                    <h4 class="mb-0">1</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="alert bg-danger">
+                                                    <p class="mb-0">Urgente: se tendrá máximo un día para ser atendidas</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="alert bg-warning text-center">
+                                                    <h4 class="mb-0">2</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="alert bg-warning">
+                                                    <p class="mb-0">Urgencia media: tendrán 2 días para ser cerradas</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="alert bg-success text-center">
+                                                    <h4 class="mb-0">3</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="alert bg-success">
+                                                    <p class="mb-0">Prioridad baja: tendrán 4 días para su cierre</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-default">
+                                    <div class="card-header bg-gradient-warning">
+                                        <h3 class="card-title text-white">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            Respuesta
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert bg-danger">
+                                            <h5 class="mb-3"><i class="icon fas fa-ban"></i> Urgente!</h5>
+                                            <p>Solicitudes que requieren atención inmediata debido a que afectan significativamente la productividad del proceso y pueden causar interrupciones graves si no se abordan de inmediato.</p>
+                                        </div>
+                                        <div class="alert bg-warning">
+                                            <h5 class="mb-3"><i class="icon fas fa-info"></i> Urgencia media!</h5>
+                                            <p>Solicitudes que son importantes para mantener la eficiencia del proceso y que, si no se atienden oportunamente, podrían generar problemas a medio plazo.</p>
+                                        </div>
+                                        <div class="alert bg-success">
+                                            <h5 class="mb-3"><i class="icon fas fa-exclamation-triangle"></i> Prioridad baja!</h5>
+                                            <p>Solicitudes que tienen cierta importancia pero que no tienen un impacto inmediato en la productividad del proceso. Se pueden abordar en un plazo razonable sin causar grandes inconvenientes.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card card-default">
+                                    <div class="card-header bg-gradient-warning">
+                                        <h3 class="card-title text-white">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            Solicitudes Realizadas
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Descripción de la Solicitud</th>
+                                                        <th>Fecha</th>
+                                                        <th>Escala de Urgencia</th>
+                                                        <th>Solución</th>
+                                                        <th>Fecha Solución</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($conn->query("SELECT * FROM soporte where Id_usuario_fk = $_SESSION[Id]") as $row) { ?>
+                                                        <tr>
+                                                            <td><?php echo $row["descripcion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_soporte"] ?></td>
+                                                            <td><?php echo $row["urgencia"] ?></td>
+                                                            <td><?php echo $row["solucion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_solucion"] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <!-- /.SOLICITUDES REALIZADAS-->
-                    <div id="solicitudes" class="tab-pane">
-                        2
+                    <div id="solicitudes_soporte" class="tab-pane">
+                        <div class="col-md-12">
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Solicitudes Realizadas
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="display table table-striped table-valign-middle " width="100%">
+                                            <thead>
+                                                <tr style="text-align: center;">
+                                                    <th>Descripción de la Solicitud</th>
+                                                    <th>Fecha</th>
+                                                    <th>Escala de Urgencia</th>
+                                                    <th>Solución</th>
+                                                    <th>Fecha Solucion</th>
+                                                    <th>Asignar Urgencia</th>
+                                                    <th>Responder</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+
+                                                foreach ($conn->query("SELECT * FROM soporte") as $row) { {
+                                                        $id_soporte = $row["id_soporte"];
+                                                        $id_soporte1 = $row["id_soporte"];
+                                                ?>
+                                                        <tr style=text-align:center>
+                                                            <td><?php echo $row["descripcion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_soporte"] ?></td>
+                                                            <td><?php echo $row["urgencia"] ?></td>
+                                                            <td><?php echo $row["solucion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_solucion"] ?></td>
+                                                            <td><button class="btn bg-danger" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
+                                                            <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
+                                                        </tr>
+                                                <?php }
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="content">
+                            <div class="modal fade" id="modal-urgencia">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h4 class="modal-title">Asignar el tipo de Urgencia a la Solicitud</h4>
+                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="form_soporte_urgencia" method="POST">
+                                                <div class="card border-danger">
+                                                    <div class="card-header bg-danger text-white" hidden>
+                                                        <h5 class="card-title mb-0">ID de Soporte:</h5>
+                                                        <input type="text" class="form-control mb-3" value="" id="id_soporte" name="id_soporte" readonly>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="btn-group btn-group-toggle d-flex justify-content-center" data-toggle="buttons" id="grupo_urgencia">
+                                                            <label class="btn btn-outline-danger active">
+                                                                <input type="radio" name="urgencia" value="1" autocomplete="off" checked> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-warning">
+                                                                <input type="radio" name="urgencia" value="2" autocomplete="off"> 2
+                                                            </label>
+                                                            <label class="btn btn-outline-success">
+                                                                <input type="radio" name="urgencia" value="3" autocomplete="off"> 3
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-transparent border-top-0">
+                                                        <button type="button" class="btn bg-info text-white btn-block" id="responder_urgencia" name="responder_urgencia">Asignar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="content">
+                            <div class="modal fade" id="modal-solicitud">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info">
+                                            <h4 class="modal-title text-white">Responder Solicitud de Soporte</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="form_soporte_respuesta" method="POST">
+                                                <div class="form-group" hidden>
+                                                    <label>Desea Darle Respuesta a esta Solicitud de Soporte:</label><input type="text" class="form-control" value="" name="id_soporte1" id="id_soporte1" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="solucion_soporte">Solución</label>
+                                                    <textarea class="form-control" id="solucion_soporte" name="solucion_soporte" rows="3" placeholder="Escribe aquí la solución"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fecha_solucion">Fecha Solución</label>
+                                                    <input type="date" name="fecha_solucion" class="form-control" id="fecha_solucion" required>
+                                                </div>
+                                                <button type="button" class="btn btn-info btn-block" id="responder_solicitud" name="responder_solicitud">Responder</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                     </div>
                     <!-- /.FORMULARIO PARA REALIZAR SOLICITUD DE SOPORTE -->
                     <div id="realizar_solicitud" class="tab-pane">
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">General Elements</h3>
+                        <div class="card card-custom">
+                            <div class="card-header bg-warning">
+                                <center>
+                                    <h3 class="card-title">¡Haz tu Solicitud de Soporte Aquí!</h3>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <form>
+                            <form id="soporte_ti" method="POST" enctype="multipart/form-data">
+                                <div class="card-body">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Correo</label>
-                                                <input type="text" class="form-control" placeholder="Enter ...">
-                                            </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="correo">Correo</label>
+                                            <input list="correo_soporte_browsers" class="form-control" id="correo_soporte" name="correo_soporte" placeholder="Correo">
+                                            <datalist id="correo_soporte_browsers">
+                                                <?php
+                                                try {
+                                                    $stmt = $conn->prepare('SELECT * FROM usuarios');
+                                                    $stmt->execute();
+                                                    if ($stmt->rowCount() > 0) {
+                                                        while ($row = $stmt->fetch()) {
+                                                            $correo_usuario = $row["correo_usuario"];
+                                                            $Id_usuario_soporte = $row["Id_usuario"];
+                                                            $nombre_usuario = $row["nombre_usuario"];
+                                                            $apellidos_usuario = $row["apellidos_usuario"];
+                                                            $proceso_usuario_fk = $row["proceso_usuario_fk"];
+                                                            echo '<option value="' . $correo_usuario . '" data-nombreusuario="' . $nombre_usuario . ' ' .  $apellidos_usuario . '" data-procesousuario="' . $proceso_usuario_fk . '" data-idusuario="' . $Id_usuario_soporte . '">' . $nombre_usuario . ' ' .  $apellidos_usuario . '</option>';
+                                                        }
+                                                    }
+                                                } catch (PDOException $e) {
+                                                    echo "Error en el servidor";
+                                                }
+                                                ?>
+                                            </datalist>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Usuario</label>
-                                                <input type="text" class="form-control" placeholder="Enter ...">
-                                            </div>
+                                        <div class="col-md-6 mb-3" hidden>
+                                            <label for="id_usuario_soporte">id usuario</label>
+                                            <input type="text" class="form-control" id="id_usuario_soporte" name="id_usuario_soporte" placeholder="ID de Usuario" readonly>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Proceso</label>
-                                                <input type="text" class="form-control" placeholder="Enter ...">
-                                            </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="usuario_soporte">Nombre de Usuario</label>
+                                            <input type="text" class="form-control" id="usuario_soporte" name="usuario_soporte" placeholder="Nombre de Usuario" readonly>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <!-- textarea -->
-                                            <div class="form-group">
-                                                <label>Textarea</label>
-                                                <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                            </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="proceso_soporte">Proceso</label>
+                                            <input type="text" class="form-control" id="proceso_soporte" name="proceso_soporte" placeholder="Proceso" readonly>
                                         </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="textarea">Descripción de la solicitud</label>
+                                            <textarea class="form-control" id="descripcion_soporte" name="descripcion_soporte" rows="3" placeholder="Descripción"></textarea>
+                                        </div>
+
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card card-default">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div id="actions" class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="btn-group w-100">
-                                                                <span class="btn btn-success col fileinput-button">
-                                                                    <i class="fas fa-plus"></i>
-                                                                    <span>Add files</span>
-                                                                </span>
-                                                                <button type="submit" class="btn btn-primary col start">
-                                                                    <i class="fas fa-upload"></i>
-                                                                    <span>Start upload</span>
-                                                                </button>
-                                                                <button type="reset" class="btn btn-warning col cancel">
-                                                                    <i class="fas fa-times-circle"></i>
-                                                                    <span>Cancel upload</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 d-flex align-items-center">
-                                                            <div class="fileupload-process w-100">
-                                                                <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table table-striped files" id="previews">
-                                                        <div id="template" class="row mt-2">
-                                                            <div class="col-auto">
-                                                                <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                                                            </div>
-                                                            <div class="col d-flex align-items-center">
-                                                                <p class="mb-0">
-                                                                    <span class="lead" data-dz-name></span>
-                                                                    (<span data-dz-size></span>)
-                                                                </p>
-                                                                <strong class="error text-danger" data-dz-errormessage></strong>
-                                                            </div>
-                                                            <div class="col-4 d-flex align-items-center">
-                                                                <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-auto d-flex align-items-center">
-                                                                <div class="btn-group">
-                                                                    <button class="btn btn-primary start">
-                                                                        <i class="fas fa-upload"></i>
-                                                                        <span>Start</span>
-                                                                    </button>
-                                                                    <button data-dz-remove class="btn btn-warning cancel">
-                                                                        <i class="fas fa-times-circle"></i>
-                                                                        <span>Cancel</span>
-                                                                    </button>
-                                                                    <button data-dz-remove class="btn btn-danger delete">
-                                                                        <i class="fas fa-trash"></i>
-                                                                        <span>Delete</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.card-body -->
-                                                <div class="card-footer">
-                                                    Visit <a href="https://www.dropzonejs.com">dropzone.js documentation</a> for more examples and information about the plugin.
+                                    <div class="col-md-12">
+                                        <div id="actions">
+                                            <div class="col-lg-6">
+                                                <div class="btn-group w-100">
+                                                    <input type="file" class="btn btn-success col" id="imagenes_soporte" name="imagenes_soporte">
+                                                    <button type="submit" class="btn btn-primary col start" hidden>
+                                                        <i class="fas fa-upload"></i>
+                                                        <span>Start upload</span>
+                                                    </button>
+                                                    <button type="reset" class="btn btn-warning col cancel">
+                                                        <i class="fas fa-times-circle"></i>
+                                                        <span>Cancelar</span>
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <!-- /.card -->
                                         </div>
+                                    </div><br>
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-outline-warning btn-block" id="enviar_soporte" name="enviar_soporte"><i class="fas fa-paper-plane"></i>Enviar</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -197,32 +381,43 @@ if ($_SESSION['ingreso'] == true) {
         </div>
     </div>
 </div>
-
 <?php require('footer.php'); ?>
 <script>
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
+    $('#modal-urgencia').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id_soporte = button.data('id_soporte'); // Extract info from data-* attributes
 
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-        url: "/target-url", // Set the url
-        thumbnailWidth: 80,
-        thumbnailHeight: 80,
-        parallelUploads: 20,
-        previewTemplate: previewTemplate,
-        autoQueue: false, // Make sure the files aren't queued until manually added
-        previewsContainer: "#previews", // Define the container to display the previews
-        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
 
-    document.querySelector("#actions .start").onclick = function() {
-        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    }
-    document.querySelector("#actions .cancel").onclick = function() {
-        myDropzone.removeAllFiles(true)
-    }
+        modal.find('.modal-body #id_soporte').val(id_soporte);
+    });
+    $('#modal-solicitud').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id_soporte1 = button.data('id_soporte1'); // Extract info from data-* attributes
+
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+
+        modal.find('.modal-body #id_soporte1').val(id_soporte1);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtenemos todos los botones de urgencia
+        const urgenciaButtons = document.querySelectorAll(".btn-group .btn");
+
+        // Agregamos un listener de clic a cada botón
+        urgenciaButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                // Obtenemos el valor de urgencia del atributo data-value del botón
+                const urgenciaValue = this.getAttribute("data-value");
+
+                // Asignamos el valor de urgencia al campo de entrada oculto
+                document.getElementById("urgencia").value = urgenciaValue;
+            });
+        });
+    });
 </script>
 </body>
 

@@ -615,7 +615,6 @@ if ($_SESSION['ingreso'] == true) {
                                                                         <button type="button" class="btn bg-info btn-block" id="enviar_formulario_mantenimiento" name="enviar_formulario_mantenimiento" onclick="enviarFormularioMantenimiento()">ENVIAR</button>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </form>
