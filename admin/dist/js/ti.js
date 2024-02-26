@@ -7,8 +7,10 @@ function gestion_ti() {
 	$("#enviar_formulario_mantenimiento").on("click", enviarFormularioMantenimiento);
 	$("#enviar_formulario_impresoras").on("click", enviarFormularioImpresoras);
 	$("#enviar_formulario_general").on("click", enviarFormularioGeneral);
-	$("#firma").on("click", firma);
-
+	$("#enviar_soporte").on("click", enviarSoporte);
+	$("#correo_soporte").on("input", actualizarDatosUsuario);
+	$("#responder_urgencia").on("click", responderUrgencia );
+	$("#responder_solicitud").on("click", responderSolicitud );
 
 	$('input').on('input', function () {
 
@@ -520,4 +522,186 @@ function enviarFormularioGeneral() {
 
 	}
 }
+
+function enviarSoporte() {
+    // Obtener los valores de los campos del formulario
+    var correo_soporte = $('#correo_soporte').val();
+	var id_usuario_soporte = $('#id_usuario_soporte').val();
+    var usuario_soporte = $('#usuario_soporte').val();
+    var proceso_soporte = $('#proceso_soporte').val();
+    var descripcion_soporte = $('#descripcion_soporte').val();
+    var imagenes_soporte = $('#imagenes_soporte')[0].files[0];
+
+    // Enviar la solicitud AJAX para insertar la solicitud de soporte
+    if (id_usuario_soporte == "" || descripcion_soporte == "") {
+        Swal.fire(
+            'Atención',
+            'Debes diligenciar todos los campos para poder continuar',
+            'error'
+        )
+    } else {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que quieres radicar esta solicitud de Soporte?',
+            text: "Recuerda que tu solicitud sera respondida en el plazo establecido",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Enviar',
+            cancelButtonText: 'No, Cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var formData = new FormData();
+                formData.append('correo_soporte', correo_soporte);
+				formData.append('id_usuario_soporte', id_usuario_soporte);
+                formData.append('usuario_soporte', usuario_soporte);
+                formData.append('proceso_soporte', proceso_soporte);
+                formData.append('descripcion_soporte', descripcion_soporte);
+                formData.append('imagenes_soporte', imagenes_soporte); // Solo se pasa el objeto File, no el nombre del archivo
+
+                $.ajax({
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    url: 'php/insertar_solicitud_soporte.php',
+                    success: function (resultacpm) {
+                        Swal.fire({
+                            title: 'Buen Trabajo',
+                            text: 'Desde el Area de T.I te darán una respuesta dependiendo de la urgencia de tu solicitud',
+                            icon: 'success',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '';
+                            }
+                        });
+                    }
+                });
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Envío Cancelado',
+                    'Aun estás a salvo :)',
+                    'error'
+                )
+            }
+        })
+    }
+}
+
+function actualizarDatosUsuario() {
+    var correoSeleccionado = $('#correo_soporte').val();
+    var optionSeleccionada = $('#correo_soporte_browsers option[value="' + correoSeleccionado + '"]');
+    var idUsuario = optionSeleccionada.data('idusuario');
+    var nombreUsuario = optionSeleccionada.data('nombreusuario');
+    var procesoUsuario = optionSeleccionada.data('procesousuario');
+
+    $('#id_usuario_soporte').val(idUsuario);
+    $('#usuario_soporte').val(nombreUsuario);
+    $('#proceso_soporte').val(procesoUsuario);
+}
+
+function responderUrgencia() {
+    var urgencia = $('#grupo_urgencia input[name="urgencia"]:checked').val();
+    var id_soporte = $('#id_soporte').val();
+
+    // Crear el objeto JSON con los datos del formulario
+    var data = {
+        responder_urgencia: true, // Agrega este parámetro
+        urgencia: urgencia,
+        id_soporte: id_soporte
+    };
+
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: 'php/insertar_respuesta_soporte.php',
+        success: function (resultacpm) {
+            Swal.fire({
+                title: 'Buen Trabajo',
+                text: 'Se guardo la Asignación de Urgencia Correctamente',
+                icon: 'success',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '';
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            Swal.fire(
+                'Error',
+                'Hubo un problema al guardar el mantenimiento',
+                'error'
+            );
+        }
+    });
+}
+
+function responderSolicitud() {
+    var solucion_soporte = $('#solucion_soporte').val();
+    var fecha_solucion = $('#fecha_solucion').val();
+    var id_soporte1 = $('#id_soporte1').val();
+
+    // Validar que los campos estén diligenciados
+    if (solucion_soporte === '' || fecha_solucion === '' || id_soporte1 === '') {
+        Swal.fire(
+            'Campos incompletos',
+            'Por favor diligencie todos los campos',
+            'warning'
+        );
+        return; // Detener la ejecución si los campos están incompletos
+    }
+
+    // Crear el objeto JSON con los datos del formulario
+    var data = {
+        responder_solicitud: true,
+        solucion_soporte: solucion_soporte,
+        fecha_solucion: fecha_solucion,
+        id_soporte1: id_soporte1
+    };
+
+    // Enviar la solicitud AJAX para actualizar el estado del usuario
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: 'php/insertar_respuesta_soporte.php',
+        success: function (resultacpm) {
+            Swal.fire({
+                title: 'Buen Trabajo',
+                text: 'Se dio respuesta a la solicitud de Soporte',
+                icon: 'success',
+            }).then((result) => {
+                // Redirige a la página después de cerrar el SweetAlert
+                if (result.isConfirmed) {
+                    window.location.href = '';
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            Swal.fire(
+                'Error',
+                'Hubo un problema al guardar la solución',
+                'error'
+            );
+        }
+    });
+}
+
+
+
+
+
+
+
+
 
