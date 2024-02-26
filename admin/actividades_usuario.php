@@ -71,42 +71,58 @@ $id_actividad = 0;
           </div>
         </div>
         <?php
-        // Utiliza sentencias preparadas para evitar inyección de SQL
-        $stmt = $conn->prepare("
-                UPDATE actividades_acpm
-                SET estado_actividad = 'Completa'
-                WHERE id_actividad = :id_actividad
-                AND EXISTS (
-                    SELECT 1
-                    FROM detalle_actividad
-                    WHERE id_actividad_fk = :id_actividad
-                )
-            ");
-        // Asigna valores a los parámetros
-        $stmt->bindParam(':id_actividad', $id_actividad, PDO::PARAM_INT);
+    // Utiliza sentencias preparadas para evitar inyección de SQL
+    $stmt = $conn->prepare("
+            UPDATE actividades_acpm
+            SET estado_actividad = 'Completa'
+            WHERE id_actividad = :id_actividad
+            AND EXISTS (
+                SELECT 1
+                FROM detalle_actividad
+                WHERE id_actividad_fk = :id_actividad
+            )
+        ");
+    // Asigna valores a los parámetros
+    $stmt->bindParam(':id_actividad', $id_actividad, PDO::PARAM_INT);
 
-        // Ejecuta la consulta preparada
-        $stmt->execute();
-        
-    $registros = $stmt->rowCount();
-
-    if ($registros > 0) {
-      
-      echo "<script>
-      Swal.fire({
-        title: 'Buen Trabajo',
-        text: 'Se registró la ACPM con éxito',
-        icon: 'success',
-      }).then((result) => {
-        // Redirige a la página después de cerrar el SweetAlert
-        if (result.isConfirmed) {
-          window.location.href = 'acpm.php';
+    // Ejecuta la consulta preparada
+    if ($stmt->execute()) {
+        $registros = $stmt->rowCount();
+        if ($registros > 0) {
+            echo "<script>
+                Swal.fire({
+                    title: 'Buen Trabajo',
+                    text: 'Se registró la ACPM con éxito',
+                    icon: 'success',
+                }).then((result) => {
+                    // Redirige a la página después de cerrar el SweetAlert
+                    if (result.isConfirmed) {
+                        window.location.href = 'acpm.php';
+                    }
+                });
+                </script>";
+        } else {
+            // No se actualizó ningún registro
+            echo "<script>
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se encontraron actividades para actualizar',
+                    icon: 'error',
+                });
+                </script>";
         }
-      });
-      </script>";
-
+    } else {
+        // Error al ejecutar la consulta preparada
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al actualizar las actividades',
+                icon: 'error',
+            });
+            </script>";
     }
-        ?>
+?>
+
 
         <!-- MODAL PARA SUBIR EVIDENCIA -->
         <section class="content">
