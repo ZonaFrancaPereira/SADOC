@@ -165,8 +165,12 @@ if ($_SESSION['ingreso'] == true) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php foreach ($conn->query("SELECT * FROM soporte where Id_usuario_fk = $_SESSION[Id]") as $row) { ?>
-                                                        <tr>
+                                                    <?php foreach ($conn->query("SELECT * FROM soporte where Id_usuario_fk = $_SESSION[Id]") as $row) {
+                                                        $urgencia = $row["urgencia"]; // Obtener el valor de urgencia
+                                                        // Determinar el color de fondo de la fila
+                                                        $colorFondo = determinarColor($urgencia);
+                                                    ?>
+                                                        <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
                                                             <td><?php echo $row["descripcion_soporte"] ?></td>
                                                             <td><?php echo $row["fecha_soporte"] ?></td>
                                                             <td><?php echo $row["urgencia"] ?></td>
@@ -182,7 +186,6 @@ if ($_SESSION['ingreso'] == true) {
                             </div>
                         </div>
                     </div>
-
                     <!-- /.SOLICITUDES REALIZADAS-->
                     <div id="solicitudes_soporte" class="tab-pane">
                         <div class="col-md-12">
@@ -198,6 +201,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <table class="display table table-striped table-valign-middle " width="100%">
                                             <thead>
                                                 <tr style="text-align: center;">
+                                                <th>Nombre del Usuario</th>
                                                     <th>Descripción de la Solicitud</th>
                                                     <th>Fecha</th>
                                                     <th>Escala de Urgencia</th>
@@ -209,22 +213,44 @@ if ($_SESSION['ingreso'] == true) {
                                             </thead>
                                             <tbody>
                                                 <?php
-
-                                                foreach ($conn->query("SELECT * FROM soporte") as $row) { {
-                                                        $id_soporte = $row["id_soporte"];
-                                                        $id_soporte1 = $row["id_soporte"];
+                                                // Definir una función para determinar el color basado en la escala de urgencia
+                                                function determinarColor($urgencia)
+                                                {
+                                                    switch ($urgencia) {
+                                                        case 1:
+                                                            return 'bg-danger'; //Rojo para alta urgencia 
+                                                            break;
+                                                        case 2:
+                                                            return 'bg-warning'; // Amarillo para media urgencia
+                                                            break;
+                                                        case 3:
+                                                            return 'bg-success'; // Verde para baja urgencia
+                                                            break;
+                                                        default:
+                                                            return ''; // Por defecto no se aplica ningún color
+                                                            break;
+                                                    }
+                                                }
+                                                foreach ($conn->query("SELECT * FROM soporte") as $row) {
+                                                    $id_soporte = $row["id_soporte"];
+                                                    $id_soporte1 = $row["id_soporte"];
+                                                    $urgencia = $row["urgencia"];
+                                                    // Determinar el color de fondo de la fila
+                                                    $colorFondo = determinarColor($urgencia);
                                                 ?>
-                                                        <tr style=text-align:center>
-                                                            <td><?php echo $row["descripcion_soporte"] ?></td>
-                                                            <td><?php echo $row["fecha_soporte"] ?></td>
-                                                            <td><?php echo $row["urgencia"] ?></td>
-                                                            <td><?php echo $row["solucion_soporte"] ?></td>
-                                                            <td><?php echo $row["fecha_solucion"] ?></td>
-                                                            <td><button class="btn bg-danger" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
-                                                            <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
-                                                        </tr>
-                                                <?php }
-                                                } ?>
+                                                    <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
+                                                    <td><?php echo $row["usuario_soporte"] ?></td>
+                                                        <td><?php echo $row["descripcion_soporte"] ?></td>
+                                                        <td><?php echo $row["fecha_soporte"] ?></td>
+                                                        <td><?php echo $row["urgencia"] ?></td>
+                                                        <td><?php echo $row["solucion_soporte"] ?></td>
+                                                        <td><?php echo $row["fecha_solucion"] ?></td>
+                                                        <td><button class="btn bg-danger" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
+                                                        <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -297,7 +323,6 @@ if ($_SESSION['ingreso'] == true) {
                                 </div>
                             </div>
                         </section>
-
                     </div>
                     <!-- /.FORMULARIO PARA REALIZAR SOLICITUD DE SOPORTE -->
                     <div id="realizar_solicitud" class="tab-pane">

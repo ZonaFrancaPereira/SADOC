@@ -677,7 +677,7 @@ function responderSolicitud() {
         success: function (resultacpm) {
             Swal.fire({
                 title: 'Buen Trabajo',
-                text: 'Se Agrego el usuario correctamente',
+                text: 'Se dio respuesta a la solicitud de Soporte',
                 icon: 'success',
             }).then((result) => {
                 // Redirige a la página después de cerrar el SweetAlert
@@ -696,6 +696,7 @@ function responderSolicitud() {
         }
     });
 }
+
 
 
 
