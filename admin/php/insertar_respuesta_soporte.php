@@ -101,15 +101,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_soporte1 = $_POST["id_soporte1"];
         $solucion_soporte = $_POST["solucion_soporte"];
         $fecha_solucion = $_POST["fecha_solucion"];
+        $usuario_respuesta = $_POST["usuario_respuesta"];
 
         try {
             // Preparar la consulta de actualización con el ID de soporte en la cláusula WHERE
-            $stmt = $conn->prepare("UPDATE soporte SET solucion_soporte = ?, fecha_solucion = ? WHERE id_soporte = ?");
+            $stmt = $conn->prepare("UPDATE soporte SET solucion_soporte = ?, fecha_solucion = ?, usuario_respuesta = ? WHERE id_soporte = ?");
 
             // Asignar los parámetros y ejecutar la consulta
             $stmt->bindParam(1, $solucion_soporte);
             $stmt->bindParam(2, $fecha_solucion);
-            $stmt->bindParam(3, $id_soporte1);
+            $stmt->bindParam(3, $usuario_respuesta);
+            $stmt->bindParam(4, $id_soporte1);
 
             if ($stmt->execute()) {
                 // Éxito al guardar en la base de datos
