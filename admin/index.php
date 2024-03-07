@@ -199,7 +199,11 @@
                             echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
                             echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
                             echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Aprobada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden'><button class='btn btn-success'><i class='fas fa-thumbs-up'></i></button></a></td>";
-                            echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Denegada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-danger'><i class='fas fa-times-circle'></i> </button></a></td>";
+                               //echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Denegada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-danger'><i class='fas fa-times-circle'></i> </button></a></td>";
+                          ?>
+                          <td><button type="button" class="btn bg-danger" id="orden_rechazada" name="" data-toggle="modal" data-target="#modal-rechazo" data-id_orden="<?php echo $id_orden ?>" data-nombre_usuario="<?php echo $nombre_usuario ?>" data-apellidos_usuario="<?php echo $apellidos_usuario ?>" data-fecha_orden="<?php echo $fecha_orden ?>" data-total_orden="<?php echo $total_orden ?>" data-correo_usuario="<?php echo $correo_usuario ?>"><i class='fas fa-times-circle'></i></button>
+                          </td>
+                    <?php
                             echo "</tr>";
                             $registros++;
                           }
@@ -350,8 +354,74 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- ./wrapper -->
+ <!-- /.MODAL RECHAZO -->
+ <div class="modal fade" id="modal-rechazo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+       <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header btn bg-danger btn-block">
+          <h4 class="modal-title">RECHAZAR ORDEN DE COMPRA</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <form action="editar_estado.php" id="form_orden" method="GET">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="row">
+                  <div class="col-md-6 col-xs-12 col-sm-12">
+                  <label>Desea rechazar la siguiente orden de compra : # </label><input type="number" class="form-control" value="" name="id_orden" id="id_orden" readonly>
+                </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                      <label for="fecha_actividad">Fecha</label>
+                      <input type="date" name="fecha_orden" class="form-control" id="fecha_orden" readonly>
+                      <input type="hidden" name="nombre_usuario" class="form-control" id="nombre_usuario" readonly>
+                      <input type="hidden" name="apellidos_usuario" class="form-control" id="apellidos_usuario" readonly>
+                      <input type="hidden" name="total_orden" class="form-control" id="total_orden" readonly>
+                      <input type="hidden" name="correo_usuario" class="form-control" id="correo_usuario" readonly>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                      <label for="descripcion_declinado">Descripción del rechazo</label>
+                      <textarea class="form-control" id="descripcion_declinado" name="descripcion_declinado"></textarea>
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-12">
+                      <label for="estado_orden">Estado de la Orden</label><input type="text" class="form-control" value="Denegada" name="estado_orden" id="estado_orden" readonly>
+                    </div>                    
+                  </div>
+                  <!-- /.card-body -->
+                  <br>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <button type="submit" class="btn bg-primary btn-block " id="declinar_orden" name="enviar_actividad">Guardar Cambios</button>
+                  </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#modal-rechazo').on('show.bs.modal', function (event){
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var id_orden = button.data('id_orden'); // Extract info from data-* attributes
+      var nombre_usuario = button.data('nombre_usuario');
+      var apellidos_usuario = button.data('apellidos_usuario');
+      var fecha_orden = button.data('fecha_orden');
+      var total_orden = button.data('total_orden');
+      var correo_usuario = button.data('correo_usuario');
+      var modal = $(this);
+      modal.find('.modal-body #id_orden').val(id_orden);
+      modal.find('.modal-body #nombre_usuario').val(nombre_usuario);
+      modal.find('.modal-body #apellidos_usuario').val(apellidos_usuario);
+      modal.find('.modal-body #fecha_orden').val(fecha_orden);
+      modal.find('.modal-body #total_orden').val(total_orden);
+      modal.find('.modal-body #correo_usuario').val(correo_usuario);
 
+    });
 
+  </script>
   </body>
 
   </html>

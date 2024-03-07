@@ -12,12 +12,20 @@ $apellidos_usuario = $_GET['apellidos_usuario'];
 $fecha_orden = $_GET['fecha_orden'];
 $total_orden = $_GET['total_orden'];
 $correo_usuario = $_GET['correo_usuario'];
+$descripcion=$_GET['descripcion_declinado'];
+if($estado_orden=="Denegada"){
+  $descripcion_declinado=$descripcion;
+}else{
+  $descripcion_declinado="";
+}
+
 try {
 
 
     // Construye y ejecuta la consulta UPDATE con parámetros
-    $stmt = $conn->prepare("UPDATE orden_compra SET estado_orden = :estado_orden WHERE id_orden = :id_orden");
+    $stmt = $conn->prepare("UPDATE orden_compra SET estado_orden = :estado_orden,descripcion_declinado = :descripcion_declinado WHERE id_orden = :id_orden");
     $stmt->bindParam(':estado_orden', $estado_orden, PDO::PARAM_STR);
+    $stmt->bindParam(':descripcion_declinado', $descripcion_declinado, PDO::PARAM_STR);
     $stmt->bindParam(':id_orden', $id_orden, PDO::PARAM_INT);
     $stmt->execute();
 
@@ -26,8 +34,8 @@ try {
     if ($registros > 0) {
         switch ($estado_orden) {
             case "Proceso":
-                 //$email = "ymontoyag@zonafrancadepereira.com";
-                $email = "agalan@zonafrancadepereira.com";
+                 $email = "ymontoyag@zonafrancadepereira.com";
+                //$email = "agalan@zonafrancadepereira.com";
                 require 'mail/autoload.php';
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -77,8 +85,8 @@ try {
                 break;
 
             case "Aprobada":
-                 //$email = "ymontoyag@zonafrancadepereira.com";
-                $email = "facturacion@zonafrancadepereira.com";
+                 $email = "ymontoyag@zonafrancadepereira.com";
+                //$email = "facturacion@zonafrancadepereira.com";
                 require 'mail/autoload.php';
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -163,7 +171,8 @@ try {
                     </div>
                     <div style="padding: 20px;">
                         <p>Hola, ' . $nombre_usuario . ' ' . $apellidos_usuario . ' 😥</p>
-                        <p>Te informamos que la orden de compra de  por un valor de $' . number_format($total_orden) . ' ha sido rechazada </p>
+                        <p>Te informamos que la orden de compra de  por un valor de $' . number_format($total_orden) . ' ha sido rechazada por el siguiente motivo : 
+                          '.$descripcion_declinado.' </p>
                         <br>
                        
                         <p>¡Gracias!</p>

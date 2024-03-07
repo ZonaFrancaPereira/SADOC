@@ -519,7 +519,10 @@
                                 <textarea class="form-control" id="descripcion_actividad" name="descripcion_actividad"></textarea>
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
-                                <label for="estado_actividad">Estado de la Actividad</label><input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
+                                <label for="estado_actividad">Estado de la Actividad</label>
+                                <input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
+                                <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
+
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="id_usuario">Nombre del Responsable:</label>

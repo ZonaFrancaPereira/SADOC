@@ -21,6 +21,7 @@ function iniciar_actividad() {
 function insertar_actividad() {
 	var fecha_actividad = $("#fecha_actividad").val();
 	var descripcion_actividad = $("#descripcion_actividad").val();
+	var tipo_actividad = $("#tipo_actividad").val();
 	var estado_actividad = $("#estado_actividad").val();
 	var id_usuario = $("#id_responsable").val();
 	var id_acpm = $("#id_acpm_fk").val();
@@ -53,6 +54,7 @@ function insertar_actividad() {
 				var json = {
 					'fecha_actividad': fecha_actividad,
 					'descripcion_actividad': descripcion_actividad,
+					'tipo_actividad':tipo_actividad,
 					'estado_actividad': estado_actividad,
 					'id_usuario_fk': id_usuario,
 					'id_acpm_fk': id_acpm

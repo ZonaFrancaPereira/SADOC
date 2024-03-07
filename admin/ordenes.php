@@ -1,126 +1,127 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require('seguridad.php');
 
-  if (isset($_POST['enviar_orden'])) {
-    $id_cotizante = $_SESSION['Id'];
-    $fecha_orden = $_POST['fecha_orden'];
-    $id_proveedor_fk = $_POST['id_proveedor_fk'];
-    $forma_pago = $_POST['forma_pago'];
-    $tiempo_pago = $_POST['tiempo_pago'];
-    $porcentaje_anticipo = $_POST['porcentaje_anticipo'];
-    $condiciones_negociacion = $_POST['condiciones_negociacion'];
-    $comentario_orden = $_POST['comentario_orden'];
-    $tiempo_entrega = $_POST['tiempo_entrega'];
-    $total_orden = $_POST['total_orden'];
-    $proveedor_recurrente = $_POST['proveedor_recurrente'];
-    if ($total_orden >= "1000001" AND $proveedor_recurrente=="No") {
-      $estado_orden = "Analisis de Cotizacion";
-      $analisis_cotizacion = "Si";
+if (isset($_POST['enviar_orden'])) {
+  $id_cotizante = $_SESSION['Id'];
+  $fecha_orden = $_POST['fecha_orden'];
+  $id_proveedor_fk = $_POST['id_proveedor_fk'];
+  $forma_pago = $_POST['forma_pago'];
+  $tiempo_pago = $_POST['tiempo_pago'];
+  $porcentaje_anticipo = $_POST['porcentaje_anticipo'];
+  $condiciones_negociacion = $_POST['condiciones_negociacion'];
+  $comentario_orden = $_POST['comentario_orden'];
+  $tiempo_entrega = $_POST['tiempo_entrega'];
+  $total_orden = $_POST['total_orden'];
+  $proveedor_recurrente = $_POST['proveedor_recurrente'];
+  if ($total_orden >= "1000001" and $proveedor_recurrente == "No") {
+    $estado_orden = "Analisis de Cotizacion";
+    $analisis_cotizacion = "Si";
+  } else {
+    $estado_orden = "Proceso";
+    $analisis_cotizacion = "No";
+  }
+  //INSERTAR LOS DATOS QUE NO SE REPITEN EN LA ORDEN
+  try {
+    $stmt = $conn->prepare('INSERT INTO orden_compra(fecha_orden,proveedor_recurrente,forma_pago,tiempo_pago,porcentaje_anticipo,condiciones_negociacion,comentario_orden,tiempo_entrega,total_orden,analisis_cotizacion,estado_orden,id_cotizante,id_proveedor_fk)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
+    $stmt->bindParam(1, $fecha_orden);
+    $stmt->bindParam(2, $proveedor_recurrente);
+    $stmt->bindParam(3, $forma_pago);
+    $stmt->bindParam(4, $tiempo_pago);
+    $stmt->bindParam(5, $porcentaje_anticipo);
+    $stmt->bindParam(6, $condiciones_negociacion);
+    $stmt->bindParam(7, $comentario_orden);
+    $stmt->bindParam(8, $tiempo_entrega);
+    $stmt->bindParam(9, $total_orden);
+    $stmt->bindParam(10, $analisis_cotizacion);
+    $stmt->bindParam(11, $estado_orden);
+    $stmt->bindParam(12, $id_cotizante);
+    $stmt->bindParam(13, $id_proveedor_fk);
+
+    if ($stmt->execute()) {
+      echo "SI";
+      $id_orden_compra = $conn->lastInsertId();
     } else {
-      $estado_orden = "Proceso";
-      $analisis_cotizacion = "No";
+      echo "ERROR";
     }
-    //INSERTAR LOS DATOS QUE NO SE REPITEN EN LA ORDEN
-    try {
-      $stmt = $conn->prepare('INSERT INTO orden_compra(fecha_orden,proveedor_recurrente,forma_pago,tiempo_pago,porcentaje_anticipo,condiciones_negociacion,comentario_orden,tiempo_entrega,total_orden,analisis_cotizacion,estado_orden,id_cotizante,id_proveedor_fk)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
-      $stmt->bindParam(1, $fecha_orden);
-      $stmt->bindParam(2, $proveedor_recurrente);
-      $stmt->bindParam(3, $forma_pago);
-      $stmt->bindParam(4, $tiempo_pago);
-      $stmt->bindParam(5, $porcentaje_anticipo);
-      $stmt->bindParam(6, $condiciones_negociacion);
-      $stmt->bindParam(7, $comentario_orden);
-      $stmt->bindParam(8, $tiempo_entrega);
-      $stmt->bindParam(9, $total_orden);
-      $stmt->bindParam(10, $analisis_cotizacion);
-      $stmt->bindParam(11, $estado_orden);
-      $stmt->bindParam(12, $id_cotizante);
-      $stmt->bindParam(13, $id_proveedor_fk);
+  } catch (PDOException $e) {
+    echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
+  }
 
-      if ($stmt->execute()) {
-        echo "SI";
-        $id_orden_compra = $conn->lastInsertId();
-      } else {
-        echo "ERROR";
-      }
-    } catch (PDOException $e) {
-      echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
-    }
+  $items1 = ($_POST['articulo_compra']);
+  $items2 = ($_POST['cantidad_orden']);
+  $items3 = ($_POST['valor_neto']);
+  $items4 = ($_POST['valor_iva']);
+  $items5 = ($_POST['valor_total']);
+  $items6 = ($_POST['observaciones_articulo']);
+  $items7 = ($id_orden_compra);
 
-    $items1 = ($_POST['articulo_compra']);
-    $items2 = ($_POST['cantidad_orden']);
-    $items3 = ($_POST['valor_neto']);
-    $items4 = ($_POST['valor_iva']);
-    $items5 = ($_POST['valor_total']);
-    $items6 = ($_POST['observaciones_articulo']);
-    $items7 = ($id_orden_compra);
+  while (true) {
+    //// RECUPERAR LOS VALORES DE LOS ARREGLOS ////////
+    $item1 = current($items1);
+    $item2 = current($items2);
+    $item3 = current($items3);
+    $item4 = current($items4);
+    $item5 = current($items5);
+    $item6 = current($items6);
+    $item7 = $items7;
+    ////// ASIGNARLOS A VARIABLES ///////////////////
+    $articulo_compra = (($item1 !== false) ? $item1 : ", &nbsp;");
+    $cantidad_orden = (($item2 !== false) ? $item2 : ", &nbsp;");
+    $valor_neto = (($item3 !== false) ? $item3 : ", &nbsp;");
+    $valor_iva = (($item4 !== false) ? $item4 : ", &nbsp;");
+    $valor_total = (($item5 !== false) ? $item5 : ", &nbsp;");
+    $observaciones_articulo = (($item6 !== false) ? $item6 : ", &nbsp;");
+    $id_orden_compra = $item7;
+    //// CONCATENAR LOS VALORES EN ORDEN PARA SU FUTURA INSERCIÓN ////////
+    $valores = '("' . $articulo_compra . '","' . $cantidad_orden . '","' . $valor_neto . '","' . $valor_iva . '","' . $valor_total . '","' . $observaciones_articulo . '","' . $id_orden_compra . '"),';
 
-    while (true) {
-      //// RECUPERAR LOS VALORES DE LOS ARREGLOS ////////
-      $item1 = current($items1);
-      $item2 = current($items2);
-      $item3 = current($items3);
-      $item4 = current($items4);
-      $item5 = current($items5);
-      $item6 = current($items6);
-      $item7 = $items7;
-      ////// ASIGNARLOS A VARIABLES ///////////////////
-      $articulo_compra = (($item1 !== false) ? $item1 : ", &nbsp;");
-      $cantidad_orden = (($item2 !== false) ? $item2 : ", &nbsp;");
-      $valor_neto = (($item3 !== false) ? $item3 : ", &nbsp;");
-      $valor_iva = (($item4 !== false) ? $item4 : ", &nbsp;");
-      $valor_total = (($item5 !== false) ? $item5 : ", &nbsp;");
-      $observaciones_articulo = (($item6 !== false) ? $item6 : ", &nbsp;");
-      $id_orden_compra = $item7;
-      //// CONCATENAR LOS VALORES EN ORDEN PARA SU FUTURA INSERCIÓN ////////
-      $valores = '("' . $articulo_compra . '","' . $cantidad_orden . '","' . $valor_neto . '","' . $valor_iva . '","' . $valor_total . '","' . $observaciones_articulo . '","' . $id_orden_compra . '"),';
+    //////// YA QUE TERMINA CON COMA CADA FILA, SE RESTA CON LA FUNCIÓN SUBSTR EN LA ULTIMA FILA /////////////////////
+    $valoresQ = substr($valores, 0, -1);
 
-      //////// YA QUE TERMINA CON COMA CADA FILA, SE RESTA CON LA FUNCIÓN SUBSTR EN LA ULTIMA FILA /////////////////////
-      $valoresQ = substr($valores, 0, -1);
-
-      ///////// QUERY DE INSERCIÓN ////////////////////////////
-      $sql = "INSERT INTO detalle_orden (articulo_compra,cantidad_orden,valor_neto,valor_iva,valor_total,observaciones_articulo,id_orden_compra) 
+    ///////// QUERY DE INSERCIÓN ////////////////////////////
+    $sql = "INSERT INTO detalle_orden (articulo_compra,cantidad_orden,valor_neto,valor_iva,valor_total,observaciones_articulo,id_orden_compra) 
                 VALUES $valoresQ";
 
-      $conn->query($sql);
-      // Up! Next Value
-      $item1 = next($items1);
-      $item2 = next($items2);
-      $item3 = next($items3);
-      $item4 = next($items4);
-      $item5 = next($items5);
-      $item6 = next($items6);
+    $conn->query($sql);
+    // Up! Next Value
+    $item1 = next($items1);
+    $item2 = next($items2);
+    $item3 = next($items3);
+    $item4 = next($items4);
+    $item5 = next($items5);
+    $item6 = next($items6);
 
-      // Check terminator
-      if ($item1 === false && $item2 === false && $item3 === false && $item4 === false && $item5 === false && $item6 === false) break;
-    }
-    if ($analisis_cotizacion == "Si" && $proveedor_recurrente == "No") {
-      //$email = "cbustamante@zonafrancadepereira.com";
-      $email = "ymontoyag@zonafrancadepereira.com";
-      $nombre_usuario = $_SESSION['nombre_usuario'];
-      $apellidos_usuario = $_SESSION['apellidos_usuario'];
-      require 'mail/autoload.php';
-      $mail = new PHPMailer(true);
-      $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-      $mail->isSMTP();
-      $mail->Host = 'smtp.gmail.com';
-      $mail->SMTPAuth = true;
-      $mail->Username = 'info@zonafrancadepereira.com';
-     $mail->Password = 'lwohsrzjdnqfhsyx';
-      $mail->SMTPSecure = 'ssl';
-      $mail->Port = 465;
-      $mail->CharSet = 'UTF-8';
-      $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
-      $mail->addAddress($email);
-      $mail->isHTML(true);
-      $titulo_correo = "ANALISIS DE COTIZACIÓN #" . $id_orden_compra . " / " . $fecha_orden;
-      $message  = "<html><body>";
+    // Check terminator
+    if ($item1 === false && $item2 === false && $item3 === false && $item4 === false && $item5 === false && $item6 === false) break;
+  }
+  if ($analisis_cotizacion == "Si" && $proveedor_recurrente == "No") {
+    //$email = "cbustamante@zonafrancadepereira.com";
+    $email = "ymontoyag@zonafrancadepereira.com";
+    $nombre_usuario = $_SESSION['nombre_usuario'];
+    $apellidos_usuario = $_SESSION['apellidos_usuario'];
+    require 'mail/autoload.php';
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'info@zonafrancadepereira.com';
+    $mail->Password = 'lwohsrzjdnqfhsyx';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+    $mail->CharSet = 'UTF-8';
+    $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
+    $mail->addAddress($email);
+    $mail->isHTML(true);
+    $titulo_correo = "ANALISIS DE COTIZACIÓN #" . $id_orden_compra . " / " . $fecha_orden;
+    $message  = "<html><body>";
 
-      $message .= '
+    $message .= '
                   <div style="max-width: 600px; margin: 0 auto;padding: 20px;border: 1px solid #ccc;border-radius: 5px;">
                 <div style=" background-color: #F8F9F9;color: black;text-align: center;padding: 10px;border-radius: 5px 5px 0 0;">
                     <img src="https://zonafrancadepereira.com/wp-content/uploads/2020/11/cropped-ZONA-FRANCA-LOGO-PNG-1-1-1-206x81.png" >  
@@ -139,40 +140,40 @@ require('seguridad.php');
                 </div>
             </div>
               ';
-      //CIERRE FINAL 
-      $message .= "</body></html>";
+    //CIERRE FINAL 
+    $message .= "</body></html>";
 
-      $mail->isHTML(true);
-      $mail->Subject =  $titulo_correo;
-      $mail->Body =  $message;
-      $mail->send();
+    $mail->isHTML(true);
+    $mail->Subject =  $titulo_correo;
+    $mail->Body =  $message;
+    $mail->send();
 
-      echo 'Correo enviado';
-      echo "<script> 
+    echo 'Correo enviado';
+    echo "<script> 
                   window.location.href='./index.php'; </script>";
-    } else {
-      $email = "ymontoyag@zonafrancadepereira.com";
-      //$email = "agalan@zonafrancadepereira.com";
-      $nombre_usuario = $_SESSION['nombre_usuario'];
-      $apellidos_usuario = $_SESSION['apellidos_usuario'];
-      require 'mail/autoload.php';
-      $mail = new PHPMailer(true);
-      $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-      $mail->isSMTP();
-      $mail->Host = 'smtp.gmail.com';
-      $mail->SMTPAuth = true;
-      $mail->Username = 'info@zonafrancadepereira.com';
-      $mail->Password = 'lwohsrzjdnqfhsyx';
-      $mail->SMTPSecure = 'ssl';
-      $mail->Port = 465;
-      $mail->CharSet = 'UTF-8';
-      $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
-      $mail->addAddress($email);
-      $mail->isHTML(true);
-      $titulo_correo = "NUEVA ORDEN DE COMPRA #" . $id_orden_compra . " / " . $fecha_orden;
-      $message  = "<html><body>";
+  } else {
+    $email = "ymontoyag@zonafrancadepereira.com";
+    //$email = "agalan@zonafrancadepereira.com";
+    $nombre_usuario = $_SESSION['nombre_usuario'];
+    $apellidos_usuario = $_SESSION['apellidos_usuario'];
+    require 'mail/autoload.php';
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'info@zonafrancadepereira.com';
+    $mail->Password = 'lwohsrzjdnqfhsyx';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+    $mail->CharSet = 'UTF-8';
+    $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
+    $mail->addAddress($email);
+    $mail->isHTML(true);
+    $titulo_correo = "NUEVA ORDEN DE COMPRA #" . $id_orden_compra . " / " . $fecha_orden;
+    $message  = "<html><body>";
 
-      $message .= '
+    $message .= '
                   <div style="max-width: 600px; margin: 0 auto;padding: 20px;border: 1px solid #ccc;border-radius: 5px;">
                 <div style=" background-color: #F8F9F9;color: black;text-align: center;padding: 10px;border-radius: 5px 5px 0 0;">
                     <img src="https://zonafrancadepereira.com/wp-content/uploads/2020/11/cropped-ZONA-FRANCA-LOGO-PNG-1-1-1-206x81.png" >  
@@ -191,34 +192,34 @@ require('seguridad.php');
                 </div>
             </div>
               ';
-      //CIERRE FINAL 
-      $message .= "</body></html>";
-      $mail->isHTML(true);
-      $mail->Subject =  $titulo_correo;
-      $mail->Body =  $message;
-      $mail->send();
-      echo 'Correo enviado';
-      echo "<script> 
+    //CIERRE FINAL 
+    $message .= "</body></html>";
+    $mail->isHTML(true);
+    $mail->Subject =  $titulo_correo;
+    $mail->Body =  $message;
+    $mail->send();
+    echo 'Correo enviado';
+    echo "<script> 
                   window.location.href='./index.php'; </script>";
-    }
   }
-  if (isset($_POST['guardarProveedor'])) {
-    $id_proveedor = $_POST['id_proveedor'];
-    $nombre_proveedor = $_POST['nombre_proveedor'];
-    $contacto_proveedor = $_POST['contacto_proveedor'];
-    $telefono_proveedor = $_POST['telefono_proveedor'];
-    $id_usuario_fk = $_SESSION['Id'];
-    try {
-      $stmt = $conn->prepare('INSERT INTO proveedor_compras(id_proveedor,nombre_proveedor,contacto_proveedor,telefono_proveedor,id_usuario_fk) VALUES(?,?,?,?,?)');
-      $stmt->bindParam(1, $id_proveedor);
-      $stmt->bindParam(2, $nombre_proveedor);
-      $stmt->bindParam(3, $contacto_proveedor);
-      $stmt->bindParam(4, $telefono_proveedor);
-      $stmt->bindParam(5, $id_usuario_fk);
+}
+if (isset($_POST['guardarProveedor'])) {
+  $id_proveedor = $_POST['id_proveedor'];
+  $nombre_proveedor = $_POST['nombre_proveedor'];
+  $contacto_proveedor = $_POST['contacto_proveedor'];
+  $telefono_proveedor = $_POST['telefono_proveedor'];
+  $id_usuario_fk = $_SESSION['Id'];
+  try {
+    $stmt = $conn->prepare('INSERT INTO proveedor_compras(id_proveedor,nombre_proveedor,contacto_proveedor,telefono_proveedor,id_usuario_fk) VALUES(?,?,?,?,?)');
+    $stmt->bindParam(1, $id_proveedor);
+    $stmt->bindParam(2, $nombre_proveedor);
+    $stmt->bindParam(3, $contacto_proveedor);
+    $stmt->bindParam(4, $telefono_proveedor);
+    $stmt->bindParam(5, $id_usuario_fk);
 
 
-      if ($stmt->execute()) {
-        echo "<script>
+    if ($stmt->execute()) {
+      echo "<script>
         Swal.fire({
           title: 'Buen Trabajo',
           text: 'Se registró el proveedor con éxito',
@@ -230,13 +231,13 @@ require('seguridad.php');
           }
         });
         </script>";
-      } else {
-        echo "ERROR";
-      }
-    } catch (PDOException $e) {
-      echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
+    } else {
+      echo "ERROR";
     }
+  } catch (PDOException $e) {
+    echo "Se ha producido un error al intentar conectar al servidor MySQL: " . $e->getMessage();
   }
+}
 
 try {
   $stmt = $conn->prepare("SELECT 
@@ -266,7 +267,7 @@ try {
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
       <a data-toggle="tab" href="#panelc" class="nav-link active">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
+        <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
           Panel de Control
         </p>
@@ -431,9 +432,11 @@ try {
                                 echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
                                 echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
                                 echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Aprobada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-success'><i class='fas fa-thumbs-up'></i></button></a></td>";
-                                echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Denegada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-danger'><i class='fas fa-times-circle'></i> </button></a></td>";
-
-
+                                //echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Denegada&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-danger'><i class='fas fa-times-circle'></i> </button></a></td>";
+                          ?>
+                                <td><button type="button" class="btn bg-danger" id="orden_rechazada" name="" data-toggle="modal" data-target="#modal-rechazo" data-id_orden="<?php echo $id_orden ?>" data-nombre_usuario="<?php echo $nombre_usuario ?>" data-apellidos_usuario="<?php echo $apellidos_usuario ?>" data-fecha_orden="<?php echo $fecha_orden ?>" data-total_orden="<?php echo $total_orden ?>" data-correo_usuario="<?php echo $correo_usuario ?>"><i class='fas fa-times-circle'></i></button>
+                                </td>
+                          <?php
                                 echo "</tr>";
                                 $registros++;
                               }
@@ -691,7 +694,7 @@ try {
                       <div class="row">
                         <div class="col-md-6">
                           <label for=""><B>TOTAL ORDEN</B></label>
-                    
+
                           <input type="number" class="form-control input-lg" id="sumaTotal" name="total_orden" total="0" value="0" placeholder="0" readonly>
                         </div>
                         <div class="col-md-6">
@@ -937,7 +940,7 @@ try {
       </div>
     </div>
   </div>
-  
+
   <!-- /.content-wrapper -->
   <?php require('footer.php'); ?>
   <!-- Control Sidebar -->
@@ -1034,6 +1037,56 @@ try {
       </div>
     </div>
   </div>
+
+ <!-- /.MODAL RECHAZO -->
+  <div class="modal fade" id="modal-rechazo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+       <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header btn bg-danger btn-block">
+          <h4 class="modal-title">RECHAZAR ORDEN DE COMPRA</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <form action="editar_estado.php" id="form_orden" method="GET">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="row">
+                  <div class="col-md-6 col-xs-12 col-sm-12">
+                  <label>Desea rechazar la siguiente orden de compra : # </label><input type="number" class="form-control" value="" name="id_orden" id="id_orden" readonly>
+                </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                      <label for="fecha_actividad">Fecha</label>
+                      <input type="date" name="fecha_orden" class="form-control" id="fecha_orden" readonly>
+                      <input type="hidden" name="nombre_usuario" class="form-control" id="nombre_usuario" readonly>
+                      <input type="hidden" name="apellidos_usuario" class="form-control" id="apellidos_usuario" readonly>
+                      <input type="hidden" name="total_orden" class="form-control" id="total_orden" readonly>
+                      <input type="hidden" name="correo_usuario" class="form-control" id="correo_usuario" readonly>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                      <label for="descripcion_declinado">Descripción del rechazo</label>
+                      <textarea class="form-control" id="descripcion_declinado" name="descripcion_declinado"></textarea>
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-12">
+                      <label for="estado_orden">Estado de la Orden</label><input type="text" class="form-control" value="Denegada" name="estado_orden" id="estado_orden" readonly>
+                    </div>                    
+                  </div>
+                  <!-- /.card-body -->
+                  <br>
+                  <div class="col-md-12 col-xs-12 col-sm-12">
+                    <button type="submit" class="btn bg-primary btn-block " id="declinar_orden" name="enviar_actividad">Guardar Cambios</button>
+                  </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+    </div>
+  </div>
+  <!-- /.modal -->
   <!-- ./wrapper -->
   <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -1083,6 +1136,25 @@ try {
       modal.find('.modal-body #telefono_proveedor').val(telefono_proveedor);
 
     });
+
+    $('#modal-rechazo').on('show.bs.modal', function (event){
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var id_orden = button.data('id_orden'); // Extract info from data-* attributes
+      var nombre_usuario = button.data('nombre_usuario');
+      var apellidos_usuario = button.data('apellidos_usuario');
+      var fecha_orden = button.data('fecha_orden');
+      var total_orden = button.data('total_orden');
+      var correo_usuario = button.data('correo_usuario');
+      var modal = $(this);
+      modal.find('.modal-body #id_orden').val(id_orden);
+      modal.find('.modal-body #nombre_usuario').val(nombre_usuario);
+      modal.find('.modal-body #apellidos_usuario').val(apellidos_usuario);
+      modal.find('.modal-body #fecha_orden').val(fecha_orden);
+      modal.find('.modal-body #total_orden').val(total_orden);
+      modal.find('.modal-body #correo_usuario').val(correo_usuario);
+
+    });
+
   </script>
 
   </body>
