@@ -162,6 +162,7 @@ if ($_SESSION['ingreso'] == true) {
                                                         <th>Escala de Urgencia</th>
                                                         <th>Solución</th>
                                                         <th>Fecha Solución</th>
+                                                        <th>Usuario quien da respuesta</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -176,6 +177,7 @@ if ($_SESSION['ingreso'] == true) {
                                                             <td><?php echo $row["urgencia"] ?></td>
                                                             <td><?php echo $row["solucion_soporte"] ?></td>
                                                             <td><?php echo $row["fecha_solucion"] ?></td>
+                                                            <td><?php echo $row["usuario_respuesta"] ?></td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -201,7 +203,7 @@ if ($_SESSION['ingreso'] == true) {
                                         <table class="display table table-striped table-valign-middle " width="100%">
                                             <thead>
                                                 <tr style="text-align: center;">
-                                                <th>Nombre del Usuario</th>
+                                                    <th>Nombre del Usuario</th>
                                                     <th>Descripción de la Solicitud</th>
                                                     <th>Fecha</th>
                                                     <th>Escala de Urgencia</th>
@@ -209,6 +211,7 @@ if ($_SESSION['ingreso'] == true) {
                                                     <th>Fecha Solucion</th>
                                                     <th>Asignar Urgencia</th>
                                                     <th>Responder</th>
+                                                    <th>Usuario</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -239,14 +242,15 @@ if ($_SESSION['ingreso'] == true) {
                                                     $colorFondo = determinarColor($urgencia);
                                                 ?>
                                                     <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
-                                                    <td><?php echo $row["usuario_soporte"] ?></td>
+                                                        <td><?php echo $row["usuario_soporte"] ?></td>
                                                         <td><?php echo $row["descripcion_soporte"] ?></td>
                                                         <td><?php echo $row["fecha_soporte"] ?></td>
                                                         <td><?php echo $row["urgencia"] ?></td>
                                                         <td><?php echo $row["solucion_soporte"] ?></td>
                                                         <td><?php echo $row["fecha_solucion"] ?></td>
-                                                        <td><button class="btn bg-danger" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
-                                                        <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
+                                                        <td><button class="btn bg-orange" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
+                                                        <td><button class="btn  bg-orange" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
+                                                        <td><?php echo $row["usuario_respuesta"] ?></td>
                                                     </tr>
                                                 <?php
                                                 }
@@ -315,6 +319,28 @@ if ($_SESSION['ingreso'] == true) {
                                                 <div class="form-group">
                                                     <label for="fecha_solucion">Fecha Solución</label>
                                                     <input type="date" name="fecha_solucion" class="form-control" id="fecha_solucion" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="usuario_respuesta">Nombre de Usuario quien da respuesta a la solicitud</label>
+                                                    <input list="usuario_respuesta_browsers" class="form-control" id="usuario_respuesta" name="usuario_respuesta" placeholder="Nombre de Usuario">
+                                                    <datalist id="usuario_respuesta_browsers">
+                                                        <?php
+                                                        try {
+                                                            $stmt = $conn->prepare('SELECT * FROM  usuarios WHERE proceso_usuario_fk = 2 ');
+                                                            $stmt->execute();
+                                                            if ($stmt->rowCount() > 0) {
+                                                                while ($row = $stmt->fetch()) {
+                                                                    $id_usuario = $row["Id_usuario"];
+                                                                    $nombre_usuario = $row["nombre_usuario"];
+                                                                    $apellidos_usuario = $row["apellidos_usuario"];
+                                                                    echo '<option value="' . $nombre_usuario . ' ' . $apellidos_usuario . '"></option>';
+                                                                }
+                                                            }
+                                                        } catch (PDOException $e) {
+                                                            echo "Error en el servidor";
+                                                        }
+                                                        ?>
+                                                    </datalist>
                                                 </div>
                                                 <button type="button" class="btn btn-info btn-block" id="responder_solicitud" name="responder_solicitud">Responder</button>
                                             </form>

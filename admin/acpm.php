@@ -438,12 +438,12 @@
                           <th>Fuente</th>
                           <th>Tipo de Reporte</th>
                           <th>Descripción </th>
-            
                           <th>Fecha Finalización</th>
                           <th>Estado</th>
                           <th>Informe</th>
                           <th>Asignar</th>
                           <th>Actividades</th>
+                          <th>Editar Fecha</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -451,6 +451,7 @@
                         foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Abierta' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
                             $id_acpm = $row["id_consecutivo"];
                             $descripcion = $row["descripcion_acpm"];
+
                         ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
@@ -478,9 +479,9 @@
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-
                               <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -493,6 +494,42 @@
 
             <!-- /.card -->
           </div>
+          <!-- /.EDITAR FECHA ACPM -->
+          <section class="content">
+            <div class="modal fade" id="modal-modificar">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header btn bg-info btn-block">
+                    <h4 class="modal-title">Modificar Fecha</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <form id="form_modificar_sig"  method="POST">
+                        <div class="card">
+                          <div class="card-header">
+                            <label>Desea Modificar la fecha de la siguiente ACPM:</label><input type="text" class="form-control" value="" name="id_acpm_fk1" id="id_acpm_fk1" readonly>
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-md-12 col-xs-12 col-sm-12">
+                                <label for="fecha_modificar">Modificar fecha de vencimiento de la ACPM</label>
+                                <input type="date" name="fecha_modificar" class="form-control" id="fecha_modificar" required>
+                              </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12"><br>
+                            <br>
+                            <button type="button" class="btn bg-info btn-block" id="modificar_fecha" name="modificar_fecha">Actualizar Fecha</button>
+                            </div>
+                          </div>
+                      </form>
+                      <!-- /.modal-content -->
+                      <!-- /.card-body -->
+                    </div>
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+              </div>
+              <!-- /.modal -->
+          </section>
           <!-- /.modal -->
           <section class="content">
             <div class="modal fade" id="modal-success">
@@ -635,8 +672,6 @@
               </div>
             </div>
           </div>
-
-
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES RECHAZADAS DE CADA USUARIO-->
           <div id="rechazadas" class="tab-pane">
             <div class="row">
@@ -705,7 +740,6 @@
             </div>
 
           </div>
-
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES EN PROCESO DE CADA USUARIO YA CUENTA CON RESPONSIVE-->
           <div id="proceso" class="tab-pane">
             <div class="row">
@@ -948,7 +982,6 @@
             </div>
             <!-- /.card -->
           </div>
-
           <!-- /Modal para sig -->
           <section class="content">
             <div class="modal fade" id="modal-respuesta">
@@ -1213,6 +1246,15 @@
 
     modal.find('.modal-body #id_acpm_fk').val(id_acpm_fk);
   });
+  $('#modal-modificar').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id_acpm_fk1 = button.data('id_acpm_fk1'); // Extract info from data-* attributes
+
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+
+    modal.find('.modal-body #id_acpm_fk1').val(id_acpm_fk1);
+  });
 
   $('#modal-rechazo').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
@@ -1232,6 +1274,7 @@
       window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
     });
   });
+
 </script>
 
 

@@ -54,7 +54,7 @@ try {
 		$mail->Host = 'smtp.gmail.com';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'info@zonafrancadepereira.com';
-		$mail->Password = 'svmzgjdkntzpkjln';
+	    $mail->Password = 'lwohsrzjdnqfhsyx';
 		$mail->SMTPSecure = 'ssl';
 		$mail->Port = 465;
 		$mail->CharSet = 'UTF-8';

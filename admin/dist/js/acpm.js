@@ -4,6 +4,7 @@ function iniciar_acpm() {
 	$("#enviar_acpm").on("click", insertar_acpm);
 	$("#guardar_sig").on("click", guardar_sig);
 	$("#rechazar_sig").on("click", rechazar_sig);
+	$("#modificar_fecha").on("click", modificar_fecha);
 
 
 	$('input').on('input', function () {
@@ -248,5 +249,66 @@ function rechazar_sig() {
 	}
 }
 
+function modificar_fecha() {
+	var id_acpm_fk1 = $("#id_acpm_fk1").val();
+	var fecha_modificar = $("#fecha_modificar").val();
+
+	if (id_acpm_fk1 == "" || fecha_modificar == "") {
+		Swal.fire(
+			'Atención',
+			'Debes diligenciar todos los campos para poder continuar',
+			'error'
+		);
+	} else {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		});
+
+		swalWithBootstrapButtons.fire({
+			title: '¿Estas segur@ que quieres Modificar la Fecha de esta ACPM?',
+			text: 'Recuerda que una vez modificada se cambiara automáticamente la fecha',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si, Enviar',
+			cancelButtonText: 'No, Cancelar!',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var json = {
+					'id_acpm_fk1': id_acpm_fk1,
+    				'fecha_modificar': fecha_modificar
+				};
+
+				$.ajax({
+					type: 'POST',
+					url: 'php/actualizar_fecha.php',
+					data: json,
+					success: function (resultacpm) {
+						Swal.fire({
+							title: 'Buen Trabajo',
+							text: 'Se actualizo la fecha con exito',
+							icon: 'success',
+						}).then((result) => {
+							// Redirige a la página después de cerrar el SweetAlert
+							if (result.isConfirmed) {
+								window.location.href = '';
+							}
+						});
+					}
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				swalWithBootstrapButtons.fire(
+					'Envio Cancelado',
+					'Aun estas a salvo :)',
+					'error'
+				);
+			}
+		});
+	}
+}
 
 

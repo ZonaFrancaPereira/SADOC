@@ -649,8 +649,9 @@ function responderUrgencia() {
 function responderSolicitud() {
     var solucion_soporte = $('#solucion_soporte').val();
     var fecha_solucion = $('#fecha_solucion').val();
+	var usuario_respuesta = $('#usuario_respuesta').val();
     var id_soporte1 = $('#id_soporte1').val();
-
+	alert(solucion_soporte+fecha_solucion+usuario_respuesta+id_soporte1);
     // Validar que los campos estén diligenciados
     if (solucion_soporte === '' || fecha_solucion === '' || id_soporte1 === '') {
         Swal.fire(
@@ -666,6 +667,7 @@ function responderSolicitud() {
         responder_solicitud: true,
         solucion_soporte: solucion_soporte,
         fecha_solucion: fecha_solucion,
+		usuario_respuesta: usuario_respuesta,
         id_soporte1: id_soporte1
     };
 
