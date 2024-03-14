@@ -53,14 +53,13 @@
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
-<<<<<<< HEAD
+
 <!-- Bootstrap Switch -->
 <script src="plugins/bootstrap-switch/js/bootstrap-switch.js"></script>
 <!-- Incluye la biblioteca Dropzone.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
-=======
->>>>>>> be85368eea9a07e6e62db1698ea77b117ec56471
+
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -83,9 +82,6 @@
 <script src="dist/js/ti.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<<<<<<< HEAD
-
-=======
 <script>
   $(function () {
     
@@ -98,7 +94,6 @@
   })
   
 </script>
->>>>>>> e8c480ba5d1d23cceae80e836a5fa8a7ecc811da
 <script>
   $(document).ready(function() {
     $("table.display").DataTable({

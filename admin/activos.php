@@ -22,7 +22,7 @@
         </p>
       </a>
     </li>
-    <?php if ($_SESSION['ingresar_activos'] == "Si") { ?>
+    <?php if ($_SESSION['admin_contable'] == "Si" || $_SESSION['aux_contable'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#ingresar" class="nav-link ">
           <i class="nav-icon fas fa-cart-plus"></i>
@@ -32,7 +32,7 @@
         </a>
       </li>
     <?php  } ?>
-    <?php if ($_SESSION['admin_activos'] == "Si") { ?>
+    <?php if ($_SESSION['admin_contable'] == "Si") { ?>
       <li class="nav-item" hidden>
         <a data-toggle="tab" href="#inventario" class="nav-link ">
           <i class="nav-icon fas fa-boxes"></i>

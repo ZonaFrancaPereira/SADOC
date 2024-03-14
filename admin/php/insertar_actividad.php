@@ -12,6 +12,7 @@ $descripcion_actividad = $_POST["descripcion_actividad"];
 $estado_actividad = $_POST["estado_actividad"];
 $id_usuario = $_POST["id_usuario_fk"];
 $id_acpm = $_POST["id_acpm_fk"];
+$tipo_actividad = $_POST["tipo_actividad"];
 $nombre_usuario = $_SESSION['nombre_usuario'];
 $apellidos_usuario = $_SESSION['apellidos_usuario'];
 $nombre_proceso = $_SESSION['nombre_proceso'];
@@ -33,12 +34,13 @@ try {
 }
 
 try {
-	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad, descripcion_actividad, estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?)');
+	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad, descripcion_actividad, tipo_actividad,estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
 	$stmt->bindParam(1, $fecha_actividad);
 	$stmt->bindParam(2, $descripcion_actividad);
-	$stmt->bindParam(3, $estado_actividad);
-	$stmt->bindParam(4, $id_usuario);
-	$stmt->bindParam(5, $id_acpm);
+	$stmt->bindParam(3, $tipo_actividad);
+	$stmt->bindParam(4, $estado_actividad);
+	$stmt->bindParam(5, $id_usuario);
+	$stmt->bindParam(6, $id_acpm);
 
 	if ($stmt->execute()) {
 		// Correo destinatario (esto después lo vamos a configurar desde la app)
