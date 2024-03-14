@@ -149,12 +149,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
                 <?php echo $fuente_acpm; ?>
             </td>
         </tr>
-        <tr>
-            <td colspan="1"><B>Descripción Fuente :</B></td>
-            <td colspan="3">
-                <?php echo $descripcion_fuente; ?>
-            </td>
-        </tr>
+        
         <tr>
             <td colspan="1"><B>Tipo :</B></td>
             <td colspan="3">
@@ -205,19 +200,19 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
             </td>
         </tr>
         <tr>
-            <td colspan="1"><B>Justificación del Riesgo :</B></td>
+            <td colspan="1"><B>Cuales Riesgos :</B></td>
             <td colspan="3">
                 <?php echo $justificacion_riesgo; ?>
             </td>
         </tr>
         <tr>
-            <td colspan="1"><B>Cambios al SIG :</B></td>
+            <td colspan="1"><B>Cambios al SG :</B></td>
             <td colspan="3">
                 <?php echo $cambios_sig; ?>
             </td>
         </tr>
         <tr>
-            <td colspan="1"><B>Justificación Cambios SIG:</B></td>
+            <td colspan="1"><B>Cuales Cambios:</B></td>
             <td colspan="3">
                 <?php echo $justificacion_sig; ?>
             </td>
@@ -229,7 +224,7 @@ $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nomb
             </td>
         </tr>
         <tr>
-            <td colspan="1"><B>Justificación Conforme SIG :</B></td>
+            <td colspan="1"><B>Justificación Conforme :</B></td>
             <td colspan="3">
                 <?php echo $justificacion_conforme_sig; ?>
             </td>

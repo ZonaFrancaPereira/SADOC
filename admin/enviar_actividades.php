@@ -80,6 +80,8 @@ require('seguridad.php');
                               </form>
                             </div>
                           </td>
+                          <td>
+                          </td>
                         </tr>
                       <?php
                       }

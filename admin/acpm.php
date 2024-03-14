@@ -398,7 +398,6 @@ if (isset($_POST['enviar_verificacion'])) {
                   <button type="button" class="btn btn-success btn-block " id="enviar_acpm" name="enviar_acpm">Radicar ACPM</button>
                 </div>
               </div>
-
             </form>
             <!-- /.card -->
           </div>
@@ -494,7 +493,6 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Asignar</th>
                           <th>Actividades</th>
-                          <th>Editar Fecha</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -532,7 +530,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
-                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              
                             </tr>
                         <?php }
                         } ?>
@@ -609,12 +607,14 @@ if (isset($_POST['enviar_verificacion'])) {
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="estado_actividad">Estado de la Actividad</label>
                                 <input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
-                                <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
-
+                              </div>
+                              <div class="col-2 col-xs-12 col-sm-12">
+                              <label for="tipo_actividad">tipo actividad</label>
+                              <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="id_usuario">Nombre del Responsable:</label>
-                                <input list="browsers" id="id_responsable" name="id_responsable" class="form-control" placeholder="Nombre del responsable" required>
+                                <input list="browsers" id="id_usuario_fk" name="id_usuario_fk" class="form-control" placeholder="Nombre del responsable" required>
                                 <datalist id="browsers">
                                   <?php
                                   try {
@@ -1057,6 +1057,8 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1091,6 +1093,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1124,6 +1127,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1158,6 +1162,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1191,6 +1196,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1225,6 +1231,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1258,6 +1265,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1292,6 +1300,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1325,6 +1334,8 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1359,6 +1370,8 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1392,6 +1405,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1426,6 +1440,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1459,6 +1474,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
                           <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1493,6 +1509,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
                             </tr>
                         <?php }
                         } ?>
