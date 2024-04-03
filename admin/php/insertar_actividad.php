@@ -34,7 +34,8 @@ try {
 }
 
 try {
-	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad, descripcion_actividad, tipo_actividad,estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
+	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad,descripcion_actividad,tipo_actividad,estado_actividad,id_usuar
+	io_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
 	$stmt->bindParam(1, $fecha_actividad);
 	$stmt->bindParam(2, $descripcion_actividad);
 	$stmt->bindParam(3, $tipo_actividad);
