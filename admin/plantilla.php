@@ -87,14 +87,26 @@ include "sumatorias.php";
         <li class="nav-item dropdown">
           <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Gestión Tecnología e Informática">G-TI</a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+              <?php
+    if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
+    ?>
             <li><a href="asignacion_ti.php" class="dropdown-item">Asignación de Equipos</a></li>
             <li><a href="backup_ti.php" class="dropdown-item">Backup</a></li>
             <li><a href="inventario_ti.php" class="dropdown-item">Inventario TI</a></li>
             <li><a href="licencias_ti..php" class="dropdown-item">Licencias</a></li>
             <li><a href="mantenimientos_ti.php" class="dropdown-item">Mantenimientos</a></li>
             <li><a href=".php" class="dropdown-item">Matriz de Usuarios y Criticidad</a></li>
+            <?php
+    }
+    ?>
             <li><a href="soporte_ti.php" class="dropdown-item">Soporte</a></li>
+            <?php
+    if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
+    ?>
             <li><a href="ti.php" class="dropdown-item">Usuarios</a></li>
+            <?php
+    }
+    ?>
           </ul>
         </li>
         <li class="nav-item dropdown">

@@ -14,7 +14,7 @@
                 </a>
             </li>
             <?php
-            if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "admin_contable" || $_SESSION['rol_usuario'] == "gerencia") {
+            if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
             ?>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

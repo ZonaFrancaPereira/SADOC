@@ -10,7 +10,7 @@ include_once("conexion.php");
 $fecha_actividad = $_POST["fecha_actividad"];
 $descripcion_actividad = $_POST["descripcion_actividad"];
 $estado_actividad = $_POST["estado_actividad"];
-$id_usuario = $_POST["id_usuario_fk"];
+$id_usuario_fk_6 = $_POST["id_usuario_fk_6"];
 $id_acpm = $_POST["id_acpm_fk"];
 $tipo_actividad = $_POST["tipo_actividad"];
 $nombre_usuario = $_SESSION['nombre_usuario'];
@@ -18,7 +18,7 @@ $apellidos_usuario = $_SESSION['apellidos_usuario'];
 $nombre_proceso = $_SESSION['nombre_proceso'];
 $correo_remitente = $_SESSION['correo_usuario'];
 try {
-	$stmt = $conn->prepare('SELECT * FROM  usuarios WHERE Id_usuario="' . $id_usuario . '"');
+	$stmt = $conn->prepare('SELECT * FROM  usuarios WHERE Id_usuario="' . $id_usuario_fk_6 . '"');
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while ($row = $stmt->fetch()) {
@@ -34,18 +34,22 @@ try {
 }
 
 try {
+<<<<<<< HEAD
 	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad,descripcion_actividad,tipo_actividad,estado_actividad,id_usuar
 	io_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
+=======
+	$stmt = $conn->prepare('INSERT INTO actividades_acpm(fecha_actividad, descripcion_actividad, tipo_actividad,  estado_actividad, id_usuario_fk, id_acpm_fk) VALUES(?,?,?,?,?,?)');
+>>>>>>> c86de2cd9b0ce0d987a14b864554570b45290892
 	$stmt->bindParam(1, $fecha_actividad);
 	$stmt->bindParam(2, $descripcion_actividad);
 	$stmt->bindParam(3, $tipo_actividad);
 	$stmt->bindParam(4, $estado_actividad);
-	$stmt->bindParam(5, $id_usuario);
+	$stmt->bindParam(5, $id_usuario_fk_6);
 	$stmt->bindParam(6, $id_acpm);
 
 	if ($stmt->execute()) {
 		// Correo destinatario (esto después lo vamos a configurar desde la app)
-		$email = "yrios@zonafrancadepereira.com";
+		$email = "ygarciaz@zonafrancadepereira.com";
 
 		// Librería
 		require '../mail/autoload.php';

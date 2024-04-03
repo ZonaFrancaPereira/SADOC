@@ -1,23 +1,23 @@
 <?php
- require('seguridad.php');
+require('seguridad.php');
 
 
-  if (isset($_POST['enviar_verificacion'])) {
-    $id_consecutivo = $_POST['id_acpm'];
-    try {
-     
-        // Construye y ejecuta la consulta UPDATE con parámetros
-        $stmt = $conn->prepare("UPDATE acpm
+if (isset($_POST['enviar_verificacion'])) {
+  $id_consecutivo = $_POST['id_acpm'];
+  try {
+
+    // Construye y ejecuta la consulta UPDATE con parámetros
+    $stmt = $conn->prepare("UPDATE acpm
         SET estado_acpm = 'abierta'
         WHERE id_consecutivo  = :id_acpm");
-        
-        $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
-        $stmt->execute();
-    
-        $registros = $stmt->rowCount();
-    
-        if ($registros > 0) {
-            echo "<script>
+
+    $stmt->bindParam(':id_acpm', $id_consecutivo, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $registros = $stmt->rowCount();
+
+    if ($registros > 0) {
+      echo "<script>
             Swal.fire({
 							title: 'Buen Trabajo',
 							text: 'Su respuesta se registro con éxito',
@@ -29,32 +29,29 @@
 							}
 						});
             </script>";
-        }
-        
-    } catch (Exception $e) {
-        echo "ERROR: " . $e->getMessage();
-    
     }
-    
-    }
+  } catch (Exception $e) {
+    echo "ERROR: " . $e->getMessage();
+  }
+}
 ?>
 
 
-  <!-- Sidebar Menu -->
-  <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      <li class="nav-item">
-        <a data-toggle="tab" href="#panelc" class="nav-link active">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item">
+      <a data-toggle="tab" href="#panelc" class="nav-link active">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
 
-          <p>
-            Panel de Control
-          </p>
-        </a>
-      </li>
-      <?php
-          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo" || $_SESSION['rol_usuario']=="admin_contable" || $_SESSION['rol_usuario']=="gerencia"  ){
-          ?>
+        <p>
+          Panel de Control
+        </p>
+      </a>
+    </li>
+    <?php
+    if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "admin_contable" || $_SESSION['rol_usuario'] == "gerencia") {
+    ?>
       <li class="nav-item">
         <a data-toggle="tab" href="#acpm" class="nav-link ">
           <i class="nav-icon fas fa-file-medical"></i>
@@ -106,18 +103,18 @@
 
         </ul>
       </li>
-      <?php
-          }
-          ?>
-      <li class="nav-item" name="actividades_asignadas">
-            <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
-            <i class="nav-icon fas fa-user-check"></i>
-              Actividades Asignadas
-            </a>
-          </li>
-          <?php
-          if($_SESSION['rol_usuario']=="admin_sig"){
-          ?>
+    <?php
+    }
+    ?>
+    <li class="nav-item" name="actividades_asignadas">
+      <a data-toggle="tab" href="javascript:void(0);" onclick="redirectActividadesUsuario()" class="nav-link">
+        <i class="nav-icon fas fa-user-check"></i>
+        Actividades Asignadas
+      </a>
+    </li>
+    <?php
+    if ($_SESSION['rol_usuario'] == "admin_sig") {
+    ?>
       <!-- /.ESTA PARTE PERTENECE SOLO A SIG -->
       <li class="nav-item">
         <a data-toggle="tab" href="#aceptar_acpm" class="nav-link ">
@@ -137,28 +134,91 @@
           </p>
         </a>
       </li>
-      <?php
-          }
-          ?>
-             <li class="nav-item">
+    <?php
+    }
+    ?>
+    <li class="nav-item">
       <a data-toggle="tab" href="#manual" class="nav-link ">
         <i class="nav-icon fas fa-book"></i>
         <p>
           Manual
         </p>
       </a>
-
     </li>
-    </ul>
-
-  </nav>
-  <footer>
-    <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
-  </footer>
-  <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
-  </aside>
+    <?php if ($_SESSION['rol_usuario'] == "admin_sig") { ?>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-search-plus"></i>
+        <p>
+          Areas
+          <i class="fas fa-angle-left right"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#tecnica" class="nav-link">
+            <i class="fas fa-tools"></i>
+            <p>Técnica</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#sig" class="nav-link">
+            <i class="fas fa-tools"></i>
+            <p>Sig</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="tab" href="#gestion_administrativa" class="nav-link">
+            <i class="fas fa-users"></i>
+            <p>Gestión Administrativa</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#gestion_contable" class="nav-link">
+            <i class="fas fa-file-csv"></i>
+            <p>Gestión Contable</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#gestion_juridica" class="nav-link">
+            <i class="fas fa-gavel"></i>
+            <p>Gestión Jurídica</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#tecnologia_informatica" class="nav-link">
+            <i class="fas fa-laptop-code"></i>
+            <p>Gestión de Tecnología e Informática</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#operaciones" class="nav-link">
+            <i class="fas fa-clipboard-check"></i>
+            <p>Operaciones</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#gerencia" class="nav-link">
+            <i class="fas fa-user-shield"></i>
+            <p>Gerencia</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#seguridad" class="nav-link">
+            <i class="fas fa-user-shield"></i>
+            <p>Seguridad</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <?php  } ?>
+  </ul>
+</nav>
+<footer>
+  <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
+</footer>
+<!-- /.sidebar -->
+</aside>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -169,71 +229,71 @@
         <div class="tab-content card">
           <!-- DIV DONDE SE MUESTRA TODA LA INFORMACION DE INTERES DE LAS ACPM PARA CADA USUARIO -->
           <div class="tab-pane  show active" id="panelc">
-          <p>Gestiona tus ACPM</p>
-          <?php
-          if($_SESSION['rol_usuario']=="admin_sig" || $_SESSION['rol_usuario']=="directivo"  ){
-          ?>
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <div class="card">
-              <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">TUS ACPM</h3>
-                  <a href="javascript:void(0);">Ver Reporte</a>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="d-flex">
-                
-                  <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 
-                    </span>
-                    <span class="text-muted">Completa las Metas</span>
-                  </p>
-                </div>
-                <!-- /.d-flex -->
+            <p>Gestiona tus ACPM</p>
+            <?php
+            if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo") {
+            ?>
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                      <h3 class="card-title">TUS ACPM</h3>
+                      <a href="javascript:void(0);">Ver Reporte</a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex">
 
-                <div class="position-relative mb-4">
-                  <canvas id="sales-chart" height="200"></canvas>
-                </div>
+                      <p class="ml-auto d-flex flex-column text-right">
+                        <span class="text-success">
+                          <i class="fas fa-arrow-up"></i>
+                        </span>
+                        <span class="text-muted">Completa las Metas</span>
+                      </p>
+                    </div>
+                    <!-- /.d-flex -->
 
-               
-              </div>
-            </div>
-            
-          </div>
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <div class="card">
-              <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">SEGUIMIENTO ACPM</h3>
-                  <a href="javascript:void(0);">Ver Reporte</a>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="d-flex">
-                
-                  <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 
-                    </span>
-                    <span class="text-muted">Completa tus ACPM a tiempo</span>
-                  </p>
-                </div>
-                <!-- /.d-flex -->
+                    <div class="position-relative mb-4">
+                      <canvas id="sales-chart" height="200"></canvas>
+                    </div>
 
-                <div class="position-relative mb-4">
-                  <canvas id="seguimiento_acpm" height="200"></canvas>
+
+                  </div>
                 </div>
 
-               
               </div>
-            </div>
-            
-          </div>
-          <?php
-          }
-          ?>
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                      <h3 class="card-title">SEGUIMIENTO ACPM</h3>
+                      <a href="javascript:void(0);">Ver Reporte</a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex">
+
+                      <p class="ml-auto d-flex flex-column text-right">
+                        <span class="text-success">
+                          <i class="fas fa-arrow-up"></i>
+                        </span>
+                        <span class="text-muted">Completa tus ACPM a tiempo</span>
+                      </p>
+                    </div>
+                    <!-- /.d-flex -->
+
+                    <div class="position-relative mb-4">
+                      <canvas id="seguimiento_acpm" height="200"></canvas>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+            <?php
+            }
+            ?>
           </div>
           <!-- DIV DONDE SE MOSTRARA EL FORMULARIO PARA UNA NUEVA ACPM -->
           <div class="tab-pane " id="acpm">
@@ -348,7 +408,6 @@
                   <button type="button" class="btn btn-success btn-block " id="enviar_acpm" name="enviar_acpm">Radicar ACPM</button>
                 </div>
               </div>
-
             </form>
             <!-- /.card -->
           </div>
@@ -373,14 +432,15 @@
                           <th>Descripcion Acpm</th>
                           <th>Fecha Finalizacion</th>
                           <th>Informe</th>
+                          <th>Asignar actividades</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Verificacion' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { 
-                          $id_acpm=$row["id_consecutivo"];
-                          ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Verificacion' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -404,10 +464,10 @@
                                   ?>
                                 </p>
                               </td>
-                             
+
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-
+                              <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                             </tr>
                         <?php }
@@ -443,7 +503,6 @@
                           <th>Informe</th>
                           <th>Asignar</th>
                           <th>Actividades</th>
-                          <th>Editar Fecha</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -475,13 +534,13 @@
                                   ?>
                                 </p>
                               </td>
-                           
+
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
-                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+
                             </tr>
                         <?php }
                         } ?>
@@ -504,7 +563,7 @@
                   </div>
                   <div class="modal-body">
                     <div class="row">
-                      <form id="form_modificar_sig"  method="POST">
+                      <form id="form_modificar_sig" method="POST">
                         <div class="card">
                           <div class="card-header">
                             <label>Desea Modificar la fecha de la siguiente ACPM:</label><input type="text" class="form-control" value="" name="id_acpm_fk1" id="id_acpm_fk1" readonly>
@@ -515,11 +574,11 @@
                                 <label for="fecha_modificar">Modificar fecha de vencimiento de la ACPM</label>
                                 <input type="date" name="fecha_modificar" class="form-control" id="fecha_modificar" required>
                               </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12"><br>
-                            <br>
-                            <button type="button" class="btn bg-info btn-block" id="modificar_fecha" name="modificar_fecha">Actualizar Fecha</button>
+                              <div class="col-md-12 col-xs-12 col-sm-12"><br>
+                                <br>
+                                <button type="button" class="btn bg-info btn-block" id="modificar_fecha" name="modificar_fecha">Actualizar Fecha</button>
+                              </div>
                             </div>
-                          </div>
                       </form>
                       <!-- /.modal-content -->
                       <!-- /.card-body -->
@@ -558,12 +617,14 @@
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="estado_actividad">Estado de la Actividad</label>
                                 <input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
+                              </div>
+                              <div class="col-2 col-xs-12 col-sm-12">
+                                <label for="tipo_actividad">tipo actividad</label>
                                 <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
-
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="id_usuario">Nombre del Responsable:</label>
-                                <input list="browsers" id="id_responsable" name="id_responsable" class="form-control" placeholder="Nombre del responsable" required>
+                                <input list="browsers" id="id_usuario_fk_6" name="id_usuario_fk_6" class="form-control" placeholder="Nombre del responsable" required>
                                 <datalist id="browsers">
                                   <?php
                                   try {
@@ -571,10 +632,10 @@
                                     $stmt->execute();
                                     if ($stmt->rowCount() > 0) {
                                       while ($row = $stmt->fetch()) {
-                                        $id_usuario = $row["Id_usuario"];
+                                        $id_usuario_fk6 = $row["Id_usuario"];
                                         $nombre_usuario = $row["nombre_usuario"];
                                         $apellidos_usuario = $row["apellidos_usuario"];
-                                        echo '<option value=' . $id_usuario . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
+                                        echo '<option value=' . $id_usuario_fk6 . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
                                       }
                                     }
                                   } catch (PDOException $e) {
@@ -632,9 +693,9 @@
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { { 
-                          $id_acpm=$row["id_consecutivo"];
-                          ?>
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE estado_acpm = 'Cerrada' AND a.id_usuario_fk ='" . $id_usuario_fk . "'") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
                             <tr style=text-align:center>
                               <td><?php echo $row["id_consecutivo"] ?></td>
                               <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
@@ -658,7 +719,7 @@
                                   ?>
                                 </p>
                               </td>
-                         
+
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
@@ -724,7 +785,7 @@
                                   ?>
                                 </p>
                               </td>
-                           
+
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td>Boton editar</td>
@@ -886,6 +947,7 @@
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
+
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                             </tr>
                         <?php }
@@ -967,7 +1029,7 @@
                               <td>
                                 <form action="" method="POST">
                                   <input type="number" name="id_acpm" value="<?php echo $row["id_consecutivo"] ?>" hidden>
-                                  <button type="submit" class="btn btn-success "  name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
+                                  <button type="submit" class="btn btn-success " name="enviar_verificacion"><i class="fas fa-user-check"></i></button>
                                 </form>
                               </td>
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
@@ -981,6 +1043,643 @@
               </div>
             </div>
             <!-- /.card -->
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE TÉCNICA-->
+          <div id="tecnica" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión Técnica</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 4") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE sig-->
+          <div id="sig" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm del Sistema Integrado de Gestion</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 1") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE GESTION ADMINISTRATIVA-->
+          <div id="gestion_administrativa" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión Administrativa</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 5") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE GESTION CONTABLE-->
+          <div id="gestion_contable" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión contable</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 3 ") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE GESTION JURIDICA-->
+          <div id="gestion_juridica" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión juridica</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 11") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE GESTION Tecnologia e informatica-->
+          <div id="tecnologia_informatica" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión de Tecnología e Informática</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 2") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE OPERACIONES-->
+          <div id="operaciones" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gestión Operaciones</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 7") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE gerencia-->
+          <div id="gerencia" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Gerencia</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 10") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE gerencia-->
+          <div id="seguridad" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Seguridad</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 13") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- /Modal para sig -->
           <section class="content">
@@ -1065,7 +1764,6 @@
               </div>
               <!-- /.modal -->
           </section>
-
           <section class="content">
             <div class="modal fade" id="modal-rechazo">
               <div class="modal-dialog modal-lg">
@@ -1117,13 +1815,12 @@
                   <div class="card">
                     <!-- /.card-header -->
                     <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?utm_content=DAF2-DXLBbQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
+                      padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                      border-radius: 8px; will-change: transform;">
+                      <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                      </iframe>
+                    </div>
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2-DXLBbQ&#x2F;view?utm_content=DAF2-DXLBbQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
                   </div>
                 </div>
               </div>
@@ -1136,16 +1833,15 @@
     </div>
   </div>
 </div>
-</div>
 <!-- /.content-wrapper -->
 <?php require('footer.php'); ?>
 <script>
-    function redirectActividadesUsuario() {
-       
+  function redirectActividadesUsuario() {
 
-        // Redireccionar con las variables
-        window.location.href = "actividades_usuario.php";
-    }
+
+    // Redireccionar con las variables
+    window.location.href = "actividades_usuario.php";
+  }
 </script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -1274,7 +1970,6 @@
       window.location.href = "php/estado_abierta.php?id_consecutivo=" + id_consecutivo;
     });
   });
-
 </script>
 
 

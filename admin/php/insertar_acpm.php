@@ -76,7 +76,7 @@ try {
 		
 	
 		//CORREO DESTINATARIO (ESTO DESPUES LO VAMOS A CONFIGURAR DESDE LA APP)
-		$email = "ymontoyag@zonafrancadepereira.com";
+		$email = "ygarciaz@zonafrancadepereira.com";
 		//$email = "yrios@zonafrancadepereira.com";
 		//LIBRERIA
 		require '../mail/autoload.php';

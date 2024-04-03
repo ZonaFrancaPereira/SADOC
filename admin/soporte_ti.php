@@ -21,6 +21,18 @@ if ($_SESSION['ingreso'] == true) {
                     <p>Principal</p>
                 </a>
             </li>
+            <?php
+    if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
+    ?>
+            <li class="nav-item" name="">
+                        <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
+                            <i class="nav-icon fas fa-sync-alt"></i>
+                            <p>Solicitudes de Soporte</p>
+                        </a>
+                    </li>
+                    <?php
+    }
+    ?>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-search-plus"></i>
@@ -30,13 +42,7 @@ if ($_SESSION['ingreso'] == true) {
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-
-                    <li class="nav-item" name="">
-                        <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
-                            <i class="nav-icon fas fa-sync-alt"></i>
-                            <p>Solicitudes de Soporte</p>
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a data-toggle="tab" href="#realizar_solicitud" class="nav-link">
                             <i class="nav-icon far fa-question-circle"></i>
