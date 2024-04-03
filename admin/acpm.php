@@ -145,6 +145,7 @@ if (isset($_POST['enviar_verificacion'])) {
         </p>
       </a>
     </li>
+    <?php if ($_SESSION['rol_usuario'] == "admin_sig") { ?>
     <li class="nav-item">
       <a href="#" class="nav-link">
         <i class="nav-icon fas fa-search-plus"></i>
@@ -158,6 +159,12 @@ if (isset($_POST['enviar_verificacion'])) {
           <a data-toggle="tab" href="#tecnica" class="nav-link">
             <i class="fas fa-tools"></i>
             <p>Técnica</p>
+          </a>
+        </li>
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#sig" class="nav-link">
+            <i class="fas fa-tools"></i>
+            <p>Sig</p>
           </a>
         </li>
         <li class="nav-item">
@@ -192,21 +199,24 @@ if (isset($_POST['enviar_verificacion'])) {
         </li>
         <li class="nav-item" name="">
           <a data-toggle="tab" href="#gerencia" class="nav-link">
-          <i class="fas fa-user-shield"></i>
+            <i class="fas fa-user-shield"></i>
             <p>Gerencia</p>
           </a>
         </li>
-
+        <li class="nav-item" name="">
+          <a data-toggle="tab" href="#seguridad" class="nav-link">
+            <i class="fas fa-user-shield"></i>
+            <p>Seguridad</p>
+          </a>
+        </li>
       </ul>
     </li>
+    <?php  } ?>
   </ul>
-
 </nav>
 <footer>
   <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
 </footer>
-<!-- /.sidebar-menu -->
-</div>
 <!-- /.sidebar -->
 </aside>
 
@@ -530,7 +540,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
-                              
+
                             </tr>
                         <?php }
                         } ?>
@@ -609,12 +619,12 @@ if (isset($_POST['enviar_verificacion'])) {
                                 <input type="text" class="form-control" value="incompleta" name="estado_actividad" id="estado_actividad" readonly>
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
-                              <label for="tipo_actividad">tipo actividad</label>
-                              <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
+                                <label for="tipo_actividad">tipo actividad</label>
+                                <input type="text" class="form-control" value="Actividad" name="tipo_actividad" id="tipo_actividad" readonly>
                               </div>
                               <div class="col-2 col-xs-12 col-sm-12">
                                 <label for="id_usuario">Nombre del Responsable:</label>
-                                <input list="browsers" id="id_usuario_fk" name="id_usuario_fk" class="form-control" placeholder="Nombre del responsable" required>
+                                <input list="browsers" id="id_usuario_fk_6" name="id_usuario_fk_6" class="form-control" placeholder="Nombre del responsable" required>
                                 <datalist id="browsers">
                                   <?php
                                   try {
@@ -622,10 +632,10 @@ if (isset($_POST['enviar_verificacion'])) {
                                     $stmt->execute();
                                     if ($stmt->rowCount() > 0) {
                                       while ($row = $stmt->fetch()) {
-                                        $id_usuario = $row["Id_usuario"];
+                                        $id_usuario_fk6 = $row["Id_usuario"];
                                         $nombre_usuario = $row["nombre_usuario"];
                                         $apellidos_usuario = $row["apellidos_usuario"];
-                                        echo '<option value=' . $id_usuario . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
+                                        echo '<option value=' . $id_usuario_fk6 . '>' . $nombre_usuario . ' ' . $apellidos_usuario . '</option>';
                                       }
                                     }
                                   } catch (PDOException $e) {
@@ -937,7 +947,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
-                              
+
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                             </tr>
                         <?php }
@@ -1058,7 +1068,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Estado</th>
                           <th>Modificar fecha</th>
-                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1094,6 +1104,78 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE sig-->
+          <div id="sig" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm del Sistema Integrado de Gestion</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 1") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1128,6 +1210,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Estado</th>
                           <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1163,6 +1246,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1197,6 +1281,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Estado</th>
                           <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1232,6 +1317,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1371,7 +1457,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
-                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1406,6 +1492,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Estado</th>
                           <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1441,6 +1528,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1475,6 +1563,7 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Informe</th>
                           <th>Estado</th>
                           <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1510,6 +1599,78 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRAN LAS ACCIONES DEL AREA DE gerencia-->
+          <div id="seguridad" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Acpm de Seguridad</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 13") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
@@ -1671,7 +1832,6 @@ if (isset($_POST['enviar_verificacion'])) {
       <!-- CIERRE DEL TAB -->
     </div>
   </div>
-</div>
 </div>
 <!-- /.content-wrapper -->
 <?php require('footer.php'); ?>

@@ -19,15 +19,17 @@ function iniciar_actividad() {
 		console.log('Enviado!!');
 	});
 }
+
 function insertar_actividad() {
 	var fecha_actividad = $("#fecha_actividad").val();
 	var descripcion_actividad = $("#descripcion_actividad").val();
 	var tipo_actividad = $("#tipo_actividad").val();
 	var estado_actividad = $("#estado_actividad").val();
-	var id_usuario = $("#id_usuario_fk").val();
+	var id_usuario_fk_6 = $("#id_usuario_fk_6").val();
 	var id_acpm = $("#id_acpm_fk").val();
-	//alert(fecha_actividad+descripcion_actividad+estado_actividad+id_usuario_fk+id_acpm_fk);
-	if (descripcion_actividad == "" || id_usuario == "") {
+	alert(fecha_actividad + descripcion_actividad + tipo_actividad + estado_actividad + id_usuario_fk_6 + id_acpm);
+
+	if (descripcion_actividad == "" || id_usuario_fk_6 == "") {
 		Swal.fire(
 			'Atención',
 			'Debes diligenciar todos los campos para poder continuar',
@@ -57,7 +59,7 @@ function insertar_actividad() {
 					'descripcion_actividad': descripcion_actividad,
 					'tipo_actividad': tipo_actividad,
 					'estado_actividad': estado_actividad,
-					'id_usuario_fk': id_usuario,
+					'id_usuario_fk_6': id_usuario_fk_6,
 					'id_acpm_fk': id_acpm
 				}
 				$.ajax({
