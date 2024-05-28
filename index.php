@@ -1,5 +1,7 @@
 <?php 
 //include('vencimientos.php');
+
+
 session_start();
 if (isset($_SESSION['ingreso'])) {
 	header('location: admin/index.php');
