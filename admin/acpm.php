@@ -155,6 +155,12 @@ if (isset($_POST['enviar_verificacion'])) {
         </p>
       </a>
       <ul class="nav nav-treeview">
+      <li class="nav-item" name="">
+          <a data-toggle="tab" href="#segumiento_acpm_areas" class="nav-link">
+            <i class="fas fa-tools"></i>
+            <p>Seguimiento ACPM</p>
+          </a>
+        </li>
         <li class="nav-item" name="">
           <a data-toggle="tab" href="#tecnica" class="nav-link">
             <i class="fas fa-tools"></i>
@@ -251,17 +257,14 @@ if (isset($_POST['enviar_verificacion'])) {
                         <span class="text-muted">Completa las Metas</span>
                       </p>
                     </div>
-                    <!-- /.d-flex -->
-
                     <div class="position-relative mb-4">
                       <canvas id="sales-chart" height="200"></canvas>
                     </div>
-
-
                   </div>
                 </div>
 
               </div>
+              
               <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div class="card">
                   <div class="card-header border-0">
@@ -1617,6 +1620,77 @@ if (isset($_POST['enviar_verificacion'])) {
                 <div class="card">
                   <div class="card-header border-0 bg-primary">
                     <h3 class="card-title">Acpm de Seguridad</h3>
+                    <div class="card-tools">
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="display table table-striped table-valign-middle " width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre del responsable</th>
+                          <th>Origen Acpm</th>
+                          <th>Fuente</th>
+                          <th>Tipo de Reporte</th>
+                          <th>Descripcion Acpm</th>
+                          <th>Fecha Finalizacion</th>
+                          <th>Informe</th>
+                          <th>Estado</th>
+                          <th>Modificar fecha ACPM</th>
+                          <th>Actividades</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($conn->query("SELECT * from acpm a INNER JOIN usuarios u ON a.id_usuario_fk = u.id_usuario WHERE u.proceso_usuario_fk = 13") as $row) { {
+                            $id_acpm = $row["id_consecutivo"];
+                        ?>
+                            <tr style=text-align:center>
+                              <td><?php echo $row["id_consecutivo"] ?></td>
+                              <td><?php echo $row["nombre_usuario"] . " " . $row["apellidos_usuario"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $origen_acpm = $row["origen_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($origen_acpm) > $max_caracteres ? substr($origen_acpm, 0, $max_caracteres) . "..." : $origen_acpm;
+                                  ?>
+                                </p>
+                              </td>
+                              <td><?php echo $row["fuente_acpm"] ?></td>
+                              <td><?php echo $row["tipo_acpm"] ?></td>
+                              <td>
+                                <p class="text-break" style="width: 10rem">
+                                  <?php
+                                  $descripcion_acpm = $row["descripcion_acpm"];
+                                  $max_caracteres = 50; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                  echo strlen($descripcion_acpm) > $max_caracteres ? substr($descripcion_acpm, 0, $max_caracteres) . "..." : $descripcion_acpm;
+                                  ?>
+                                </p>
+                              </td>
+
+                              <td><?php echo $row["fecha_finalizacion"] ?></td>
+                              <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
+                              <td><?php echo $row["estado_acpm"] ?></td>
+                              <td><button class="btn  bg-danger" data-toggle="modal" data-target="#modal-modificar" data-id_acpm_fk1="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-calendar-alt"></i></button></td>
+                              <td><a href="modificar_fecha.php?id_acpm=<?php echo $id_acpm; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
+                            </tr>
+                        <?php }
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- DIV DONDE SE MUESTRA EL SEGUIMIENTO DE LAS ACPM DE LAS AREAS-->
+          <div id="segumiento_acpm_areas" class="tab-pane ">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-primary">
+                    <h3 class="card-title">Seguimiento</h3>
                     <div class="card-tools">
                     </div>
                   </div>
