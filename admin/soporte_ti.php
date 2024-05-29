@@ -22,21 +22,21 @@ if ($_SESSION['ingreso'] == true) {
                 </a>
             </li>
             <?php
-            if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
-            ?>
-                <li class="nav-item" name="">
-                    <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
-                        <i class="nav-icon fas fa-sync-alt"></i>
-                        <p>Solicitudes de Soporte</p>
-                    </a>
-                    <a data-toggle="tab" href="#solicitudes_solucionadas" class="nav-link">
-                        <i class="nav-icon fas fa-sync-alt"></i>
-                        <p>Solicitudes Finalizadas</p>
-                    </a>
-                </li>
-            <?php
-            }
-            ?>
+    if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
+    ?>
+            <li class="nav-item" name="">
+                        <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
+                            <i class="nav-icon fas fa-sync-alt"></i>
+                            <p>Solicitudes de Soporte</p>
+                        </a>
+                        <a data-toggle="tab" href="#solicitudes_solucionadas" class="nav-link">
+                            <i class="nav-icon fas fa-sync-alt"></i>
+                            <p>Solicitudes Finalizadas</p>
+                        </a>
+                    </li>
+                    <?php
+    }
+    ?>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-search-plus"></i>
@@ -46,7 +46,7 @@ if ($_SESSION['ingreso'] == true) {
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-
+                    
                     <li class="nav-item">
                         <a data-toggle="tab" href="#realizar_solicitud" class="nav-link">
                             <i class="nav-icon far fa-question-circle"></i>
@@ -82,9 +82,51 @@ if ($_SESSION['ingreso'] == true) {
                     <!-- /.panel principal -->
                     <div id="principal" class="tab-pane">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-default">
+                                    <div class="card-header bg-gradient-info">
+                                        <h3 class="card-title text-white">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            Solicitudes Realizadas
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Descripción de la Solicitud</th>
+                                                        <th>Fecha</th>
+                                                        <th>Escala de Urgencia</th>
+                                                        <th>Solución</th>
+                                                        <th>Fecha Solución</th>
+                                                        <th>Usuario quien da respuesta</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($conn->query("SELECT * FROM soporte where Id_usuario_fk = $_SESSION[Id]") as $row) {
+                                                        $urgencia = $row["urgencia"]; // Obtener el valor de urgencia
+                                                        // Determinar el color de fondo de la fila
+                                                        $colorFondo = determinarColor($urgencia);
+                                                    ?>
+                                                        <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
+                                                            <td><?php echo $row["descripcion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_soporte"] ?></td>
+                                                            <td><?php echo $row["urgencia"] ?></td>
+                                                            <td><?php echo $row["solucion_soporte"] ?></td>
+                                                            <td><?php echo $row["fecha_solucion"] ?></td>
+                                                            <td><?php echo $row["usuario_respuesta"] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="card card-default">
-                                    <div class="card-header bg-gradient-danger">
+                                    <div class="card-header bg-gradient-info">
                                         <h3 class="card-title text-white">
                                             <i class="fas fa-bullhorn mr-2"></i>
                                             Escala de Urgencia
@@ -132,7 +174,7 @@ if ($_SESSION['ingreso'] == true) {
                             </div>
                             <div class="col-md-6">
                                 <div class="card card-default">
-                                    <div class="card-header bg-gradient-warning">
+                                    <div class="card-header bg-gradient-info">
                                         <h3 class="card-title text-white">
                                             <i class="fas fa-exclamation-triangle mr-2"></i>
                                             Respuesta
@@ -154,51 +196,10 @@ if ($_SESSION['ingreso'] == true) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="card card-default">
-                                    <div class="card-header bg-gradient-warning">
-                                        <h3 class="card-title text-white">
-                                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                                            Solicitudes Realizadas
-                                        </h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Descripción de la Solicitud</th>
-                                                        <th>Fecha</th>
-                                                        <th>Escala de Urgencia</th>
-                                                        <th>Solución</th>
-                                                        <th>Fecha Solución</th>
-                                                        <th>Usuario quien da respuesta</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($conn->query("SELECT * FROM soporte where Id_usuario_fk = $_SESSION[Id]") as $row) {
-                                                        $urgencia = $row["urgencia"]; // Obtener el valor de urgencia
-                                                        // Determinar el color de fondo de la fila
-                                                        $colorFondo = determinarColor($urgencia);
-                                                    ?>
-                                                        <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
-                                                            <td><?php echo $row["descripcion_soporte"] ?></td>
-                                                            <td><?php echo $row["fecha_soporte"] ?></td>
-                                                            <td><?php echo $row["urgencia"] ?></td>
-                                                            <td><?php echo $row["solucion_soporte"] ?></td>
-                                                            <td><?php echo $row["fecha_solucion"] ?></td>
-                                                            <td><?php echo $row["usuario_respuesta"] ?></td>
-                                                        </tr>
-                                                    <?php } ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
-                    <!-- /.SOLICITUDES REALIZADAS-->
+<!-- /.SOLICITUDES REALIZADAS-->
                     <div id="solicitudes_soporte" class="tab-pane">
                         <div class="col-md-12">
                             <div class="card card-default">
@@ -545,48 +546,27 @@ if ($_SESSION['ingreso'] == true) {
                             <form id="soporte_ti" method="POST" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-6 mb-3"  hidden>
                                             <label for="correo">Correo</label>
-                                            <input list="correo_soporte_browsers" class="form-control" id="correo_soporte" name="correo_soporte" placeholder="Correo">
-                                            <datalist id="correo_soporte_browsers">
-                                                <?php
-                                                try {
-                                                    $stmt = $conn->prepare('SELECT * FROM usuarios');
-                                                    $stmt->execute();
-                                                    if ($stmt->rowCount() > 0) {
-                                                        while ($row = $stmt->fetch()) {
-                                                            $correo_usuario = $row["correo_usuario"];
-                                                            $Id_usuario_soporte = $row["Id_usuario"];
-                                                            $nombre_usuario = $row["nombre_usuario"];
-                                                            $apellidos_usuario = $row["apellidos_usuario"];
-                                                            $proceso_usuario_fk = $row["proceso_usuario_fk"];
-                                                            echo '<option value="' . $correo_usuario . '" data-nombreusuario="' . $nombre_usuario . ' ' .  $apellidos_usuario . '" data-procesousuario="' . $proceso_usuario_fk . '" data-idusuario="' . $Id_usuario_soporte . '">' . $nombre_usuario . ' ' .  $apellidos_usuario . '</option>';
-                                                        }
-                                                    }
-                                                } catch (PDOException $e) {
-                                                    echo "Error en el servidor";
-                                                }
-                                                ?>
-                                            </datalist>
+                                            <input list="correo_soporte_browsers" class="form-control" value="<?php echo $_SESSION['correo_usuario'] ?>" id="correo_soporte" name="correo_soporte" placeholder="Correo" readonly>
                                         </div>
                                         <div class="col-md-6 mb-3" hidden>
                                             <label for="id_usuario_soporte">id usuario</label>
-                                            <input type="text" class="form-control" id="id_usuario_soporte" name="id_usuario_soporte" placeholder="ID de Usuario" readonly>
+                                            <input type="text" class="form-control" id="id_usuario_soporte" value="<?php echo $_SESSION['Id'] ?>" name="id_usuario_soporte" placeholder="ID de Usuario" readonly>
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-6 mb-3"  hidden>
                                             <label for="usuario_soporte">Nombre de Usuario</label>
-                                            <input type="text" class="form-control" id="usuario_soporte" name="usuario_soporte" placeholder="Nombre de Usuario" readonly>
+                                            <input type="text" class="form-control" id="usuario_soporte" value="<?php echo $_SESSION['nombre_usuario'] . " " . $_SESSION['apellidos_usuario'] ?>" name="usuario_soporte" placeholder="Nombre de Usuario" readonly>
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-6 mb-3"  hidden>
                                             <label for="proceso_soporte">Proceso</label>
-                                            <input type="text" class="form-control" id="proceso_soporte" name="proceso_soporte" placeholder="Proceso" readonly>
+                                            <input type="text" class="form-control" id="proceso_soporte" value="<?php echo $_SESSION['nombre_proceso'] ?>" name="proceso_soporte" placeholder="Proceso" readonly>
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-12">
                                             <label for="textarea">Descripción de la solicitud</label>
                                             <textarea class="form-control" id="descripcion_soporte" name="descripcion_soporte" rows="3" placeholder="Descripción"></textarea>
                                         </div>
-
-                                    </div>
+                                    </div>                <br>
                                     <div class="col-md-12">
                                         <div id="actions">
                                             <div class="col-lg-6">
