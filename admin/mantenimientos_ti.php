@@ -557,8 +557,6 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <label for="administrador">Administrador</label>
                                                                     <input type="checkbox" id="administrador" name="administrador" value="SI">
                                                                 </div>
-<<<<<<< HEAD
-=======
 
                                                                 <div class="col-sm-2 border-right"><br>
                                                                     <label for="analisis_completo">Analisis Completo</label>
@@ -585,14 +583,14 @@ if ($_SESSION['ingreso'] == true) {
                                                                     
                                                                 </div>
                                                                 <div class="card card-secondary">
-              <div class="card-header">
-                <h3 class="card-title">Bootstrap Switch</h3>
-              </div>
-              <div class="card-body">
-                <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch>
-                <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
-              </div>
-            </div>
+                                                                <div class="card-header">
+                                                                    <h3 class="card-title">Bootstrap Switch</h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch>
+                                                                    <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                                                </div>
+                                                                </div>
                                                                 <div class="col-3"><br>
                                                                     <label for="estado_mantenimiento_equipo">Estado</label>
                                                                     <input list="browsers" id="estado_mantenimiento_equipo" name="estado_mantenimiento_equipo" class="form-control" value="Sin Firmar" readonly>
@@ -601,7 +599,6 @@ if ($_SESSION['ingreso'] == true) {
                                                                     <br>
                                                                     <button type="button" class="btn bg-info btn-block" id="enviar_formulario_mantenimiento" name="enviar_formulario_mantenimiento" onclick="enviarFormularioMantenimiento()">ENVIAR</button>
                                                                 </div>
->>>>>>> be85368eea9a07e6e62db1698ea77b117ec56471
                                                             </div>
                                                         </div>
                                                     </form>
