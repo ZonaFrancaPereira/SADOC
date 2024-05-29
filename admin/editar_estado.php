@@ -1,9 +1,20 @@
 <?php
-session_start();
 
+session_start();
+require_once __DIR__ . '../../vendor/autoload.php'; // Ruta al autoload.php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+// Cargar las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../');
+$dotenv->load();
+$smtpUsername = $_ENV['SMTP_USERNAME'];
+$smtpPassword = $_ENV['SMTP_PASSWORD'];
+$smtpHost = $_ENV['SMTP_HOST'];
+$smtpPort = $_ENV['SMTP_PORT'];
+$smtpSecure = $_ENV['SMTP_SECURE'];
+
 include "php/conexion.php";
 $id_orden = $_GET['id_orden'];
 $estado_orden = $_GET['estado_orden'];
@@ -40,12 +51,12 @@ try {
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = $smtpHost;
                 $mail->SMTPAuth = true;
-                $mail->Username = 'info@zonafrancadepereira.com';
-                 $mail->Password = 'lwohsrzjdnqfhsyx';
-                $mail->SMTPSecure = 'ssl';
-                $mail->Port = 465;
+                $mail->Username = $smtpUsername;
+                $mail->Password = $smtpPassword;
+                $mail->SMTPSecure = $smtpSecure;
+                $mail->Port = $smtpPort;
                 $mail->CharSet = 'UTF-8';
                 $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
                 $mail->addAddress($email);
@@ -91,12 +102,12 @@ try {
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = $smtpHost;
                 $mail->SMTPAuth = true;
-               $mail->Username = 'info@zonafrancadepereira.com';
-                     $mail->Password = 'lwohsrzjdnqfhsyx';
-                $mail->SMTPSecure = 'ssl';
-                $mail->Port = 465;
+                $mail->Username = $smtpUsername;
+                $mail->Password = $smtpPassword;
+                $mail->SMTPSecure = $smtpSecure;
+                $mail->Port = $smtpPort;
                 $mail->CharSet = 'UTF-8';
                 $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
                 $mail->addAddress($email);
@@ -150,12 +161,12 @@ try {
                     $mail = new PHPMailer(true);
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Host = $smtpHost;
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'info@zonafrancadepereira.com';
-                     $mail->Password = 'lwohsrzjdnqfhsyx';
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->Port = 465;
+                    $mail->Username = $smtpUsername;
+                    $mail->Password = $smtpPassword;
+                    $mail->SMTPSecure = $smtpSecure;
+                    $mail->Port = $smtpPort;
                     $mail->CharSet = 'UTF-8';
                     $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
                     $mail->addAddress($correo_usuario);

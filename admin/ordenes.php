@@ -1,8 +1,17 @@
 <?php
-
+require_once __DIR__ . '../../vendor/autoload.php'; // Ruta al autoload.php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+// Cargar las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../');
+$dotenv->load();
+$smtpUsername = $_ENV['SMTP_USERNAME'];
+$smtpPassword = $_ENV['SMTP_PASSWORD'];
+$smtpHost = $_ENV['SMTP_HOST'];
+$smtpPort = $_ENV['SMTP_PORT'];
+$smtpSecure = $_ENV['SMTP_SECURE'];
 
 require('seguridad.php');
 
@@ -108,12 +117,12 @@ if (isset($_POST['enviar_orden'])) {
     $mail = new PHPMailer(true);
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = $smtpHost;
     $mail->SMTPAuth = true;
-    $mail->Username = 'info@zonafrancadepereira.com';
-    $mail->Password = 'lwohsrzjdnqfhsyx';
-    $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
+    $mail->Username = $smtpUsername;
+    $mail->Password = $smtpPassword;
+    $mail->SMTPSecure = $smtpSecure;
+    $mail->Port = $smtpPort;
     $mail->CharSet = 'UTF-8';
     $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
     $mail->addAddress($email);
@@ -160,12 +169,12 @@ if (isset($_POST['enviar_orden'])) {
     $mail = new PHPMailer(true);
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = $smtpHost;
     $mail->SMTPAuth = true;
-    $mail->Username = 'info@zonafrancadepereira.com';
-    $mail->Password = 'lwohsrzjdnqfhsyx';
-    $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
+    $mail->Username = $smtpUsername;
+    $mail->Password = $smtpPassword;
+    $mail->SMTPSecure = $smtpSecure;
+    $mail->Port = $smtpPort;
     $mail->CharSet = 'UTF-8';
     $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
     $mail->addAddress($email);
@@ -298,6 +307,17 @@ try {
             Proveedores
           </p>
         </a>
+      </li>
+    <?php  } ?>
+    <?php if ($_SESSION['pagar_ordenes'] == "Si") { ?>
+      <li class="nav-item">
+        <a data-toggle="tab" href="#aprobadas" class="nav-link ">
+          <i class="nav-icon fas fa-clipboard-check"></i>
+          <p>
+            Ordenes Aprobadas
+          </p>
+        </a>
+
       </li>
     <?php  } ?>
     <li class="nav-item">
@@ -472,6 +492,7 @@ try {
                             <th>Valor</th>
                             <th>Ver</th>
                             <th>Recibido</th>
+                            <th>Declinar</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -505,7 +526,10 @@ try {
                                 echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
                                 echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></a></td>";
                                 echo "<td><a href='editar_estado.php?id_orden=$id_orden&estado_orden=Proceso&nombre_usuario=$nombre_usuario&apellidos_usuario=$apellidos_usuario&fecha_orden=$fecha_orden&total_orden=$total_orden&correo_usuario=$correo_usuario'><button class='btn btn-success'><i class='fas fa-thumbs-up'></i></button></a></td>";
-
+                          ?>
+                                <td><button type="button" class="btn bg-danger" id="orden_rechazada" name="" data-toggle="modal" data-target="#modal-rechazo" data-id_orden="<?php echo $id_orden ?>" data-nombre_usuario="<?php echo $nombre_usuario ?>" data-apellidos_usuario="<?php echo $apellidos_usuario ?>" data-fecha_orden="<?php echo $fecha_orden ?>" data-total_orden="<?php echo $total_orden ?>" data-correo_usuario="<?php echo $correo_usuario ?>"><i class='fas fa-times-circle'></i></button>
+                                </td>
+                          <?php
                                 echo "</tr>";
                                 $registros++;
                               }
@@ -524,13 +548,13 @@ try {
                 <div class="col-lg-12">
                   <!-- /.card -->
                   <div class="card">
-                    <div class="card-header border-0">
+                    <div class="card-header border-0 bg-danger">
                       <h3 class="card-title">Por Pagar</h3>
                       <div class="card-tools">
 
                       </div>
                     </div>
-                    <div class="card-body table-responsive p-0">
+                    <div class="card-body table-responsive p-2">
                       <table class="display table table-striped table-valign-middle">
                         <thead>
                           <tr>
@@ -771,6 +795,7 @@ try {
                           <th>Forma de Pago</th>
                           <th>Valor</th>
                           <th>Estado</th>
+                          <th>Observaciones de Rechazo</th>
                           <th>Ver</th>
                         </tr>
                       </thead>
@@ -779,7 +804,7 @@ try {
                         try {
                           $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
                                   c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
-                                  c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
+                                  c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,c.descripcion_declinado,u.Id_usuario, u.correo_usuario,
                                   u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
                                   u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
                                   FROM  orden_compra c
@@ -824,6 +849,7 @@ try {
                                   echo "<td><center><span class='badge badge-success'>" . $estado_orden . "</span></center></td>";
                                   break;
                               }
+                              echo "<td>" . $row["descripcion_declinado"] . "</td>";
                               echo "<td><a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-primary'><i class='fas fa-eye'></i> </button></a></td>";
                               echo "</tr>";
                               $registros++;
@@ -916,17 +942,14 @@ try {
               </div>
             </div>
           </div>
-          <!-- DIV DONDE SE MUESTRAN LOS PROVEEDORES DE CADA USUARIO-->
+          <!-- DIV DONDE SE MUESTRA EL MANUAL-->
           <div id="manual" class="tab-pane">
             <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
-
                   <!-- Button trigger modal -->
                   <div class="card">
-                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
                       <iframe loading="lazy" style="position: absolute; width: 100%; height: 80%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF2tRLHnr8&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
                       </iframe>
                     </div>
@@ -936,6 +959,76 @@ try {
             </div>
           </div>
           <!-- CIERRE MANUAL-->
+                    <!-- DIV DONDE SE PUEDEN CONSULTAR LAS ORDENES-->
+                    <div id="aprobadas" class="tab-pane">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div class="card">
+                  <div class="card-header border-0 bg-success">
+                    <h3 class="card-title">Ordenes Ejecutadas</h3>
+                  </div>
+                  <div class="card-body table-responsive p-2">
+                  <table class="display table table-striped table-valign-middle " width="100%">
+                        <thead>
+                          <tr>
+                            <th># Orden</th>
+                            <th>Cotizante</th>
+                            <th>Fecha</th>
+                            <th>Valor</th>
+                            <th>Ver</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                          try {
+                            $stmt = $conn->prepare('SELECT c.id_orden,c.fecha_orden,c.proveedor_recurrente,c.forma_pago,
+                                  c.tiempo_pago,c.porcentaje_anticipo,c.condiciones_negociacion,c.comentario_orden,c.tiempo_entrega,
+                                  c.total_orden,c.analisis_cotizacion,c.estado_orden,c.id_cotizante,c.id_proveedor_fk,u.Id_usuario, u.correo_usuario,
+                                  u.contrasena_usuario, u.nombre_usuario,u.apellidos_usuario, u.siglas_usuario, u.estado_usuario, u.firma_usuario,
+                                  u.proceso_usuario_fk, u.id_cargo_fk, u.tipo_usuario_fk,p.id_proveedor,p.nombre_proveedor,p.contacto_proveedor,p.telefono_proveedor,p.id_usuario_fk
+                                  FROM  orden_compra c
+                                  INNER JOIN usuarios u
+                                  ON c.id_cotizante=u.Id_usuario
+                                  INNER JOIN proveedor_compras p
+                                  ON c.id_proveedor_fk= p.id_proveedor
+                                  WHERE  c.estado_orden = "Ejecutada" ');
+                            $stmt->execute();
+                            $registros = 1;
+                            if ($stmt->rowCount() > 0) {
+
+                              while ($row = $stmt->fetch()) {
+
+                                $id_orden = $row["id_orden"];
+                                $nombre_usuario = $row["nombre_usuario"];
+                                $apellidos_usuario = $row["apellidos_usuario"];
+                                $fecha_orden = $row["fecha_orden"];
+                                $total_orden = $row["total_orden"];
+                                $correo_usuario = $row["correo_usuario"];
+                                echo "<tr>";
+                                echo "<td >" . $id_orden . "</td>";
+                                echo "<td >" . $nombre_usuario . " " . $apellidos_usuario . "</td>";
+                                echo "<td>" . $row["fecha_orden"] . "</td>";
+                                echo "<td>$ " . number_format($row["total_orden"]) . "</td>";
+                                echo "<td> <a href='orden_pdf.php?id_orden=$id_orden' target='_blank'> <button class='btn btn-danger'><i class='fas fa-file-pdf'></i> </button></a></td>";
+
+                                echo "</tr>";
+                                $registros++;
+                              }
+                            }
+                          } catch (PDOException $e) {
+                            echo "Error en el servidor";
+                          } ?>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           <!-- CIERRE ORDENES EJECUTADAS -->
+
+          
         </div>
       </div>
     </div>
@@ -1038,9 +1131,9 @@ try {
     </div>
   </div>
 
- <!-- /.MODAL RECHAZO -->
-  <div class="modal fade" id="modal-rechazo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
-       <div class="modal-dialog modal-lg">
+  <!-- /.MODAL RECHAZO -->
+  <div class="modal fade" id="modal-rechazo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content ">
         <div class="modal-header btn bg-danger btn-block">
           <h4 class="modal-title">RECHAZAR ORDEN DE COMPRA</h4>
@@ -1049,12 +1142,12 @@ try {
           <div class="row">
             <form action="editar_estado.php" id="form_orden" method="GET">
               <div class="card">
-                
+
                 <div class="card-body">
                   <div class="row">
-                  <div class="col-md-6 col-xs-12 col-sm-12">
-                  <label>Desea rechazar la siguiente orden de compra : # </label><input type="number" class="form-control" value="" name="id_orden" id="id_orden" readonly>
-                </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                      <label>Desea rechazar la siguiente orden de compra : # </label><input type="number" class="form-control" value="" name="id_orden" id="id_orden" readonly>
+                    </div>
                     <div class="col-md-6 col-xs-12 col-sm-12">
                       <label for="fecha_actividad">Fecha</label>
                       <input type="date" name="fecha_orden" class="form-control" id="fecha_orden" readonly>
@@ -1069,7 +1162,7 @@ try {
                     </div>
                     <div class="col-12 col-xs-12 col-sm-12">
                       <label for="estado_orden">Estado de la Orden</label><input type="text" class="form-control" value="Denegada" name="estado_orden" id="estado_orden" readonly>
-                    </div>                    
+                    </div>
                   </div>
                   <!-- /.card-body -->
                   <br>
@@ -1137,7 +1230,7 @@ try {
 
     });
 
-    $('#modal-rechazo').on('show.bs.modal', function (event){
+    $('#modal-rechazo').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget); // Button that triggered the modal
       var id_orden = button.data('id_orden'); // Extract info from data-* attributes
       var nombre_usuario = button.data('nombre_usuario');
@@ -1154,7 +1247,6 @@ try {
       modal.find('.modal-body #correo_usuario').val(correo_usuario);
 
     });
-
   </script>
 
   </body>
