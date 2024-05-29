@@ -4,6 +4,19 @@ require('seguridad.php');
   $descripcion = $_GET['descripcion'];
   $id_actividad = 0;
 ?>
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item">
+      <a href="acpm.php#abiertas" class="nav-link active">
+      <i class="fas fa-arrow-alt-circle-left"></i>
+        <p>
+          ATRAS
+        </p>
+      </a>
+    </li>          
+      </ul>
+</nav>
   <footer>
     <small class="bg-teal">SADOC 3.0 &copy; Copyright 2022, ZFIP SAS</small>
   </footer>

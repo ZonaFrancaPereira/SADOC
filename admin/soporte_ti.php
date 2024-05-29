@@ -22,17 +22,21 @@ if ($_SESSION['ingreso'] == true) {
                 </a>
             </li>
             <?php
-    if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
-    ?>
-            <li class="nav-item" name="">
-                        <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
-                            <i class="nav-icon fas fa-sync-alt"></i>
-                            <p>Solicitudes de Soporte</p>
-                        </a>
-                    </li>
-                    <?php
-    }
-    ?>
+            if ($_SESSION['nombre_cargo'] == "Auxiliar Tecnologia e Informatica" || $_SESSION['nombre_cargo'] == "Coordinadora Tecnologia e Informatica") {
+            ?>
+                <li class="nav-item" name="">
+                    <a data-toggle="tab" href="#solicitudes_soporte" class="nav-link">
+                        <i class="nav-icon fas fa-sync-alt"></i>
+                        <p>Solicitudes de Soporte</p>
+                    </a>
+                    <a data-toggle="tab" href="#solicitudes_solucionadas" class="nav-link">
+                        <i class="nav-icon fas fa-sync-alt"></i>
+                        <p>Solicitudes Finalizadas</p>
+                    </a>
+                </li>
+            <?php
+            }
+            ?>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-search-plus"></i>
@@ -42,7 +46,7 @@ if ($_SESSION['ingreso'] == true) {
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    
+
                     <li class="nav-item">
                         <a data-toggle="tab" href="#realizar_solicitud" class="nav-link">
                             <i class="nav-icon far fa-question-circle"></i>
@@ -240,7 +244,7 @@ if ($_SESSION['ingreso'] == true) {
                                                             break;
                                                     }
                                                 }
-                                                foreach ($conn->query("SELECT * FROM soporte") as $row) {
+                                                foreach ($conn->query("SELECT * FROM soporte WHERE fecha_solucion IS NULL OR fecha_solucion = ''") as $row) {
                                                     $id_soporte = $row["id_soporte"];
                                                     $id_soporte1 = $row["id_soporte"];
                                                     $urgencia = $row["urgencia"];
@@ -249,13 +253,188 @@ if ($_SESSION['ingreso'] == true) {
                                                 ?>
                                                     <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
                                                         <td><?php echo $row["usuario_soporte"] ?></td>
-                                                        <td><?php echo $row["descripcion_soporte"] ?></td>
+                                                        <td>
+                                                            <p class="text-break" style="width: 10rem">
+                                                                <?php
+                                                                $descripcion_soporte1 = $row["descripcion_soporte"];
+                                                                $max_caracteres = 600; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                                                echo strlen($descripcion_soporte1) > $max_caracteres ? substr($descripcion_soporte1, 0, $max_caracteres) . "..." : $descripcion_soporte1;
+                                                                ?>
+                                                            </p>
+                                                        </td>
                                                         <td><?php echo $row["fecha_soporte"] ?></td>
                                                         <td><?php echo $row["urgencia"] ?></td>
                                                         <td><?php echo $row["solucion_soporte"] ?></td>
                                                         <td><?php echo $row["fecha_solucion"] ?></td>
                                                         <td><button class="btn bg-orange" data-toggle="modal" data-target="#modal-urgencia" data-id_soporte="<?php echo $row['id_soporte'] ?>"><i class="fas fa-hourglass-half"></i></button></td>
                                                         <td><button class="btn  bg-orange" data-toggle="modal" data-target="#modal-solicitud" data-id_soporte1="<?php echo $row['id_soporte'] ?>"><i class="fas fa-file-signature"></i></button></td>
+                                                        <td><?php echo $row["usuario_respuesta"] ?></td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="content">
+                            <div class="modal fade" id="modal-urgencia">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h4 class="modal-title">Asignar el tipo de Urgencia a la Solicitud</h4>
+                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="form_soporte_urgencia" method="POST">
+                                                <div class="card border-danger">
+                                                    <div class="card-header bg-danger text-white" hidden>
+                                                        <h5 class="card-title mb-0">ID de Soporte:</h5>
+                                                        <input type="text" class="form-control mb-3" value="" id="id_soporte" name="id_soporte" readonly>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="btn-group btn-group-toggle d-flex justify-content-center" data-toggle="buttons" id="grupo_urgencia">
+                                                            <label class="btn btn-outline-danger active">
+                                                                <input type="radio" name="urgencia" value="1" autocomplete="off" checked> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-warning">
+                                                                <input type="radio" name="urgencia" value="2" autocomplete="off"> 2
+                                                            </label>
+                                                            <label class="btn btn-outline-success">
+                                                                <input type="radio" name="urgencia" value="3" autocomplete="off"> 3
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-transparent border-top-0">
+                                                        <button type="button" class="btn bg-info text-white btn-block" id="responder_urgencia" name="responder_urgencia">Asignar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="content">
+                            <div class="modal fade" id="modal-solicitud">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info">
+                                            <h4 class="modal-title text-white">Responder Solicitud de Soporte</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="form_soporte_respuesta" method="POST">
+                                                <div class="form-group" hidden>
+                                                    <label>Desea Darle Respuesta a esta Solicitud de Soporte:</label><input type="text" class="form-control" value="" name="id_soporte1" id="id_soporte1" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="solucion_soporte">Solución</label>
+                                                    <textarea class="form-control" id="solucion_soporte" name="solucion_soporte" rows="3" placeholder="Escribe aquí la solución"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fecha_solucion">Fecha Solución</label>
+                                                    <input type="date" name="fecha_solucion" class="form-control" id="fecha_solucion" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="usuario_respuesta">Nombre de Usuario quien da respuesta a la solicitud</label>
+                                                    <input list="usuario_respuesta_browsers" class="form-control" id="usuario_respuesta" name="usuario_respuesta" placeholder="Nombre de Usuario">
+                                                    <datalist id="usuario_respuesta_browsers">
+                                                        <?php
+                                                        try {
+                                                            $stmt = $conn->prepare('SELECT * FROM  usuarios WHERE proceso_usuario_fk = 2 ');
+                                                            $stmt->execute();
+                                                            if ($stmt->rowCount() > 0) {
+                                                                while ($row = $stmt->fetch()) {
+                                                                    $id_usuario = $row["Id_usuario"];
+                                                                    $nombre_usuario = $row["nombre_usuario"];
+                                                                    $apellidos_usuario = $row["apellidos_usuario"];
+                                                                    echo '<option value="' . $nombre_usuario . ' ' . $apellidos_usuario . '"></option>';
+                                                                }
+                                                            }
+                                                        } catch (PDOException $e) {
+                                                            echo "Error en el servidor";
+                                                        }
+                                                        ?>
+                                                    </datalist>
+                                                </div>
+                                                <button type="button" class="btn btn-info btn-block" id="responder_solicitud" name="responder_solicitud">Responder</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- /.SOLICITUDES Finalizadas-->
+                    <div id="solicitudes_solucionadas" class="tab-pane">
+                        <div class="col-md-12">
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Solicitudes Finalizadas
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="display table table-striped table-valign-middle " width="100%">
+                                            <thead>
+                                                <tr style="text-align: center;">
+                                                    <th>Nombre del Usuario</th>
+                                                    <th>Descripción de la Solicitud</th>
+                                                    <th>Fecha</th>
+                                                    <th>Escala de Urgencia</th>
+                                                    <th>Solución</th>
+                                                    <th>Fecha Solucion</th>
+                                                    <th>Usuario</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Definir una función para determinar el color basado en la escala de urgencia
+                                                function determinarColor1($urgencia)
+                                                {
+                                                    switch ($urgencia) {
+                                                        case 1:
+                                                            return 'bg-danger'; //Rojo para alta urgencia 
+                                                            break;
+                                                        case 2:
+                                                            return 'bg-warning'; // Amarillo para media urgencia
+                                                            break;
+                                                        case 3:
+                                                            return 'bg-success'; // Verde para baja urgencia
+                                                            break;
+                                                        default:
+                                                            return ''; // Por defecto no se aplica ningún color
+                                                            break;
+                                                    }
+                                                }
+                                                foreach ($conn->query("SELECT * FROM soporte WHERE fecha_solucion IS NOT NULL AND fecha_solucion != ''") as $row) {
+                                                    $id_soporte = $row["id_soporte"];
+                                                    $id_soporte1 = $row["id_soporte"];
+                                                    $urgencia = $row["urgencia"];
+                                                    // Determinar el color de fondo de la fila
+                                                    $colorFondo = determinarColor1($urgencia);
+                                                ?>
+                                                    <tr style="text-align:center" class="<?php echo $colorFondo; ?>">
+                                                        <td><?php echo $row["usuario_soporte"] ?></td>
+                                                        <td>
+                                                            <p class="text-break" style="width: 10rem">
+                                                                <?php
+                                                                $descripcion_soporte2 = $row["descripcion_soporte"];
+                                                                $max_caracteres = 600; // Cambia esto al número máximo de caracteres que deseas mostrar
+                                                                echo strlen($descripcion_soporte2) > $max_caracteres ? substr($descripcion_soporte2, 0, $max_caracteres) . "..." : $descripcion_soporte2;
+                                                                ?>
+                                                            </p>
+                                                        </td>
+                                                        <td><?php echo $row["fecha_soporte"] ?></td>
+                                                        <td><?php echo $row["urgencia"] ?></td>
+                                                        <td><?php echo $row["solucion_soporte"] ?></td>
+                                                        <td><?php echo $row["fecha_solucion"] ?></td>
                                                         <td><?php echo $row["usuario_respuesta"] ?></td>
                                                     </tr>
                                                 <?php
