@@ -612,7 +612,6 @@ function actualizarDatosUsuario() {
 function responderUrgencia() {
     var urgencia = $('#grupo_urgencia input[name="urgencia"]:checked').val();
     var id_soporte = $('#id_soporte').val();
-
     // Crear el objeto JSON con los datos del formulario
     var data = {
         responder_urgencia: true, // Agrega este parámetro
@@ -639,7 +638,7 @@ function responderUrgencia() {
             console.error(xhr.responseText);
             Swal.fire(
                 'Error',
-                'Hubo un problema al guardar el mantenimiento',
+                'Hubo un problema al guardar la asignacion de urgencia',
                 'error'
             );
         }
