@@ -1,9 +1,23 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
+require_once __DIR__ . '../../../vendor/autoload.php'; // Ruta al autoload.php
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+// Cargar las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../../');
+$dotenv->load();
+$smtpUsername = $_ENV['SMTP_USERNAME'];
+$smtpPassword = $_ENV['SMTP_PASSWORD'];
+$smtpHost = $_ENV['SMTP_HOST'];
+$smtpPort = $_ENV['SMTP_PORT'];
+$smtpSecure = $_ENV['SMTP_SECURE'];
+
+var_dump($_ENV);
 
 include_once("conexion.php");
 $origen_acpm = $_POST["origen_acpm"];
@@ -81,16 +95,16 @@ try {
 		//LIBRERIA
 		require '../mail/autoload.php';
 		$mail = new PHPMailer(true);
-		$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-		$mail->isSMTP();
-		$mail->Host = 'smtp.gmail.com';
-		$mail->SMTPAuth = true;
-		$mail->Username = 'info@zonafrancadepereira.com';
-		$mail->Password = 'lwohsrzjdnqfhsyx';
-		$mail->SMTPSecure = 'ssl';
-		$mail->Port = 465;
-		$mail->CharSet = 'UTF-8';
-		$mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail->isSMTP();
+                $mail->Host = $smtpHost;
+                $mail->SMTPAuth = true;
+                $mail->Username = $smtpUsername;
+                $mail->Password = $smtpPassword;
+                $mail->SMTPSecure = $smtpSecure;
+                $mail->Port = $smtpPort;
+                $mail->CharSet = 'UTF-8';
+                $mail->setFrom('info@zonafrancadepereira.com', 'Zona Franca Internacional de Pereira');
 		$mail->addAddress($email);
 		$mail->isHTML(true);
 		$titulo_correo = "Nueva ACPM del Proceso de " . $nombre_proceso . " / " . $fecha_finalizacion;
