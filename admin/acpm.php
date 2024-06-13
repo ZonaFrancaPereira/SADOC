@@ -81,7 +81,7 @@ if (isset($_POST['enviar_verificacion'])) {
               <i class="nav-icon far fa-question-circle"></i>
               <p>Acciones Abiertas</p>
             </a>
-          </li>
+        </li>
           <li class="nav-item" name="cerradas">
             <a data-toggle="tab" href="#cerradas" class="nav-link">
               <i class="nav-icon far fa-check-circle"></i>
@@ -484,6 +484,7 @@ if (isset($_POST['enviar_verificacion'])) {
           </div>
           <!-- DIV DONDE SE MUESTRAN LAS ACCIONES ABIERTAS DE CADA USUARIO-->
           <div id="abiertas" class="tab-pane">
+            <div id="abiertas1">
             <div class="row">
               <div class="col-lg-12 ">
                 <div class="card">
@@ -553,8 +554,7 @@ if (isset($_POST['enviar_verificacion'])) {
                 </div>
               </div>
             </div>
-
-            <!-- /.card -->
+          </div>
           </div>
           <!-- /.EDITAR FECHA ACPM -->
           <section class="content">
@@ -949,7 +949,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $fecha_finalizacion ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                              <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta"><i class="far fa-solid fa-paper-plane"></i></button></td>
+                              <td><button class='btn btn-success' data-toggle="modal" data-target="#modal-respuesta" id="rechazar" data-id_acpm_fk_sig1="<?php echo $row['id_consecutivo'] ?>"><i class="far fa-solid fa-paper-plane"></i></button></td>
 
                               <td><button class='btn bg-danger' data-toggle="modal" data-target="#modal-rechazo" id="rechazar" data-id_acpm_fk_sig="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-bomb"></i></button></td>
                             </tr>
@@ -1764,12 +1764,12 @@ if (isset($_POST['enviar_verificacion'])) {
                     <h4 class="modal-title ">EFICACIA</h4>
                   </div>
                   <div class="modal-body">
-                    <form id="" method="POST" action="">
+                    <form id="" method="POST" >
                       <div class="card card-navy">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <input type="text" value="<?php echo $id_acpm; ?>" name="id_acpm_sig" id="id_acpm_sig" hidden>
+                            <input type="text" name="id_acpm_fk_sig1" id="id_acpm_fk_sig1" class="form-control">
                               <label>SI (Conforme) NO (No conforme)</label>
                               <select class="form-control" id="riesgo_acpm_sig" name="riesgo_acpm_sig" required>
                                 <option>Selecciona una Opcion</option>
@@ -1785,7 +1785,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label>¿Es necesario hacer cambios al sistema de gestión? (gestión del cambio) (SI - NO)</label>
+                              <label>¿Existe la necesidad de actualizar los riesgos y oportunidades actuales?</label>
                               <select class="form-control" id="cambios_sig" name="cambios_sig" required>
                                 <option>Selecciona una Opcion</option>
                                 <option value="SI">SI</option>
@@ -1795,12 +1795,12 @@ if (isset($_POST['enviar_verificacion'])) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
-                                <label>¿Qué cambios se deben contemplar y documentar? Describa brevemente</label>
+                                <label>¿Cuáles riesgos u oportunidades se deben contemplar?</label>
                                 <textarea type="text" id="justificacion_sig" name="justificacion_sig" class="form-control" required></textarea>
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12">
-                              <label>Conforme</label>
+                              <label>¿Es necesario hacer cambios al sistema de gestión?</label>
                               <select class="form-control" id="conforme_sig" name="conforme_sig" required>
                                 <option>Selecciona una Opcion</option>
                                 <option value="SI">SI</option>
@@ -1810,7 +1810,7 @@ if (isset($_POST['enviar_verificacion'])) {
                             <div class="col-md-12 col-xs-12 col-sm-12">
                               <br>
                               <div class="form-group">
-                                <label>Justificación Conforme o No conforme</label>
+                                <label>¿Qué cambios se deben contemplar y documentar?</label>
                                 <textarea type="text" id="justificacion_conforme_sig" name="justificacion_conforme_sig" class="form-control" required></textarea>
                               </div>
                             </div>
@@ -1858,7 +1858,7 @@ if (isset($_POST['enviar_verificacion'])) {
                               </div>
                             </div>
                             <div class="form-group">
-                              <input type="text" name="id_acpm_fk_sig" id="id_acpm_fk_sig" class="form-control" hidden>
+                              <input type="text" name="id_acpm_fk_sig" id="id_acpm_fk_sig" class="form-control">
                             </div>
                             <br>
                             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -2035,6 +2035,15 @@ if (isset($_POST['enviar_verificacion'])) {
 
     modal.find('.modal-body #id_acpm_fk_sig').val(id_acpm_fk_sig);
   });
+  $('#modal-respuesta').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id_acpm_fk_sig1 = button.data('id_acpm_fk_sig1'); // Extract info from data-* attributes
+
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+
+    modal.find('.modal-body #id_acpm_fk_sig1').val(id_acpm_fk_sig1);
+  });
 
   $(document).ready(function() {
     $(".btn-aprobado").on("click", function() {
@@ -2045,7 +2054,42 @@ if (isset($_POST['enviar_verificacion'])) {
     });
   });
 </script>
+<script>
+        function openTab(tabName) {
+            let i, tabcontent;
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+        }
 
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener la pestaña y div objetivo de localStorage
+            const targetTab = localStorage.getItem('targetTab');
+            const targetDiv = localStorage.getItem('targetDiv');
+
+            if (targetTab) {
+                // Simular clic en el enlace de la pestaña
+                const tabLink = document.querySelector(`a[href="#${targetTab}"]`);
+                if (tabLink) {
+                    tabLink.click();
+                }
+
+                // Asegurarse de que la pestaña esté activa y visible antes de desplazar
+                setTimeout(() => {
+                    openTab(targetTab);
+                    if (targetDiv) {
+                        document.getElementById(targetDiv).scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100); // Ajustar el tiempo si es necesario
+
+                // Limpiar los datos de localStorage
+                localStorage.removeItem('targetTab');
+                localStorage.removeItem('targetDiv');
+            }
+        });
+    </script>
 
 </body>
 

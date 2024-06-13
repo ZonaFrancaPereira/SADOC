@@ -27,7 +27,7 @@ function insertar_actividad() {
 	var estado_actividad = $("#estado_actividad").val();
 	var id_usuario_fk_6 = $("#id_usuario_fk_6").val();
 	var id_acpm = $("#id_acpm_fk").val();
-	alert(fecha_actividad + descripcion_actividad + tipo_actividad + estado_actividad + id_usuario_fk_6 + id_acpm);
+	//alert(fecha_actividad + descripcion_actividad + tipo_actividad + estado_actividad + id_usuario_fk_6 + id_acpm);
 
 	if (descripcion_actividad == "" || id_usuario_fk_6 == "") {
 		Swal.fire(

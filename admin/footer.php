@@ -80,6 +80,7 @@
 <script src="dist/js/actividades.js"></script>
 <script src="dist/js/evidencia_actividades.js"></script>
 <script src="dist/js/ti.js"></script>
+<script src="dist/js/codificacion.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>
@@ -228,6 +229,51 @@ autoWidth: true
 
     });
   });
+  
+  $(function() {
+    /*=============================================
+     Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+     =============================================*/
+    $("#adicional2").on('click', function() {
+      $("#tabla2 tbody tr:eq(0)").clone().removeClass('fila-fija2').appendTo("#tabla2");
+      sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
+
+    });
+    /*=============================================
+    Evento que selecciona la fila y la elimina 
+    =============================================*/
+    $(document).on("click", ".eliminar", function() {
+      var parent = $(this).parents().get(0);
+      $(parent).remove();
+      sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
+
+
+    });
+  });
+  $(function() {
+    /*=============================================
+     Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+     =============================================*/
+    $("#adicional3").on('click', function() {
+      $("#tabla3 tbody tr:eq(0)").clone().removeClass('fila-fija3').appendTo("#tabla3");
+      sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
+
+    });
+    /*=============================================
+    Evento que selecciona la fila y la elimina 
+    =============================================*/
+    $(document).on("click", ".eliminar", function() {
+      var parent = $(this).parents().get(0);
+      $(parent).remove();
+      sumarTotalPrecios()
+      actualizarSuma(); // Actualiza la suma después de eliminar la fila
+
+
+    });
+  });
 </script>
 <script>
   $(function () {
@@ -251,6 +297,19 @@ autoWidth: true
     // Actualiza el contenido del textarea cuando cambia Quill
     quill.on('text-change', function() {
       $('.editor').val(quill.root.innerHTML);
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Inicializa Quill en el contenedor
+    var editor1 = new Quill('#editor1', {
+    theme: 'snow'  // o 'bubble' según tu preferencia
+});
+
+    // Actualiza el contenido del textarea cuando cambia Quill
+    quill.on('text-change', function() {
+      $('.editor1').val(quill.root.innerHTML);
     });
   });
 </script>

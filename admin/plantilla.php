@@ -64,6 +64,7 @@ include "sumatorias.php";
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <li><a href="sadoc.php" class="dropdown-item" target="_blank">SADOC </a></li>
             <li><a href="acpm.php" class="dropdown-item">ACPM</a></li>
+            <li><a href="codificar.php" class="dropdown-item">Solicitud de Codificacion</a></li>
 
           </ul>
         </li>
