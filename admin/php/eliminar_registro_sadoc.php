@@ -18,7 +18,7 @@
 			echo "2";
 		}
 
-	} catch (PDOExeption $e) {
+	} catch (PDOException $e) {
 		echo "Error en el servidor";
 	}
 

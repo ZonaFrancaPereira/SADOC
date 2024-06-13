@@ -80,7 +80,11 @@
 <script src="dist/js/actividades.js"></script>
 <script src="dist/js/evidencia_actividades.js"></script>
 <script src="dist/js/ti.js"></script>
+<<<<<<< HEAD
 <script src="dist/js/codificacion.js"></script>
+=======
+<script src="dist/js/asignacion.js"></script>
+>>>>>>> 8d4219690ef644dde349e728edb2f714e363a3d2
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>

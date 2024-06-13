@@ -74,12 +74,12 @@ try {
 	echo "Error en el servidor";
 }
 $fecha = date("d/m/Y", strtotime($fecha_orden));
-$nombreImagen = "img/zf.png";
+$nombreImagen = "img/logo_pdf.jpg";
 $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
 $firma = "firmas/" . $firma_usuario;
 $firma_cotizante = "data:image/png;base64," . base64_encode(file_get_contents($firma));
 if ($firma_gerente == "") {
-	$firmag = "firmas/noautorizado.png";
+	$firmag = "firmas/noautorizado.jpg";
 	$gerente = "data:image/png;base64," . base64_encode(file_get_contents($firmag));
 } else {
 	$firmag = "firmas/" . $firma_gerente;
@@ -99,29 +99,40 @@ if ($firma_gerente == "") {
 <body>
 	<style>
 		body {
-			font-family: "Gill Sans", sans-serif;
+			font-family: arial, sans-serif;
 		}
 
 		table {
-			font-family: arial, sans-serif;
+			
 			border-collapse: collapse;
 			width: 100%;
 		}
 
-		td,
-		th {
+		td{
 			border: 1px solid #ccc;
 			text-align: left;
 			padding: 8px;
-			font-size: 8;
+			font-size: 9;
+		}
+		th {
+			border: 1px solid #ccc;
+			text-align: center;
+			padding: 8px;
+			font-size: 10;
 		}
 
 		tr:nth-child(even) {
 			background-color: #dddddd;
 		}
 
-		.sinBorde th {
+		.sinBorde{
 			border: 0;
+		}
+		.titulo{
+			border: 0;
+			text-align: center;
+			
+		
 		}
 
 		.sinBorde tr {
@@ -130,26 +141,27 @@ if ($firma_gerente == "") {
 	</style>
 	<table>
 		<tr class="sinBorde">
-			<th><img src="<?php echo $imagenBase64; ?>" alt="" width="140"></th>
-			<th>
+			<td class="sinBorde"><img src="<?php echo $imagenBase64; ?>" alt="" width="140"></td>
+			<td class="titulo">
 				<h3>
-					<center>ORDEN DE COMPRA Nº <?php echo $id_orden; ?></center>
+					ORDEN DE COMPRA Nº <?php echo $id_orden; ?>
 				</h3>
-			</th>
+			</td>
 		</tr>
 	</table>
 
-	<table border="1" whidth="100">
+	<table >
 		<tr>
-			<td colspan="4">
-				<center><B> Datos Proveedor</B></center>
-			</td>
+			<th colspan="4">
+				Datos Proveedor
+			</th>
 		</tr>
 		<tr>
+		<td>Proveedor</td>
+			<td>NIT:  <?php echo number_format($id_proveedor); ?> | <?php echo $nombre_proveedor; ?></td>
 			<td>Fecha</td>
 			<td><?php echo $fecha; ?></td>
-			<td>Proveedor</td>
-			<td><?php echo $nombre_proveedor; ?></td>
+			
 		</tr>
 		<tr>
 			<td>Contacto</td>
@@ -162,7 +174,7 @@ if ($firma_gerente == "") {
 	<table>
 		<tr>
 			<th colspan="6">
-				<center><B>Detalle Orden de Compra</B></center>
+				Detalle Orden de Compra
 			</th>
 		</tr>
 		<tr>
@@ -219,106 +231,105 @@ if ($firma_gerente == "") {
 
 		?>
 		<tr>
-			<td colspan="4">Total</td>
-			<td colspan="2">$ <?php echo number_format($total_orden); ?></td>
+			<td colspan="1">Total</td>
+			<td colspan="5">$ <?php echo number_format($total_orden); ?></td>
 		</tr>
 
 	</table>
-	
-	<table whidth="100">
+	<br>
+	<table width="100">
 		<tr>
-			<td colspan="3">
-				<center><B>Detalles Forma de Pago</B></center>
-			</td>
+			<th colspan="3">
+				Detalles Forma de Pago
+			</th>
 		</tr>
 		<tr>
-			<td><B>Forma de Pago : </B> <?php echo $forma_pago; ?></td>
-			<td><B>Tiempo (Dias) </B> <?php echo $tiempo_pago; ?></td>
-			<td><B>Porcentaje Anticipo : </B> <?php echo $porcentaje_anticipo; ?> %</td>
+			<td>Forma de Pago :  <?php echo $forma_pago; ?></td>
+			<td>Tiempo (Dias)  <?php echo $tiempo_pago; ?></td>
+			<td>Porcentaje Anticipo :  <?php echo $porcentaje_anticipo; ?> %</td>
 		</tr>
 		<tr>
-			<td><B>Otras condiciones de negociación</B></td>
+			<td>Otras condiciones de negociación</td>
 			<td colspan="2"><?php echo $porcentaje_anticipo; ?></td>
 		</tr>
 	</table>
-
-	<table whidth="100">
+<br>
+	<table>
 		<tr>
-			<td>
-				<center><B>Comentarios</B></center>
-			</td>
+			<th>
+				Comentarios
+			</th>
 		</tr>
 		<tr>
 			<td><?php echo $comentario_orden; ?></td>
 		</tr>
 	</table>
 	<br>
-	<table whidth="100">
+	<table >
 		<tr>
-			<td colspan="3">
-				<center><B>Cotizado por :</B></center>
+			<th colspan="3">
+				Cotizado por :
+	</th>
+		</tr>
+		<tr>
+			<td colspan="1">Tiempo de Entrega :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td colspan="2" >
+				<?php echo $tiempo_entrega; ?>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Tiempo de Entrega :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B></td>
+			<td colspan="1">Firma :</td>
 			<td colspan="2">
-				<center><?php echo $tiempo_entrega; ?></center>
+				<img src="<?php echo $firma_cotizante; ?>" alt="" width="100">
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Firma :</B></td>
+			<td colspan="1">Cotizado por :</td>
 			<td colspan="2">
-				<center><img src="<?php echo $firma_cotizante; ?>" alt="" width="100">
+				<?php echo $nombre_usuario . " " . $apellidos_usuario; ?>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Cotizado por :</B></td>
+			<td colspan="1">Cargo :</td>
 			<td colspan="2">
-				<center><?php echo $nombre_usuario . " " . $apellidos_usuario; ?>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="1"><B>Cargo :</B></td>
-			<td colspan="2">
-				<center><?php echo $nombre_cargo; ?>
+				<?php echo $nombre_cargo; ?>
 			</td>
 		</tr>
 	</table>
-	
-	<table whidth="100">
+	<br>
+	<table >
 		<tr>
-			<td colspan="3">
-				<center><B>Autorizado por :</B></center>
-			</td>
+			<th colspan="3">
+				Autorizado por :
+	</th>
 		</tr>
 
 		<tr>
-			<td colspan="1"><B>Firma :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B></td>
+			<td colspan="1">Firma :</td>
 			<td colspan="2">
-				<center><img src="<?php echo $gerente; ?>" alt="" width="80">
+				<img src="<?php echo $gerente; ?>" alt="" width="80">
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Aprobo :</B></td>
+			<td colspan="1">Aprobo :</td>
 			<td colspan="2">
-				<center><?php echo $nombre_gerente . " " . $apellidos_gerente; ?>
+				<?php echo $nombre_gerente . " " . $apellidos_gerente; ?>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Cargo :</B></td>
+			<td colspan="1">Cargo :</td>
 			<td colspan="2">
-				<center><?php echo $nombre_cargog; ?>
+				<?php echo $nombre_cargog; ?>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="1"><B>Fecha Aprobación :</B></td>
+			<td colspan="1">Fecha Aprobación :</td>
 			<td colspan="2">
-				<center><?php echo $fecha_aprobacion; ?>
+				<?php echo $fecha_aprobacion; ?>
 			</td>
 		</tr>
 	</table>
 </body>
-
 </html>
 <?php
 
