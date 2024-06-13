@@ -71,7 +71,7 @@ include "sumatorias.php";
           <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" title="Contabilidad y Finanzas">CT</a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <?php
-            if ($_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "superadmin" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "gerencia" || $_SESSION['rol_usuario'] == "aux_cotizacion" || $_SESSION['rol_usuario'] == "aux_contable" || $_SESSION['rol_usuario'] == "admin_contable") {
+            if ( $_SESSION['rol_usuario'] == "admin_sig" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "superadmin" || $_SESSION['rol_usuario'] == "directivo" || $_SESSION['rol_usuario'] == "gerencia" || $_SESSION['rol_usuario'] == "aux_cotizacion" || $_SESSION['rol_usuario'] == "aux_contable" || $_SESSION['rol_usuario'] == "admin_contable") {
             ?>
               <li>
                 <a href="ordenes.php" class="dropdown-item">Ordenes de Compra</a>
