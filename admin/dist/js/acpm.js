@@ -84,8 +84,8 @@ function insertar_acpm() {
 					url: 'php/insertar_acpm.php',
 					success: function (resultacpm) {
 						Swal.fire({
-							title: 'Buen Trabajo',
-							text: 'Se registró la ACPM con éxito',
+							title: 'OJO',
+							text: 'Por favor, describe las actividades de tu ACPM, en la pestaña "ACCIONES EN VERIFICACIÓN", de lo contrario tu ACCIÓN SERÁ RECHAZADA.',
 							icon: 'success',
 						}).then((result) => {
 							// Redirige a la página después de cerrar el SweetAlert
@@ -114,7 +114,7 @@ function insertar_acpm() {
 }
 
 function guardar_sig() {
-	var id_acpm = $("#id_acpm_sig").val();
+	var id_acpm_fk_sig1 = $("#id_acpm_fk_sig1").val();
 	var riesgo_acpm = $("#riesgo_acpm_sig").val();
 	var justificacion_riesgo = $("#justificacion_riesgo_sig").val();
 	var cambios_sig = $("#cambios_sig").val();
@@ -149,7 +149,7 @@ function guardar_sig() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				var json = {
-					'id_acpm_sig': id_acpm,
+					'id_acpm_fk_sig1': id_acpm_fk_sig1,
 					'riesgo_acpm_sig': riesgo_acpm,
 					'justificacion_riesgo_sig': justificacion_riesgo,
 					'cambios_sig': cambios_sig,

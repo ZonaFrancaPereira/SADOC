@@ -70,124 +70,60 @@ $id_actividad = 0;
             </div>
           </div>
         </div>
-        <?php
-    // Utiliza sentencias preparadas para evitar inyección de SQL
-    $stmt = $conn->prepare("
-            UPDATE actividades_acpm
-            SET estado_actividad = 'Completa'
-            WHERE id_actividad = :id_actividad
-            AND EXISTS (
-                SELECT 1
-                FROM detalle_actividad
-                WHERE id_actividad_fk = :id_actividad
-            )
-        ");
-    // Asigna valores a los parámetros
-    $stmt->bindParam(':id_actividad', $id_actividad, PDO::PARAM_INT);
-
-    // Ejecuta la consulta preparada
-    if ($stmt->execute()) {
-        $registros = $stmt->rowCount();
-        if ($registros > 0) {
-            echo "<script>
-                Swal.fire({
-                    title: 'Buen Trabajo',
-                    text: 'Se registró la ACPM con éxito',
-                    icon: 'success',
-                }).then((result) => {
-                    // Redirige a la página después de cerrar el SweetAlert
-                    if (result.isConfirmed) {
-                        window.location.href = 'acpm.php';
-                    }
-                });
-                </script>";
-        } else {
-            // No se actualizó ningún registro
-            echo "<script>
-                Swal.fire({
-                    title: 'Error',
-                    text: 'No se encontraron actividades para actualizar',
-                    icon: 'error',
-                });
-                </script>";
-        }
-    } else {
-        // Error al ejecutar la consulta preparada
-        echo "<script>
-            Swal.fire({
-                title: 'Error',
-                text: 'Ocurrió un error al actualizar las actividades',
-                icon: 'error',
-            });
-            </script>";
-    }
-?>
-
-
         <!-- MODAL PARA SUBIR EVIDENCIA -->
         <section class="content">
-          <div class="modal fade" id="modal-success">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
+    <div class="modal fade" id="modal-success">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header btn btn-success btn-block">
-                  <h4 class="modal-title ">SUBIR EVIDENCIA ACTIVIDAD </h4>
+                    <h4 class="modal-title">SUBIR EVIDENCIA ACTIVIDAD</h4>
                 </div>
                 <div class="modal-body">
-                  <form id="" method="POST">
-                    <div class="card card-navy">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                            <label for="fecha_evidencia">Fecha Actividad</label>
-                            <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
-                          </div>
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                            <br>
-                            <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
-                            <!-- Contenedor para el contenido de Quill -->
-                            <div class="quill-content"></div>
-                            <!-- Create the editor container -->
-                          </div>
-                          <!-- /.SUBIR EVIDENCIAS -->
-                          <!-- /.card-header -->
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                            <br><br><br><label>Recursos</label>
-                            <select class="form-control" id="recursos" name="recursos" required>
-                              <option>Selecciona una Opción</option>
-                              <option value="Humanos">Humanos</option>
-                              <option value="Tecnologicos">Tecnológicos</option>
-                            </select>
-                          </div>
-                          <!-- /.content -->
-
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                            <br>
-                            <div class="form-group">
-                              <label>Numero de la Actividad</label>
-                              <input type="number" id="id_actividad" class="form-control" readonly>
+                    <form id="evidenciaForm" method="POST">
+                        <div class="card card-navy">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <label for="fecha_evidencia">Fecha Actividad</label>
+                                        <input type="date" name="fecha_evidencia" class="form-control" id="fecha_evidencia" required>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <br>
+                                        <textarea class="editor" id="evidencia" name="evidencia" style="display: none;"></textarea>
+                                        <!-- Contenedor para el contenido de Quill -->
+                                        <div class="quill-content"></div>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <br><br><br><label>Recursos</label>
+                                        <select class="form-control" id="recursos" name="recursos" required>
+                                            <option>Selecciona una Opción</option>
+                                            <option value="Humanos">Humanos</option>
+                                            <option value="Tecnologicos">Tecnológicos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <br>
+                                        <div class="form-group">
+                                            <label>Numero de la Actividad</label>
+                                            <input type="number" id="id_actividad" name="id_actividad" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 col-sm-6" hidden>
+                                        <label>Id Usuario</label>
+                                        <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /.form-group -->
-                          </div>
-                          <!-- /.SUBIR EVIDENCIAS -->
-                          <div class="col-md-6 col-xs-6 col-sm-6" hidden>
-                            <label>Id Usuario</label>
-                            <input type="hidden" name="id_usuario_e_fk" id="id_usuario_e_fk" value="<?php echo $_SESSION['Id'] ?>" class="form-control" readonly>
-                          </div>
-                          <div class="col-md-12 col-xs-12 col-sm-12">
-                            <button type="button" class="btn btn-success btn-block" id="subir_evidencia" name="subir_evidencia">SUBIR EVIDENCIA</button>
-                          </div>
                         </div>
-                        <!-- /.modal-content -->
-                        <!-- /.card-body -->
-                      </div>
-                    </div>
-                  </form>
+                    </form>
                 </div>
-              </div>
-              <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
-        </section>
+        </div>
+    </div>
+</section>
         <!-- /.CIERRE DE MODAL -->
         <!-- MODAL PARA VISUALIZAR LA EVIDENCIA -->
         <section class="content">

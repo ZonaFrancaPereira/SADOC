@@ -8,12 +8,7 @@ require('seguridad.php');
 <nav class="mt-2">
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
-      <a href="acpm.php#abiertas" class="nav-link active">
-      <i class="fas fa-arrow-alt-circle-left"></i>
-        <p>
-          ATRAS
-        </p>
-      </a>
+    <button class="btn btn-info btn-block"  onclick="setTabAndDiv('abiertas', 'abiertas1')"><i class="fas fa-backward"> Atras</i></button>
     </li>          
       </ul>
 </nav>
@@ -391,7 +386,7 @@ require('seguridad.php');
           }).then((result) => {
             // Redirige a la página después de cerrar el SweetAlert
             if (result.isConfirmed) {
-              window.location.href = 'acpm.php';
+              window.location.href = '';
             }
           });
         },
@@ -401,6 +396,13 @@ require('seguridad.php');
       });
     });
   });
+</script>
+<script>
+    function setTabAndDiv(tab, div) {
+        localStorage.setItem('targetTab', tab);
+        localStorage.setItem('targetDiv', div);
+        window.location.href = 'acpm.php';  // Redirigir a Página acpm abiertas
+    }
 </script>
 </body>
 
