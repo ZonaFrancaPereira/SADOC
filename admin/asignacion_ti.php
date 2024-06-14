@@ -344,7 +344,7 @@ require('seguridad.php');
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="realiza_backup">Realiza Backup</label>
+                      <label for="realiza_backup">¿Realiza copias de seguridad en otro equipo?</label>
                       <select class="form-control" id="realiza_backup" name="realiza_backup">
                         <option value="Si">Si</option>
                         <option value="No">No</option>
