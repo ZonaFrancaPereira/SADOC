@@ -505,7 +505,6 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Fecha Finalización</th>
                           <th>Estado</th>
                           <th>Informe</th>
-                          <th>Asignar</th>
                           <th>Actividades</th>
                         </tr>
                       </thead>
@@ -542,7 +541,6 @@ if (isset($_POST['enviar_verificacion'])) {
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
                               <td><a href='informe_acpm.php?id_acpm=<?php echo $id_acpm; ?>' target='_blank'> <button class='btn bg-danger'><i class="far fa-file-pdf"></i> </button></a></td>
-                              <td><button type="button" class="btn bg-warning" id="asignar_actividad" name="asignar_actividad" data-toggle="modal" data-target="#modal-success" data-id_acpm_fk="<?php echo $row['id_consecutivo'] ?>"><i class="fas fa-user-check"></i></button></a></td>
                               <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-info" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-clipboard-list"></i></button></a></td>
 
                             </tr>
@@ -758,8 +756,6 @@ if (isset($_POST['enviar_verificacion'])) {
                           <th>Descripcion Acpm</th>
                           <th>Fecha Finalizacion</th>
                           <th>Estado</th>
-                          <th>Editar</th>
-                          <th>Actividades</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -791,8 +787,6 @@ if (isset($_POST['enviar_verificacion'])) {
 
                               <td><?php echo $row["fecha_finalizacion"] ?></td>
                               <td><?php echo $row["estado_acpm"] ?></td>
-                              <td>Boton editar</td>
-                              <td><a href="enviar_actividades.php?id_acpm=<?php echo $id_acpm; ?>&descripcion=<?php echo $descripcion; ?>"><button type="button" class="btn bg-warning" id="idConsecutivo" name="idConsecutivo"><i class="fas fa-edit"></i></button></a></td>
                             </tr>
                         <?php }
                         } ?>
